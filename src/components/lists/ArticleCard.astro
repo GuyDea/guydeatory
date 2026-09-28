@@ -1,0 +1,71 @@
+---
+import type { LangCode } from '@i18n/languages';
+import type { Article, Catalog } from '@lib/content/types';
+import { articleUrl } from '@lib/urls';
+import LabelChip from './LabelChip.astro';
+
+interface Props {
+  lang: LangCode;
+  article: Article;
+  catalog: Catalog;
+  /** Links inside articles extend the reading trail. */
+  trail?: boolean;
+  headingLevel?: 'h2' | 'h3';
+}
+const { lang, article, catalog, trail = false, headingLevel: Heading = 'h3' } = Astro.props;
+const text = article.texts[lang]!;
+const labels = article.labels.map((id) => catalog.labels.get(id)).filter((l) => l !== undefined);
+---
+<article class="card">
+  <Heading class="card-title">
+    <a href={articleUrl(article, lang)} data-trail-link={trail ? '' : undefined} data-trail-to={trail ? article.id : undefined}>{text.title}</a>
+  </Heading>
+  <p class="card-summary">{text.summary}</p>
+  <p class="card-labels">{labels.map((label) => <LabelChip lang={lang} label={label} link={false} />)}</p>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+    padding: var(--space-4) var(--space-5) var(--space-5);
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-md);
+  }
+
+  .card:hover {
+    border-color: var(--accent);
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+    font-weight: 750;
+  }
+
+  .card-title a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  /* The whole card is clickable, the heading link stays the accessible name. */
+  .card-title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .card-summary {
+    color: var(--ink-soft);
+    font-size: var(--text-sm);
+  }
+
+  .card-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+</style>

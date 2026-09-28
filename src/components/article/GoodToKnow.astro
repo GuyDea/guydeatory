@@ -1,0 +1,54 @@
+---
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+import type { Catalog } from '@lib/content/types';
+import { resolveArticleLink } from '@lib/urls';
+
+interface Props {
+  lang: LangCode;
+  ids: string[];
+  catalog: Catalog;
+}
+const { lang, ids, catalog } = Astro.props;
+const links = ids.flatMap((id) => {
+  const link = resolveArticleLink(catalog, id, lang);
+  return link ? [{ id, ...link }] : [];
+});
+---
+{
+  links.length > 0 && (
+    <p class="good-to-know">
+      <span>{t(lang, 'article.goodToKnow')}</span>{' '}
+      {links.map((link, i) => (
+        <>
+          {i > 0 && ', '}
+          <a class="term" href={link.href} data-trail-link data-trail-to={link.id} data-preview-title={link.text.title} data-preview-summary={link.text.summary}>
+            {link.text.term}
+          </a>
+        </>
+      ))}
+    </p>
+  )
+}
+
+<style>
+  .good-to-know {
+    max-width: var(--measure);
+    margin-top: var(--space-5);
+    color: var(--ink-soft);
+  }
+
+  .term {
+    color: var(--term-ink);
+    font-weight: 700;
+    text-decoration: none;
+    padding-inline: 0.12em;
+    border-radius: 0.25em;
+    background: linear-gradient(to top, var(--term-mark) 62%, transparent 62%);
+  }
+
+  .term:hover,
+  .term:focus-visible {
+    background: var(--term-mark-hover);
+  }
+</style>

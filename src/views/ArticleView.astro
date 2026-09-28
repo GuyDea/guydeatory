@@ -1,10 +1,20 @@
 ---
 import { getEntry, render } from 'astro:content';
+import ArticleFooter from '@components/article/ArticleFooter.astro';
+import ArticleHeader from '@components/article/ArticleHeader.astro';
+import GoodToKnow from '@components/article/GoodToKnow.astro';
+import ReadingTrail from '@components/article/ReadingTrail.astro';
+import ShortAnswer from '@components/article/ShortAnswer.astro';
+import Toc from '@components/article/Toc.astro';
+import TopicPath from '@components/article/TopicPath.astro';
 import { contentComponents } from '@components/content/index';
 import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { getCatalog } from '@lib/content/catalog';
-import { articleAlternates, articleUrl } from '@lib/urls';
+import { localized, topicAncestry } from '@lib/content/queries';
+import { foldDiacritics } from '@lib/text';
+import { absolute, articleAlternates, articleUrl, homeUrl, SITE, topicUrl } from '@lib/urls';
 import '@styles/prose.css';
 
 interface Props {
@@ -18,39 +28,108 @@ const article = catalog.articles.get(id)!;
 const text = article.texts[lang]!;
 const entry = await getEntry('articleTexts', text.entryId);
 if (!entry) throw new Error(`No MDX entry "${text.entryId}" for article "${id}"`);
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
+
+const url = articleUrl(article, lang)!;
+const topicPath = topicAncestry(catalog, article.topics[0]!);
+const searchTopics = [...new Set(article.topics.flatMap((topicId) => topicAncestry(catalog, topicId).map((t) => t.id)))];
+const trailName = text.term.charAt(0).toLocaleUpperCase(lang) + text.term.slice(1);
+
+// Extra search terms, plus a copy without diacritics so "elektricky prud" finds "elektrický prúd".
+const keywordText = [text.title, text.term, ...text.keywords].join(' · ');
+const folded = foldDiacritics(keywordText);
+const searchKeywords = folded === keywordText ? keywordText : `${keywordText} · ${folded}`;
+const isoDate = (date: Date) => date.toISOString().slice(0, 10);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { name: t(lang, 'nav.home'), item: absolute(homeUrl(lang)) },
+      ...topicPath.map((topic) => ({ name: localized(topic.name, lang), item: absolute(topicUrl(topic, lang)!) })),
+      { name: text.title, item: absolute(url) },
+    ].map((crumb, index) => ({ '@type': 'ListItem', position: index + 1, ...crumb })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: text.title,
+    description: text.summary,
+    inLanguage: lang,
+    datePublished: isoDate(article.created),
+    dateModified: isoDate(article.updated),
+    mainEntityOfPage: absolute(url),
+    isAccessibleForFree: true,
+    publisher: { '@type': 'Organization', name: 'Guydeatory', url: SITE },
+  },
+];
 ---
-<BaseLayout
-  lang={lang}
-  title={text.title}
-  description={text.summary}
-  canonical={articleUrl(article, lang)!}
-  alternates={articleAlternates(article)}
-  ogType="article"
->
-  <article class="page article">
-    <h1>{text.title}</h1>
-    <p class="summary">{text.summary}</p>
-    <div class="prose">
-      <Content components={contentComponents as Record<string, never>} />
+<BaseLayout lang={lang} title={text.title} description={text.summary} canonical={url} alternates={articleAlternates(article)} ogType="article" jsonLd={jsonLd}>
+  <div class="page article-page">
+    <TopicPath lang={lang} topics={topicPath} />
+    <ReadingTrail lang={lang} id={id} name={trailName} />
+    <div class="article-layout">
+      <div class="article-main">
+        <article data-pagefind-body data-pagefind-sort={`updated:${isoDate(article.updated)}`}>
+          <ArticleHeader lang={lang} article={article} text={text} catalog={catalog} />
+          <ShortAnswer lang={lang} summary={text.summary} />
+          <GoodToKnow lang={lang} ids={article.prerequisites} catalog={catalog} />
+          <Toc lang={lang} headings={headings} variant="inline" />
+          <div class="prose article-body">
+            <Content components={contentComponents as Record<string, never>} />
+          </div>
+          <div class="search-data" aria-hidden="true">
+            {article.labels.map((label) => <span data-pagefind-filter={`label:${label}`} />)}
+            {searchTopics.map((topic) => <span data-pagefind-filter={`topic:${topic}`} />)}
+            <span class="visually-hidden" data-pagefind-weight="5">{searchKeywords}</span>
+          </div>
+        </article>
+        <ArticleFooter lang={lang} article={article} catalog={catalog} />
+      </div>
+      <aside class="article-aside">
+        <Toc lang={lang} headings={headings} variant="side" />
+      </aside>
     </div>
-  </article>
+  </div>
 </BaseLayout>
 
+<script>
+  import '../scripts/toc.ts';
+</script>
+
 <style>
-  .article {
-    padding-block: var(--space-7);
+  .article-page {
+    padding-block: var(--space-5) var(--space-7);
   }
 
-  h1 {
-    font-size: var(--text-h1);
-    font-weight: 800;
-    max-width: 20ch;
+  .article-layout {
+    display: grid;
+    gap: var(--space-7);
+    margin-top: var(--space-6);
   }
 
-  .summary {
-    margin-block: var(--space-5);
-    font-size: var(--text-lg);
-    max-width: var(--measure);
+  .article-main {
+    min-width: 0;
+  }
+
+  .article-body {
+    margin-top: var(--space-7);
+  }
+
+  .search-data {
+    display: contents;
+  }
+
+  @media (min-width: 1100px) {
+    .article-layout {
+      grid-template-columns: minmax(0, 1fr) 15rem;
+    }
+  }
+
+  @media (max-width: 1099px) {
+    .article-aside {
+      display: none;
+    }
   }
 </style>

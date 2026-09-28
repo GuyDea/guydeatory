@@ -1,0 +1,102 @@
+---
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+
+interface Props {
+  lang: LangCode;
+  headings: { depth: number; slug: string; text: string }[];
+  /** `side`: sticky sidebar on wide screens; `inline`: collapsed box in the text column on small screens. */
+  variant: 'side' | 'inline';
+}
+const { lang, headings, variant } = Astro.props;
+const sections = headings.filter((h) => h.depth === 2);
+const titleId = `toc-${variant}`;
+---
+{
+  sections.length >= 3 && (
+    <nav class:list={['toc', `toc-${variant}`]} aria-labelledby={titleId} data-pagefind-ignore>
+      <details open={variant === 'side'}>
+        <summary id={titleId}>{t(lang, 'article.toc')}</summary>
+        <ol>
+          {sections.map((h) => (
+            <li>
+              <a href={`#${h.slug}`}>{h.text}</a>
+            </li>
+          ))}
+        </ol>
+      </details>
+    </nav>
+  )
+}
+
+<style>
+  .toc {
+    font-size: var(--text-sm);
+  }
+
+  .toc-inline {
+    max-width: var(--measure);
+    margin-top: var(--space-5);
+    padding-inline: var(--space-4);
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-md);
+  }
+
+  .toc-inline ol {
+    margin-bottom: var(--space-4);
+  }
+
+  .toc-side {
+    position: sticky;
+    top: 6rem;
+  }
+
+  @media (min-width: 1100px) {
+    .toc-inline {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1099px) {
+    .toc-side {
+      display: none;
+    }
+  }
+
+  summary {
+    min-height: var(--touch);
+    display: flex;
+    align-items: center;
+    font-family: var(--font-display-stack);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  ol {
+    margin: 0;
+    padding: 0 0 0 var(--space-3);
+    list-style: none;
+    border-left: 2px solid var(--line);
+  }
+
+  li a {
+    display: block;
+    padding: var(--space-1) var(--space-3);
+    color: var(--ink-soft);
+    text-decoration: none;
+    line-height: 1.35;
+  }
+
+  li a:hover,
+  li a[aria-current='true'] {
+    color: var(--ink);
+  }
+
+  li a[aria-current='true'] {
+    font-weight: 700;
+    box-shadow: -2px 0 0 var(--accent);
+    margin-left: calc(-1 * var(--space-3) - 2px);
+    padding-left: calc(2 * var(--space-3) + 2px);
+  }
+</style>

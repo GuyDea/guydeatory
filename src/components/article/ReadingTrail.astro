@@ -1,0 +1,116 @@
+---
+/**
+ * "Your path": the chain of articles the reader followed through term links.
+ * Rendered in the browser from sessionStorage by src/scripts/trail.ts; hidden until it has 2+ stops.
+ */
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+
+interface Props {
+  lang: LangCode;
+  id: string;
+  /** Short name shown for this article in the trail. */
+  name: string;
+}
+const { lang, id, name } = Astro.props;
+---
+<nav class="trail" aria-label={t(lang, 'trail.label')} data-trail hidden data-trail-current data-id={id} data-title={name} data-earlier={t(lang, 'trail.earlier')}>
+  <span class="trail-label">{t(lang, 'trail.label')}</span>
+  <ol></ol>
+</nav>
+
+<script>
+  import '../../scripts/trail.ts';
+</script>
+
+<style>
+  .trail {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .trail[hidden] {
+    display: none;
+  }
+
+  .trail-label {
+    flex-shrink: 0;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+
+  ol {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* A little metro line: every stop is a dot, joined to the previous stop by a line. */
+  .trail :global(li) {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding-left: 1.2rem;
+    white-space: nowrap;
+    font-size: var(--text-sm);
+  }
+
+  .trail :global(li)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0.75rem;
+    height: 0.75rem;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: var(--surface);
+    border: 3px solid var(--accent);
+    box-sizing: border-box;
+  }
+
+  .trail :global(li + li) {
+    margin-left: 1.4rem;
+  }
+
+  .trail :global(li + li)::after {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 50%;
+    width: 1rem;
+    height: 3px;
+    transform: translateY(-50%);
+    background: var(--accent);
+  }
+
+  .trail :global(li:last-child)::before {
+    background: var(--accent);
+  }
+
+  .trail :global(a) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    color: var(--ink);
+  }
+
+  .trail :global([aria-current]) {
+    font-weight: 700;
+  }
+
+  .trail :global(.trail-gap) {
+    color: var(--ink-soft);
+  }
+</style>

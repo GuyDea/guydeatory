@@ -1,0 +1,79 @@
+---
+import LabelChip from '@components/lists/LabelChip.astro';
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+import type { Article, ArticleText, Catalog } from '@lib/content/types';
+import { readingMinutes } from '@lib/content/queries';
+
+interface Props {
+  lang: LangCode;
+  article: Article;
+  text: ArticleText;
+  catalog: Catalog;
+}
+const { lang, article, text, catalog } = Astro.props;
+const labels = article.labels.map((id) => catalog.labels.get(id)).filter((l) => l !== undefined);
+---
+<header class="article-header">
+  {article.status === 'draft' && <p class="banner banner-draft">{t(lang, 'article.draft')}</p>}
+  <h1>{text.title}</h1>
+  <div class="facts">
+    <ul class="labels" aria-label={t(lang, 'article.labelsLabel')}>
+      {labels.map((label) => <li><LabelChip lang={lang} label={label} /></li>)}
+    </ul>
+    <span class="minutes">{t(lang, 'article.readingTime', { minutes: readingMinutes(text) })}</span>
+  </div>
+  {article.status === 'stub' && <p class="banner banner-stub">{t(lang, 'article.stub')}</p>}
+</header>
+
+<style>
+  .article-header {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    font-weight: 800;
+    max-width: 18ch;
+  }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+  }
+
+  .labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .minutes {
+    color: var(--ink-soft);
+    font-size: var(--text-sm);
+  }
+
+  .banner {
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm);
+    max-width: var(--measure);
+  }
+
+  .banner-stub {
+    background: var(--surface-sunk);
+    color: var(--ink-soft);
+  }
+
+  .banner-draft {
+    background: var(--danger);
+    color: #fff;
+    font-weight: 700;
+  }
+</style>

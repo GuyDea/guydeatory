@@ -1,0 +1,107 @@
+---
+import ArticleCard from '@components/lists/ArticleCard.astro';
+import { getLanguage } from '@i18n/languages';
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+import type { Article, Catalog } from '@lib/content/types';
+import { resolveArticleLink } from '@lib/urls';
+
+interface Props {
+  lang: LangCode;
+  article: Article;
+  catalog: Catalog;
+}
+const { lang, article, catalog } = Astro.props;
+const related = article.related.map((id) => catalog.articles.get(id)).filter((a): a is Article => !!a?.texts[lang]);
+const usedIn = (catalog.backlinks.get(article.id) ?? []).flatMap((id) => {
+  const link = resolveArticleLink(catalog, id, lang);
+  return link && !link.isFallback ? [{ id, ...link }] : [];
+});
+const updated = new Intl.DateTimeFormat(getLanguage(lang).dateLocale, { dateStyle: 'long' }).format(article.updated);
+---
+<footer class="article-footer">
+  {
+    related.length > 0 && (
+      <section>
+        <h2>{t(lang, 'article.whereNext')}</h2>
+        <div class="cards">
+          {related.map((a) => (
+            <ArticleCard lang={lang} article={a} catalog={catalog} trail />
+          ))}
+        </div>
+      </section>
+    )
+  }
+  {
+    usedIn.length > 0 && (
+      <section>
+        <h2>{t(lang, 'article.usedIn')}</h2>
+        <ul class="used-in">
+          {usedIn.map((link) => (
+            <li>
+              <a href={link.href} data-trail-link data-trail-to={link.id}>
+                {link.text.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+  {
+    article.sources.length > 0 && (
+      <section>
+        <h2>{t(lang, 'article.sources')}</h2>
+        <ul class="sources">
+          {article.sources.map((source) => (
+            <li>
+              <a href={source.url} rel="noopener noreferrer" target="_blank">
+                {source.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+  <p class="updated">{t(lang, 'article.updated', { date: updated })}</p>
+</footer>
+
+<style>
+  .article-footer {
+    display: grid;
+    gap: var(--space-7);
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 2px solid var(--line);
+  }
+
+  h2 {
+    font-size: var(--text-h3);
+    font-weight: 750;
+    margin-bottom: var(--space-4);
+  }
+
+  .cards {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  }
+
+  .used-in,
+  .sources {
+    display: grid;
+    gap: var(--space-2);
+    padding-left: 1.2em;
+    max-width: var(--measure);
+  }
+
+  .sources {
+    font-size: var(--text-sm);
+  }
+
+  .updated {
+    color: var(--ink-soft);
+    font-size: var(--text-sm);
+  }
+</style>

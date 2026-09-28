@@ -1,0 +1,56 @@
+---
+/** Static breadcrumb: where the article lives in the topic tree (its primary topic). */
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+import { localized } from '@lib/content/queries';
+import type { Topic } from '@lib/content/types';
+import { homeUrl, topicUrl } from '@lib/urls';
+
+interface Props {
+  lang: LangCode;
+  topics: Topic[];
+}
+const { lang, topics } = Astro.props;
+---
+<nav class="topic-path" aria-label={t(lang, 'breadcrumb.label')}>
+  <ol>
+    <li><a href={homeUrl(lang)}>{t(lang, 'nav.home')}</a></li>
+    {topics.map((topic) => <li><a href={topicUrl(topic, lang)}>{localized(topic.name, lang)}</a></li>)}
+  </ol>
+</nav>
+
+<style>
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-sm);
+  }
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  li + li::before {
+    content: '›';
+    color: var(--ink-soft);
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+  }
+</style>
