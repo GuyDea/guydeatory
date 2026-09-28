@@ -31,7 +31,7 @@ export const strings: Record<LangCode, Strings> = {
     heatPumpRow: (heat) => `Heat pump: ${heat} of heat`,
     heaterRow: 'Electric heater: 1 kWh of heat',
     picture: ({ outside, cop, heat }) =>
-      `At ${outside} outside, the heat pump turns 1 kilowatt-hour of electricity into ${heat} of heat (COP ${cop}). An electric heater turns it into just 1 kilowatt-hour.`,
+      `At ${outside} outside, the heat pump delivers ${heat} of heat for every 1 kilowatt-hour of electricity (COP ${cop}); the rest is heat it collects from the outside air. An electric heater delivers just 1 kilowatt-hour.`,
   },
   sk: {
     title: 'Koľko tepla z 1 kWh elektriny?',
@@ -47,6 +47,6 @@ export const strings: Record<LangCode, Strings> = {
     heatPumpRow: (heat) => `Tepelné čerpadlo: ${heat} tepla`,
     heaterRow: 'Elektrický ohrievač: 1 kWh tepla',
     picture: ({ outside, cop, heat }) =>
-      `Pri teplote ${outside} vonku zmení tepelné čerpadlo 1 kilowatthodinu elektriny na ${heat} tepla (COP ${cop}). Elektrický ohrievač z nej urobí len 1 kilowatthodinu.`,
+      `Pri teplote ${outside} vonku dodá tepelné čerpadlo za každú 1 kilowatthodinu elektriny ${heat} tepla (COP ${cop}); zvyšok je teplo pozbierané z vonkajšieho vzduchu. Elektrický ohrievač dodá len 1 kilowatthodinu.`,
   },
 };

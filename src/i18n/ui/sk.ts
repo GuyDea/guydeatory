@@ -17,7 +17,7 @@ export const sk = {
   'theme.light': 'svetlý',
   'theme.dark': 'tmavý',
   'footer.promise': 'Žiadne reklamy. Žiadne sledovanie. Pre zvedavé deti aj ich dospelých.',
-  'footer.readIn': 'Čítaj po',
+  'footer.readIn': 'Aj v jazyku:',
   'article.shortAnswer': 'Stručná odpoveď',
   'article.goodToKnow': 'Dobré vedieť najprv:',
   'article.toc': 'Na tejto stránke',

@@ -19,7 +19,7 @@ export const en = {
   'theme.light': 'light',
   'theme.dark': 'dark',
   'footer.promise': 'No ads. No tracking. Made for curious kids and their grown-ups.',
-  'footer.readIn': 'Read in',
+  'footer.readIn': 'Also in:',
   'article.shortAnswer': 'The short answer',
   'article.goodToKnow': 'Good to know first:',
   'article.toc': 'On this page',

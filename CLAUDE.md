@@ -30,7 +30,8 @@ Read `docs/vision.md` once per session if you are unsure what the product is for
    - Run `npm run check` for code: typecheck, tests, lint, build, dist checks.
 6. **Privacy.**
    - No trackers, no analytics, no third-party requests; fonts are self-hosted.
-   - Only a `lang` cookie and a `theme` localStorage key are stored.
+   - Only a `lang` cookie, a `theme` localStorage key and the reading trail (`gd:trail`, `gd:intent` in
+     sessionStorage, gone when the tab closes) are stored. The About page says so — keep it true.
 7. **Git.**
    - Work on a feature branch, never commit to `main`.
    - Commit progressively.
