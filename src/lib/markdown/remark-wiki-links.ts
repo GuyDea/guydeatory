@@ -1,14 +1,14 @@
 import type { PhrasingContent, Root, Text } from 'mdast';
 import type { MdxJsxTextElement } from 'mdast-util-mdx-jsx';
 import { SKIP, visit } from 'unist-util-visit';
-import { WIKI_LINK_RE } from '../content/wiki-links.ts';
+import { normaliseLinkText, WIKI_LINK_RE } from '../content/wiki-links.ts';
 
 function termElement(id: string, text: string | undefined): MdxJsxTextElement {
   return {
     type: 'mdxJsxTextElement',
     name: 'Term',
     attributes: [{ type: 'mdxJsxAttribute', name: 'id', value: id }],
-    children: text === undefined ? [] : [{ type: 'text', value: text }],
+    children: text === undefined ? [] : [{ type: 'text', value: normaliseLinkText(text) }],
   };
 }
 

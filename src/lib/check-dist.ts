@@ -73,7 +73,7 @@ export async function checkDist(root: string): Promise<Problem[]> {
     const body = doc.querySelector('body');
     if (body) {
       for (const el of body.querySelectorAll('script, style, template')) el.remove();
-      const leaked = /\[\[[^\]\n]{0,80}\]\]/.exec(body.text);
+      const leaked = /\[\[[^\]]{0,120}\]\]/.exec(body.text);
       if (leaked) report(`untransformed wiki-link in text: "${leaked[0]}"`);
       for (const widget of body.querySelectorAll('[data-widget]')) {
         const hasElements = widget.childNodes.some((node) => node.nodeType === 1);

@@ -103,6 +103,11 @@ describe('checkDist', () => {
     expect(await checkDist(root)).toEqual([{ file: 'en/x/index.html', message: 'untransformed wiki-link in text: "[[voltage]]"' }]);
   });
 
+  it('reports leaked wiki-links that span lines', async () => {
+    const root = await site({ 'en/x/index.html': page({ ...ARTICLE, body: '<p>See [[voltage|the\npush]].</p>' }) });
+    expect(await checkDist(root)).toEqual([{ file: 'en/x/index.html', message: 'untransformed wiki-link in text: "[[voltage|the\npush]]"' }]);
+  });
+
   it('reports widgets that render nothing before hydration', async () => {
     const root = await site({ 'en/x/index.html': page({ ...ARTICLE, body: '<div data-widget="ohms-law"></div>' }) });
     expect(await checkDist(root)).toEqual([{ file: 'en/x/index.html', message: 'widget "ohms-law" renders no content before hydration' }]);

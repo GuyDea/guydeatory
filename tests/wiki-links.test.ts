@@ -13,6 +13,12 @@ describe('extractWikiLinks', () => {
     expect(extractWikiLinks('s [[voltage|napätím]] a')).toEqual([{ target: 'voltage', text: 'napätím' }]);
   });
 
+  it('accepts display text that wraps onto the next line, normalising the whitespace', () => {
+    expect(extractWikiLinks('see [[conservation-of-energy|energy can never be\nmade from nothing]].')).toEqual([
+      { target: 'conservation-of-energy', text: 'energy can never be made from nothing' },
+    ]);
+  });
+
   it('ignores links inside fenced and inline code', () => {
     const md = 'Real [[atom]].\n\n```md\n[[electron]]\n```\n\nand `[[proton]]` too.';
     expect(extractWikiLinks(md)).toEqual([{ target: 'atom' }]);
@@ -27,6 +33,10 @@ describe('findMalformedWikiLinks', () => {
       '[[ atom]]',
       '[[atom|]]',
     ]);
+  });
+
+  it('reports malformed links even when they span lines', () => {
+    expect(findMalformedWikiLinks('text [[Voltage|the\npush]] more')).toEqual(['[[Voltage|the\npush]]']);
   });
 
   it('ignores code', () => {

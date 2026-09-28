@@ -55,6 +55,11 @@ describe('remarkWikiLinks', () => {
     expect(textOf(calls[0]!.props.children)).toBe('napätím');
   });
 
+  it('turns a link whose text wraps onto the next line into one Term with single-spaced text', async () => {
+    const { calls } = await render('Pravidlo, že [[conservation-of-energy|energia nikdy nevznikne\nz ničoho]] platí.');
+    expect(calls.map((c) => [c.props.id, textOf(c.props.children)])).toEqual([['conservation-of-energy', 'energia nikdy nevznikne z ničoho']]);
+  });
+
   it('handles several links in one paragraph and inside emphasis', async () => {
     const { calls } = await render('An [[atom]] has *[[electron|electrons]]* and a [[nucleus]].');
     expect(calls.map((c) => c.props.id)).toEqual(['atom', 'electron', 'nucleus']);

@@ -6,10 +6,18 @@
 export const ID_PATTERN = '[a-z0-9]+(?:-[a-z0-9]+)*';
 export const ID_RE = new RegExp(`^${ID_PATTERN}$`);
 
-/** Global regex; group 1 = target id, group 2 = optional display text. */
-export const WIKI_LINK_RE = new RegExp(`\\[\\[(${ID_PATTERN})(?:\\|([^\\]|\\n]*[^\\]|\\n\\s][^\\]|\\n]*))?\\]\\]`, 'g');
+/**
+ * Global regex; group 1 = target id, group 2 = optional display text.
+ * The display text may wrap onto the next line (authors wrap long lines); see normaliseLinkText.
+ */
+export const WIKI_LINK_RE = new RegExp(`\\[\\[(${ID_PATTERN})(?:\\|([^\\]|]*[^\\]|\\s][^\\]|]*))?\\]\\]`, 'g');
 
-const ANY_DOUBLE_BRACKET_RE = /\[\[[^\]\n]*\]\]/g;
+const ANY_DOUBLE_BRACKET_RE = /\[\[[^\]]*\]\]/g;
+
+/** Display text as shown to readers: line breaks and runs of spaces become single spaces. */
+export function normaliseLinkText(text: string): string {
+  return text.replace(/\s+/g, ' ').trim();
+}
 
 export interface WikiLink {
   target: string;
@@ -25,7 +33,7 @@ export function extractWikiLinks(markdown: string): WikiLink[] {
   const links: WikiLink[] = [];
   for (const match of stripCode(markdown).matchAll(WIKI_LINK_RE)) {
     const [, target, text] = match;
-    links.push(text === undefined ? { target: target! } : { target: target!, text });
+    links.push(text === undefined ? { target: target! } : { target: target!, text: normaliseLinkText(text) });
   }
   return links;
 }
