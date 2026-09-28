@@ -1,0 +1,24 @@
+---
+// Temporary preview of the design system; replaced by the real home page in Task 9.
+import BaseLayout from '@layouts/BaseLayout.astro';
+import '@styles/prose.css';
+import { LANG_CODES } from '@i18n/languages';
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+
+export function getStaticPaths() {
+  return LANG_CODES.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as LangCode;
+const alternates = LANG_CODES.map((code) => ({ lang: code, href: `/${code}/` }));
+---
+<BaseLayout lang={lang} title={t(lang, 'site.name')} description={t(lang, 'site.tagline')} canonical={`/${lang}/`} alternates={alternates}>
+  <div class="page" style="padding-block: 3rem">
+    <h1 style="font-size: var(--text-h1); font-weight: 800; max-width: 18ch">Ako funguje elektrický prúd? Štvrťhodinová prechádzka</h1>
+    <div class="prose" style="margin-top: 1.5rem">
+      <p>Každý <strong>atóm</strong> má okolo svojho stredu drobné čiastočky nazývané elektróny. Ľaľa, ďaleko, ŕ, ĺ, ô, ä, č, ť, ž, š, ň, ý, á, í, é, ú.</p>
+      <h2>Čo sa vlastne hýbe?</h2>
+      <p>Imagine cutting a piece of gold in half, and then in half again, and again. At some point you reach a piece so small that cutting it would stop it being gold. Il1 aa gg 0O.</p>
+    </div>
+  </div>
+</BaseLayout>

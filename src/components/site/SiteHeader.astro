@@ -1,0 +1,178 @@
+---
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+import { homeUrl, sectionUrl } from '@lib/urls';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import type { Alternate } from './LanguageSwitcher.astro';
+import Logo from './Logo.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  lang: LangCode;
+  alternates: Alternate[];
+  /** Which main section this page belongs to, for aria-current. */
+  current?: 'explore' | 'about' | 'search' | undefined;
+}
+const { lang, alternates, current } = Astro.props;
+---
+<header class="site-header">
+  <div class="page bar">
+    <a class="brand" href={homeUrl(lang)}>
+      <Logo />
+      <span class="wordmark">{t(lang, 'site.name')}</span>
+    </a>
+    <nav class="nav" aria-label={t(lang, 'a11y.mainNav')}>
+      <a href={sectionUrl(lang, 'explore')} aria-current={current === 'explore' ? 'page' : undefined}>{t(lang, 'nav.explore')}</a>
+      <a class="nav-about" href={sectionUrl(lang, 'about')} aria-current={current === 'about' ? 'page' : undefined}>{t(lang, 'nav.about')}</a>
+    </nav>
+    <div class="tools">
+      <a class="search-trigger" href={sectionUrl(lang, 'search')} data-search-open aria-current={current === 'search' ? 'page' : undefined}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"></circle><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"></path></svg>
+        <span class="search-label">{t(lang, 'nav.search')}</span>
+        <kbd aria-hidden="true">/</kbd>
+      </a>
+      <LanguageSwitcher lang={lang} alternates={alternates} />
+      <ThemeToggle lang={lang} />
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3) var(--space-5);
+    min-height: 4rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--ink);
+    text-decoration: none;
+    min-height: var(--touch);
+  }
+
+  .wordmark {
+    font-family: var(--font-display-stack);
+    font-weight: 800;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+  }
+
+  .nav {
+    display: flex;
+    gap: var(--space-1);
+  }
+
+  .nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
+    padding-inline: var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .nav a:hover {
+    background: var(--surface-sunk);
+  }
+
+  .nav a[aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-color: var(--highlight);
+    text-decoration-thickness: 0.3em;
+    text-underline-offset: 0.05em;
+    text-decoration-skip-ink: none;
+  }
+
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-left: auto;
+  }
+
+  .search-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch);
+    padding-inline: var(--space-3) var(--space-2);
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+
+  .search-trigger:hover {
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  .search-trigger svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .search-label {
+    min-width: 6ch;
+  }
+
+  kbd {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.6em;
+    height: 1.6em;
+    border-radius: var(--radius-sm);
+    background: var(--surface-sunk);
+    font-family: inherit;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 720px) {
+    .nav .nav-about,
+    .search-trigger .search-label,
+    .search-trigger kbd {
+      display: none;
+    }
+
+    .nav a {
+      padding-inline: var(--space-2);
+    }
+
+    .search-trigger {
+      width: var(--touch);
+      justify-content: center;
+      padding: 0;
+    }
+
+    .bar {
+      gap: var(--space-2);
+    }
+
+    .wordmark {
+      font-size: 1.15rem;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .wordmark {
+      display: none;
+    }
+  }
+</style>

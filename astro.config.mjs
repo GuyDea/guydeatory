@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import svelte from '@astrojs/svelte';
 import { unified } from '@astrojs/markdown-remark';
@@ -24,4 +24,26 @@ export default defineConfig({
     }),
   },
   integrations: [mdx(), svelte()],
+  // Downloaded at build time and self-hosted: no third-party requests from readers' browsers.
+  fonts: [
+    {
+      // SIL's literacy typeface: single-storey a/g like children learn to write, clear I/l/1.
+      provider: fontProviders.google(),
+      name: 'Andika',
+      cssVariable: '--font-body',
+      weights: [400, 700],
+      styles: ['normal', 'italic'],
+      subsets: ['latin', 'latin-ext'],
+      fallbacks: ['system-ui', 'sans-serif'],
+    },
+    {
+      provider: fontProviders.google(),
+      name: 'Bricolage Grotesque',
+      cssVariable: '--font-display',
+      weights: ['500 800'],
+      styles: ['normal'],
+      subsets: ['latin', 'latin-ext'],
+      fallbacks: ['system-ui', 'sans-serif'],
+    },
+  ],
 });

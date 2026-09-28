@@ -1,0 +1,111 @@
+---
+import { getLanguage } from '@i18n/languages';
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+
+export interface Alternate {
+  lang: LangCode;
+  /** null when this page is not available in that language */
+  href: string | null;
+}
+
+interface Props {
+  lang: LangCode;
+  alternates: Alternate[];
+}
+
+const { lang, alternates } = Astro.props;
+---
+<nav class="langs" aria-label={t(lang, 'lang.label')}>
+  <ul>
+    {
+      alternates.map((alt) => {
+        const language = getLanguage(alt.lang);
+        if (alt.lang === lang) {
+          return (
+            <li>
+              <span class="lang is-current" aria-current="true" title={language.nativeName} lang={alt.lang}>
+                {alt.lang.toUpperCase()}
+              </span>
+            </li>
+          );
+        }
+        if (!alt.href) {
+          return (
+            <li>
+              <span class="lang is-missing" aria-disabled="true" title={t(lang, 'lang.notTranslated')} lang={alt.lang}>
+                {alt.lang.toUpperCase()}
+              </span>
+            </li>
+          );
+        }
+        return (
+          <li>
+            <a class="lang" href={alt.href} hreflang={alt.lang} lang={alt.lang} title={language.nativeName} data-lang-link={alt.lang}>
+              {alt.lang.toUpperCase()}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>
+
+<script>
+  // Remember the reader's choice so theguydea.com/ opens in their language next time.
+  document.addEventListener('click', (event) => {
+    const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('[data-lang-link]');
+    if (!link) return;
+    document.cookie = `lang=${link.dataset.langLink};path=/;max-age=31536000;SameSite=Lax`;
+  });
+</script>
+
+<style>
+  ul {
+    display: flex;
+    gap: 2px;
+    margin: 0;
+    padding: 2px;
+    list-style: none;
+    background: var(--surface-sunk);
+    border-radius: var(--radius-pill);
+  }
+
+  .lang {
+    display: grid;
+    place-items: center;
+    min-width: var(--touch);
+    min-height: 36px;
+    padding-inline: var(--space-2);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display-stack);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+
+  a.lang:hover {
+    color: var(--ink);
+    background: var(--surface);
+  }
+
+  .is-current {
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: 0 1px 2px rgb(26 38 64 / 0.15);
+  }
+
+  .is-missing {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  /* Narrow screens: the page language is obvious, show only the way out to the others. */
+  @media (max-width: 480px) {
+    li:has(.is-current) {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,12 @@
+---
+/** The mark: a magnifying glass over a highlighter stroke — look closely at the highlighted things. */
+interface Props {
+  size?: number;
+}
+const { size = 32 } = Astro.props;
+---
+<svg class="logo-mark" style="flex-shrink: 0; max-width: none" viewBox="0 0 32 32" width={size} height={size} aria-hidden="true" focusable="false">
+  <path d="M5 21 21 7" stroke="var(--highlight)" stroke-width="9" stroke-linecap="round" fill="none"></path>
+  <circle cx="13" cy="13" r="8" fill="none" stroke="currentColor" stroke-width="3"></circle>
+  <path d="m19.2 19.2 7.3 7.3" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" fill="none"></path>
+</svg>

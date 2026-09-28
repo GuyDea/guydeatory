@@ -1,0 +1,111 @@
+/*
+ * Long-form reading typography for article bodies (.prose).
+ * Text stays at a comfortable measure; exhibits (.wide) may break out wider.
+ */
+.prose {
+  font-size: var(--text-base);
+  line-height: var(--leading);
+}
+
+.prose > * {
+  max-width: var(--measure);
+}
+
+.prose > * + * {
+  margin-top: 1.1em;
+}
+
+.prose > .wide,
+.prose > figure.wide,
+.prose > .katex-display {
+  max-width: none;
+}
+
+.prose h2 {
+  font-size: var(--text-h2);
+  font-weight: 750;
+  margin-top: 2.2em;
+}
+
+.prose h3 {
+  font-size: var(--text-h3);
+  font-weight: 700;
+  margin-top: 1.8em;
+}
+
+.prose h2 + *,
+.prose h3 + * {
+  margin-top: 0.6em;
+}
+
+.prose strong {
+  font-weight: 700;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.4em;
+}
+
+.prose li + li {
+  margin-top: 0.4em;
+}
+
+.prose li::marker {
+  color: var(--ink-soft);
+}
+
+.prose blockquote {
+  padding-left: var(--space-4);
+  border-left: 4px solid var(--line-strong);
+  color: var(--ink-soft);
+}
+
+.prose hr {
+  border: 0;
+  height: 2px;
+  background: var(--line);
+  margin-block: var(--space-7);
+}
+
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: var(--text-sm);
+  display: block;
+  overflow-x: auto;
+}
+
+.prose th,
+.prose td {
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.prose th {
+  font-weight: 700;
+  border-bottom-width: 2px;
+}
+
+.prose code {
+  font-size: 0.9em;
+  background: var(--surface-sunk);
+  padding: 0.1em 0.3em;
+  border-radius: var(--radius-sm);
+}
+
+.prose .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: var(--space-2);
+}
+
+.prose .katex {
+  font-size: 1.1em;
+}
+
+.prose a:not(.term) {
+  color: var(--accent);
+}

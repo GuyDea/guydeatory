@@ -11,3 +11,6 @@ infra/.build/
 .env.*
 .DS_Store
 *.log
+
+# browser automation output
+.playwright-mcp/

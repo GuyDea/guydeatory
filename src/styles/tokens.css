@@ -1,0 +1,170 @@
+/*
+ * Design tokens — "a hands-on science museum in the browser".
+ * Cool chalk paper, navy ink, cobalt for actions, highlighter yellow for terms.
+ * Every colour a component or diagram uses comes from here, so dark mode is automatic.
+ */
+:root {
+  color-scheme: light;
+
+  /* Base palette */
+  --paper: #f6f8fb;
+  --surface: #ffffff;
+  --surface-sunk: #edf1f7;
+  --ink: #1a2640;
+  --ink-soft: #4a5670;
+  --line: #d9e0ea;
+  --line-strong: #b9c4d6;
+  --accent: #2548d8;
+  --accent-ink: #ffffff;
+  --accent-soft: #e5ebfd;
+  --highlight: #ffd84d;
+  --highlight-soft: #fff0b3;
+  --focus: #2548d8;
+
+  /* Meaningful colours */
+  --hot: #d9481f;
+  --cold: #1f7fd1;
+  --safe: #147a52;
+  --danger: #c0262d;
+  --caution: #ffc400;
+
+  /* Label colours (see content/labels.yaml → color) */
+  --label-sky: #1f6fc5;
+  --label-sky-bg: #e3f0fd;
+  --label-violet: #6b46c9;
+  --label-violet-bg: #efe9fc;
+  --label-green: #147a52;
+  --label-green-bg: #e0f4eb;
+  --label-amber: #9a5b00;
+  --label-amber-bg: #fff1d6;
+  --label-rose: #b42f63;
+  --label-rose-bg: #fce6ee;
+
+  /* Diagram palette (SVG diagrams and widgets use only these) */
+  --d-ink: var(--ink);
+  --d-muted: #7a869c;
+  --d-wire: #3b4a66;
+  --d-fill: #ffffff;
+  --d-fill-alt: #edf1f7;
+  --d-electron: #1f7fd1;
+  --d-positive: #d9481f;
+  --d-glow: #ffc93c;
+  --d-hot: #e4572e;
+  --d-warm: #f29e4c;
+  --d-cool: #6cb8ff;
+  --d-cold: #1f7fd1;
+  --d-accent: #2548d8;
+
+  /* Type */
+  --font-body-stack: var(--font-body, system-ui, sans-serif);
+  --font-display-stack: var(--font-display, system-ui, sans-serif);
+  --text-sm: 1rem;
+  --text-base: 1.1875rem;
+  --text-lg: 1.3125rem;
+  --text-h3: 1.5rem;
+  --text-h2: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+  --text-h1: clamp(2.25rem, 1.5rem + 3.2vw, 3.75rem);
+  --leading: 1.6;
+  --measure: 66ch;
+
+  /* Space and shape: radius grows with the size of the thing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --shadow-raised: 0 1px 0 var(--line), 0 12px 28px -16px rgb(26 38 64 / 0.35);
+  --page-gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+  --page-max: 76rem;
+  --touch: 44px;
+}
+
+/* Dark: navy night, not black */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --paper: #0e1729;
+    --surface: #16223a;
+    --surface-sunk: #0b1322;
+    --ink: #e7edf7;
+    --ink-soft: #a9b6cc;
+    --line: #2a3a58;
+    --line-strong: #3d5078;
+    --accent: #8fa8ff;
+    --accent-ink: #0e1729;
+    --accent-soft: #1f2d52;
+    --highlight: #ffd84d;
+    --highlight-soft: rgb(255 216 77 / 0.22);
+    --focus: #b8c7ff;
+    --hot: #ff8a65;
+    --cold: #6cb8ff;
+    --safe: #6fd3a6;
+    --danger: #ff7b7b;
+    --label-sky: #7db8f5;
+    --label-sky-bg: #16304f;
+    --label-violet: #b7a1f5;
+    --label-violet-bg: #2b2150;
+    --label-green: #6fd3a6;
+    --label-green-bg: #12372a;
+    --label-amber: #f5c46a;
+    --label-amber-bg: #3d2c0b;
+    --label-rose: #f59bbe;
+    --label-rose-bg: #43182a;
+    --d-muted: #7f8ca6;
+    --d-wire: #9fb0cc;
+    --d-fill: #16223a;
+    --d-fill-alt: #0b1322;
+    --d-electron: #6cb8ff;
+    --d-positive: #ff8a65;
+    --d-cold: #6cb8ff;
+    --d-accent: #8fa8ff;
+    --shadow-raised: 0 1px 0 var(--line), 0 16px 32px -18px rgb(0 0 0 / 0.7);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --paper: #0e1729;
+  --surface: #16223a;
+  --surface-sunk: #0b1322;
+  --ink: #e7edf7;
+  --ink-soft: #a9b6cc;
+  --line: #2a3a58;
+  --line-strong: #3d5078;
+  --accent: #8fa8ff;
+  --accent-ink: #0e1729;
+  --accent-soft: #1f2d52;
+  --highlight: #ffd84d;
+  --highlight-soft: rgb(255 216 77 / 0.22);
+  --focus: #b8c7ff;
+  --hot: #ff8a65;
+  --cold: #6cb8ff;
+  --safe: #6fd3a6;
+  --danger: #ff7b7b;
+  --label-sky: #7db8f5;
+  --label-sky-bg: #16304f;
+  --label-violet: #b7a1f5;
+  --label-violet-bg: #2b2150;
+  --label-green: #6fd3a6;
+  --label-green-bg: #12372a;
+  --label-amber: #f5c46a;
+  --label-amber-bg: #3d2c0b;
+  --label-rose: #f59bbe;
+  --label-rose-bg: #43182a;
+  --d-muted: #7f8ca6;
+  --d-wire: #9fb0cc;
+  --d-fill: #16223a;
+  --d-fill-alt: #0b1322;
+  --d-electron: #6cb8ff;
+  --d-positive: #ff8a65;
+  --d-cold: #6cb8ff;
+  --d-accent: #8fa8ff;
+  --shadow-raised: 0 1px 0 var(--line), 0 16px 32px -18px rgb(0 0 0 / 0.7);
+}

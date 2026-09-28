@@ -1,0 +1,79 @@
+---
+import { Font } from 'astro:assets';
+import '@styles/tokens.css';
+import '@styles/base.css';
+import SiteFooter from '@components/site/SiteFooter.astro';
+import SiteHeader from '@components/site/SiteHeader.astro';
+import type { Alternate } from '@components/site/LanguageSwitcher.astro';
+import { DEFAULT_LANG, getLanguage } from '@i18n/languages';
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+import { absolute } from '@lib/urls';
+
+interface Props {
+  lang: LangCode;
+  /** Page title without the site name. Pass the site name itself for the home page. */
+  title: string;
+  description: string;
+  /** Root-relative canonical path, e.g. /sk/napatie/ */
+  canonical: string;
+  /** One entry per configured language; href null = page not available in that language. */
+  alternates: Alternate[];
+  current?: 'explore' | 'about' | 'search' | undefined;
+  noindex?: boolean;
+  ogType?: 'website' | 'article';
+  jsonLd?: object[];
+}
+
+const { lang, title, description, canonical, alternates, current, noindex = false, ogType = 'website', jsonLd = [] } = Astro.props;
+const siteName = t(lang, 'site.name');
+const fullTitle = title === siteName ? siteName : `${title} – ${siteName}`;
+const language = getLanguage(lang);
+const available = alternates.filter((alt): alt is Alternate & { href: string } => alt.href !== null);
+const xDefault = available.find((alt) => alt.lang === DEFAULT_LANG) ?? available.find((alt) => alt.lang === lang);
+---
+<!doctype html>
+<html lang={lang} dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={absolute(canonical)} />
+    {available.map((alt) => <link rel="alternate" hreflang={alt.lang} href={absolute(alt.href)} />)}
+    {xDefault && <link rel="alternate" hreflang="x-default" href={absolute(xDefault.href)} />}
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f6f8fb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e1729" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={absolute(canonical)} />
+    <meta property="og:locale" content={language.ogLocale} />
+    {available.filter((alt) => alt.lang !== lang).map((alt) => <meta property="og:locale:alternate" content={getLanguage(alt.lang).ogLocale} />)}
+    <meta name="twitter:card" content="summary" />
+    <!-- Preload only what the first screen needs; other weights/subsets load on demand. -->
+    <Font cssVariable="--font-body" preload={[{ weight: 400, style: 'normal', subset: 'latin' }]} />
+    <Font cssVariable="--font-display" preload={[{ subset: 'latin' }]} />
+    <script is:inline>
+      // Apply the saved colour theme before first paint (no flash).
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch (e) {}
+    </script>
+    {jsonLd.map((data) => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t(lang, 'a11y.skipToContent')}</a>
+    <SiteHeader lang={lang} alternates={alternates} current={current} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter lang={lang} alternates={alternates} />
+  </body>
+</html>

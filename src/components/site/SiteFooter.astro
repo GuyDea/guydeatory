@@ -1,0 +1,97 @@
+---
+import { getLanguage } from '@i18n/languages';
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+import { homeUrl, sectionUrl } from '@lib/urls';
+import type { Alternate } from './LanguageSwitcher.astro';
+import Logo from './Logo.astro';
+
+interface Props {
+  lang: LangCode;
+  alternates: Alternate[];
+}
+const { lang, alternates } = Astro.props;
+const others = alternates.filter((alt) => alt.lang !== lang);
+---
+<footer class="site-footer">
+  <div class="page inner">
+    <div class="about">
+      <a class="brand" href={homeUrl(lang)}><Logo size={28} /><span>{t(lang, 'site.name')}</span></a>
+      <p>{t(lang, 'site.tagline')}</p>
+      <p class="promise">{t(lang, 'footer.promise')}</p>
+    </div>
+    <nav class="links" aria-label={t(lang, 'site.name')}>
+      <a href={sectionUrl(lang, 'explore')}>{t(lang, 'nav.explore')}</a>
+      <a href={sectionUrl(lang, 'search')}>{t(lang, 'nav.search')}</a>
+      <a href={sectionUrl(lang, 'about')}>{t(lang, 'nav.about')}</a>
+      {
+        others.length > 0 && (
+          <p class="read-in">
+            {t(lang, 'footer.readIn')}{' '}
+            {others.map((alt, i) => (
+              <>
+                {i > 0 && ', '}
+                <a href={alt.href ?? homeUrl(alt.lang)} hreflang={alt.lang} lang={alt.lang} data-lang-link={alt.lang}>
+                  {getLanguage(alt.lang).nativeName}
+                </a>
+              </>
+            ))}
+          </p>
+        )
+      }
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--space-8);
+    padding-block: var(--space-7);
+    background: var(--surface-sunk);
+    border-top: 1px solid var(--line);
+    font-size: var(--text-sm);
+    color: var(--ink-soft);
+  }
+
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6) var(--space-8);
+    justify-content: space-between;
+  }
+
+  .about {
+    max-width: 34rem;
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--font-display-stack);
+    font-weight: 800;
+    font-size: 1.15rem;
+  }
+
+  .promise {
+    color: var(--ink);
+  }
+
+  .links {
+    display: grid;
+    align-content: start;
+    gap: var(--space-2);
+  }
+
+  .links > a {
+    color: var(--ink);
+    font-weight: 700;
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+  }
+</style>
