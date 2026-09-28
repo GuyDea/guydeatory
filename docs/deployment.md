@@ -52,12 +52,13 @@ Both use the `default` AWS CLI profile (`~/.aws/credentials`).
 
 1. `npm run check`: types, tests, content lint, build, dist checks. It stops on any failure.
 2. It reads the bucket name and distribution id from the stack outputs.
-3. `aws s3 sync dist/ s3://<bucket>/ --delete` in two passes:
-   - `_astro/**` (hashed file names): `Cache-Control: public, max-age=31536000, immutable`
-   - everything else (HTML, Pagefind files, sitemap): `Cache-Control: public, max-age=0,
-     s-maxage=31536000, must-revalidate`. Browsers always revalidate; CloudFront keeps a copy until
-     the next invalidation.
-4. `aws cloudfront create-invalidation --paths '/*'`, then it waits for the invalidation to finish.
+3. It uploads the hashed assets (`_astro/**`) with `Cache-Control: public, max-age=31536000,
+   immutable`, without deleting old ones yet. Pages still cached somewhere may reference them.
+4. It uploads everything else (HTML, Pagefind files, sitemap…) with `--delete` and
+   `Cache-Control: public, max-age=0, s-maxage=31536000, must-revalidate`. Browsers always
+   revalidate; CloudFront keeps a copy until the next invalidation.
+5. It runs `aws cloudfront create-invalidation --paths '/*'` and waits until the invalidation is done.
+6. Only then does it remove the `_astro/**` files that no current page uses (`sync --delete`).
 
 ## Testing the router in the real CloudFront runtime
 
