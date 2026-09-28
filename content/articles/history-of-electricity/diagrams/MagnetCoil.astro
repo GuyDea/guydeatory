@@ -1,0 +1,49 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Faraday’s discovery: a moving magnet makes a current',
+    desc: 'A bar magnet with a south pole (S) and a north pole (N) moves in and out of a coil of wire. The two ends of the coil are joined to a meter, and the meter’s needle swings to show that a current is flowing.',
+    move: 'in and out',
+    north: 'N',
+    south: 'S',
+    coil: 'coil of wire',
+    meter: 'meter',
+  },
+  sk: {
+    title: 'Faradayov objav: pohybujúci sa magnet vyrobí prúd',
+    desc: 'Tyčový magnet s južným pólom (J) a severným pólom (S) sa pohybuje dnu a von z cievky z drôtu. Oba konce cievky sú spojené s meračom prúdu a jeho ručička sa vychýli – ukazuje, že tečie prúd.',
+    move: 'dnu a von',
+    north: 'S',
+    south: 'J',
+    coil: 'cievka z drôtu',
+    meter: 'merač prúdu',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const loops = [180, 200, 220, 240, 260, 280, 300];
+---
+<Svg viewBox="0 0 400 285" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M34 76H118" class="d-line d-arrow-accent" style="marker-start: url(#d-arrow-accent)" />
+  <text x="76" y="58" text-anchor="middle" class="d-label">{s.move}</text>
+  <rect x="20" y="96" width="56" height="34" class="d-box-alt" />
+  <rect x="76" y="96" width="56" height="34" class="d-hot" style="stroke: var(--d-ink); stroke-width: 2" />
+  <text x="48" y="119" text-anchor="middle" class="d-label">{s.south}</text>
+  <text x="104" y="119" text-anchor="middle" class="d-label">{s.north}</text>
+
+  <text x="240" y="54" text-anchor="middle" class="d-label">{s.coil}</text>
+  {loops.map((x) => <ellipse cx={x} cy="113" rx="9" ry="40" class="d-wire" style="stroke-width: 4" />)}
+  <path d="M180 153V222H232" class="d-wire" style="stroke-width: 4" />
+  <path d="M300 153V222H288" class="d-wire" style="stroke-width: 4" />
+
+  <circle cx="260" cy="222" r="28" class="d-box" />
+  <path d="M242 214A22 22 0 0 1 278 214" class="d-line" style="stroke: var(--d-muted)" />
+  <path d="M260 232L273 205" class="d-line" style="stroke: var(--d-hot); stroke-width: 3" />
+  <circle cx="260" cy="232" r="3.5" style="fill: var(--d-ink)" />
+  <text x="260" y="276" text-anchor="middle" class="d-label">{s.meter}</text>
+</Svg>

@@ -1,0 +1,75 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'A timeline of electricity',
+    desc: 'A timeline running from top to bottom. About 600 BC: Thales notices that rubbed amber pulls in dust. Then, about 2,200 years later: 1600, William Gilbert tests many materials. 1752, Benjamin Franklin: lightning is electricity. 1780, Luigi Galvani sees frog legs twitch. 1800, Alessandro Volta builds the first battery. 1820, Ørsted and Ampère find that electricity moves magnets. 1827, Georg Ohm connects voltage, current and resistance. 1831, Michael Faraday makes electricity from magnets. 1865, James Clerk Maxwell explains that light is an electromagnetic wave. 1879, Edison and Swan make long-lasting light bulbs. 1888, Tesla and Westinghouse bring alternating current. 1897, J. J. Thomson discovers the electron. 1905, Jozef Murgaš sends radio messages without wires. The line ends at today.',
+    bc: 'BC',
+    gap: '2,200 years later',
+    today: 'today',
+    events: [
+      ['600', 'Thales', 'rubbed amber pulls in dust'],
+      ['1600', 'William Gilbert', 'tests many materials'],
+      ['1752', 'Benjamin Franklin', 'lightning is electricity'],
+      ['1780', 'Luigi Galvani', 'twitching frog legs'],
+      ['1800', 'Alessandro Volta', 'the first battery'],
+      ['1820', 'Ørsted and Ampère', 'electricity moves magnets'],
+      ['1827', 'Georg Ohm', 'voltage, current, resistance'],
+      ['1831', 'Michael Faraday', 'electricity from magnets'],
+      ['1865', 'James Clerk Maxwell', 'light is an electromagnetic wave'],
+      ['1879', 'Edison and Swan', 'long-lasting light bulbs'],
+      ['1888', 'Tesla and Westinghouse', 'alternating current (AC)'],
+      ['1897', 'J. J. Thomson', 'discovers the electron'],
+      ['1905', 'Jozef Murgaš', 'radio messages without wires'],
+    ],
+  },
+  sk: {
+    title: 'Časová os elektriny',
+    desc: 'Časová os zhora nadol. Okolo roku 600 pred n. l.: Táles si všimne, že jantár po trení priťahuje prach. Potom asi o 2\u00a0200 rokov neskôr: 1600 – William Gilbert skúma mnoho látok. 1752 – Benjamin Franklin: blesk je elektrina. 1780 – Luigi Galvani vidí, ako sa mykajú žabie stehienka. 1800 – Alessandro Volta zostrojí prvú batériu. 1820 – Ørsted a Ampère zistia, že elektrina hýbe magnetmi. 1827 – Georg Ohm spojí napätie, prúd a odpor. 1831 – Michael Faraday vyrobí elektrinu pomocou magnetov. 1865 – James Clerk Maxwell vysvetlí, že svetlo je elektromagnetická vlna. 1879 – Edison a Swan vyrobia žiarovky, ktoré dlho svietia. 1888 – Tesla a Westinghouse presadzujú striedavý prúd. 1897 – J. J. Thomson objaví elektrón. 1905 – Jozef Murgaš posiela rádiové správy bez drôtov. Os sa končí dneškom.',
+    bc: 'pred n. l.',
+    gap: 'o 2 200 rokov neskôr',
+    today: 'dnes',
+    events: [
+      ['600', 'Táles', 'jantár po trení priťahuje prach'],
+      ['1600', 'William Gilbert', 'skúma mnoho látok'],
+      ['1752', 'Benjamin Franklin', 'blesk je elektrina'],
+      ['1780', 'Luigi Galvani', 'mykajúce sa žabie stehienka'],
+      ['1800', 'Alessandro Volta', 'prvá batéria'],
+      ['1820', 'Ørsted a Ampère', 'elektrina hýbe magnetmi'],
+      ['1827', 'Georg Ohm', 'napätie, prúd, odpor'],
+      ['1831', 'Michael Faraday', 'elektrina z magnetov'],
+      ['1865', 'James Clerk Maxwell', 'svetlo je elektromagnetická vlna'],
+      ['1879', 'Edison a Swan', 'žiarovky, ktoré dlho svietia'],
+      ['1888', 'Tesla a Westinghouse', 'striedavý prúd (AC)'],
+      ['1897', 'J. J. Thomson', 'objavuje elektrón'],
+      ['1905', 'Jozef Murgaš', 'rádiové správy bez drôtov'],
+    ],
+  },
+} as const;
+const s = strings[Astro.props.lang];
+/** Vertical position of each event: a long, dashed gap after the first one, then even steps. */
+const rows = s.events.map(([year, name, what], index) => ({ year, name, what, y: index === 0 ? 56 : 156 + (index - 1) * 60 }));
+---
+<Svg viewBox="0 0 400 912" title={s.title} desc={s.desc} maxWidth="26rem">
+  <path d="M90 68V144" class="d-line" stroke-dasharray="2 8" style="stroke: var(--d-muted); stroke-width: 4" />
+  <text x="106" y="111" class="d-small d-muted">{s.gap}</text>
+  <path d="M90 156V868" class="d-wire" />
+  <path d="M90 862V888" class="d-line d-arrow" style="stroke: var(--d-wire); stroke-width: 4" />
+  <text x="106" y="900" class="d-label">{s.today}</text>
+  {
+    rows.map(({ year, name, what, y }) => (
+      <>
+        <circle cx="90" cy={y} r="9" class="d-glow" style="stroke: var(--d-ink); stroke-width: 2" />
+        <text x="76" y={y + 6} text-anchor="end" class="d-label d-accent">{year}</text>
+        <text x="106" y={y + 6} class="d-label">{name}</text>
+        <text x="106" y={y + 28} class="d-small">{what}</text>
+      </>
+    ))
+  }
+  <text x="76" y="84" text-anchor="end" class="d-small d-muted">{s.bc}</text>
+</Svg>

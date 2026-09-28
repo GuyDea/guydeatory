@@ -1,5 +1,18 @@
 topics: [electricity]
 labels: [history]
-status: stub
+prerequisites: [electric-current]
+related: [voltage, alternating-current, electron, electric-charge, ohms-law, conductors-and-insulators, why-birds-on-wires-dont-get-shocked]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: History of electromagnetic theory — Wikipedia
+    url: https://en.wikipedia.org/wiki/History_of_electromagnetic_theory
+  - title: Kite experiment — Wikipedia
+    url: https://en.wikipedia.org/wiki/Kite_experiment
+  - title: The great debate about if Benjamin Franklin really flew his kite — National Constitution Center
+    url: https://constitutioncenter.org/blog/the-great-debate-about-if-benjamin-franklin-really-flew-his-kite
+  - title: War of the currents — Wikipedia
+    url: https://en.wikipedia.org/wiki/War_of_the_currents
+  - title: Jozef Murgaš — Wikipedia
+    url: https://en.wikipedia.org/wiki/Jozef_Murga%C5%A1

@@ -1,0 +1,53 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'A small bird on one wire and a big bird touching two wires',
+    desc: 'Two power line wires run across, one above the other. On the left, a small bird sits on the upper wire with both feet on it: it is safe. On the right, a big bird stands on the lower wire and touches the upper wire with one wing. A spark and an arrow show current rushing through its body from one wire to the other: danger.',
+    oneWire: 'one wire',
+    safe: 'safe',
+    twoWires: 'two wires',
+    danger: 'danger!',
+  },
+  sk: {
+    title: 'Malý vták na jednom drôte a veľký vták, ktorý sa dotýka dvoch drôtov',
+    desc: 'Dva drôty elektrického vedenia vedú vodorovne, jeden nad druhým. Vľavo sedí malý vták oboma nohami na hornom drôte: je v bezpečí. Vpravo stojí veľký vták na dolnom drôte a jedným krídlom sa dotýka horného drôtu. Iskra a šípka ukazujú prúd, ktorý sa rúti jeho telom z jedného drôtu do druhého: nebezpečenstvo.',
+    oneWire: 'jeden drôt',
+    safe: 'v bezpečí',
+    twoWires: 'dva drôty',
+    danger: 'nebezpečenstvo!',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 280" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M0 100H400" class="d-wire" />
+  <path d="M0 196H400" class="d-wire" />
+
+  <path d="M88 85L86 97M102 85L104 97" class="d-line" />
+  <path d="M76 70L50 61L57 81Z" class="d-box-alt" />
+  <ellipse cx="96" cy="72" rx="25" ry="15" class="d-box" />
+  <path d="M83 68Q98 58 112 72" class="d-line" />
+  <circle cx="122" cy="55" r="12" class="d-box" />
+  <circle cx="126" cy="52" r="2.2" style="fill: var(--d-ink)" />
+  <path d="M133 51L148 56L133 60Z" class="d-warm" />
+  <text x="96" y="238" text-anchor="middle" class="d-label">{s.oneWire}</text>
+  <text x="96" y="264" text-anchor="middle" class="d-label">{s.safe}</text>
+
+  <path d="M282 172L280 193M300 172L302 193" class="d-line" />
+  <path d="M258 154L228 148L238 166Z" class="d-box-alt" />
+  <ellipse cx="292" cy="158" rx="36" ry="19" class="d-box" />
+  <path d="M270 150L236 104L260 101L272 110L287 113L305 142Z" class="d-box-alt" />
+  <circle cx="330" cy="134" r="13" class="d-box" />
+  <circle cx="334" cy="131" r="2.2" style="fill: var(--d-ink)" />
+  <path d="M341 130L374 138L341 141Z" class="d-hot" />
+  <path d="M236 85L240 94L249 92L243 100L250 108L240 106L236 115L232 106L222 108L229 100L223 92L232 94Z" class="d-glow" style="stroke: var(--d-ink); stroke-width: 1.5" />
+  <path d="M217 118C217 148 232 172 258 186" class="d-line d-arrow-hot" />
+  <text x="292" y="238" text-anchor="middle" class="d-label">{s.twoWires}</text>
+  <text x="292" y="264" text-anchor="middle" class="d-label">{s.danger}</text>
+</Svg>

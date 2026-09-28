@@ -2,7 +2,206 @@
 title: 'Prečo vtáky na drôtoch nezasiahne prúd?'
 term: 'vtáky na drôtoch'
 slug: preco-vtaky-na-drotoch-nezasiahne-prud
-summary: 'Vták sedí oboma nohami na tom istom drôte, takže medzi jeho nohami nie je rozdiel napätia a prúd nemá dôvod tiecť cez jeho telo. Dotyk dvoch drôtov alebo drôtu a zeme by bol úplne iný príbeh.'
+summary: 'Vták sedí oboma nohami na tom istom drôte, takže medzi jeho nohami nie je takmer žiadny rozdiel napätia a elektrina nemá dôvod tiecť cez jeho telo. Vták, ktorý sa dotkne dvoch drôtov naraz, je vo veľkom nebezpečenstve.'
+keywords: [vtáky na drôtoch, vták na elektrickom vedení, zásah elektrickým prúdom, úraz elektrinou, elektrické vedenie, stĺp vysokého napätia, bezpečnosť pri vedení, veverička a výpadok prúdu, púšťanie šarkana, spadnutý drôt]
 ---
 
-Elektrické vedenie má tisíce voltov, a predsa na ňom vtáky celé dni sedia. Tajomstvo je v tom, že elektrina tečie cez niečo len vtedy, keď je medzi dvoma bodmi rozdiel v tlaku.
+import BirdsOnWires from './diagrams/BirdsOnWires.astro';
+import SafePole from './diagrams/SafePole.astro';
+
+Pozri sa hore na elektrické vedenie a často na ňom uvidíš celý rad vtákov. Štebocú, čistia si
+perie a odpočívajú.
+
+Pritom ten istý drôt vedie toľko elektriny, že by zabila človeka. Prečo sa teda vtákom nič
+nestane? Odpoveď nám prezradí niečo dôležité o tom, ako sa elektrina pohybuje. Poďme na to!
+
+## Čo je vnútri elektrického vedenia?
+
+Elektrické vedenie privádza elektrinu z elektrární do miest a dedín, často na veľké vzdialenosti.
+Jeho drôty sú z kovu, pretože kov elektrinu ľahko prepúšťa. Tie najhrubšie sú zhruba také hrubé
+ako tvoj palec.
+
+Tu je prekvapenie: väčšina veľkých elektrických vedení nemá vôbec žiadny plastový obal. Kov je
+holý! Vzduch je [[conductors-and-insulators|izolant]], čiže elektrinu takmer neprepúšťa. Vzduch
+okolo drôtov preto nedovolí elektrine uniknúť.
+
+Tam, kde sa drôty stretávajú so stĺpmi, ich držia súčiastky zo skla, porcelánu alebo plastu. Tieto
+**izolátory** nedovolia elektrine utiecť do stĺpa.
+
+Tlačenie, ktoré poháňa elektrinu, sa volá [[voltage|napätie]]. Zásuvka v Európe tlačí napätím
+230&nbsp;voltov (V). Veľké elektrické vedenia tlačia tisíckami, ba až stovkami tisíc voltov.
+
+Vták na elektrickom vedení teda stojí na holom kove s obrovským napätím. Ako to, že je v bezpečí?
+
+## Prečo elektrina netečie cez vtáka?
+
+Elektrina tečie len vtedy, keď ju niečo tlačí z jedného miesta na druhé. Potrebuje dva body,
+medzi ktorými je **rozdiel** v tlačení. A potrebuje aj celú cestu z jedného bodu do druhého, ako
+je okruh v [[electric-circuit|elektrickom obvode]].
+
+Vták sedí oboma nohami na tom istom drôte a nohy má len pár centimetrov od seba. Obe nohy cítia
+rovnako obrovské tlačenie. Medzi ľavou a pravou nohou nie je takmer žiadny rozdiel napätia.
+
+Elektrina preto nemá dôvod ísť okľukou cez vtáka. Tečie ďalej drôtom, rovno popod vtáčie prsty.
+
+<Analogy title="Ako malá bočná rúrka">
+Predstav si veľkú vodovodnú rúru, ku ktorej je pripojená tenká bočná rúrka. Oba konce bočnej rúrky
+sú napojené na veľkú rúru tesne vedľa seba. Voda tlačí na oba konce takmer rovnako silno, takže
+bočnou rúrkou nepretečie takmer nič. Vták je ako tá malá bočná rúrka.
+</Analogy>
+
+<GoDeeper title="Aký malý je „takmer žiadny rozdiel“?">
+Aj samotný drôt má malý [[electrical-resistance|odpor]], takže napätie pozdĺž neho veľmi mierne
+klesá. Pokles medzi vtáčími nohami odhadneme pomocou [[ohms-law|Ohmovho zákona]], $U = I \cdot R$.
+
+Zoberme hrubé hliníkové vedenie, ktorým tečie prúd 500&nbsp;ampérov (A). Taký drôt má odpor asi
+0,1&nbsp;miliohmu na meter (0,0001&nbsp;Ω/m). Ak sú nohy 5&nbsp;cm od seba, kúsok drôtu medzi nimi
+má odpor
+
+$$
+R = 0{,}0001\ \Omega/\text{m} \cdot 0{,}05\ \text{m} = 0{,}000005\ \Omega
+$$
+
+takže napätie medzi nohami je
+
+$$
+U = I \cdot R = 500\ \text{A} \cdot 0{,}000005\ \Omega = 0{,}0025\ \text{V} = 2{,}5\ \text{mV}
+$$
+
+To je 600-krát menej, ako má jedna tužková batéria (1,5&nbsp;V).
+
+**Prečo prúd zostáva v drôte.** Vtáčie telo a 5&nbsp;cm drôtu medzi jeho nohami sú dve cesty
+vedľa seba. Prúd sa medzi takéto súbežné cesty rozdelí v obrátenom pomere k ich odporom, takže
+takmer celý ide tou ľahšou. Predpokladajme, že by vtáčie telo malo odpor len 1&nbsp;000&nbsp;Ω. Je
+to skôr nízky odhad, pretože tenké nohy a suché, šupinaté chodidlá vedú elektrinu zle. Prúd cez
+vtáka by potom bol
+
+$$
+I_\text{vták} = \frac{U}{R_\text{vták}} = \frac{0{,}0025\ \text{V}}{1\,000\ \Omega} = 0{,}0000025\ \text{A}
+$$
+
+To sú 2,5 milióntiny ampéra, asi 400-krát menej ako najmenší prúd, ktorý človek vôbec dokáže
+pocítiť (asi 1&nbsp;miliampér). Odpor drôtu 0,000005&nbsp;Ω je 200 miliónov ráz menší ako
+1&nbsp;000&nbsp;Ω vtáčieho tela, takže prakticky celý prúd tečie drôtom.
+</GoDeeper>
+
+<GoDeeper title="Kde obrázok s vodou sedí a kde nie">
+- **Sedí:** voda, ktorá tečie skutočnou rúrou, cestou trochu stráca tlak – rovnako ako napätie
+  pozdĺž drôtu trochu klesá. Ten drobný rozdiel je všetko, čo bočná rúrka pocíti.
+- **Nesedí:** väčšina elektrických vedení vedie [[alternating-current|striedavý prúd]], ktorý sa
+  v Európe kýve sem a tam 50-krát za sekundu. Voda v rúre to nerobí. Drobné napätie medzi vtáčími
+  nohami sa kýve tiež, ale v každom okamihu zostáva drobné.
+</GoDeeper>
+
+## Kedy je vták v nebezpečenstve?
+
+Teraz si predstav veľkého vtáka, napríklad bociana alebo orla. S roztiahnutými krídlami meria od
+špičky po špičku asi 2&nbsp;metre. To je viac, než koľko meria vysoký dospelý človek!
+
+Keď veľký vták pristáva alebo vzlieta, môže sa krídlom dotknúť druhého drôtu. Na dvoch drôtoch je
+veľmi rozdielne tlačenie. Zrazu je medzi krídlom a nohami obrovský rozdiel napätia.
+
+Telom vtáka sa z jedného drôtu do druhého prežene [[electric-current|elektrický prúd]]. Pre vtáka
+je to zvyčajne smrteľné. Môže to spôsobiť aj výpadok elektriny.
+
+Aj zem sa počíta. Elektrické vedenie má oproti zemi obrovské napätie. Mnohé stĺpy majú navrchu
+kovové časti, ktoré sú spojené so zemou. Vták, ktorý sa naraz dotkne drôtu a jednej z týchto
+kovových častí, je tiež v nebezpečenstve.
+
+<Figure caption="Malý vták sa dotýka len jedného drôtu, preto cezeň netečie žiadny prúd. Veľký vták sa dotýka dvoch drôtov naraz a jeho telom sa rúti prúd." wide>
+  <BirdsOnWires />
+</Figure>
+
+Malé vtáky, napríklad vrabce a lastovičky, obyčajne na druhý drôt nedosiahnu. Na najvyšších
+vedeniach s obrovskými oceľovými stožiarmi visia drôty mnoho metrov od seba. Ani tie najväčšie
+vtáky sa nedotknú dvoch naraz.
+
+Pre vtáky sú najnebezpečnejšie stredne veľké vedenia na betónových alebo drevených stĺpoch. Drôty
+sú tam blízko seba a blízko kovového ramena na vrchu stĺpa.
+
+## Ako ľudia chránia vtáky?
+
+Mnohé energetické spoločnosti spolupracujú s odborníkmi na vtáky, aby boli ich vedenia
+bezpečnejšie. Tu je niekoľko ich trikov:
+
+- **Kryty.** Na drôty a kovové časti pri vrchu stĺpa sa nasadzujú plastové kryty. Krídlo, ktoré sa
+  o ne obtrie, je v bezpečí.
+- **Visiace drôty.** Na bezpečnejších stĺpoch visia drôty pod ramenom na dlhých izolátoroch. Sú
+  ďaleko od miest, kde vtáky zvyknú sedieť.
+- **Bidlá.** Bidlo je tyčka, na ktorej sa dá sedieť. Bidlo na vrchu stĺpa ponúkne vtákom miesto
+  na sedenie vysoko nad drôtmi.
+- **Viac miesta.** Nové stĺpy môžu držať drôty ďalej od seba, než je rozpätie krídel veľkého vtáka.
+- **Podložky pod hniezda.** Bociany si veľmi často stavajú hniezda na vrchu stĺpov. Podložka
+  zdvihne hniezdo bezpečne nad drôty.
+- **Označenia.** Pestré gule alebo špirály na drôtoch pomáhajú vtákom drôty zbadať, aby do nich
+  nenarazili.
+
+<Figure caption="Na nebezpečnom stĺpe ležia drôty navrchu kovového ramena, kam pristávajú veľké vtáky. Na bezpečnejšom stĺpe visia drôty hlboko pod ramenom a vták má na vrchu bezpečné bidlo.">
+  <SafePole />
+</Figure>
+
+Keď nabudúce pôjdeš okolo elektrického vedenia, skús zistiť, koľko z týchto trikov objavíš!
+
+## Môže veverička spôsobiť výpadok elektriny?
+
+Vtáky nie sú jediné zvieratá, ktoré sa dostanú do problémov. Veveričky rady šplhajú po stĺpoch
+a behajú po drôtoch. Niekedy sa veverička v tej istej chvíli dotkne dvoch častí s rozdielnym
+tlačením. Môže to byť drôt a kovová skriňa **transformátora** – veľkej skrine, ktorá znižuje
+napätie pre domácnosti.
+
+Vtedy sa veveričkou prežene prúd a veverička, žiaľ, väčšinou uhynie. Bezpečnostné vypínače zachytia náhly
+nápor prúdu a elektrinu vypnú. Celá ulica tak môže zrazu zostať bez elektriny.
+
+<FunFact>
+V Spojených štátoch spôsobia veveričky každý rok tisíce výpadkov elektriny. Niektoré energetické
+spoločnosti si ich dokonca zapisujú a počítajú!
+</FunFact>
+
+## Prečo sa ľudia musia držať ďalej od elektrického vedenia?
+
+Ľudia nie sú vtáky. Sú oveľa väčší a stoja na zemi. Keď sa človek dotkne elektrického vedenia,
+elektrina si nájde cestu: cez telo a dolu do zeme. Rozdiel napätia je obrovský, a preto je prúd
+smrteľný.
+
+Nemusí to byť ani ruka. Elektrinu k tebe môže priviesť šnúra od šarkana, rybársky prút, rebrík
+alebo akákoľvek dlhá tyč. Z najväčších vedení dokáže elektrina dokonca preskočiť vzduchom na
+niekoho, kto sa k nim len priblíži.
+
+<Safety>
+- Nikdy sa nedotýkaj elektrického vedenia. Nikdy neliez na stĺpy, stožiare ani na stromy, ktoré
+  rastú blízko elektrického vedenia.
+- Šarkany a drony púšťaj len na otvorených priestranstvách, ďaleko od elektrického vedenia. Ak sa
+  šarkan zachytí na drôte, pusti šnúru a šarkana tam nechaj. Požiadaj dospelého, nech zavolá
+  energetickú spoločnosť.
+- Nikdy nechytaj ryby pod elektrickým vedením a nikdy pri ňom nedvíhaj dlhý prút ani rebrík.
+- Nikdy neliez na vlaky ani na železničné vagóny. Aj drôty nad koľajami vedú smrteľne nebezpečnú
+  elektrinu.
+- Ak spadne drôt elektrického vedenia, drž sa od neho aspoň 10&nbsp;metrov ďaleko, zhruba na dĺžku
+  autobusu. Nebezpečná môže byť aj zem okolo neho. Nepúšťaj k nemu nikoho ďalšieho a požiadaj
+  dospelého, nech zavolá na tiesňovú linku 112.
+</Safety>
+
+<Remember>
+- Elektrina tečie len vtedy, keď je medzi dvoma bodmi rozdiel napätia.
+- Obe nohy vtáka na jednom drôte cítia takmer rovnaké tlačenie, takže cez vtáka netečie prakticky
+  žiadny prúd.
+- Veľký vták, ktorý sa dotkne dvoch drôtov alebo drôtu a kovovej časti stĺpa, môže zahynúť.
+- Energetické spoločnosti chránia vtáky krytmi, bezpečnejšími stĺpmi, bidlami a podložkami pod
+  hniezda.
+- Ľudia sa nikdy nesmú dotýkať elektrického vedenia ani sa k nemu približovať. Od spadnutých drôtov
+  sa treba držať ďaleko.
+</Remember>
+
+<Quiz
+  question="Vrabec sedí na jednom drôte. Bocian sa krídlami dotkne dvoch drôtov. Ktorý vták je v nebezpečenstve?"
+  options={["Vrabec", "Bocian", "Oba vtáky", "Ani jeden"]}
+  answer={1}
+  explanation="Medzi dvoma drôtmi je veľký rozdiel napätia, takže bocianom sa prežene prúd. Vrabec sa dotýka len jedného drôtu."
+/>
+
+<Quiz
+  question="Tvoj šarkan sa zachytil na elektrickom vedení. Čo urobíš?"
+  options={["Silno potiahnem za šnúru, aby šarkan spadol", "Vyleziem hore a zložím ho", "Pustím šnúru, zostanem ďaleko a poviem to dospelému"]}
+  answer={2}
+  explanation="Šnúra môže priviesť elektrinu do tvojho tela. Pusti ju, drž sa ďalej a požiadaj dospelého, nech zavolá energetickú spoločnosť."
+/>

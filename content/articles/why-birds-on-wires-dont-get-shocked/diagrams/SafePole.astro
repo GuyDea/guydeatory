@@ -1,0 +1,60 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'A risky power pole and a safer one',
+    desc: 'Two power poles seen from the front. On the risky pole, the wires sit on short insulators on top of the metal arm. A big bird standing on the arm spreads its wings and touches a wire, and a spark flies. On the safer pole, the wires hang far below the arm on long insulators, and a bird sits safely on a perch on top of the pole.',
+    risky: 'risky',
+    safer: 'safer',
+    wire: 'wire',
+    perch: 'perch',
+  },
+  sk: {
+    title: 'Nebezpečný a bezpečnejší stĺp elektrického vedenia',
+    desc: 'Dva stĺpy elektrického vedenia spredu. Na nebezpečnom stĺpe ležia drôty na krátkych izolátoroch navrchu kovového ramena. Veľký vták stojí na ramene, roztiahne krídla, dotkne sa drôtu a vyletí iskra. Na bezpečnejšom stĺpe visia drôty na dlhých izolátoroch hlboko pod ramenom a vták sedí v bezpečí na bidle na vrchu stĺpa.',
+    risky: 'nebezpečný',
+    safer: 'bezpečnejší',
+    wire: 'drôt',
+    perch: 'bidlo',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 300" title={s.title} desc={s.desc} maxWidth="30rem">
+  <rect x="92" y="130" width="16" height="135" class="d-box-alt" />
+  <rect x="28" y="120" width="144" height="10" rx="2" class="d-box" />
+  <rect x="33" y="101" width="12" height="19" rx="3" class="d-box-alt" />
+  <rect x="155" y="101" width="12" height="19" rx="3" class="d-box-alt" />
+  <circle cx="39" cy="94" r="7" style="fill: var(--d-wire)" />
+  <circle cx="161" cy="94" r="7" style="fill: var(--d-wire)" />
+  <text x="161" y="76" text-anchor="middle" class="d-small">{s.wire}</text>
+  <path d="M76 107V120M84 107V120" class="d-line" />
+  <path d="M72 90L47 86L51 96L73 104Z" class="d-box-alt" />
+  <path d="M88 90L114 86L110 96L87 104Z" class="d-box-alt" />
+  <ellipse cx="80" cy="97" rx="10" ry="14" class="d-box" />
+  <circle cx="80" cy="76" r="8" class="d-box" />
+  <path d="M77 79L83 79L80 86Z" class="d-hot" />
+  <path d="M46 78L49 85L56 84L51 90L55 97L48 94L45 101L42 94L35 96L40 90L36 84L43 85Z" class="d-glow" style="stroke: var(--d-ink); stroke-width: 1.5" />
+  <text x="100" y="292" text-anchor="middle" class="d-label">{s.risky}</text>
+
+  <rect x="292" y="70" width="16" height="195" class="d-box-alt" />
+  <rect x="228" y="120" width="144" height="10" rx="2" class="d-box" />
+  <rect x="274" y="62" width="52" height="8" rx="3" class="d-box" />
+  <rect x="233" y="130" width="12" height="48" rx="3" class="d-box-alt" />
+  <rect x="355" y="130" width="12" height="48" rx="3" class="d-box-alt" />
+  <circle cx="239" cy="185" r="7" style="fill: var(--d-wire)" />
+  <circle cx="361" cy="185" r="7" style="fill: var(--d-wire)" />
+  <text x="361" y="214" text-anchor="middle" class="d-small">{s.wire}</text>
+  <path d="M296 50V62M304 50V62" class="d-line" />
+  <ellipse cx="300" cy="39" rx="10" ry="14" class="d-box" />
+  <path d="M292 34Q289 44 294 51M308 34Q311 44 306 51" class="d-line" />
+  <circle cx="300" cy="18" r="8" class="d-box" />
+  <path d="M297 21L303 21L300 28Z" class="d-hot" />
+  <text x="334" y="71" class="d-small">{s.perch}</text>
+  <text x="300" y="292" text-anchor="middle" class="d-label">{s.safer}</text>
+</Svg>

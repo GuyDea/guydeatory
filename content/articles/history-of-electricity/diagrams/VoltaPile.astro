@@ -1,0 +1,50 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Volta’s pile, the first battery',
+    desc: 'A tall stack of discs. From the top: copper, cardboard soaked in salty water, zinc, and then the same three layers again and again. A wire leaves the top of the stack, marked plus, and another leaves the bottom, marked minus.',
+    copper: 'copper',
+    cardboard1: 'salty wet',
+    cardboard2: 'cardboard',
+    zinc: 'zinc',
+    again: '…and again',
+  },
+  sk: {
+    title: 'Voltov stĺp, prvá batéria',
+    desc: 'Vysoký stĺpik kotúčikov. Zhora: meď, kartón nasiaknutý slanou vodou, zinok a potom tie isté tri vrstvy znova a znova. Z vrchu stĺpika vedie drôt označený plus a zo spodku drôt označený mínus.',
+    copper: 'meď',
+    cardboard1: 'kartón',
+    cardboard2: 'v slanej vode',
+    zinc: 'zinok',
+    again: '…a znova',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+/** From the top: copper, wet cardboard, zinc — three times. Each disc is 20 high, with a 2 gap. */
+const layers = ['copper', 'cardboard', 'zinc', 'copper', 'cardboard', 'zinc', 'copper', 'cardboard', 'zinc'] as const;
+const look = { copper: 'd-warm', cardboard: 'd-cool', zinc: 'd-box-alt' } as const;
+---
+<Svg viewBox="0 0 400 290" title={s.title} desc={s.desc} maxWidth="28rem">
+  <path d="M135 46V20" class="d-wire" />
+  <path d="M135 242V270" class="d-wire" />
+  <text x="152" y="32" class="d-label">+</text>
+  <text x="152" y="268" class="d-label">−</text>
+  {
+    layers.map((layer, index) => (
+      <rect x="70" y={46 + index * 22} width="130" height="20" rx="5" class={look[layer]} style="stroke: var(--d-ink); stroke-width: 1.5" />
+    ))
+  }
+  <path d="M204 56L232 46M204 78L232 96M204 100L232 150" class="d-line" style="stroke: var(--d-muted)" />
+  <text x="238" y="52" class="d-label">{s.copper}</text>
+  <text x="238" y="100" class="d-label">{s.cardboard1}</text>
+  <text x="238" y="122" class="d-label">{s.cardboard2}</text>
+  <text x="238" y="156" class="d-label">{s.zinc}</text>
+  <path d="M214 178V240" class="d-line" style="stroke: var(--d-muted)" />
+  <text x="226" y="214" class="d-small d-muted">{s.again}</text>
+</Svg>

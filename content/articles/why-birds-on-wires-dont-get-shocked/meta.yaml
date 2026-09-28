@@ -1,5 +1,18 @@
 topics: [electricity]
 labels: [trivia]
-status: stub
+prerequisites: [voltage]
+related: [electric-circuit, conductors-and-insulators, electrical-resistance, alternating-current, history-of-electricity]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Why don’t birds get electrocuted when they sit on power lines? — Ask Dr. Universe, Washington State University
+    url: https://askdruniverse.wsu.edu/2023/08/02/dont-birds-get-electrocuted-sit-power-lines/
+  - title: Avian-friendly power lines — American Eagle Foundation
+    url: https://eagles.org/take-action/avian-friendly-power-lines/
+  - title: Electrical disruptions caused by squirrels — Wikipedia
+    url: https://en.wikipedia.org/wiki/Electrical_disruptions_caused_by_squirrels
+  - title: Overhead power line — Wikipedia
+    url: https://en.wikipedia.org/wiki/Overhead_power_line
+  - title: Safe distance from downed power lines — BC Hydro
+    url: https://www.bchydro.com/safety-outages/electrical-safety/safe-distance.html

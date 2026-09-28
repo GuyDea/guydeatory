@@ -2,7 +2,204 @@
 title: 'Why don’t birds on power lines get shocked?'
 term: 'birds on power lines'
 slug: why-birds-on-wires-dont-get-shocked
-summary: 'A bird sits with both feet on the same wire, so there is no difference in voltage between its feet and no reason for electricity to flow through its body. Touching two wires, or a wire and the ground, would be very different.'
+summary: 'A bird sits with both feet on the same wire, so there is almost no difference in voltage between its feet and no reason for electricity to flow through it. A bird that touches two wires at once is in great danger.'
+keywords: [birds on wires, bird on a power line, electric shock, electrocution, overhead power line, power line safety, squirrel power cut, kite safety, fallen power line]
 ---
 
-Power lines carry thousands of volts, yet birds perch on them all day. The secret is that electricity only flows through something when there is a difference in push between two points.
+import BirdsOnWires from './diagrams/BirdsOnWires.astro';
+import SafePole from './diagrams/SafePole.astro';
+
+Look up at a power line, and you will often see birds sitting on it in a row. They chat, clean
+their feathers and rest their wings.
+
+Yet the same wire carries enough electricity to kill a person. So why are the birds fine? The
+answer tells us something important about how electricity moves. Let’s find out!
+
+## What is inside a power line?
+
+Power lines carry electricity from power stations to towns and villages, often over long
+distances. Their wires are made of metal, because metal lets electricity through easily. The
+biggest ones are about as thick as your thumb.
+
+Here is a surprise: most big power lines have no plastic coat at all. The metal is bare! Air is an
+[[conductors-and-insulators|insulator]], which means it hardly lets electricity through. So the air
+around the wires stops the electricity from leaking away.
+
+Where the wires meet the poles, they are held by parts made of glass, porcelain or plastic. These
+insulators stop the electricity from escaping into the pole.
+
+The push that makes electricity flow is called [[voltage]]. A wall socket in Europe pushes with 230
+volts (V). Big power lines push with thousands, or even hundreds of thousands, of volts.
+
+So a bird on a power line stands on bare metal with a huge voltage. How can it be safe?
+
+## Why doesn’t electricity flow through the bird?
+
+Electricity only flows when something pushes it from one place to another. It needs two points
+with a **difference** in push between them. It also needs a complete path from one point to the
+other, like the loop of an [[electric-circuit|electric circuit]].
+
+A bird sits with both feet on the same wire, just a few centimetres apart. Both feet feel the same
+huge push. Between the left foot and the right foot, there is almost no difference in voltage.
+
+So the electricity has no reason to take a detour through the bird. It keeps flowing along the
+wire, right under the bird’s toes.
+
+<Analogy title="Like a little side pipe">
+Imagine a big water pipe with a thin side pipe attached to it. Both ends of the side pipe join the
+big pipe, right next to each other. The water pushes almost equally hard at both ends, so hardly
+any water flows through the side pipe. The bird is like that little side pipe.
+</Analogy>
+
+<GoDeeper title="How small is “almost no difference”?">
+The wire itself has a little [[electrical-resistance|resistance]], so the voltage drops very
+slightly along it. We can estimate the drop between the bird’s feet with [[ohms-law|Ohm’s law]],
+$V = I \cdot R$.
+
+Take a thick aluminium line carrying a current of 500 amperes (A). A wire like that has a
+resistance of about 0.1 milliohm per metre (0.0001 Ω/m). If the feet are 5 cm apart, the piece of
+wire between them has a resistance of
+
+$$
+R = 0.0001\ \Omega/\text{m} \times 0.05\ \text{m} = 0.000005\ \Omega
+$$
+
+so the voltage between the feet is
+
+$$
+V = I \cdot R = 500\ \text{A} \times 0.000005\ \Omega = 0.0025\ \text{V} = 2.5\ \text{mV}
+$$
+
+That is 600 times less than one AA battery (1.5 V).
+
+**Why the current stays in the wire.** The bird’s body and the 5 cm of wire between its feet are
+two paths side by side. Current divides between side-by-side paths in inverse proportion to their
+resistances, so almost all of it takes the easy one. Suppose the bird’s body had a resistance of
+only 1,000 Ω. That is a guess on the low side, because thin legs and dry, scaly feet conduct
+poorly. The current through the bird would then be
+
+$$
+I_\text{bird} = \frac{V}{R_\text{bird}} = \frac{0.0025\ \text{V}}{1000\ \Omega} = 0.0000025\ \text{A}
+$$
+
+That is 2.5 millionths of an ampere, about 400 times less than the smallest current a person can
+feel (about 1 milliampere). The wire’s 0.000005 Ω is 200 million times smaller than the bird’s
+1,000 Ω, so the wire carries practically all of the current.
+</GoDeeper>
+
+<GoDeeper title="Where the water picture fits, and where it doesn’t">
+- **It fits:** water flowing through a real pipe loses a little pressure along the way, just as the
+  voltage drops a little along the wire. That tiny difference is all the side pipe ever feels.
+- **It doesn’t fit:** most power lines carry [[alternating-current|alternating current]], which
+  swings back and forth 50 times a second in Europe. Water in a pipe does not do that. The tiny
+  voltage between the bird’s feet swings too, but at every moment it stays tiny.
+</GoDeeper>
+
+## When is a bird in danger?
+
+Now think of a big bird, like a stork or an eagle. With its wings spread, it measures about 2
+metres from tip to tip. That is wider than a tall grown-up is tall!
+
+When a big bird lands or takes off, a wing can touch a second wire. The two wires carry very
+different pushes. Suddenly there is a huge difference in voltage between the wing and the feet.
+
+An [[electric-current|electric current]] rushes through the bird’s body, from one wire to the
+other. This is usually deadly for the bird. It can also cause a power cut.
+
+The ground counts too. Power lines have a huge voltage compared with the ground. Many poles have
+metal parts at the top that are connected to the ground. A bird that touches a wire and one of
+these metal parts at the same time is in danger as well.
+
+<Figure caption="The small bird touches only one wire, so no current flows through it. The big bird touches two wires at once, and current rushes through its body." wide>
+  <BirdsOnWires />
+</Figure>
+
+Small birds, like sparrows and swallows, are usually too small to reach a second wire. On the
+tallest power lines, with huge steel towers, the wires hang many metres apart. Even the biggest
+birds cannot touch two of them at once.
+
+The most dangerous lines for birds are medium-sized ones on concrete or wooden poles. There, the
+wires sit close together and close to the metal arm at the top of the pole.
+
+## How do people protect birds?
+
+Many power companies work with bird experts to make their lines safer. Here are some of their
+tricks:
+
+- **Covers.** Plastic covers go over the wires and metal parts near the top of the pole. A wing
+  that brushes against them is safe.
+- **Hanging wires.** On safer poles, the wires hang below the arm on long insulators. They are far
+  from the spots where birds like to sit.
+- **Perches.** A perch is a bar for sitting on. A perch on top of the pole gives birds a seat high
+  above the wires.
+- **More space.** New poles can hold the wires farther apart than a big bird’s wings.
+- **Nest platforms.** Storks love to build their nests on top of poles. A platform lifts the nest
+  safely above the wires.
+- **Markers.** Bright balls or spirals on the wires help birds see them, so they do not fly into
+  them.
+
+<Figure caption="On the risky pole, the wires sit on top of the metal arm, where big birds land. On the safer pole, the wires hang far below the arm, and a perch gives birds a safe seat.">
+  <SafePole />
+</Figure>
+
+Next time you walk past a power line, see how many of these tricks you can spot!
+
+## Can a squirrel cause a power cut?
+
+Birds are not the only animals that get into trouble. Squirrels love to climb poles and run along
+wires. Sometimes a squirrel touches two parts with different pushes at the same moment. It might
+touch a wire and the metal case of a **transformer**, a big box that lowers the voltage for homes.
+
+Then current rushes through the squirrel, and sadly, the squirrel usually dies. Safety switches notice the
+sudden rush and switch the electricity off. A whole street can suddenly be without power.
+
+<FunFact>
+In the United States, squirrels cause thousands of power cuts every year. Some power companies even
+keep count of them!
+</FunFact>
+
+## Why must people stay away from power lines?
+
+We are not birds. We are much bigger, and we stand on the ground. If a person touches a power line,
+the electricity finds a path: through the body and down into the ground. The difference in voltage
+is huge, so the current is deadly.
+
+It does not even have to be your hand. A kite string, a fishing rod, a ladder or any long pole can
+carry the electricity to you. From the biggest power lines, electricity can even jump through the
+air to someone who only comes close.
+
+<Safety>
+- Never touch a power line. Never climb electricity poles, pylons or trees that grow near power
+  lines.
+- Fly kites and drones only in open places, far away from power lines. If a kite gets stuck in a
+  line, let go of the string and leave the kite there. Ask a grown-up to call the power company.
+- Never fish under power lines, and never lift a long rod or a ladder near them.
+- Never climb onto trains or railway wagons. The wires above the tracks carry deadly electricity
+  too.
+- If a power line has fallen down, stay at least 10 metres away, about the length of a bus. The
+  ground around it can be dangerous too. Keep others away, and ask a grown-up to call the emergency
+  number (112 in Europe).
+</Safety>
+
+<Remember>
+- Electricity flows only when there is a difference in voltage between two points.
+- Both feet of a bird on one wire feel almost the same push, so practically no current flows
+  through the bird.
+- A big bird that touches two wires, or a wire and a metal part of the pole, can be killed.
+- Power companies protect birds with covers, safer poles, perches and nest platforms.
+- People must never touch or come near power lines. Stay far away from fallen ones.
+</Remember>
+
+<Quiz
+  question="A sparrow sits on one wire. A stork touches two wires with its wings. Which bird is in danger?"
+  options={["The sparrow", "The stork", "Both birds", "Neither bird"]}
+  answer={1}
+  explanation="Between two wires there is a big difference in voltage, so current rushes through the stork. The sparrow touches only one wire."
+/>
+
+<Quiz
+  question="Your kite gets stuck in a power line. What should you do?"
+  options={["Pull hard on the string to get it back", "Climb up and fetch it", "Let go of the string, stay away and tell a grown-up"]}
+  answer={2}
+  explanation="The string can carry electricity into your body. Let go, stay away, and ask a grown-up to call the power company."
+/>
