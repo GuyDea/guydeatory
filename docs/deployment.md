@@ -18,6 +18,17 @@ CloudFront, all defined in one CloudFormation stack.
 The domain `theguydea.com` is registered in Route53 in the same AWS account. The hosted zone is
 `Z06939482PPSH3VUZ9L07`.
 
+### Live stack outputs (created 2026-09-29)
+
+| Output | Value |
+|---|---|
+| BucketName | `guydeatory-site-sitebucket-luacmlkiatbc` |
+| DistributionId | `E1E9R6G6JD5REX` |
+| DistributionDomainName | `d3jfmpxjaq9phs.cloudfront.net` |
+
+The deploy script reads these from the stack itself, so this table is only for reference. The
+bucket has `DeletionPolicy: Retain`, so deleting the stack keeps the files.
+
 ### Router behaviour
 
 | Request | Result |
@@ -47,6 +58,15 @@ Both use the `default` AWS CLI profile (`~/.aws/credentials`).
      s-maxage=31536000, must-revalidate`. Browsers always revalidate; CloudFront keeps a copy until
      the next invalidation.
 4. `aws cloudfront create-invalidation --paths '/*'`, then it waits for the invalidation to finish.
+
+## Testing the router in the real CloudFront runtime
+
+```bash
+ETAG=$(aws cloudfront describe-function --name guydeatory-router --stage LIVE --query ETag --output text)
+aws cloudfront test-function --name guydeatory-router --if-match "$ETAG" --stage LIVE --event-object fileb://event.json
+```
+
+`event.json` holds a viewer-request event: `{"version":"1.0","context":{"eventType":"viewer-request"},"viewer":{"ip":"1.2.3.4"},"request":{"method":"GET","uri":"/","querystring":{},"headers":{"host":{"value":"theguydea.com"}},"cookies":{}}}`.
 
 ## First-time setup (already done once)
 
