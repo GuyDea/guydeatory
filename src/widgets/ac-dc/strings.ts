@@ -38,7 +38,7 @@ export const strings: Record<LangCode, Strings> = {
     dc: 'Jednosmerný (DC) – batéria',
     ac: 'Striedavý (AC) – zásuvka',
     speed: 'Kmity za sekundu (spomalené)',
-    realLife: 'V skutočnej zásuvke v Európe mení prúd smer tam a späť 50-krát za sekundu – oveľa rýchlejšie, než to dokážeš vidieť.',
+    realLife: 'V skutočnej zásuvke v Európe kmitá prúd tam a späť 50-krát za sekundu – oveľa rýchlejšie, než to dokážeš vidieť.',
     current: 'prúd',
     time: 'čas',
     direction: ['dopredu', 'stojí', 'dozadu'],

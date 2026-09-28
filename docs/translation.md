@@ -42,8 +42,12 @@ exists in both, with the same structure. More languages can be added later (see 
 | Multiplication | `·` (`\cdot`), not × | `$U = R \cdot I$` |
 | Ordinals | number with a period | 1. poschodie |
 
-In MDX, type non-breaking spaces as `&nbsp;` or the real U+00A0 character. English uses "1.5 A",
-"1,000 W" and "20 °C".
+In MDX, type non-breaking spaces as `&nbsp;` or the real U+00A0 character. Inside JSX attribute
+strings (quiz options, captions) only the real character works. English uses "1.5 A", "1,000 W"
+and "20 °C", also with a non-breaking space between number and unit.
+
+**50 Hz, precisely:** the current swings back and forth ("kmitá tam a späť") 50 times a second. That
+means it changes direction 100 times a second. Don't write "changes direction 50 times".
 
 ## 4. Glossary (EN → SK)
 
@@ -93,6 +97,16 @@ Keep terms consistent across all articles. Add new terms here when you introduce
 | latent heat | skupenské teplo | |
 | conservation of energy | zákon zachovania energie | |
 | particle | častica, čiastočka | "čiastočka" is friendlier for kids |
+| electron shell / cloud | elektrónový obal | |
+| chemical element, molecule | prvok, molekula | |
+| free electrons | voľné elektróny | |
+| appliance / load, source | spotrebič, zdroj | |
+| circuit diagram, circuit symbol | schéma zapojenia, schematická značka | |
+| in series / in parallel | za sebou (sériovo) / vedľa seba (paralelne) | |
+| conventional current direction | technický (dohodnutý) smer prúdu | |
+| semiconductor | polovodič | |
+| static electricity | statická elektrina | |
+| conservation of charge, Coulomb's law | zákon zachovania náboja, Coulombov zákon | |
 | transformer | transformátor | |
 | frequency, hertz | frekvencia, hertz (Hz) | |
 | sine wave, amplitude, period | sínusoida, amplitúda, perióda | |
