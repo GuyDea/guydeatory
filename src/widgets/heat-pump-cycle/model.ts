@@ -4,6 +4,15 @@
  */
 export type Mode = 'heating' | 'cooling';
 
+/**
+ * Outdoor temperatures (°C) that make sense for each season. Outside them the simple model would
+ * show impossible numbers (e.g. "cooling" a house when it is freezing outside).
+ */
+export const OUTDOOR_RANGE: Record<Mode, [number, number]> = {
+  heating: [-20, 15],
+  cooling: [15, 45],
+};
+
 export interface CycleStates {
   /** Coil inside the house (condenser when heating, evaporator when cooling). */
   indoorCoil: number;

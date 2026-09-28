@@ -5,7 +5,7 @@
   import Readout from '../kit/Readout.svelte';
   import Slider from '../kit/Slider.svelte';
   import WidgetFrame from '../kit/WidgetFrame.svelte';
-  import { PRESETS, solve } from './model.ts';
+  import { ohmsDigits, PRESETS, solve } from './model.ts';
   import { strings } from './strings.ts';
 
   let { lang }: { lang: LangCode } = $props();
@@ -21,7 +21,7 @@
   const ampsText = $derived(formatQuantity(result.amps, 'A', lang, ampDigits(result.amps)));
   const wattsText = $derived(formatQuantity(result.watts, 'W', lang, result.watts < 10 && result.watts > 0 ? 1 : 0));
   const voltsText = $derived(formatQuantity(volts, 'V', lang));
-  const ohmsText = $derived(formatQuantity(ohms, 'Ω', lang, ohms < 10 ? 1 : 0));
+  const ohmsText = $derived(formatQuantity(ohms, 'Ω', lang, ohmsDigits(ohms)));
 
   // The pipe narrows as resistance grows (log scale 1 Ω … 10 000 Ω).
   const pipeHeight = $derived(10 + 40 * (1 - Math.log10(ohms) / 4));
@@ -80,7 +80,7 @@
 
   {#snippet controls()}
     <Slider label={s.voltage} bind:value={volts} min={0} max={240} step={1} unit="V" {lang} />
-    <Slider label={s.resistance} bind:value={ohms} min={1} max={10000} step={0.5} unit="Ω" digits={ohms < 10 ? 1 : 0} scale="log" {lang} />
+    <Slider label={s.resistance} bind:value={ohms} min={1} max={10000} step={0.5} unit="Ω" digits={ohmsDigits(ohms)} scale="log" {lang} />
     <Readout label={s.current} value={ampsText} tone="accent" />
     <Readout label={s.power} value={wattsText} tone="hot" />
     <div class="presets" role="group" aria-label={s.presets}>

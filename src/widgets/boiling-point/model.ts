@@ -1,7 +1,8 @@
 /**
  * Boiling temperature from pressure using the Antoine equation.
  * Water (mmHg, °C): two constant sets, below and above 100 °C.
- * Propane / R-290 (bar, K): NIST constants valid ~230–320 K.
+ * Propane / R-290 (bar, K): fitted to NIST saturation data at −60, −40 and −20 °C;
+ * good to a few tenths of a degree across the widget's 0.3–3 bar range.
  */
 const MMHG_PER_BAR = 750.062;
 
@@ -12,7 +13,7 @@ export function boilingPointWater(bar: number): number {
 }
 
 export function boilingPointPropane(bar: number): number {
-  const [a, b, c] = [3.98292, 819.296, -24.417];
+  const [a, b, c] = [3.9143, 796.7, -27.2];
   return b / (a - Math.log10(bar)) - c - 273.15;
 }
 

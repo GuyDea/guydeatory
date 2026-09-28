@@ -3,9 +3,9 @@ import { current as acdcCurrent, displacement } from '../../src/widgets/ac-dc/mo
 import { boilingPointPropane, boilingPointWater } from '../../src/widgets/boiling-point/model.ts';
 import { cop } from '../../src/widgets/cop-explorer/model.ts';
 import { flow } from '../../src/widgets/electron-flow/model.ts';
-import { cycleStates } from '../../src/widgets/heat-pump-cycle/model.ts';
+import { cycleStates, OUTDOOR_RANGE } from '../../src/widgets/heat-pump-cycle/model.ts';
 import { logPosition, logValue } from '../../src/widgets/kit/scale.ts';
-import { solve } from '../../src/widgets/ohms-law/model.ts';
+import { ohmsDigits, PRESETS, solve } from '../../src/widgets/ohms-law/model.ts';
 import { circuit } from '../../src/widgets/series-parallel/model.ts';
 
 describe('log scale (sliders)', () => {
@@ -48,6 +48,15 @@ describe("Ohm's law playground", () => {
 
   it('gives zero current with zero voltage', () => {
     expect(solve({ volts: 0, ohms: 10 })).toEqual({ amps: 0, watts: 0 });
+  });
+});
+
+describe("Ohm's law presets", () => {
+  it('use resistances that display exactly, so the shown sum always adds up', () => {
+    for (const preset of PRESETS) {
+      const shown = Number(preset.ohms.toFixed(ohmsDigits(preset.ohms)));
+      expect(shown, preset.id).toBe(preset.ohms);
+    }
   });
 });
 
@@ -107,6 +116,21 @@ describe('heat pump cycle temperatures', () => {
     expect(s.afterValve).toBeLessThan(s.afterCompressor);
   });
 
+  it('never shows impossible temperatures anywhere in the allowed outdoor range', () => {
+    for (const mode of ['heating', 'cooling'] as const) {
+      const [min, max] = OUTDOOR_RANGE[mode];
+      const indoor = mode === 'heating' ? 21 : 25;
+      for (let outdoor = min; outdoor <= max; outdoor++) {
+        const s = cycleStates(mode, outdoor, indoor);
+        const condensing = mode === 'heating' ? s.indoorCoil : s.outdoorCoil;
+        const evaporating = mode === 'heating' ? s.outdoorCoil : s.indoorCoil;
+        expect(condensing - 3, `${mode} ${outdoor}`).toBeGreaterThan(s.afterValve);
+        expect(s.afterCompressor, `${mode} ${outdoor}`).toBeGreaterThan(condensing);
+        expect(evaporating, `${mode} ${outdoor}`).toBeLessThan(condensing);
+      }
+    }
+  });
+
   it('cooling: the indoor coil is colder than the room, the outdoor coil hotter than the outside air', () => {
     const s = cycleStates('cooling', 32, 25);
     expect(s.indoorCoil).toBeLessThan(25);
@@ -140,8 +164,9 @@ describe('boiling point', () => {
     expect(boilingPointWater(2)).toBeCloseTo(120, 0);
   });
 
-  it('propane (refrigerant R-290) boils at about −42 °C at normal pressure and ~26 °C at 10 bar', () => {
-    expect(boilingPointPropane(1.01325)).toBeCloseTo(-42.7, 0);
-    expect(boilingPointPropane(10)).toBeCloseTo(26, 0);
+  it('propane (refrigerant R-290) boils at −42 °C at normal pressure, matching NIST data across the slider range', () => {
+    expect(Math.abs(boilingPointPropane(1.01325) - -42.1)).toBeLessThan(0.3);
+    expect(Math.abs(boilingPointPropane(1.6804) - -30)).toBeLessThan(0.3); // NIST: 1.6804 bar at −30 °C
+    expect(boilingPointPropane(0.3)).toBeLessThan(-55);
   });
 });

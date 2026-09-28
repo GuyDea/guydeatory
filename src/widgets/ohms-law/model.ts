@@ -11,6 +11,11 @@ export const PRESETS = [
   { id: 'phone', volts: 5, ohms: 2.5 },
   { id: 'led', volts: 230, ohms: 5290 },
   { id: 'toaster', volts: 230, ohms: 53 },
-  { id: 'kettle', volts: 230, ohms: 26.45 },
+  { id: 'kettle', volts: 230, ohms: 26.5 },
 ] as const;
 export type PresetId = (typeof PRESETS)[number]['id'];
+
+/** Decimals used to show a resistance: whole ohms stay whole, halves show one decimal. */
+export function ohmsDigits(ohms: number): number {
+  return Number.isInteger(ohms) ? 0 : 1;
+}

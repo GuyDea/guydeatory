@@ -6,7 +6,7 @@
   import Slider from '../kit/Slider.svelte';
   import Toggle from '../kit/Toggle.svelte';
   import WidgetFrame from '../kit/WidgetFrame.svelte';
-  import { cycleStates } from './model.ts';
+  import { cycleStates, OUTDOOR_RANGE } from './model.ts';
   import type { Mode } from './model.ts';
   import { strings } from './strings.ts';
   import type { Part } from './strings.ts';
@@ -152,7 +152,7 @@
       ]}
       bind:value={() => mode, (next) => setMode(next as Mode)}
     />
-    <Slider label={s.outdoorTemp} bind:value={outdoor} min={-15} max={40} step={1} unit="°C" {lang} />
+    <Slider label={s.outdoorTemp} bind:value={outdoor} min={OUTDOOR_RANGE[mode][0]} max={OUTDOOR_RANGE[mode][1]} step={1} unit="°C" {lang} />
     <Readout label={s.heatMoved} value={s.heatDirection[mode]} tone="hot" compact />
     <div class="part-buttons" role="group" aria-label={s.parts}>
       <span class="part-buttons-label">{s.parts}</span>
