@@ -7,7 +7,9 @@
 import { LANGUAGES } from '@i18n/languages';
 import type { LangCode } from '@i18n/languages';
 import { getCatalog } from '@lib/content/catalog';
+import AboutView from '@views/AboutView.astro';
 import ArticleView from '@views/ArticleView.astro';
+import ExploreView from '@views/ExploreView.astro';
 import SectionView from '@views/SectionView.astro';
 
 type Props = { kind: 'article'; id: string } | { kind: 'explore' | 'search' | 'about' };
@@ -31,4 +33,7 @@ export async function getStaticPaths() {
 const lang = Astro.params.lang as LangCode;
 const props = Astro.props as Props;
 ---
-{props.kind === 'article' ? <ArticleView lang={lang} id={props.id} /> : <SectionView lang={lang} kind={props.kind} />}
+{props.kind === 'article' && <ArticleView lang={lang} id={props.id} />}
+{props.kind === 'explore' && <ExploreView lang={lang} />}
+{props.kind === 'about' && <AboutView lang={lang} />}
+{props.kind === 'search' && <SectionView lang={lang} kind="search" />}

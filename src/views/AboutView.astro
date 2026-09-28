@@ -1,0 +1,44 @@
+---
+import { getEntry, render } from 'astro:content';
+import { contentComponents } from '@components/content/index';
+import type { LangCode } from '@i18n/languages';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { sectionAlternates, sectionUrl } from '@lib/urls';
+import '@styles/prose.css';
+import '@styles/content.css';
+
+interface Props {
+  lang: LangCode;
+}
+const { lang } = Astro.props;
+const entry = await getEntry('pages', `about/${lang}`);
+if (!entry) throw new Error(`Missing content/pages/about/${lang}.mdx`);
+const { Content } = await render(entry);
+---
+<BaseLayout lang={lang} title={entry.data.title} description={entry.data.summary} canonical={sectionUrl(lang, 'about')} alternates={sectionAlternates('about')} current="about">
+  <article class="page about">
+    <h1>{entry.data.title}</h1>
+    <p class="lead">{entry.data.summary}</p>
+    <div class="prose">
+      <Content components={contentComponents as Record<string, never>} />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .about {
+    padding-block: var(--space-7);
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    font-weight: 800;
+    max-width: 16ch;
+  }
+
+  .lead {
+    margin-block: var(--space-4) var(--space-6);
+    max-width: var(--measure);
+    font-size: var(--text-lg);
+  }
+</style>

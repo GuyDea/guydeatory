@@ -24,6 +24,17 @@ export default defineConfig({
     }),
   },
   integrations: [mdx(), svelte()],
+  vite: {
+    build: {
+      rollupOptions: {
+        onwarn(warning, warn) {
+          // Astro's own MDX asset-propagation directive; harmless, and it would print once per article.
+          if (warning.code === 'MODULE_LEVEL_DIRECTIVE' && warning.message.includes('astro:head-inject')) return;
+          warn(warning);
+        },
+      },
+    },
+  },
   // Downloaded at build time and self-hosted: no third-party requests from readers' browsers.
   fonts: [
     {

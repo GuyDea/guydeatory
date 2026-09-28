@@ -1,0 +1,245 @@
+---
+import TreeNode from '@components/explore/TreeNode.astro';
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getCatalog } from '@lib/content/catalog';
+import { localized, topicHasContent } from '@lib/content/queries';
+import { sectionAlternates, sectionUrl } from '@lib/urls';
+
+interface Props {
+  lang: LangCode;
+}
+const { lang } = Astro.props;
+const catalog = await getCatalog();
+const roots = catalog.rootTopics.filter((id) => topicHasContent(catalog, id, lang));
+const labels = [...catalog.labels.values()];
+---
+<BaseLayout
+  lang={lang}
+  title={t(lang, 'explore.title')}
+  description={t(lang, 'explore.intro')}
+  canonical={sectionUrl(lang, 'explore')}
+  alternates={sectionAlternates('explore')}
+  current="explore"
+>
+  <div class="page explore" data-explore>
+    <h1>{t(lang, 'explore.title')}</h1>
+    <p class="intro">{t(lang, 'explore.intro')}</p>
+
+    <div class="controls" data-explore-controls hidden>
+      <div class="chips" role="group" aria-label={t(lang, 'explore.show')}>
+        <span class="chips-label" aria-hidden="true">{t(lang, 'explore.show')}</span>
+        {
+          labels.map((label) => (
+            <button type="button" class="chip" data-label-chip={label.id} aria-pressed="false" style={`--chip: var(--label-${label.color}); --chip-bg: var(--label-${label.color}-bg)`}>
+              {localized(label.name, lang)}
+            </button>
+          ))
+        }
+      </div>
+      <div class="filter-row">
+        <label class="filter">
+          <span>{t(lang, 'explore.filterLabel')}</span>
+          <input type="search" data-explore-query placeholder={t(lang, 'explore.filterPlaceholder')} autocomplete="off" />
+        </label>
+        <p class="status" data-explore-status data-template={t(lang, 'explore.showing')} aria-live="polite"></p>
+        <button type="button" class="clear" data-explore-clear hidden>{t(lang, 'explore.clear')}</button>
+      </div>
+    </div>
+
+    <p class="empty" data-explore-empty hidden>{t(lang, 'explore.empty')}</p>
+
+    <ul class="tree">
+      {roots.map((id) => <TreeNode lang={lang} catalog={catalog} topicId={id} />)}
+    </ul>
+  </div>
+</BaseLayout>
+
+<script>
+  import '../scripts/explore.ts';
+</script>
+
+<style>
+  .explore {
+    padding-block: var(--space-7);
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    font-weight: 800;
+  }
+
+  .intro {
+    margin-top: var(--space-3);
+    max-width: var(--measure);
+    color: var(--ink-soft);
+  }
+
+  .controls {
+    display: grid;
+    gap: var(--space-4);
+    margin-block: var(--space-6);
+    padding: var(--space-4) var(--space-5);
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+
+  .controls[hidden] {
+    display: none;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .chips-label {
+    font-weight: 700;
+    margin-right: var(--space-2);
+  }
+
+  .chip {
+    min-height: var(--touch);
+    padding: 0 var(--space-4);
+    border-radius: var(--radius-pill);
+    border: 2px solid var(--chip);
+    background: var(--surface);
+    color: var(--chip);
+    font-family: var(--font-display-stack);
+    font-weight: 700;
+  }
+
+  .chip[aria-pressed='true'] {
+    background: var(--chip);
+    color: var(--surface);
+  }
+
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: var(--space-3) var(--space-5);
+  }
+
+  .filter {
+    display: grid;
+    gap: var(--space-1);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+
+  .filter input {
+    min-height: var(--touch);
+    width: min(22rem, 80vw);
+    padding: 0 var(--space-3);
+    border: 2px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    background: var(--paper);
+    font-weight: 400;
+  }
+
+  .status {
+    min-height: var(--touch);
+    display: flex;
+    align-items: center;
+    color: var(--ink-soft);
+    font-size: var(--text-sm);
+  }
+
+  .clear {
+    min-height: var(--touch);
+    padding: 0 var(--space-4);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .empty {
+    padding: var(--space-5);
+    background: var(--surface-sunk);
+    border-radius: var(--radius-md);
+    font-weight: 700;
+  }
+
+  .tree,
+  .tree :global(.tree-list),
+  .tree :global(.tree-articles) {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tree :global(.tree-list),
+  .tree :global(.tree-articles) {
+    margin-left: 1.1rem;
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--line);
+  }
+
+  .tree :global(.tree-topic > details > summary) {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch);
+    font-family: var(--font-display-stack);
+    font-weight: 750;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+
+  .tree > :global(.tree-topic) + :global(.tree-topic) {
+    margin-top: var(--space-5);
+  }
+
+  .tree :global(.tree-topic summary a) {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .tree :global(.tree-topic summary a:hover) {
+    text-decoration: underline;
+  }
+
+  .tree :global(.tree-count) {
+    min-width: 2em;
+    padding: 0 0.5em;
+    border-radius: var(--radius-pill);
+    background: var(--surface-sunk);
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .tree :global(.tree-article) {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 40px;
+  }
+
+  .tree :global(.tree-article a) {
+    color: var(--ink);
+  }
+
+  .tree :global(.tree-labels) {
+    display: inline-flex;
+    gap: 3px;
+  }
+
+  .tree :global(.tree-dot) {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--dot);
+  }
+
+  .tree :global([hidden]) {
+    display: none;
+  }
+</style>

@@ -1,20 +1,340 @@
 ---
+import LabelChip from '@components/lists/LabelChip.astro';
 import type { LangCode } from '@i18n/languages';
-import { t } from '@i18n/t';
+import { t, tp } from '@i18n/t';
+import BaseLayout from '@layouts/BaseLayout.astro';
 import { getCatalog } from '@lib/content/catalog';
-import { articleUrl, homeAlternates, homeUrl } from '@lib/urls';
-import SimplePage from './SimplePage.astro';
+import { localized, topicArticleCount, topicHasContent } from '@lib/content/queries';
+import { articleUrl, homeAlternates, homeUrl, sectionUrl, topicUrl } from '@lib/urls';
 
 interface Props {
   lang: LangCode;
 }
 const { lang } = Astro.props;
 const catalog = await getCatalog();
-const articles = [...catalog.articles.values()].filter((a) => a.texts[lang]);
+const featured = catalog.featured.map((id) => catalog.articles.get(id)!).filter((a) => a.texts[lang]);
+const questions = featured.length > 0 ? featured : [...catalog.articles.values()].filter((a) => a.texts[lang]).slice(0, 4);
+const roots = catalog.rootTopics.filter((id) => topicHasContent(catalog, id, lang)).map((id) => catalog.topics.get(id)!);
+const labels = [...catalog.labels.values()];
+const children = (id: string) =>
+  catalog.topics
+    .get(id)!
+    .children.filter((childId) => topicHasContent(catalog, childId, lang))
+    .map((childId) => catalog.topics.get(childId)!);
 ---
-<SimplePage lang={lang} title={t(lang, 'site.name')} description={t(lang, 'site.tagline')} canonical={homeUrl(lang)} alternates={homeAlternates()}>
-  <p>{t(lang, 'site.tagline')}</p>
-  <ul>
-    {articles.map((a) => <li><a href={articleUrl(a, lang)}>{a.texts[lang]!.title}</a></li>)}
-  </ul>
-</SimplePage>
+<BaseLayout lang={lang} title={t(lang, 'site.name')} description={t(lang, 'site.tagline')} canonical={homeUrl(lang)} alternates={homeAlternates()}>
+  <div class="page home">
+    <section class="hero">
+      <h1>{t(lang, 'home.title')}</h1>
+      <p class="intro">{t(lang, 'home.intro')}</p>
+      <form class="search" action={sectionUrl(lang, 'search')} method="get" role="search">
+        <label class="visually-hidden" for="home-q">{t(lang, 'home.searchLabel')}</label>
+        <input id="home-q" name="q" type="search" placeholder={t(lang, 'home.searchPlaceholder')} autocomplete="off" />
+        <button type="submit">{t(lang, 'nav.search')}</button>
+      </form>
+      {
+        questions.length > 0 && (
+          <div class="try">
+            <p>{t(lang, 'home.tryThese')}</p>
+            <ul>
+              {questions.map((article) => (
+                <li>
+                  <a class="question" href={articleUrl(article, lang)}>
+                    {article.texts[lang]!.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </section>
+
+    <section class="topics" aria-labelledby="home-topics">
+      <h2 id="home-topics">{t(lang, 'home.topics')}</h2>
+      <ul class="topic-grid">
+        {
+          roots.map((topic) => (
+            <li class="topic-block">
+              <h3>
+                <a href={topicUrl(topic, lang)}>
+                  {topic.icon && <span aria-hidden="true">{topic.icon}</span>}
+                  {localized(topic.name, lang)}
+                </a>
+              </h3>
+              <p>{localized(topic.description, lang)}</p>
+              <ul class="subtopics">
+                {children(topic.id).map((sub) => (
+                  <li>
+                    <a href={topicUrl(sub, lang)}>{localized(sub.name, lang)}</a>
+                    <span>{tp(lang, 'count.articles', topicArticleCount(catalog, sub.id, lang))}</span>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="kinds" aria-labelledby="home-kinds">
+      <h2 id="home-kinds">{t(lang, 'home.labels')}</h2>
+      <ul class="kind-list">
+        {
+          labels.map((label) => (
+            <li>
+              <LabelChip lang={lang} label={label} />
+              <p>{localized(label.description, lang)}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="how" aria-labelledby="home-how">
+      <h2 id="home-how">{t(lang, 'home.howTo')}</h2>
+      <div class="how-grid">
+        <div class="how-item">
+          <p class="how-demo"><span class="demo-term">{lang === 'sk' ? 'napätie' : 'voltage'}</span></p>
+          <h3>{t(lang, 'home.howTo.terms.title')}</h3>
+          <p>{t(lang, 'home.howTo.terms.body')}</p>
+        </div>
+        <div class="how-item">
+          <p class="how-demo"><span class="demo-answer">{t(lang, 'article.shortAnswer')}</span></p>
+          <h3>{t(lang, 'home.howTo.short.title')}</h3>
+          <p>{t(lang, 'home.howTo.short.body')}</p>
+        </div>
+        <div class="how-item">
+          <p class="how-demo"><span class="demo-deeper">{t(lang, 'content.goDeeper')}</span></p>
+          <h3>{t(lang, 'home.howTo.deeper.title')}</h3>
+          <p>{t(lang, 'home.howTo.deeper.body')}</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .home {
+    display: grid;
+    gap: var(--space-8);
+    padding-block: var(--space-7);
+  }
+
+  .hero {
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+  }
+
+  h1 {
+    font-size: clamp(2.6rem, 1.6rem + 4.5vw, 5rem);
+    font-weight: 800;
+    line-height: 1.02;
+    max-width: 14ch;
+    letter-spacing: -0.025em;
+  }
+
+  .intro {
+    max-width: 38rem;
+    font-size: var(--text-lg);
+    color: var(--ink-soft);
+  }
+
+  .search {
+    display: flex;
+    width: min(100%, 40rem);
+    padding: var(--space-1);
+    background: var(--surface);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius-pill);
+    box-shadow: 5px 5px 0 var(--highlight);
+  }
+
+  .search input {
+    flex: 1;
+    min-width: 0;
+    min-height: 3.2rem;
+    padding: 0 var(--space-5);
+    border: 0;
+    background: transparent;
+    font-size: var(--text-lg);
+  }
+
+  .search input:focus {
+    outline: none;
+  }
+
+  .search:focus-within {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  .search button {
+    flex-shrink: 0;
+    min-height: 3.2rem;
+    padding: 0 var(--space-5);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 700;
+    font-size: var(--text-base);
+  }
+
+  .try p {
+    color: var(--ink-soft);
+    margin-bottom: var(--space-3);
+  }
+
+  .try ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .question {
+    font-family: var(--font-display-stack);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--term-ink);
+    text-decoration: none;
+    padding-inline: 0.15em;
+    background: linear-gradient(to top, var(--term-mark) 55%, transparent 55%);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .question:hover {
+    background: var(--term-mark-hover);
+  }
+
+  h2 {
+    font-size: var(--text-h2);
+    font-weight: 800;
+    margin-bottom: var(--space-5);
+  }
+
+  .topic-grid,
+  .kind-list,
+  .subtopics {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .topic-grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  }
+
+  .topic-block {
+    padding: var(--space-5);
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+
+  .topic-block h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+  }
+
+  .topic-block h3 a {
+    display: inline-flex;
+    gap: var(--space-2);
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .topic-block h3 a:hover {
+    text-decoration: underline;
+  }
+
+  .topic-block > p {
+    margin-block: var(--space-2) var(--space-4);
+    color: var(--ink-soft);
+  }
+
+  .subtopics li {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    align-items: baseline;
+    padding-block: var(--space-2);
+    border-top: 1px solid var(--line);
+  }
+
+  .subtopics a {
+    font-weight: 700;
+  }
+
+  .subtopics span {
+    color: var(--ink-soft);
+    font-size: var(--text-sm);
+    white-space: nowrap;
+  }
+
+  .kind-list {
+    display: grid;
+    gap: var(--space-4) var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  }
+
+  .kind-list p {
+    margin-top: var(--space-2);
+    color: var(--ink-soft);
+  }
+
+  .how-grid {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  }
+
+  .how-item h3 {
+    font-size: 1.3rem;
+    font-weight: 750;
+    margin-block: var(--space-3) var(--space-2);
+  }
+
+  .how-item p:last-child {
+    color: var(--ink-soft);
+  }
+
+  .how-demo {
+    min-height: 3.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .demo-term {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--term-ink);
+    padding-inline: 0.15em;
+    background: linear-gradient(to top, var(--term-mark) 60%, transparent 60%);
+  }
+
+  .demo-answer {
+    padding: 0.2em 0.8em;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    font-weight: 700;
+    box-shadow: 4px 4px 0 var(--highlight);
+  }
+
+  .demo-deeper {
+    padding: 0.4em 0.9em;
+    background: var(--surface-sunk);
+    border-radius: var(--radius-md);
+    box-shadow: inset 0 2px 6px rgb(26 38 64 / 0.12);
+    font-family: var(--font-display-stack);
+    font-weight: 700;
+  }
+</style>

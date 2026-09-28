@@ -1,10 +1,14 @@
 ---
+import TopicPath from '@components/article/TopicPath.astro';
+import ArticleCard from '@components/lists/ArticleCard.astro';
+import LabelChip from '@components/lists/LabelChip.astro';
 import { LANG_CODES } from '@i18n/languages';
 import type { LangCode } from '@i18n/languages';
+import { t, tp } from '@i18n/t';
+import BaseLayout from '@layouts/BaseLayout.astro';
 import { getCatalog } from '@lib/content/catalog';
-import { articlesInTopic, localized, topicHasContent } from '@lib/content/queries';
-import { articleUrl, topicUrl } from '@lib/urls';
-import SimplePage from './SimplePage.astro';
+import { articlesInTopic, localized, topicAncestry, topicArticleCount, topicHasContent } from '@lib/content/queries';
+import { topicUrl } from '@lib/urls';
 
 interface Props {
   lang: LangCode;
@@ -13,12 +17,142 @@ interface Props {
 const { lang, id } = Astro.props;
 const catalog = await getCatalog();
 const topic = catalog.topics.get(id)!;
+const ancestors = topicAncestry(catalog, id).slice(0, -1);
 const alternates = LANG_CODES.map((code) => ({ lang: code, href: topicHasContent(catalog, id, code) ? topicUrl(topic, code) : null }));
+const subtopics = topic.children.filter((childId) => topicHasContent(catalog, childId, lang)).map((childId) => catalog.topics.get(childId)!);
 const articles = articlesInTopic(catalog, id, lang, true);
+// Group by each article's first (main) label, in vocabulary order.
+const groups = [...catalog.labels.values()]
+  .map((label) => ({ label, articles: articles.filter((a) => a.labels[0] === label.id) }))
+  .filter((group) => group.articles.length > 0);
 ---
-<SimplePage lang={lang} title={localized(topic.name, lang)} description={localized(topic.description, lang)} canonical={topicUrl(topic, lang)!} alternates={alternates}>
-  <p>{localized(topic.description, lang)}</p>
-  <ul>
-    {articles.map((a) => <li><a href={articleUrl(a, lang)}>{a.texts[lang]!.title}</a></li>)}
-  </ul>
-</SimplePage>
+<BaseLayout lang={lang} title={localized(topic.name, lang)} description={localized(topic.description, lang)} canonical={topicUrl(topic, lang)!} alternates={alternates}>
+  <div class="page topic">
+    <TopicPath lang={lang} topics={ancestors} />
+    <h1>{topic.icon && <span class="icon" aria-hidden="true">{topic.icon}</span>}{localized(topic.name, lang)}</h1>
+    <p class="intro">{localized(topic.description, lang)}</p>
+
+    {
+      subtopics.length > 0 && (
+        <nav class="subtopics" aria-labelledby="subtopics-title">
+          <h2 id="subtopics-title">{t(lang, 'topic.inside')}</h2>
+          <ul>
+            {subtopics.map((sub) => (
+              <li>
+                <a href={topicUrl(sub, lang)}>
+                  {sub.icon && <span aria-hidden="true">{sub.icon}</span>}
+                  <span class="name">{localized(sub.name, lang)}</span>
+                  <span class="count">{tp(lang, 'count.articles', topicArticleCount(catalog, sub.id, lang))}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+
+    {
+      groups.map(({ label, articles: list }) => (
+        <section class="group">
+          <h2>
+            <LabelChip lang={lang} label={label} />
+          </h2>
+          <p class="group-hint">{localized(label.description, lang)}</p>
+          <div class="cards">
+            {list.map((article) => (
+              <ArticleCard lang={lang} article={article} catalog={catalog} />
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .topic {
+    padding-block: var(--space-5) var(--space-7);
+  }
+
+  h1 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    font-size: var(--text-h1);
+    font-weight: 800;
+  }
+
+  .icon {
+    font-size: 0.8em;
+  }
+
+  .intro {
+    margin-top: var(--space-3);
+    max-width: var(--measure);
+    font-size: var(--text-lg);
+    color: var(--ink-soft);
+  }
+
+  .subtopics {
+    margin-top: var(--space-6);
+  }
+
+  .subtopics h2,
+  .group-hint {
+    font-size: var(--text-sm);
+    color: var(--ink-soft);
+    font-family: var(--font-body-stack);
+    font-weight: 700;
+  }
+
+  .subtopics ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .subtopics a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--touch);
+    padding: var(--space-2) var(--space-4);
+    background: var(--surface);
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .subtopics a:hover {
+    border-color: var(--accent);
+  }
+
+  .name {
+    font-weight: 700;
+  }
+
+  .count {
+    color: var(--ink-soft);
+    font-size: var(--text-sm);
+  }
+
+  .group {
+    margin-top: var(--space-7);
+  }
+
+  .group-hint {
+    margin-block: var(--space-2) var(--space-4);
+    font-weight: 400;
+  }
+
+  .cards {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  }
+</style>

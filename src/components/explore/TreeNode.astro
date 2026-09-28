@@ -1,0 +1,57 @@
+---
+/** One topic in the Explore tree, with its subtopics (recursively) and its own articles. */
+import type { LangCode } from '@i18n/languages';
+import { localized, articlesInTopic, topicArticleCount, topicHasContent } from '@lib/content/queries';
+import type { Catalog } from '@lib/content/types';
+import { foldDiacritics } from '@lib/text';
+import { articleUrl, topicUrl } from '@lib/urls';
+
+interface Props {
+  lang: LangCode;
+  catalog: Catalog;
+  topicId: string;
+}
+const { lang, catalog, topicId } = Astro.props;
+const topic = catalog.topics.get(topicId)!;
+const subtopics = topic.children.filter((id) => topicHasContent(catalog, id, lang));
+const articles = articlesInTopic(catalog, topicId, lang, false);
+const count = topicArticleCount(catalog, topicId, lang);
+const searchText = (id: string) => {
+  const text = catalog.articles.get(id)!.texts[lang]!;
+  return foldDiacritics([text.term, text.title, ...text.keywords].join(' ').toLowerCase());
+};
+---
+<li class="tree-topic" data-topic={topicId}>
+  <details open>
+    <summary>
+      {topic.icon && <span class="tree-icon" aria-hidden="true">{topic.icon}</span>}
+      <a href={topicUrl(topic, lang)}>{localized(topic.name, lang)}</a>
+      <span class="tree-count" data-count>{count}</span>
+    </summary>
+    {
+      subtopics.length > 0 && (
+        <ul class="tree-list">
+          {subtopics.map((id) => (
+            <Astro.self lang={lang} catalog={catalog} topicId={id} />
+          ))}
+        </ul>
+      )
+    }
+    {
+      articles.length > 0 && (
+        <ul class="tree-articles">
+          {articles.map((article) => (
+            <li class="tree-article" data-id={article.id} data-labels={article.labels.join(' ')} data-search={searchText(article.id)}>
+              <a href={articleUrl(article, lang)}>{article.texts[lang]!.title}</a>
+              <span class="tree-labels" aria-hidden="true">
+                {article.labels.map((id) => (
+                  <span class="tree-dot" style={`--dot: var(--label-${catalog.labels.get(id)?.color})`} />
+                ))}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </details>
+</li>
