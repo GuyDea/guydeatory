@@ -65,7 +65,7 @@ describe('CloudFront router', () => {
   it('chooses the same language as the site’s own picker', () => {
     const cases = ['sk', 'en-GB,en;q=0.9', 'cs', 'de,sk;q=0.5', 'fr', ''];
     for (const accept of cases) {
-      const headers = accept ? { 'accept-language': { value: accept } } : {};
+      const headers: Record<string, { value: string }> = accept ? { 'accept-language': { value: accept } } : {};
       const viaRouter = location(run(request('/', { headers })))!.slice(1, -1);
       const viaSite = pickLanguage({ cookie: '', accept: accept ? accept.split(',').map((p) => p.split(';')[0]!.trim()) : [] });
       expect(viaRouter, accept).toBe(viaSite);

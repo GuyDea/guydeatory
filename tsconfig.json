@@ -1,7 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "node_modules", "infra/.build"],
+  "exclude": ["dist", "node_modules", "infra/.build", "infra/cloudfront"],
   "compilerOptions": {
     "paths": {
       "@lib/*": ["./src/lib/*"],
