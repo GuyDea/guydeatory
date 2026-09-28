@@ -199,6 +199,15 @@ describe('buildCatalog — validation rules', () => {
     expectOneProblem(problems, 'content/labels.yaml', /description\.sk/);
   });
 
+  it('15. rejects TODO placeholders in published articles but allows them in drafts', () => {
+    const todoBody = article('atom', { bodySk: 'TODO: preložiť.' });
+    expectOneProblem(build(raw({ articles: [todoBody] })).problems, 'content/articles/atom/sk.mdx', /TODO/);
+    const todoTitle = article('atom', { en: { title: 'TODO: the question' } });
+    expectOneProblem(build(raw({ articles: [todoTitle] })).problems, 'content/articles/atom/en.mdx', /TODO/);
+    const draft = article('atom', { meta: { status: 'draft' }, bodyEn: 'TODO: write it.' });
+    expect(build(raw({ articles: [draft] }), true).problems).toEqual([]);
+  });
+
   it('14. rejects an article that lists itself', () => {
     const { problems } = build(raw({ articles: [article('atom', { meta: { related: ['atom'] } })] }));
     expectOneProblem(problems, 'content/articles/atom/meta.yaml', /itself/);

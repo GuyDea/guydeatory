@@ -130,6 +130,7 @@ function buildTexts(raw: RawContent, problems: Problem[]): Map<string, Partial<R
       reviewed: data.reviewed,
       links: extractWikiLinks(entry.body),
       wordCount: countWords(entry.body),
+      hasTodo: [data.title, data.summary, entry.body].some((part) => /\bTODO\b/.test(part)),
     };
     textsByArticle.set(entry.id, texts);
   }
@@ -187,6 +188,9 @@ export function buildCatalog(raw: RawContent, options: BuildOptions): { catalog:
       }
     }
     for (const text of Object.values(article.texts)) {
+      if (text.hasTodo && article.status !== 'draft') {
+        problems.push({ file: text.file, message: 'contains a TODO placeholder — finish it or set status: draft' });
+      }
       for (const link of text.links) {
         if (articles.has(link.target)) continue;
         const written = `[[${link.target}${link.text === undefined ? '' : `|${link.text}`}]]`;

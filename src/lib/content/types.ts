@@ -20,6 +20,8 @@ export interface ArticleText {
   reviewed: boolean;
   links: WikiLink[];
   wordCount: number;
+  /** Title, summary or body still contains a TODO placeholder (allowed only in drafts). */
+  hasTodo: boolean;
 }
 
 export interface Source {
