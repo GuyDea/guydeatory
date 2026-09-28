@@ -91,6 +91,16 @@ Keep terms consistent across all articles. Add new terms here when you introduce
 | latent heat | skupenské teplo | |
 | conservation of energy | zákon zachovania energie | |
 | particle | častica, čiastočka | "čiastočka" is friendlier for kids |
+| friction | trenie | |
+| conduction / convection / radiation (of heat) | vedenie / prúdenie / žiarenie tepla | |
+| thermal insulator | tepelný izolant | |
+| specific heat capacity | merná tepelná kapacita | |
+| internal energy | vnútorná energia | |
+| kinetic / potential energy | pohybová / polohová energia | "kinetická / potenciálna" in GoDeeper |
+| absolute zero | absolútna nula | |
+| perpetual motion machine | perpetuum mobile | |
+| vacuum flask (thermos) | termoska | |
+| vacuum | vákuum | |
 
 ### Heat pumps and air conditioning
 
