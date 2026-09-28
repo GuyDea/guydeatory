@@ -17,13 +17,14 @@ function redirect(status, location) {
   };
 }
 
+// CloudFront hands us keys and values still URL-encoded, so they are passed through unchanged.
 function queryString(querystring) {
   var parts = [];
   for (var key in querystring) {
     var entry = querystring[key];
     var values = entry.multiValue ? entry.multiValue : [entry];
     for (var i = 0; i < values.length; i++) {
-      parts.push(encodeURIComponent(key) + (values[i].value === '' ? '' : '=' + encodeURIComponent(values[i].value)));
+      parts.push(key + (values[i].value === '' ? '' : '=' + values[i].value));
     }
   }
   return parts.length ? '?' + parts.join('&') : '';
@@ -72,6 +73,11 @@ function handler(event) {
   if (host !== APEX && host.indexOf('www.') === 0) {
     return redirect(301, 'https://' + APEX + uri + query);
   }
+  // "//evil.com/x" or "/\\evil.com" would read as another host in a relative Location header:
+  // normalise such paths and always redirect to an absolute URL on our own domain.
+  if (uri.indexOf('//') === 0 || uri.indexOf('\\') !== -1) {
+    return redirect(301, 'https://' + APEX + uri.replace(/\\/g, '/').replace(/^\/+/, '/') + query);
+  }
   if (uri === '/') {
     return redirect(302, '/' + pickLanguage(request) + '/' + query);
   }
@@ -81,7 +87,7 @@ function handler(event) {
   }
   var last = uri.substring(uri.lastIndexOf('/') + 1);
   if (last.indexOf('.') === -1) {
-    return redirect(301, uri + '/' + query);
+    return redirect(301, 'https://' + APEX + uri + '/' + query);
   }
   return request;
 }

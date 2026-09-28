@@ -53,7 +53,22 @@ describe('CloudFront router', () => {
   it('adds the trailing slash to extensionless paths (301)', () => {
     const res = run(request('/en/voltage', { querystring: { a: { value: '1' } } }));
     expect((res as CfResponse).statusCode).toBe(301);
-    expect(location(res)).toBe('/en/voltage/?a=1');
+    expect(location(res)).toBe('https://theguydea.com/en/voltage/?a=1');
+  });
+
+  it('never redirects off the site, even for paths that look like other hosts', () => {
+    for (const uri of ['//example.com/x', '/\\evil.com/x', '//example.com']) {
+      const res = run(request(uri)) as CfResponse;
+      expect(res.statusCode, uri).toBe(301);
+      expect(location(res), uri).toMatch(/^https:\/\/theguydea\.com\//);
+    }
+  });
+
+  it('keeps already-encoded query strings exactly as received', () => {
+    const res = run(request('/sk/hladaj', { querystring: { q: { value: 'pr%C3%BAd' } } }));
+    expect(location(res)).toBe('https://theguydea.com/sk/hladaj/?q=pr%C3%BAd');
+    const www = run(request('/en/', { headers: { host: { value: 'www.theguydea.com' } }, querystring: { q: { value: 'heat%20pump' } } }));
+    expect(location(www)).toBe('https://theguydea.com/en/?q=heat%20pump');
   });
 
   it('passes files through untouched', () => {

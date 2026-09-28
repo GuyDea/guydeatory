@@ -36,8 +36,13 @@ bucket has `DeletionPolicy: Retain`, so deleting the stack keeps the files.
 | `www.theguydea.com/…` | 301 → `https://theguydea.com/…` |
 | `/` | 302 → `/sk/` or `/en/`. Order: `lang` cookie, then `Accept-Language` (Czech → Slovak), else English. |
 | `/en/voltage/` | Rewritten to `/en/voltage/index.html` (S3 has no directory index) |
-| `/en/voltage` | 301 → `/en/voltage/` |
+| `/en/voltage` | 301 → `https://theguydea.com/en/voltage/` |
+| `//example.com/x`, `/\example.com/x` | 301 → `https://theguydea.com/example.com/x`. A path that looks like another host never leaves the site. |
 | Files (`/_astro/x.css`, `/sitemap.xml`) | Unchanged |
+
+Every redirect goes to an absolute `https://theguydea.com/…` URL and keeps the query string exactly
+as it arrived. CloudFront hands it over already percent-encoded, so encoding it again would turn
+`?q=pr%C3%BAd` into `?q=pr%25C3%25BAd`.
 
 ## Commands
 
