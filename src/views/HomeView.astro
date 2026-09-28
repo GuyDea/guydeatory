@@ -1,0 +1,20 @@
+---
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+import { getCatalog } from '@lib/content/catalog';
+import { articleUrl, homeAlternates, homeUrl } from '@lib/urls';
+import SimplePage from './SimplePage.astro';
+
+interface Props {
+  lang: LangCode;
+}
+const { lang } = Astro.props;
+const catalog = await getCatalog();
+const articles = [...catalog.articles.values()].filter((a) => a.texts[lang]);
+---
+<SimplePage lang={lang} title={t(lang, 'site.name')} description={t(lang, 'site.tagline')} canonical={homeUrl(lang)} alternates={homeAlternates()}>
+  <p>{t(lang, 'site.tagline')}</p>
+  <ul>
+    {articles.map((a) => <li><a href={articleUrl(a, lang)}>{a.texts[lang]!.title}</a></li>)}
+  </ul>
+</SimplePage>

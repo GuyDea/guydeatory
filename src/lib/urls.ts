@@ -1,4 +1,4 @@
-import { DEFAULT_LANG, getLanguage } from '../i18n/languages.ts';
+import { DEFAULT_LANG, getLanguage, LANG_CODES } from '../i18n/languages.ts';
 import type { LangCode, SectionKey } from '../i18n/languages.ts';
 import type { Article, ArticleText, Catalog, Topic } from './content/types.ts';
 
@@ -43,4 +43,22 @@ export function resolveArticleLink(catalog: Catalog, targetId: string, lang: Lan
     if (text) return { href: `/${candidate}/${text.slug}/`, lang: candidate, isFallback: candidate !== lang, text };
   }
   return null;
+}
+
+export interface Alternate {
+  lang: LangCode;
+  /** null when the page does not exist in that language */
+  href: string | null;
+}
+
+export function articleAlternates(article: Article): Alternate[] {
+  return LANG_CODES.map((lang) => ({ lang, href: articleUrl(article, lang) }));
+}
+
+export function sectionAlternates(section: SectionKey): Alternate[] {
+  return LANG_CODES.map((lang) => ({ lang, href: sectionUrl(lang, section) }));
+}
+
+export function homeAlternates(): Alternate[] {
+  return LANG_CODES.map((lang) => ({ lang, href: homeUrl(lang) }));
 }

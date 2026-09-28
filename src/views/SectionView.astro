@@ -1,0 +1,22 @@
+---
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+import { sectionAlternates, sectionUrl } from '@lib/urls';
+import SimplePage from './SimplePage.astro';
+
+interface Props {
+  lang: LangCode;
+  kind: 'explore' | 'search' | 'about';
+}
+const { lang, kind } = Astro.props;
+const titleKey = kind === 'explore' ? 'nav.explore' : kind === 'search' ? 'nav.search' : 'nav.about';
+---
+<SimplePage
+  lang={lang}
+  title={t(lang, titleKey)}
+  description={t(lang, 'site.tagline')}
+  canonical={sectionUrl(lang, kind)}
+  alternates={sectionAlternates(kind)}
+  current={kind}
+  noindex={kind === 'search'}
+/>

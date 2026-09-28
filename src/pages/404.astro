@@ -1,0 +1,53 @@
+---
+import { DEFAULT_LANG, LANGUAGES } from '@i18n/languages';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { homeAlternates, homeUrl, sectionUrl } from '@lib/urls';
+
+const copy = {
+  en: { title: 'We could not find that page', body: 'The link may be old or mistyped. Try searching, or start again from the home page.', search: 'Search', home: 'Home' },
+  sk: { title: 'Túto stránku sme nenašli', body: 'Odkaz môže byť starý alebo s preklepom. Skús vyhľadávanie alebo začni znova na úvodnej stránke.', search: 'Hľadať', home: 'Domov' },
+} as const;
+---
+<BaseLayout lang={DEFAULT_LANG} title="404" description={copy.en.title} canonical="/404.html" alternates={homeAlternates()} noindex>
+  <div class="page not-found">
+    {
+      LANGUAGES.map(({ code }) => (
+        <section lang={code} data-lang={code}>
+          <h1>{copy[code].title}</h1>
+          <p>{copy[code].body}</p>
+          <p class="actions">
+            <a href={sectionUrl(code, 'search')}>{copy[code].search}</a>
+            <a href={homeUrl(code)}>{copy[code].home}</a>
+          </p>
+        </section>
+      ))
+    }
+  </div>
+  <script>
+    // Show the visitor's language first, judging by the path they tried.
+    const lang = location.pathname.split('/')[1];
+    const match = document.querySelector<HTMLElement>(`.not-found [data-lang="${lang}"]`);
+    match?.parentElement?.prepend(match);
+  </script>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding-block: var(--space-8);
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  h1 {
+    font-size: var(--text-h2);
+    font-weight: 800;
+    margin-bottom: var(--space-3);
+  }
+
+  .actions {
+    display: flex;
+    gap: var(--space-5);
+    margin-top: var(--space-4);
+    font-weight: 700;
+  }
+</style>

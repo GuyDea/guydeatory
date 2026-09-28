@@ -1,0 +1,55 @@
+---
+/**
+ * A highlighted term linking to the article that explains it. Created from [[id]] / [[id|text]]
+ * by the remark-wiki-links plugin; `lang` is injected by remark-inject-lang.
+ */
+import type { LangCode } from '@i18n/languages';
+import { getCatalog } from '@lib/content/catalog';
+import { resolveArticleLink } from '@lib/urls';
+
+interface Props {
+  id: string;
+  lang: LangCode;
+}
+
+const { id, lang } = Astro.props;
+const link = resolveArticleLink(await getCatalog(), id, lang);
+if (!link) throw new Error(`[[${id}]] links to an unknown article (page language: ${lang})`);
+const custom = Astro.slots.has('default');
+---
+<a
+  class="term"
+  href={link.href}
+  hreflang={link.isFallback ? link.lang : undefined}
+  data-trail-link
+  data-trail-to={id}
+  data-preview-title={link.text.title}
+  data-preview-summary={link.text.summary}
+>{custom ? <slot /> : link.text.term}{link.isFallback && <span class="term-lang" lang={link.lang}>{link.lang.toUpperCase()}</span>}</a>
+
+<style>
+  .term {
+    color: var(--term-ink);
+    text-decoration: none;
+    font-weight: 700;
+    padding-inline: 0.12em;
+    margin-inline: -0.06em;
+    border-radius: 0.25em;
+    background: linear-gradient(to top, var(--term-mark) 62%, transparent 62%);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    transition: background-size 0.15s ease;
+  }
+
+  .term:hover,
+  .term:focus-visible {
+    background: var(--term-mark-hover);
+  }
+
+  .term-lang {
+    font-size: 0.65em;
+    margin-left: 0.25em;
+    vertical-align: 0.2em;
+    color: var(--ink-soft);
+  }
+</style>

@@ -1,0 +1,24 @@
+---
+import { LANG_CODES } from '@i18n/languages';
+import type { LangCode } from '@i18n/languages';
+import { getCatalog } from '@lib/content/catalog';
+import { articlesInTopic, localized, topicHasContent } from '@lib/content/queries';
+import { articleUrl, topicUrl } from '@lib/urls';
+import SimplePage from './SimplePage.astro';
+
+interface Props {
+  lang: LangCode;
+  id: string;
+}
+const { lang, id } = Astro.props;
+const catalog = await getCatalog();
+const topic = catalog.topics.get(id)!;
+const alternates = LANG_CODES.map((code) => ({ lang: code, href: topicHasContent(catalog, id, code) ? topicUrl(topic, code) : null }));
+const articles = articlesInTopic(catalog, id, lang, true);
+---
+<SimplePage lang={lang} title={localized(topic.name, lang)} description={localized(topic.description, lang)} canonical={topicUrl(topic, lang)!} alternates={alternates}>
+  <p>{localized(topic.description, lang)}</p>
+  <ul>
+    {articles.map((a) => <li><a href={articleUrl(a, lang)}>{a.texts[lang]!.title}</a></li>)}
+  </ul>
+</SimplePage>

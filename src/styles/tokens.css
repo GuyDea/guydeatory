@@ -19,6 +19,9 @@
   --accent-soft: #e5ebfd;
   --highlight: #ffd84d;
   --highlight-soft: #fff0b3;
+  --term-mark: #ffe477;
+  --term-mark-hover: #ffd84d;
+  --term-ink: var(--ink);
   --focus: #2548d8;
 
   /* Meaningful colours */
@@ -102,6 +105,9 @@
     --accent-soft: #1f2d52;
     --highlight: #ffd84d;
     --highlight-soft: rgb(255 216 77 / 0.22);
+    --term-mark: rgb(255 216 77 / 0.26);
+    --term-mark-hover: rgb(255 216 77 / 0.42);
+    --term-ink: #fff4cc;
     --focus: #b8c7ff;
     --hot: #ff8a65;
     --cold: #6cb8ff;
@@ -143,6 +149,9 @@
   --accent-soft: #1f2d52;
   --highlight: #ffd84d;
   --highlight-soft: rgb(255 216 77 / 0.22);
+  --term-mark: rgb(255 216 77 / 0.26);
+  --term-mark-hover: rgb(255 216 77 / 0.42);
+  --term-ink: #fff4cc;
   --focus: #b8c7ff;
   --hot: #ff8a65;
   --cold: #6cb8ff;

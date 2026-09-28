@@ -1,0 +1,56 @@
+---
+import { getEntry, render } from 'astro:content';
+import { contentComponents } from '@components/content/index';
+import type { LangCode } from '@i18n/languages';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getCatalog } from '@lib/content/catalog';
+import { articleAlternates, articleUrl } from '@lib/urls';
+import '@styles/prose.css';
+
+interface Props {
+  lang: LangCode;
+  id: string;
+}
+
+const { lang, id } = Astro.props;
+const catalog = await getCatalog();
+const article = catalog.articles.get(id)!;
+const text = article.texts[lang]!;
+const entry = await getEntry('articleTexts', text.entryId);
+if (!entry) throw new Error(`No MDX entry "${text.entryId}" for article "${id}"`);
+const { Content } = await render(entry);
+---
+<BaseLayout
+  lang={lang}
+  title={text.title}
+  description={text.summary}
+  canonical={articleUrl(article, lang)!}
+  alternates={articleAlternates(article)}
+  ogType="article"
+>
+  <article class="page article">
+    <h1>{text.title}</h1>
+    <p class="summary">{text.summary}</p>
+    <div class="prose">
+      <Content components={contentComponents as Record<string, never>} />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .article {
+    padding-block: var(--space-7);
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    font-weight: 800;
+    max-width: 20ch;
+  }
+
+  .summary {
+    margin-block: var(--space-5);
+    font-size: var(--text-lg);
+    max-width: var(--measure);
+  }
+</style>

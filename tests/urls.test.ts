@@ -60,3 +60,28 @@ describe('resolveArticleLink', () => {
     expect(resolveArticleLink(catalogWith('voltage'), 'nope', 'en')).toBeNull();
   });
 });
+
+describe('alternates', () => {
+  it('lists every language for an article, null where it is not translated', async () => {
+    const { articleAlternates } = await import('../src/lib/urls.ts');
+    const catalog = catalogWith('voltage');
+    const voltage = catalog.articles.get('voltage')!;
+    delete voltage.texts.sk;
+    expect(articleAlternates(voltage)).toEqual([
+      { lang: 'en', href: '/en/voltage/' },
+      { lang: 'sk', href: null },
+    ]);
+  });
+
+  it('lists localized section and home URLs for every language', async () => {
+    const { homeAlternates, sectionAlternates } = await import('../src/lib/urls.ts');
+    expect(sectionAlternates('explore')).toEqual([
+      { lang: 'en', href: '/en/explore/' },
+      { lang: 'sk', href: '/sk/objavuj/' },
+    ]);
+    expect(homeAlternates()).toEqual([
+      { lang: 'en', href: '/en/' },
+      { lang: 'sk', href: '/sk/' },
+    ]);
+  });
+});

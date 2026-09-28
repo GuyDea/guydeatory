@@ -1,6 +1,31 @@
 ---
+/**
+ * theguydea.com/ — send the visitor to their language. In production the CloudFront router
+ * does this before the page is fetched; this page covers local preview and no-JS visitors.
+ */
+import { LANGUAGES } from '@i18n/languages';
+import { homeUrl } from '@lib/urls';
 ---
+<!doctype html>
 <html lang="en">
-  <head><meta charset="utf-8" /><title>Guydeatory</title></head>
-  <body><h1>Guydeatory</h1></body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Guydeatory</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <noscript><meta http-equiv="refresh" content="0; url=/en/" /></noscript>
+    <style>
+      body { font-family: system-ui, sans-serif; display: grid; place-items: center; min-height: 100vh; margin: 0; background: #f6f8fb; color: #1a2640; }
+      a { color: #2548d8; font-size: 1.25rem; margin: 0 0.75rem; }
+    </style>
+  </head>
+  <body>
+    <p>{LANGUAGES.map((language) => <a href={homeUrl(language.code)} hreflang={language.code} lang={language.code}>{language.nativeName}</a>)}</p>
+    <script>
+      import { pickLanguage } from '../lib/language-pick.ts';
+
+      location.replace(`/${pickLanguage({ cookie: document.cookie, accept: navigator.languages ?? [navigator.language] })}/`);
+    </script>
+  </body>
 </html>

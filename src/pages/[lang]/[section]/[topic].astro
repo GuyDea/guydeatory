@@ -1,0 +1,24 @@
+---
+/** Topic pages: /en/topics/<slug>/, /sk/temy/<slug>/ — only for topics with articles in that language. */
+import { LANGUAGES } from '@i18n/languages';
+import type { LangCode } from '@i18n/languages';
+import { getCatalog } from '@lib/content/catalog';
+import { topicHasContent } from '@lib/content/queries';
+import TopicView from '@views/TopicView.astro';
+
+export async function getStaticPaths() {
+  const catalog = await getCatalog();
+  return LANGUAGES.flatMap((language) =>
+    [...catalog.topics.values()]
+      .filter((topic) => topic.slug[language.code] && topicHasContent(catalog, topic.id, language.code))
+      .map((topic) => ({
+        params: { lang: language.code, section: language.sections.topics, topic: topic.slug[language.code]! },
+        props: { id: topic.id },
+      })),
+  );
+}
+
+const lang = Astro.params.lang as LangCode;
+const { id } = Astro.props;
+---
+<TopicView lang={lang} id={id} />
