@@ -1,5 +1,18 @@
 topics: [electricity]
 labels: [high-level]
-status: stub
+prerequisites: [electron]
+related: [electric-circuit, electrical-resistance, electric-current, why-birds-on-wires-dont-get-shocked]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Electrical resistivity and conductivity — Wikipedia
+    url: https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity
+  - title: Insulator (electricity) — Wikipedia
+    url: https://en.wikipedia.org/wiki/Insulator_(electricity)
+  - title: Dielectric strength (breakdown of air) — Wikipedia
+    url: https://en.wikipedia.org/wiki/Dielectric_strength
+  - title: Semiconductor — Wikipedia
+    url: https://en.wikipedia.org/wiki/Semiconductor
+  - title: Superconductivity — Wikipedia
+    url: https://en.wikipedia.org/wiki/Superconductivity

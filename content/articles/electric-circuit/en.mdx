@@ -1,8 +1,179 @@
 ---
-title: 'What is an electric circuit?'
-term: 'electric circuit'
+title: What is an electric circuit?
+term: electric circuit
 slug: electric-circuit
-summary: 'An electric circuit is a closed loop that electricity can flow around: from a battery, through wires and a lamp, and back to the battery. Break the loop anywhere and the flow stops.'
+summary: "An electric circuit is a closed loop that electricity can flow around: from a battery, through wires and a lamp, and back to the battery. Break the loop anywhere and the flow stops."
+keywords: [circuit, electrical circuit, closed circuit, open circuit, loop, switch, circuit diagram, circuit symbols, series circuit, parallel circuit, short circuit]
 ---
 
-A circuit is a complete path for electricity, like a race track with no gaps. A switch is simply a way to open or close a gap in the loop.
+import OpenClosed from './diagrams/OpenClosed.astro';
+import CircuitSymbols from './diagrams/CircuitSymbols.astro';
+import SeriesParallel from './diagrams/SeriesParallel.astro';
+
+Press the button on a torch, and it lights up. Press it again, and it goes dark. Inside, the button
+opens and closes a path for electricity. That path is called an **electric circuit**.
+
+## Why does electricity need a loop?
+
+Electricity in a wire is a flow of tiny particles called [[electron|electrons]]. We call this flow
+an [[electric-current|electric current]]. A battery pushes the electrons along. But they can only
+flow along a complete path: out of the battery, all the way around and back in.
+
+A complete path like this is called a **circuit**. The word means “a way around”, because a circuit
+always leads back to where it started.
+
+<Analogy>
+Think of water pipes joined into a closed loop, with a pump in one place. The pump pushes the water
+around and around. No water gets used up: the same water keeps coming back to the pump. A battery
+does the same with electrons.
+</Analogy>
+
+## What are the parts of a circuit?
+
+A simple circuit has four kinds of parts:
+
+- A **source**, such as a battery. It gives the push, called [[voltage]].
+- **Wires**, which carry the electricity.
+- A **load**, such as a bulb, a buzzer or a motor. It turns the [[energy]] brought by the
+  electricity into light, sound or movement.
+- A **switch**, which opens or closes the loop.
+
+The wires are metal inside, because metal is a good [[conductors-and-insulators|conductor]]: it
+lets electrons through easily. Their plastic covering is an insulator, which keeps the electricity
+inside.
+
+## Open or closed?
+
+A circuit with no gaps is **closed**. Electrons flow all the way around, and the bulb lights up.
+
+A circuit with a gap is **open**. The electrons stop moving everywhere in the loop — not only at
+the gap. The bulb goes dark.
+
+<Figure caption="Top: the switch is open, so there is a gap and the bulb stays dark. The electrons are still in the wires, but they don’t move. Bottom: the switch is closed, the electrons flow around the loop and the bulb shines." wide>
+  <OpenClosed />
+</Figure>
+
+<Analogy title="A switch is like a drawbridge">
+Imagine a ring-shaped road packed with cars, with a drawbridge on it. When the bridge is down, the
+ring is complete and all the cars can roll around. When the bridge is up, there is a gap. The car
+at the gap must stop, and so must every car behind it, all the way around the ring.
+</Analogy>
+
+Watch out for the words! For a circuit, “closed” means the electricity flows, and “open” means it
+stops. For a door or a tap, it is the other way around.
+
+## What about circuits at home?
+
+The lights in your home are on circuits too. Their loops are hidden inside the walls. When you
+press a light switch, you close a gap in the loop that leads to the lamp.
+
+Every plug has at least two metal pins, because electricity needs a way to the lamp and a way
+back.
+
+Your body can become part of a circuit, too. If electricity from a socket or a power line flows
+through you into the ground or into another wire, it can kill. A bird sitting on one power line is
+safe, because both its feet touch the same wire. Read more in
+[[why-birds-on-wires-dont-get-shocked|why birds on wires are safe]].
+
+<Safety>
+Never poke anything into a socket, and stay far away from power lines. The electricity in your home
+is strong enough to kill.
+</Safety>
+
+## How do you draw a circuit?
+
+Drawing real batteries and bulbs takes a long time, so people use simple symbols instead. A drawing
+made of these symbols is called a **circuit diagram**.
+
+- A long thin line next to a short thick line is a battery. The long line is the plus end.
+- A circle with a cross inside is a bulb.
+- A line with a lifted lever is a switch.
+- Straight lines are wires.
+
+<Figure caption="Each part has its own symbol. At the bottom, a whole circuit with a battery, a switch and a bulb is drawn with them." wide>
+  <CircuitSymbols />
+</Figure>
+
+## One after another, or side by side?
+
+A circuit can have more than one bulb. There are two ways to connect them:
+
+- **One after another**, also called **in series**. The bulbs sit in the same loop, like beads on
+  a string. If one bulb breaks, the loop is broken, and all of them go dark.
+- **Side by side**, also called **in parallel**. Each bulb has its own path. If one bulb breaks,
+  the others keep shining.
+
+<Figure caption="Left: two bulbs one after another, in a single loop. Right: two bulbs side by side, each with its own path." wide>
+  <SeriesParallel />
+</Figure>
+
+The lamps in your home are connected side by side. That is why you can switch one off while the
+others stay on. How the current divides between the bulbs is explained in
+[[how-electric-current-behaves|how electric current behaves]].
+
+<FunFact>
+Some old strings of fairy lights had their bulbs one after another. When one tiny bulb broke, the
+whole string went dark — and finding the broken one could take ages!
+</FunFact>
+
+## What is a short circuit?
+
+What if a wire joins the two ends of a battery directly, with no bulb in between? Then the
+electrons rush around far too easily. The wire and the battery get hot, and the battery can be
+damaged. This is called a **short circuit**.
+
+At home, fuses and circuit breakers watch for this. If far too much electricity flows, they open
+the circuit.
+
+<Safety>
+Build circuits only with small batteries, never with a socket. Never join the two ends of a battery
+with a bare wire. And never put a battery in your mouth: small button batteries are very dangerous
+if swallowed.
+</Safety>
+
+<GoDeeper title="Which way does the current flow?">
+Electrons flow out of the battery’s minus end, around the circuit and back into its plus end. But
+arrows for current in circuit diagrams usually point the other way, from plus to minus. This
+“conventional current” goes back to the 1700s, when Benjamin Franklin named the two kinds of charge
+— long before anyone knew about electrons. Both ways of describing it give the same answers, as
+long as you stick to one of them.
+
+Similar symbols are used all over the world, so people can read a circuit diagram whatever language
+they speak. The ones in the picture above follow the international standard (IEC 60617), but some
+countries draw a few of them differently. In the United States, for example, a bulb is often drawn as a
+circle with a little loop inside.
+</GoDeeper>
+
+<GoDeeper title="Where the water-pipe picture goes wrong">
+- Cut a water pipe, and the water pours out. Cut a wire, and no electrons pour out: the flow stops
+  everywhere in the loop.
+- A closed tap stops water, but a closed switch lets electricity flow. The words work the other
+  way around.
+- A battery does not run out of electrons: they are already in the wires. What runs out is the
+  battery’s chemical energy.
+- At home, the current is [[alternating-current|alternating current]]: the electrons swing back
+  and forth 50 times a second (60 in some countries) instead of going around. The circuit still has
+  to be a closed loop, through the lamp and back.
+</GoDeeper>
+
+<Remember>
+- A circuit is a closed loop that electricity flows around.
+- It needs a source (like a battery), wires and a load (like a bulb).
+- A switch opens or closes a gap in the loop.
+- In a closed circuit, electricity flows. In an open circuit, it stops.
+- Bulbs can be connected one after another or side by side.
+</Remember>
+
+<Quiz
+  question="Why does the bulb go out when you open the switch?"
+  options={["The battery runs out", "The loop has a gap, so the electrons stop flowing", "The bulb gets too cold"]}
+  answer={1}
+  explanation="Electricity needs a complete loop. The open switch makes a gap, so the flow stops all around the circuit."
+/>
+
+<Quiz
+  question="One lamp in your home breaks. Why do the other lamps keep shining?"
+  options={["They are connected side by side, each with its own path", "They have spare electricity inside them", "The broken lamp sends its electricity to them"]}
+  answer={0}
+  explanation="The lamps in a home are connected side by side. Each lamp has its own path, so one broken lamp does not break the loops of the others."
+/>

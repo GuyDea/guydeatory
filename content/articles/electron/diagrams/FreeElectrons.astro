@@ -1,0 +1,66 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Free electrons in a metal wire',
+    desc: 'Two views of a piece of metal wire, full of atoms with free electrons between them. Top: with no push, the free electrons move in all directions. Bottom: with a push from a battery, they all drift the same way along the wire, which is an electric current.',
+    calm: 'no push: electrons wander',
+    pushed: 'with a push: electric current',
+    atom: 'metal atom',
+    electron: 'free electron',
+  },
+  sk: {
+    title: 'Voľné elektróny v kovovom drôte',
+    desc: 'Dva pohľady na kúsok kovového drôtu plného atómov, medzi ktorými sú voľné elektróny. Hore: bez tlačenia sa voľné elektróny pohybujú všetkými smermi. Dole: keď ich tlačí batéria, všetky sa posúvajú po drôte rovnakým smerom – to je elektrický prúd.',
+    calm: 'bez tlačenia: elektróny sa túlajú',
+    pushed: 's tlačením: elektrický prúd',
+    atom: 'atóm kovu',
+    electron: 'voľný elektrón',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+
+const atomXs = [45, 97, 149, 201, 253, 305, 357];
+// Free electrons [x, y, direction in degrees] inside a panel that starts at y = 0.
+const wandering: [number, number, number][] = [
+  [22, 91, 270], [71, 91, 200], [123, 45, 350], [175, 91, 110], [227, 137, 180],
+  [279, 91, 250], [331, 45, 190], [71, 137, 270], [379, 91, 90],
+];
+const drifting: [number, number, number][] = [
+  [22, 91, 0], [71, 91, 0], [123, 45, 0], [175, 91, 0], [227, 137, 0],
+  [279, 91, 0], [331, 45, 0], [71, 137, 0], [331, 91, 0],
+];
+const arrow = (x: number, y: number, deg: number) => {
+  const dx = Math.cos((deg * Math.PI) / 180);
+  const dy = Math.sin((deg * Math.PI) / 180);
+  const f = (n: number) => n.toFixed(1);
+  return `M${f(x + dx * 8)} ${f(y + dy * 8)}L${f(x + dx * 26)} ${f(y + dy * 26)}`;
+};
+const panels = [
+  { top: 0, label: s.calm, electrons: wandering },
+  { top: 164, label: s.pushed, electrons: drifting },
+];
+---
+<Svg viewBox="0 0 400 350" title={s.title} desc={s.desc} maxWidth="30rem">
+  {
+    panels.map(({ top, label, electrons }) => (
+      <g transform={`translate(0 ${top})`}>
+        <text x="12" y="24" class="d-label">{label}</text>
+        <rect x="10" y="36" width="380" height="110" rx="14" class="d-box-alt" />
+        {atomXs.map((x) => <circle cx={x} cy="66" r="11" class="d-muted" />)}
+        {atomXs.map((x) => <circle cx={x} cy="116" r="11" class="d-muted" />)}
+        {electrons.map(([x, y]) => <circle cx={x} cy={y} r="5.5" class="d-electron" />)}
+        {electrons.map(([x, y, deg]) => <path d={arrow(x, y, deg)} class="d-line d-arrow-electron" />)}
+      </g>
+    ))
+  }
+  <circle cx="22" cy="330" r="11" class="d-muted" />
+  <text x="40" y="336">{s.atom}</text>
+  <circle cx="212" cy="330" r="5.5" class="d-electron" />
+  <text x="226" y="336">{s.electron}</text>
+</Svg>

@@ -1,8 +1,164 @@
 ---
-title: 'Čo sú vodiče a izolanty?'
-term: 'vodiče a izolanty'
+title: Čo sú vodiče a izolanty?
+term: vodiče a izolanty
 slug: vodice-a-izolanty
-summary: 'Vodiče sú látky, cez ktoré elektrina ľahko prechádza, napríklad meď a iné kovy. Izolanty ako plast, guma a sklo ju takmer vôbec neprepustia – preto sú drôty obalené plastom.'
+summary: Vodiče sú látky, cez ktoré elektrina ľahko prechádza, napríklad meď a iné kovy. Izolanty ako plast, guma a sklo ju takmer vôbec neprepustia – preto sú drôty obalené plastom.
+keywords: [vodič, izolant, elektrický vodič, izolácia, vodivosť, čo vedie elektrinu, čo vedie prúd, vodivé materiály, nevodivé materiály, kovy, plast, guma, kábel, polovodič, supravodič]
 ---
 
-Cez niektoré látky elektrina tečie ľahko a cez iné takmer vôbec. Kovy sú dobré vodiče, plast a guma sú dobré izolanty, ktoré udržia elektrinu tam, kde má byť.
+import InsideMaterials from './diagrams/InsideMaterials.astro';
+import CableCutaway from './diagrams/CableCutaway.astro';
+
+Pozri sa na kábel od lampy alebo od nabíjačky. Zvonka je z mäkkého plastu, ale vo vnútri sú schované
+tenké lesklé drôtiky z kovu, väčšinou z medi. Prečo dva rôzne materiály? Lebo niektorými látkami
+elektrina prechádza ľahko a inými takmer vôbec.
+
+## Čím sa líšia?
+
+Všetko je z [[atom|atómov]] a každý atóm má okolo seba drobné [[electron|elektróny]]. Elektrina
+v drôte je tok elektrónov, ktoré sa posúvajú rovnakým smerom.
+
+V **kovoch** niektoré elektróny nepatria k žiadnemu jednému atómu. Môžu sa voľne túlať pomedzi
+atómy. Keď ich niečo zatlačí, tečú – a elektrina ľahko prechádza. Takým látkam hovoríme **vodiče**.
+
+V látkach ako **plast** alebo **guma** drží každý elektrón pevne jeho vlastný atóm. Aj keď ich niečo
+tlačí, elektróny zostanú na mieste, a tak elektrina takmer neprejde. Takým látkam hovoríme
+**izolanty**.
+
+<Figure caption="V kove sa niektoré elektróny môžu voľne pohybovať pomedzi atómy. V plaste zostáva každý elektrón pri svojom atóme." wide>
+  <InsideMaterials />
+</Figure>
+
+<Analogy>
+Predstav si ihrisko. Vo vodiči sú niektoré deti voľné a môžu behať, kam chcú: zavoláš ich na jednu
+stranu a už bežia! V izolante drží každé dieťa pevne za ruku niekoho dospelého. Môžeš volať, koľko
+chceš, nikto nepríde.
+</Analogy>
+
+## Ktoré látky sú vodiče a ktoré izolanty?
+
+| Vodiče | Izolanty |
+|---|---|
+| meď | plast |
+| hliník | guma |
+| železo a oceľ | sklo |
+| striebro | porcelán |
+| zlato | suché drevo |
+| tuha v ceruzke (grafit) | vzduch |
+
+Zo všetkých kovov vedie elektrinu najlepšie striebro. Meď je tesne za ním a je oveľa lacnejšia,
+preto je väčšina drôtov z medi. Veľké elektrické vedenia sú často z hliníka, lebo je ľahký a lacný.
+
+Dobrý vodič má malý [[electrical-resistance|odpor]]: elektrinu takmer nebrzdí. Izolant má obrovský
+odpor.
+
+<FunFact>
+Kovy dobre vedú aj [[heat|teplo]], a to z rovnakého dôvodu: ich voľné elektróny ho rýchlo roznášajú.
+Preto sa kovová lyžica v horúcej polievke rýchlo zohreje, ale drevená nie.
+</FunFact>
+
+<GoDeeper title="Aký veľký je ten rozdiel?">
+To, ako dobre látka vedie elektrinu, udáva jej **rezistivita** (merný elektrický odpor): odpor
+kvádra dlhého 1&nbsp;meter s prierezom 1&nbsp;štvorcový meter. Meď má asi
+$1{,}7 \cdot 10^{-8}\ \Omega\cdot\text{m}$. Tvrdá guma a plasty majú
+$10^{13}\ \Omega\cdot\text{m}$ alebo viac. Medená tyč teda prepúšťa elektrinu viac ako miliardu
+miliárd ráz ľahšie než rovnako veľká gumená alebo plastová tyč.
+</GoDeeper>
+
+## Prečo je kábel vnútri z medi a zvonka z plastu?
+
+Kábel má dve úlohy. Meď vo vnútri vedie elektrinu do lampy. Plast zvonka drží elektrinu vo vnútri,
+aby nemohla prejsť do tvojej ruky ani do ničoho iného.
+
+<Figure caption="Meď vo vnútri kábla vedie elektrinu. Plast okolo nej drží elektrinu vo vnútri." wide>
+  <CableCutaway />
+</Figure>
+
+Izolanty nás chránia na mnohých miestach. Zástrčky majú plastový obal a vypínače sú z plastu.
+Elektrické vedenia visia na vysokých stožiaroch na sklenených alebo porcelánových držiakoch, ktoré
+sa volajú izolátory. Vďaka nim elektrina nestečie dolu stožiarom.
+
+<Safety>
+Nikdy sa nedotýkaj kábla s poškodeným obalom a nikdy sa ho nepokúšaj otvoriť ani prerezať. Keď na
+kábli alebo zástrčke uvidíš holý kov, nedotýkaj sa ho – povedz to dospelému.
+</Safety>
+
+## Vedie voda elektrinu?
+
+Čistá voda je v skutočnosti zlý vodič. Voda okolo nás však nikdy nie je čistá. Voda z vodovodu,
+morská voda aj pot majú v sebe rozpustené soli a iné látky. Vďaka nim vedú elektrinu.
+
+Tvoje telo je plné slanej vody, takže tiež vedie elektrinu. Preto je elektrina zo zásuvky taká
+nebezpečná: môže prejsť priamo cez teba.
+
+<Safety>
+Nikdy sa nedotýkaj vypínačov, zástrčiek ani ničoho elektrického mokrými rukami. Elektrické prístroje
+drž ďaleko od vane, umývadla a bazéna. Drž sa ďaleko od elektrického vedenia a nikdy neliez na
+stromy ani stĺpy v jeho blízkosti.
+</Safety>
+
+## Vedie vzduch elektrinu?
+
+Vzduch je izolant. Preto môžu byť veľké elektrické vedenia vysoko nad zemou z holého kovu: vzduch
+okolo nich drží elektrinu vo vnútri. Možno ťa napadne, ako môžu vtáky sedieť na holých drôtoch.
+Dozvieš sa to v článku [[why-birds-on-wires-dont-get-shocked|prečo sú vtáky na drôtoch v bezpečí]].
+
+Obrovské tlačenie však dokáže vzduch preraziť. Vzduch vtedy zažiari a elektrina ním preskočí. To je
+iskra – alebo, oveľa väčší, blesk. Tlačeniu hovoríme [[voltage|napätie]] a pri blesku dosahuje
+stovky miliónov voltov.
+
+<GoDeeper title="Keď prúd nesú ióny">
+V slanej vode nie sú voľné elektróny. Soľ sa v nej rozpadne na nabité atómy, ktoré sa volajú
+**ióny**, a tie sa posúvajú vodou.
+
+Vo vzduchu začne iskra vtedy, keď silné tlačenie – v suchom vzduchu asi 3 milióny voltov na meter –
+vytrhne z molekúl vzduchu elektróny. Vzduch sa zmení na žiariaci plyn, ktorý vedie elektrinu.
+Hovoríme mu **plazma**.
+</GoDeeper>
+
+## Vyskúšaj to: čo vedie elektrinu?
+
+S dospelým si môžeš postaviť jednoduchú skúšačku. Potrebuješ plochú batériu 4,5&nbsp;V, malú
+žiarovku z baterky v objímke a tri drôty so svorkami. Poslúžia aj tri tužkové batérie v držiaku.
+Taká skúšačka je jednoduchý [[electric-circuit|elektrický obvod]].
+
+1. Spoj batériu, žiarovku a drôty do okruhu, ale medzi dvoma voľnými koncami drôtov nechaj medzeru.
+2. Oboma voľnými koncami sa dotkni skúšanej veci, kúsok od seba.
+3. Ak sa žiarovka rozsvieti, vec je vodič. Ak zostane tmavá, je to izolant.
+
+Vyskúšaj lyžičku, mincu, kľúč, tuhu z ceruzky, plastové pravítko, gumičku a kúsok papiera. Tuha
+z ceruzky možno žiarovku rozsvieti len slabo.
+
+<Safety>
+Pokusy rob len s malými batériami – nikdy nie so zásuvkou. Nikdy nespájaj oba konce batérie priamo
+drôtom: drôt aj batéria sa rozpália. A batérie nikdy nedávaj do úst.
+</Safety>
+
+<GoDeeper title="Niečo medzi: polovodiče">
+Niektoré látky, napríklad kremík, sú **polovodiče**. Vedú elektrinu oveľa horšie ako kovy, ale oveľa
+lepšie ako izolanty. To, ako dobre vedú, sa dá meniť: pridaním nepatrného množstva iných látok,
+svetlom, teplom alebo malým napätím. Preto sa z nich vyrábajú počítačové čipy, LED diódy a solárne
+panely.
+</GoDeeper>
+
+<GoDeeper title="Supravodiče: žiadny odpor">
+Keď niektoré látky dostatočne ochladíme, ich odpor úplne zmizne. Objavili to v roku 1911, keď ortuť
+ochladená na −269&nbsp;°C náhle stratila všetok odpor. V supravodivom prstenci môže prúd tiecť celé
+roky úplne bez batérie. Zo supravodivých cievok sú silné magnety v nemocničných prístrojoch na
+magnetickú rezonanciu.
+</GoDeeper>
+
+<Remember>
+- Vodiče ľahko prepúšťajú elektrinu. Izolanty ju takmer neprepustia.
+- Kovy vedú elektrinu, lebo niektoré ich elektróny sa môžu voľne pohybovať.
+- Plast, guma, sklo, suché drevo a vzduch sú izolanty.
+- Voda s rozpustenými soľami vedie elektrinu a tvoje telo tiež.
+- Na nič elektrické nesiahaj mokrými rukami.
+</Remember>
+
+<Quiz
+  question="Prečo sú elektrické káble obalené plastom?"
+  options={["Aby pekne vyzerali", "Plast je izolant a drží elektrinu vo vnútri", "Plast zrýchľuje elektrinu"]}
+  answer={1}
+  explanation="Plast pevne drží svoje elektróny, takže ním elektrina neprejde. Udrží ju vo vnútri medeného drôtu."
+/>

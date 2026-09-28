@@ -1,8 +1,167 @@
 ---
-title: 'What are conductors and insulators?'
-term: 'conductors and insulators'
+title: What are conductors and insulators?
+term: conductors and insulators
 slug: conductors-and-insulators
-summary: 'Conductors are materials that let electricity flow easily, like copper and other metals. Insulators, like plastic, rubber and glass, hardly let it through at all — that is why wires are wrapped in plastic.'
+summary: Conductors are materials that let electricity flow through them easily, like copper and other metals. Insulators, like plastic, rubber and glass, hardly let it through at all — that is why wires are wrapped in plastic.
+keywords: [conductor, insulator, electrical conductor, electrical insulator, conductivity, insulation, what conducts electricity, metals, plastic, semiconductor, superconductor]
 ---
 
-Electricity flows easily through some materials and hardly at all through others. Metals are good conductors; plastic and rubber are good insulators that keep electricity where it belongs.
+import InsideMaterials from './diagrams/InsideMaterials.astro';
+import CableCutaway from './diagrams/CableCutaway.astro';
+
+Look at the cable of a lamp or a phone charger. On the outside, it is soft plastic, but hidden
+inside are thin, shiny metal wires, usually made of copper. Why two different materials? Because
+electricity flows easily through some materials and hardly at all through others.
+
+## What makes the difference?
+
+Everything is made of [[atom|atoms]], and every atom has tiny [[electron|electrons]] around it.
+Electricity in a wire is a flow of electrons, all drifting the same way.
+
+In **metals**, some electrons are not tied to any one atom. They can wander freely between the
+atoms. Give them a push, and they flow — so electricity passes through easily. Materials like this
+are called **conductors**.
+
+In materials like **plastic** or **rubber**, every electron is held tightly by its own atom. Even
+with a push, the electrons stay where they are, so electricity can hardly pass. Materials like this
+are called **insulators**.
+
+<Figure caption="In a metal, some electrons are free to move between the atoms. In plastic, every electron stays with its own atom." wide>
+  <InsideMaterials />
+</Figure>
+
+<Analogy>
+Picture a playground. In a conductor, some children are free to run wherever they like: call them
+to one side, and off they go! In an insulator, every child is holding a grown-up’s hand tightly.
+You can call as much as you like, but nobody comes.
+</Analogy>
+
+## Which materials are which?
+
+| Conductors | Insulators |
+|---|---|
+| copper | plastic |
+| aluminium | rubber |
+| iron and steel | glass |
+| silver | porcelain |
+| gold | dry wood |
+| pencil lead (graphite) | air |
+
+Of all the metals, silver conducts best. Copper comes a close second and costs much less, so most
+wires are made of copper. Big power lines are often made of aluminium, because it is light and cheap.
+
+A good conductor has a low [[electrical-resistance|resistance]]: it hardly holds the electricity
+back. An insulator has a huge resistance.
+
+<FunFact>
+Metals are good at carrying [[heat]] too, and for the same reason: their free electrons carry heat
+along quickly. That is why a metal spoon in hot soup soon gets hot, but a wooden spoon does not.
+</FunFact>
+
+<GoDeeper title="How big is the difference?">
+How well a material conducts is measured by its **resistivity**: the resistance of a block that is
+1 metre long and 1 square metre across. Copper has about $1.7 \times 10^{-8}\ \Omega\cdot\text{m}$.
+Hard rubber and plastics have $10^{13}\ \Omega\cdot\text{m}$ or more. So a copper rod lets
+electricity through more than a billion billion times more easily than a rubber or plastic rod of
+the same size.
+</GoDeeper>
+
+## Why is a cable copper inside and plastic outside?
+
+A cable has two jobs. The copper inside carries the electricity to the lamp. The plastic outside
+keeps the electricity in, so it cannot flow into your hand or into anything else.
+
+<Figure caption="The copper inside the cable carries the electricity. The plastic around it keeps the electricity inside." wide>
+  <CableCutaway />
+</Figure>
+
+Insulators keep us safe in lots of places. Plugs have plastic cases, and light switches are made of
+plastic. Power lines hang from tall towers on glass or porcelain holders, called insulators. These
+stop the electricity from running down the towers.
+
+<Safety>
+Never touch a cable with a damaged cover, and never try to open or cut one. If you see bare metal
+on a cable or a plug, don’t touch it — tell a grown-up.
+</Safety>
+
+## Can water carry electricity?
+
+Pure water is actually a poor conductor. But the water around us is never pure. Tap water, sea
+water and sweat all have salts and other substances dissolved in them. These let electricity
+through.
+
+Your body is full of salty water, so it conducts electricity too. That is what makes the
+electricity from a socket so dangerous: it can flow right through you.
+
+<Safety>
+Never touch switches, plugs or anything electrical with wet hands. Keep electrical things away from
+baths, sinks and pools. Stay far away from power lines, and never climb trees or poles near them.
+</Safety>
+
+## Can air carry electricity?
+
+Air is an insulator. That is why big power lines high above the ground can be bare metal: the air
+around them keeps the electricity in. You may wonder how birds can sit on those bare wires. Find
+out in [[why-birds-on-wires-dont-get-shocked|why birds on wires are safe]].
+
+But a huge push can break through the air. The air then glows and lets electricity jump across.
+That is a spark — or, much bigger, a bolt of lightning. The push is called [[voltage]], and for
+lightning it reaches hundreds of millions of volts.
+
+<GoDeeper title="When ions carry the current">
+In salty water there are no free electrons. Instead, the salt breaks up into charged atoms called
+**ions**, and these drift through the water.
+
+In air, a spark starts when a strong push — about 3 million volts per metre in dry air — tears
+electrons off the air’s molecules. The air turns into a glowing gas that conducts, called a
+**plasma**.
+</GoDeeper>
+
+## Try it: which things conduct?
+
+With a grown-up, you can build a simple tester. You need a 4.5-volt battery, a small torch bulb in
+a holder and three wires with clips. Three AA batteries in a holder work too. The tester is a simple
+[[electric-circuit|electric circuit]].
+
+1. Connect the battery, the bulb and the wires into a loop, but leave a gap between two loose wire
+   ends.
+2. Touch both loose ends to the object you are testing, a little apart from each other.
+3. If the bulb lights up, the object is a conductor. If it stays dark, it is an insulator.
+
+Test a spoon, a coin, a key, a pencil lead, a plastic ruler, a rubber band and a piece of paper.
+The pencil lead may make the bulb glow only faintly.
+
+<Safety>
+Only experiment with small batteries — never with a socket. Never connect the two ends of a battery
+straight to each other with a wire: the wire and the battery get hot. And never put batteries in
+your mouth.
+</Safety>
+
+<GoDeeper title="In between: semiconductors">
+Some materials, such as silicon, are **semiconductors**. They conduct much worse than metals, but
+much better than insulators. How well they conduct can be changed: by adding tiny amounts of other
+substances, by light, by heat or by a small voltage. That makes them perfect for computer chips,
+LEDs and solar panels.
+</GoDeeper>
+
+<GoDeeper title="Superconductors: no resistance at all">
+Cool certain materials far enough, and their resistance vanishes completely. This was discovered in
+1911, when mercury cooled to −269 °C suddenly lost all its resistance. In a superconducting ring,
+a current can keep flowing for years with no battery at all. Superconducting coils make the
+powerful magnets inside hospital MRI scanners.
+</GoDeeper>
+
+<Remember>
+- Conductors let electricity flow easily. Insulators hardly let it through.
+- Metals conduct because some of their electrons are free to move.
+- Plastic, rubber, glass, dry wood and air are insulators.
+- Water with salts in it conducts electricity, and so does your body.
+- Never touch anything electrical with wet hands.
+</Remember>
+
+<Quiz
+  question="Why are electric cables covered in plastic?"
+  options={["To make them look nice", "Plastic is an insulator that keeps the electricity inside", "Plastic makes electricity flow faster"]}
+  answer={1}
+  explanation="Plastic holds on to its electrons, so electricity cannot pass through it. It keeps the electricity inside the copper wire."
+/>

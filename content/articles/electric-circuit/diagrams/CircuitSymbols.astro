@@ -1,0 +1,66 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Circuit symbols',
+    desc: 'The symbols for a battery (a long thin line next to a short thick line, with the long line as plus), a bulb (a circle with a cross), a switch (a line with a lifted lever) and a wire (a straight line). Below them, a whole circuit with a battery, a switch and a bulb is drawn with these symbols.',
+    battery: 'battery',
+    bulb: 'bulb',
+    switch: 'switch',
+    wire: 'wire',
+  },
+  sk: {
+    title: 'Schematické značky',
+    desc: 'Značky pre batériu (dlhá tenká čiara vedľa krátkej hrubej čiary, dlhá čiara je plus), žiarovku (krúžok s krížikom), vypínač (čiara s nadvihnutou páčkou) a vodič (rovná čiara). Pod nimi je týmito značkami nakreslený celý obvod s batériou, vypínačom a žiarovkou.',
+    battery: 'batéria',
+    bulb: 'žiarovka',
+    switch: 'vypínač',
+    wire: 'vodič',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const thin = 'stroke-width: 3';
+const thick = 'stroke-width: 8; stroke-linecap: butt';
+// A bulb symbol: a circle with a cross inside.
+const cross = (x: number, y: number, r: number) => {
+  const a = Math.round(r * 0.7);
+  return `M${x - a} ${y - a}L${x + a} ${y + a}M${x + a} ${y - a}L${x - a} ${y + a}`;
+};
+---
+<Svg viewBox="0 0 400 450" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M30 45H86M102 45H150" class="d-line" style={thin} />
+  <path d="M86 23V67" class="d-line" style={thin} />
+  <path d="M102 33V57" class="d-line" style={thick} />
+  <text x="72" y="26" text-anchor="middle" class="d-label">+</text>
+  <text x="118" y="32" text-anchor="middle" class="d-label">−</text>
+  <text x="180" y="51" class="d-label">{s.battery}</text>
+
+  <path d="M30 115H70M110 115H150" class="d-line" style={thin} />
+  <circle cx="90" cy="115" r="20" class="d-box" style={thin} />
+  <path d={cross(90, 115, 20)} class="d-line" style={thin} />
+  <text x="180" y="121" class="d-label">{s.bulb}</text>
+
+  <path d="M30 185H66M114 185H150M70 185L106 163" class="d-line" style={thin} />
+  <circle cx="70" cy="185" r="4" class="d-box" />
+  <circle cx="110" cy="185" r="4" class="d-box" />
+  <text x="180" y="191" class="d-label">{s.switch}</text>
+
+  <path d="M30 245H150" class="d-line" style={thin} />
+  <text x="180" y="251" class="d-label">{s.wire}</text>
+
+  <path d="M20 280H380" class="d-line" stroke-dasharray="4 6" style="stroke: var(--d-muted); stroke-width: 1.5" />
+
+  <path d="M80 310H182M218 310H320V420H206M194 420H80V389M80 341V310" class="d-line" style={thin} />
+  <circle cx="200" cy="310" r="18" class="d-box" style={thin} />
+  <path d={cross(200, 310, 18)} class="d-line" style={thin} />
+  <path d="M194 400V440" class="d-line" style={thin} />
+  <path d="M206 408V432" class="d-line" style={thick} />
+  <path d="M80 385L58 350" class="d-line" style={thin} />
+  <circle cx="80" cy="385" r="4" class="d-box" />
+  <circle cx="80" cy="345" r="4" class="d-box" />
+</Svg>

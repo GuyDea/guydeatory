@@ -1,6 +1,16 @@
 topics: [matter, electricity]
 labels: [high-level]
 prerequisites: [atom]
-status: stub
+related: [electric-charge, conductors-and-insulators, electric-current, voltage]
+status: published
 created: 2026-09-28
-updated: 2026-09-28
+updated: 2026-09-29
+sources:
+  - title: Electron — Wikipedia
+    url: https://en.wikipedia.org/wiki/Electron
+  - title: J. J. Thomson — Encyclopaedia Britannica
+    url: https://www.britannica.com/biography/J-J-Thomson
+  - title: Elementary charge — Wikipedia
+    url: https://en.wikipedia.org/wiki/Elementary_charge
+  - title: Drift velocity (free electrons in copper) — Wikipedia
+    url: https://en.wikipedia.org/wiki/Drift_velocity

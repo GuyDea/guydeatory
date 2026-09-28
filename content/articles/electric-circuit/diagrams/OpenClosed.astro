@@ -1,0 +1,70 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'An open circuit and a closed circuit',
+    desc: 'Two copies of the same circuit: a battery, a switch and a bulb joined by wires into a loop. Top: the switch is open, so there is a gap in the loop. The electrons in the wires stay still and the bulb is dark. Bottom: the switch is closed, the electrons flow around the loop and the bulb shines.',
+    open: 'open circuit: the bulb is off',
+    closed: 'closed circuit: the bulb shines',
+    battery: 'battery',
+    bulb: 'bulb',
+    switch: 'switch',
+  },
+  sk: {
+    title: 'Otvorený a uzavretý obvod',
+    desc: 'Dva rovnaké obvody: batéria, vypínač a žiarovka spojené drôtmi do okruhu. Hore je vypínač vypnutý, takže v okruhu je medzera. Elektróny v drôtoch stoja a žiarovka nesvieti. Dole je vypínač zapnutý, elektróny obiehajú okruhom a žiarovka svieti.',
+    open: 'otvorený obvod: žiarovka nesvieti',
+    closed: 'uzavretý obvod: žiarovka svieti',
+    battery: 'batéria',
+    bulb: 'žiarovka',
+    switch: 'vypínač',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const electrons = [
+  [110, 160], [290, 160], [60, 148], [100, 70], [140, 70], [260, 70], [300, 70], [340, 100], [340, 130],
+];
+// Short rays around the shining bulb (centre 200, 70).
+const rays = [-150, -120, -90, -60, -30].map((deg) => {
+  const dx = Math.cos((deg * Math.PI) / 180);
+  const dy = Math.sin((deg * Math.PI) / 180);
+  const f = (n: number) => n.toFixed(1);
+  return `M${f(200 + dx * 30)} ${f(70 + dy * 30)}L${f(200 + dx * 39)} ${f(70 + dy * 39)}`;
+});
+const circuits = [
+  { top: 0, closed: false, heading: s.open },
+  { top: 200, closed: true, heading: s.closed },
+];
+---
+<Svg viewBox="0 0 400 390" title={s.title} desc={s.desc} maxWidth="30rem">
+  {
+    circuits.map(({ top, closed, heading }) => (
+      <g transform={`translate(0 ${top})`}>
+        <text x="12" y="22" class="d-label">{heading}</text>
+        <path d="M160 160H60V135M60 95V70H178M222 70H340V160H247" class="d-wire" />
+        <path d={closed ? 'M60 135L60 95' : 'M60 135L34 101'} class="d-wire" />
+        <circle cx="60" cy="135" r="5" class="d-box" />
+        <circle cx="60" cy="95" r="5" class="d-box" />
+        <rect x="160" y="140" width="80" height="40" rx="7" class="d-box" />
+        <rect x="240" y="151" width="7" height="18" rx="2" class="d-box" />
+        <text x="178" y="168" class="d-label">−</text>
+        <text x="212" y="168" class="d-label">+</text>
+        <circle cx="200" cy="70" r="22" class={closed ? 'd-glow' : 'd-box'} />
+        <path d="M190 78c3-12 7-12 10 0s7 12 10 0" class="d-line" />
+        {closed && rays.map((d) => <path d={d} class="d-line" style="stroke: var(--d-warm); stroke-width: 3" />)}
+        {electrons.map(([x, y]) => <circle cx={x} cy={y} r="5.5" class="d-electron" />)}
+        {closed && <path d="M140 146H96" class="d-line d-arrow-electron" />}
+        {closed && <path d="M96 84H146" class="d-line d-arrow-electron" />}
+        {closed && <path d="M324 90V136" class="d-line d-arrow-electron" />}
+      </g>
+    ))
+  }
+  <text x="230" y="54" class="d-small">{s.bulb}</text>
+  <text x="200" y="197" text-anchor="middle" class="d-small">{s.battery}</text>
+  <text x="74" y="122" class="d-small">{s.switch}</text>
+</Svg>

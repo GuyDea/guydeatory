@@ -1,0 +1,39 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Cutting a piece of gold in half again and again',
+    desc: 'A row of gold pieces. Each piece is half the size of the one before it. After many more cuts, the row ends with a single tiny dot: one gold atom.',
+    gold: 'gold',
+    atom: 'one atom',
+    cut: 'cut in half again and again',
+  },
+  sk: {
+    title: 'Kúsok zlata rozrezaný na polovicu znova a znova',
+    desc: 'Rad kúskov zlata. Každý kúsok je o polovicu menší ako ten pred ním. Po mnohých ďalších rezoch sa rad končí jedinou drobnou bodkou: jedným atómom zlata.',
+    gold: 'zlato',
+    atom: 'jeden atóm',
+    cut: 'na polovicu, znova a znova',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+// [x, side]: each square has half the area of the one before it; the bottoms line up at y = 110.
+const pieces = [
+  [8, 72], [92, 51], [155, 36], [203, 25], [240, 18], [268, 13],
+];
+const dots = [296, 307, 318];
+---
+<Svg viewBox="0 0 400 186" title={s.title} desc={s.desc} maxWidth="30rem">
+  {pieces.map(([x, side]) => <rect x={x} y={110 - side} width={side} height={side} rx="3" class="d-box d-glow" />)}
+  {dots.map((x) => <circle cx={x} cy="104" r="2.5" class="d-muted" />)}
+  <circle cx="348" cy="105" r="4" class="d-box d-glow" />
+  <text x="44" y="136" text-anchor="middle" class="d-label">{s.gold}</text>
+  <text x="346" y="136" text-anchor="middle" class="d-label">{s.atom}</text>
+  <path d="M30 152H330" class="d-line d-arrow" />
+  <text x="180" y="176" text-anchor="middle" class="d-small">{s.cut}</text>
+</Svg>

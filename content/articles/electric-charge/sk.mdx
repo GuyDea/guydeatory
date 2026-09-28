@@ -1,8 +1,167 @@
 ---
-title: 'Čo je elektrický náboj?'
-term: 'elektrický náboj'
+title: Čo je elektrický náboj?
+term: elektrický náboj
 slug: elektricky-naboj
-summary: 'Elektrický náboj je vlastnosť drobných čiastočiek, vďaka ktorej sa navzájom priťahujú alebo odpudzujú. Elektróny majú záporný náboj, protóny kladný – a opačné náboje sa priťahujú.'
+summary: "Elektrický náboj majú drobné čiastočky a vďaka nemu sa navzájom priťahujú alebo odpudzujú. Je dvojakého druhu, plus a mínus: opačné náboje sa priťahujú a rovnaké sa odpudzujú."
+keywords: [náboj, statická elektrina, kladný náboj, záporný náboj, plus a mínus, elektrizovanie, elektrizovanie vlasov, elektrická iskra, coulomb, priťahovanie, odpudzovanie, balón, iskra, blesk]
 ---
 
-Niektoré drobné čiastočky majú niečo, čomu hovoríme elektrický náboj. Sú dva druhy, plus a mínus. Dva opačné náboje sa priťahujú a dva rovnaké sa odpudzujú.
+import AttractRepel from './diagrams/AttractRepel.astro';
+import BalloonHair from './diagrams/BalloonHair.astro';
+
+Pošúchaj balón o vlasy a potom ho pomaly odťahuj. Vlasy sa postavia a naťahujú sa za balónom, akoby
+to bolo kúzlo! Kúzlo to však nie je. To pracuje **elektrický náboj**.
+
+## Plus a mínus
+
+Všetko je z drobných [[atom|atómov]]. V každom atóme sú ešte menšie čiastočky. Dva druhy z nich majú
+elektrický náboj: protóny a [[electron|elektróny]].
+
+- Protóny sú v strede atómu. Majú **kladný** náboj – plus.
+- Elektróny sa pohybujú okolo. Majú **záporný** náboj – mínus.
+
+Náboj sa nedá chytiť do ruky ako kamienok. Je to niečo, čo tieto čiastočky majú, a vďaka tomu sa
+navzájom priťahujú alebo odtláčajú – aj bez toho, aby sa dotkli.
+
+## Ktoré náboje sa priťahujú a ktoré odpudzujú?
+
+Pre náboje platí jednoduché pravidlo:
+
+- Plus a mínus sa k sebe ťahajú. Hovoríme, že sa **priťahujú**.
+- Dva plusy sa od seba odtláčajú a dva mínusy tiež. Hovoríme, že sa **odpudzujú**.
+
+Čím sú náboje bližšie pri sebe, tým silnejšie sa priťahujú alebo odpudzujú.
+
+<Figure caption="Opačné náboje sa priťahujú. Dva náboje rovnakého druhu sa odpudzujú.">
+  <AttractRepel />
+</Figure>
+
+<GoDeeper title="Čím bližšie, tým oveľa silnejšie">
+Sila medzi dvoma nábojmi rýchlo rastie, keď sa k sebe približujú. Keď sa vzdialenosť zmenší na
+polovicu, sila bude štyrikrát väčšia. Tomuto pravidlu hovoríme **Coulombov zákon**:
+
+$$
+F = k \, \frac{q_1 \, q_2}{r^2}
+$$
+
+- $F$ je sila v newtonoch (N). Ak vyjde $F$ kladné, náboje sa odpudzujú; ak záporné, priťahujú
+  sa.
+- $q_1$ a $q_2$ sú oba náboje v coulomboch (C).
+- $r$ je vzdialenosť medzi nábojmi v metroch (m).
+- $k$ je stále číslo, približne $9 \cdot 10^{9}$ N·m²/C².
+
+Jeden elektrón má náboj $-1{,}602 \cdot 10^{-19}$ C, takže jeden coulomb je náboj približne 6,24
+miliardy miliárd elektrónov ($6{,}24 \cdot 10^{18}$). To je veľa náboja. Dva predmety s nábojom
+1&nbsp;C vo vzdialenosti 1&nbsp;meter by sa odtláčali takou silou, akou na zem tlačí asi
+600&nbsp;000 áut. Bežné statické náboje sú oproti tomu maličké: pošúchaný balón nesie menej ako
+niekoľko milióntin coulombu.
+
+Protóny v jadre sú mimoriadne blízko seba a všetky sú kladné, takže sa veľmi silno odtláčajú. Drží
+ich pokope iná sila – silná jadrová sila. Je ešte silnejšia ako elektrické odpudzovanie, ale siaha
+len asi na šírku jadra.
+</GoDeeper>
+
+## Prečo sa všetko navzájom nepriťahuje a neodtláča?
+
+Bežný atóm má presne toľko elektrónov ako protónov. Ku každému plusu patrí jeden mínus, takže sa
+náboje navzájom vyrušia. Hovoríme, že atóm je **neutrálny**, teda vyrovnaný.
+
+Takmer všetko okolo nás je takto vyrovnané. Preto stolička a ceruzka k sebe neskáču ani od seba
+neodlietajú.
+
+## Ako trenie vytvorí náboj?
+
+Protóny sú zamknuté hlboko vo vnútri atómov. Niektoré elektróny sú však na okraji a trenie ich môže
+presunúť z jednej veci na druhú.
+
+Keď šúchaš balón o vlasy, niektoré elektróny prejdú z vlasov na balón. Balón má teraz elektróny
+navyše, takže má záporný náboj. Vlasom elektróny chýbajú, takže majú kladný náboj.
+
+Plus a mínus sa priťahujú, a preto sa vlasy naťahujú k balónu. A keďže majú teraz všetky vlasy
+rovnaký kladný náboj, navzájom sa odpudzujú a postavia sa dupkom!
+
+<Figure caption="Trenie presunie elektróny z vlasov na balón. Balón získa záporný náboj a vlasy kladný, a preto sa priťahujú." wide>
+  <BalloonHair />
+</Figure>
+
+Takému náboju, ktorý zostáva na balóne alebo na svetri, často hovoríme **statická elektrina**.
+
+<GoDeeper title="Odkiaľ sa náboj berie?">
+Trenie nevyrobí nový náboj. Len ho presunie z jedného predmetu na druhý. Balón získa presne toľko
+záporného náboja, koľko kladného získajú vlasy, takže celkový náboj zostane rovnaký. Tomuto pravidlu
+hovoríme **zákon zachovania náboja**: celkový náboj uzavretej sústavy sa nikdy nemení.
+
+Ktoré čiastočky presne preskakujú, keď sa dve látky dotknú, vedci ešte stále skúmajú. Často sú to
+elektróny, niekedy však možno aj nabité atómy (ióny) alebo drobné kúsočky samotnej látky. Tak či
+onak, jeden predmet skončí so záporným nábojom navyše a druhý s kladným.
+</GoDeeper>
+
+## Vyskúšaj to
+
+- Pošúchaj balón o vlasy alebo o vlnený sveter. Podrž ho nad drobnými kúskami papiera. Papieriky
+  vyskočia a prilepia sa naň!
+- Znova balón pošúchaj a jemne ho prilož k stene. Zostane na nej, drží ho tam jeho náboj.
+- Pusti z kohútika tenký, hladký prúd vody. Podrž pošúchaný balón blízko pri ňom, ale nedotkni sa
+  ho. Prúd vody sa k balónu ohne!
+
+Papier ani stena nemajú vlastný náboj. Elektróny navyše na balóne však elektróny v papieri trochu
+odtlačia. Strana papiera najbližšie k balónu tak bude trošku kladná – a plus a mínus sa priťahujú.
+
+Najlepšie to funguje v suchom počasí. Keď je vlhko, náboj uniká rýchlejšie.
+
+## Iskry a blesky
+
+Niekedy sa na jednom mieste nahromadí veľa náboja. Elektróny potom môžu preskočiť vzduchom
+v drobnej iskre. Možno to poznáš: prejdeš po koberci, chytíš kovovú kľučku a – cvak!
+
+Blesk je to isté, len obrovské. V búrkovom oblaku silný vietor hádže kúsky ľadu hore a dole a tie do
+seba narážajú. Tým sa náboje oddelia: spodná časť oblaku zvyčajne získa obrovský záporný náboj.
+
+Keď je náboja dosť, preskočí z oblaku do zeme obrovská iskra. Väčšina bleskov však do zeme vôbec
+nedopadne: zablyskne sa vo vnútri oblakov alebo medzi nimi.
+
+Blesk zohreje vzduch asi na 30&nbsp;000&nbsp;°C – viac, ako má povrch Slnka. Vzduch sa tak náhle
+roztiahne, že to tresne. Ten tresk je hrom.
+
+<Safety>
+Blesk môže zabiť. Keď počuješ hrmieť, blesk je dosť blízko na to, aby ťa zasiahol.
+
+- Choď do budovy alebo do auta s kovovou strechou. Zostaň tam, kým neprejde 30&nbsp;minút od
+  posledného zahrmenia.
+- Vyjdi z vody a nikdy sa neskrývaj pod osamelým stromom.
+- Nikdy nepúšťaj šarkana počas búrky ani blízko elektrického vedenia.
+</Safety>
+
+<GoDeeper title="Malá iskrička a obrovský blesk">
+Iskra z kľučky môže vzniknúť pri napätí niekoľko tisíc [[voltage|voltov]]. Len štípne, lebo pretečie
+veľmi málo náboja a len na maličký okamih. Priemerný blesk je úplne iný: nesie prúd okolo
+30&nbsp;000 ampérov, prenesie približne 15 coulombov náboja a uvoľní asi miliardu joulov energie.
+</GoDeeper>
+
+<FunFact>
+Slovo „elektrina“ pochádza zo slova „élektron“, čo je starogrécky názov pre jantár. Jantár je
+zlatistý kameň zo živice dávnych stromov. Už pred viac ako 2&nbsp;500 rokmi si ľudia v Grécku
+všimli, že pošúchaný jantár priťahuje slamky a pierka. Ľudí, ktorí neskôr prišli na ostatné,
+spoznáš v článku o [[history-of-electricity|histórii elektriny]].
+</FunFact>
+
+## Náboje v pohybe
+
+Keď sa náboje pohybujú, vzniká [[electric-current|elektrický prúd]]. V drôte tečú elektróny, ktoré
+tlačí [[voltage|napätie]] batérie. Niektoré látky nechajú náboje ľahko prejsť a iné takmer vôbec.
+Ktoré to sú, zistíš v článku [[conductors-and-insulators|vodiče a izolanty]].
+
+<Remember>
+- Elektrický náboj je dvojakého druhu: plus a mínus.
+- Opačné náboje sa priťahujú. Rovnaké náboje sa odpudzujú.
+- Protóny sú kladné, elektróny záporné a bežné atómy sú vyrovnané.
+- Trenie môže presunúť elektróny z jednej veci na druhú.
+- Iskry a blesky vznikajú, keď vzduchom preskočí veľa náboja.
+</Remember>
+
+<Quiz
+  question="Dva balóny pošúchaš o vlasy a zavesíš ich vedľa seba. Čo sa stane?"
+  options={["Pritiahnu sa k sebe", "Odtlačia sa od seba", "Nestane sa nič"]}
+  answer={1}
+  explanation="Oba balóny získali elektróny navyše, takže oba majú záporný náboj. Dva rovnaké náboje sa odpudzujú."
+/>

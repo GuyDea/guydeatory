@@ -1,0 +1,60 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'The parts of a helium atom',
+    desc: 'A fuzzy cloud surrounds a tiny nucleus in the middle, and two electrons move somewhere in the cloud. A zoomed-in circle shows the nucleus up close: two protons and two neutrons packed together. The picture is not to scale.',
+    nucleus: 'nucleus',
+    cloud: 'electron cloud',
+    proton: 'proton +',
+    neutron: 'neutron',
+    electron: 'electron −',
+  },
+  sk: {
+    title: 'Časti atómu hélia',
+    desc: 'Maličké jadro v strede obklopuje rozmazaný oblak a niekde v ňom sa pohybujú dva elektróny. Zväčšený krúžok ukazuje jadro zblízka: dva protóny a dva neutróny natesno pri sebe. Obrázok nie je v správnej mierke.',
+    nucleus: 'jadro',
+    cloud: 'elektrónový obal',
+    proton: 'protón +',
+    neutron: 'neutrón',
+    electron: 'elektrón −',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+// The fuzzy electron cloud: three see-through discs stacked on top of each other.
+const cloud = [
+  [120, 0.14],
+  [90, 0.16],
+  [58, 0.2],
+];
+// The nucleus: protons (d-positive) and neutrons (d-muted), drawn tiny in the atom and big in the zoom.
+const particles: { dx: number; dy: number; kind: string }[] = [
+  { dx: -1, dy: -1, kind: 'd-positive' },
+  { dx: 1, dy: -1, kind: 'd-muted' },
+  { dx: -1, dy: 1, kind: 'd-muted' },
+  { dx: 1, dy: 1, kind: 'd-positive' },
+];
+---
+<Svg viewBox="0 0 400 300" title={s.title} desc={s.desc} maxWidth="30rem">
+  {cloud.map(([r, opacity]) => <circle cx="130" cy="150" r={r} class="d-cool" opacity={opacity} />)}
+  {particles.map(({ dx, dy, kind }) => <circle cx={130 + dx * 4} cy={150 + dy * 4} r="4.5" class={kind} />)}
+  <circle cx="62" cy="104" r="7" class="d-electron" />
+  <circle cx="204" cy="200" r="7" class="d-electron" />
+  <path d="M136 144L299 50M136 156L280 121" class="d-line" stroke-dasharray="4 5" style="stroke: var(--d-muted)" />
+  <circle cx="325" cy="95" r="52" class="d-box" />
+  {particles.map(({ dx, dy, kind }) => <circle cx={325 + dx * 17} cy={95 + dy * 17} r="17" class={kind} />)}
+  <path d="M300 78h16M308 70v16M334 112h16M342 104v16" fill="none" style="stroke: var(--d-fill); stroke-width: 3.5; stroke-linecap: round" />
+  <text x="325" y="30" text-anchor="middle" class="d-label">{s.nucleus}</text>
+  <circle cx="278" cy="178" r="9" class="d-positive" />
+  <text x="294" y="184" class="d-label">{s.proton}</text>
+  <circle cx="278" cy="210" r="9" class="d-muted" />
+  <text x="294" y="216" class="d-label">{s.neutron}</text>
+  <circle cx="278" cy="242" r="7" class="d-electron" />
+  <text x="294" y="248" class="d-label">{s.electron}</text>
+  <text x="130" y="292" text-anchor="middle" class="d-label">{s.cloud}</text>
+</Svg>

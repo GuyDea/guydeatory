@@ -1,8 +1,171 @@
 ---
-title: 'Čo je elektrický obvod?'
-term: 'elektrický obvod'
+title: Čo je elektrický obvod?
+term: elektrický obvod
 slug: elektricky-obvod
-summary: 'Elektrický obvod je uzavretý okruh, po ktorom môže elektrina obiehať: z batérie cez drôty a žiarovku a späť do batérie. Keď okruh kdekoľvek prerušíš, prúd prestane tiecť.'
+summary: "Elektrický obvod je uzavretý okruh, po ktorom môže elektrina obiehať: z batérie cez drôty a žiarovku a späť do batérie. Keď okruh kdekoľvek prerušíš, prúd prestane tiecť."
+keywords: [obvod, okruh, elektrický okruh, zapojenie, uzavretý obvod, otvorený obvod, vypínač, schéma zapojenia, schematické značky, sériové zapojenie, paralelné zapojenie, zapojenie za sebou, zapojenie vedľa seba, skrat, spotrebič, zdroj]
 ---
 
-Obvod je úplná cesta pre elektrinu, ako pretekárska dráha bez medzier. Vypínač je len spôsob, ako medzeru v okruhu otvoriť alebo zavrieť.
+import OpenClosed from './diagrams/OpenClosed.astro';
+import CircuitSymbols from './diagrams/CircuitSymbols.astro';
+import SeriesParallel from './diagrams/SeriesParallel.astro';
+
+Stlačíš tlačidlo na baterke a rozsvieti sa. Stlačíš ho znova a zhasne. Tlačidlo vo vnútri otvára
+a zatvára cestu pre elektrinu. Tejto ceste hovoríme **elektrický obvod**.
+
+## Prečo elektrina potrebuje okruh?
+
+Elektrina v drôte je tok drobných čiastočiek, ktoré sa volajú [[electron|elektróny]]. Tomuto toku
+hovoríme [[electric-current|elektrický prúd]]. Batéria elektróny tlačí dopredu. Tiecť však môžu len
+po celej ceste: z batérie, dookola a späť do nej.
+
+Takej úplnej ceste hovoríme **obvod**. Slovo obvod poznáš aj z matematiky – je to cesta dookola,
+ktorá sa vráti tam, kde začala.
+
+<Analogy>
+Predstav si vodovodné rúry spojené do uzavretého okruhu, s čerpadlom na jednom mieste. Čerpadlo
+tlačí vodu stále dookola. Žiadna voda sa nespotrebuje: tá istá voda sa stále vracia k čerpadlu.
+Batéria robí to isté s elektrónmi.
+</Analogy>
+
+## Z čoho sa obvod skladá?
+
+Jednoduchý obvod má štyri druhy častí:
+
+- **Zdroj**, napríklad batéria. Dáva tlačenie, ktorému hovoríme [[voltage|napätie]].
+- **Vodiče** (drôty), ktoré vedú elektrinu.
+- **Spotrebič**, napríklad žiarovka, bzučiak alebo motorček. Mení [[energy|energiu]], ktorú
+  prináša elektrina, na svetlo, zvuk alebo pohyb.
+- **Vypínač**, ktorý okruh otvára alebo zatvára.
+
+Drôty sú vo vnútri z kovu, lebo kov je dobrý [[conductors-and-insulators|vodič]]: ľahko prepúšťa
+elektróny. Ich plastový obal je izolant, ktorý drží elektrinu vo vnútri.
+
+## Otvorený, či uzavretý?
+
+Obvod bez medzier je **uzavretý**. Elektróny obiehajú celým okruhom a žiarovka svieti.
+
+Obvod s medzerou je **otvorený**. Elektróny sa zastavia v celom okruhu – nielen pri medzere.
+Žiarovka zhasne.
+
+<Figure caption="Hore je vypínač vypnutý, v okruhu je medzera a žiarovka nesvieti. Elektróny sú stále v drôtoch, ale nehýbu sa. Dole je vypínač zapnutý, elektróny obiehajú okruhom a žiarovka svieti." wide>
+  <OpenClosed />
+</Figure>
+
+<Analogy title="Vypínač je ako padací most">
+Predstav si cestu v tvare kruhu, plnú áut, a na nej padací most. Keď je most spustený, kruh je celý
+a všetky autá môžu jazdiť dookola. Keď je most zdvihnutý, v ceste je medzera. Auto pri medzere musí
+zastaviť – a s ním aj všetky autá za ním, po celom kruhu.
+</Analogy>
+
+Pozor na slovíčka! Pri obvode „uzavretý“ znamená, že elektrina tečie, a „otvorený“, že netečie. Pri
+dverách alebo pri kohútiku je to naopak.
+
+## Ako je to s obvodmi doma?
+
+Svetlá u vás doma sú tiež zapojené v obvodoch. Ich okruhy sú schované v stenách. Keď stlačíš
+vypínač, uzavrieš medzeru v okruhu, ktorý vedie k lampe.
+
+Každá zástrčka má aspoň dva kovové kolíky, lebo elektrina potrebuje cestu k lampe a cestu späť.
+
+Aj tvoje telo sa môže stať súčasťou obvodu. Ak elektrina zo zásuvky alebo z vedenia prejde cez teba
+do zeme alebo do iného drôtu, môže zabiť. Vták, ktorý sedí na jednom drôte, je v bezpečí, lebo sa
+oboma nohami dotýka toho istého drôtu. Viac sa dozvieš v článku
+[[why-birds-on-wires-dont-get-shocked|prečo sú vtáky na drôtoch v bezpečí]].
+
+<Safety>
+Nikdy nič nestrkaj do zásuvky a drž sa ďaleko od elektrického vedenia. Elektrina v domácnosti je
+dosť silná na to, aby zabila.
+</Safety>
+
+## Ako sa obvod kreslí?
+
+Kresliť skutočné batérie a žiarovky trvá dlho, preto sa používajú jednoduché značky. Nákresu
+z takých značiek hovoríme **schéma zapojenia**.
+
+- Dlhá tenká čiara vedľa krátkej hrubej čiary je batéria. Dlhá čiara je plus.
+- Krúžok s krížikom je žiarovka.
+- Čiara s nadvihnutou páčkou je vypínač.
+- Rovné čiary sú vodiče.
+
+<Figure caption="Každá časť má svoju značku. Dole je nimi nakreslený celý obvod s batériou, vypínačom a žiarovkou." wide>
+  <CircuitSymbols />
+</Figure>
+
+## Za sebou, alebo vedľa seba?
+
+V obvode môže byť aj viac žiaroviek. Dajú sa zapojiť dvoma spôsobmi:
+
+- **Za sebou**, čiže **sériovo**. Žiarovky sú v tom istom okruhu ako korálky na šnúrke. Keď sa
+  jedna pokazí, okruh sa preruší a zhasnú všetky.
+- **Vedľa seba**, čiže **paralelne**. Každá žiarovka má vlastnú cestu. Keď sa jedna pokazí,
+  ostatné svietia ďalej.
+
+<Figure caption="Vľavo sú dve žiarovky za sebou v jednom okruhu. Vpravo sú dve žiarovky vedľa seba a každá má vlastnú cestu." wide>
+  <SeriesParallel />
+</Figure>
+
+Svetlá u vás doma sú zapojené vedľa seba. Preto môžeš jedno zhasnúť a ostatné svietia ďalej. Ako sa
+prúd medzi žiarovky rozdeľuje, sa dozvieš v článku
+[[how-electric-current-behaves|ako sa správa elektrický prúd]].
+
+<FunFact>
+Niektoré staré svetelné reťaze mali žiarovky zapojené za sebou. Keď sa pokazila jedna drobná
+žiarovka, zhasla celá reťaz – a hľadanie tej pokazenej mohlo trvať celú večnosť!
+</FunFact>
+
+## Čo je skrat?
+
+Čo ak drôt spojí oba konce batérie priamo, bez žiarovky? Elektróny sa potom okruhom preženú až
+príliš ľahko. Drôt aj batéria sa zohrejú a batéria sa môže pokaziť. Tomu hovoríme **skrat**.
+
+Doma na to dávajú pozor poistky a ističe. Keď tečie priveľa elektriny, obvod otvoria.
+
+<Safety>
+Obvody stavaj len s malými batériami, nikdy nie so zásuvkou. Nikdy nespájaj oba konce batérie holým
+drôtom. A batériu nikdy nedávaj do úst: malé gombíkové batérie sú pri prehltnutí veľmi nebezpečné.
+</Safety>
+
+<GoDeeper title="Akým smerom tečie prúd?">
+Elektróny tečú z mínusového konca batérie cez obvod späť do jej plusového konca. Šípky pre prúd
+v schémach však zvyčajne mieria opačne, od plusu k mínusu. Tento **technický smer prúdu** pochádza
+z 18. storočia, keď Benjamin Franklin pomenoval dva druhy náboja – dávno predtým, ako ktokoľvek
+vedel o elektrónoch. Oba spôsoby dávajú rovnaké výsledky, pokiaľ sa človek drží jedného z nich.
+
+Podobné značky sa používajú na celom svete, takže schéme zapojenia rozumejú ľudia, nech hovoria
+akýmkoľvek jazykom. Značky na obrázku vyššie zodpovedajú medzinárodnej norme (IEC 60617), ale
+v niektorých krajinách sa pár z nich kreslí inak. V USA sa napríklad žiarovka často kreslí ako
+krúžok s malou slučkou vo vnútri.
+</GoDeeper>
+
+<GoDeeper title="Kde obrázok s rúrami nesedí">
+- Z prerezanej rúrky voda vytečie. Z prerezaného drôtu elektróny nevytečú: prúd sa zastaví v celom
+  okruhu.
+- Zatvorený kohútik vodu zastaví, ale uzavretý obvod elektrinu púšťa. Slová tu fungujú naopak.
+- Batérii sa neminú elektróny – tie už v drôtoch sú. Minie sa jej chemická energia.
+- Doma tečie [[alternating-current|striedavý prúd]]: elektróny sa kývajú tam a späť 50-krát za
+  sekundu (v niektorých krajinách 60-krát), namiesto toho, aby obiehali dookola. Obvod však aj tak
+  musí byť uzavretý – cez lampu a späť.
+</GoDeeper>
+
+<Remember>
+- Obvod je uzavretý okruh, po ktorom obieha elektrina.
+- Potrebuje zdroj (napríklad batériu), vodiče a spotrebič (napríklad žiarovku).
+- Vypínač otvára alebo zatvára medzeru v okruhu.
+- Uzavretým obvodom elektrina tečie, otvoreným netečie.
+- Žiarovky sa dajú zapojiť za sebou alebo vedľa seba.
+</Remember>
+
+<Quiz
+  question="Prečo žiarovka zhasne, keď vypínač vypneš?"
+  options={["Batéria sa vybije", "V okruhu je medzera, a tak elektróny prestanú tiecť", "Žiarovka vychladne"]}
+  answer={1}
+  explanation="Elektrina potrebuje uzavretý okruh. Vypnutý vypínač urobí medzeru, a tak sa tok zastaví v celom obvode."
+/>
+
+<Quiz
+  question="Doma sa pokazí jedna lampa. Prečo ostatné svietia ďalej?"
+  options={["Sú zapojené vedľa seba a každá má vlastnú cestu", "Majú v sebe elektrinu do zásoby", "Pokazená lampa im pošle svoju elektrinu"]}
+  answer={0}
+  explanation="Lampy v domácnosti sú zapojené vedľa seba. Každá má vlastnú cestu, takže jedna pokazená lampa nepreruší okruhy ostatných."
+/>

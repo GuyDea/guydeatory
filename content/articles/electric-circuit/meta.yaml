@@ -1,5 +1,18 @@
 topics: [electricity]
 labels: [high-level]
-status: stub
+prerequisites: [electron]
+related: [electric-current, voltage, how-electric-current-behaves, conductors-and-insulators, electrical-resistance]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Electric circuit — Encyclopaedia Britannica
+    url: https://www.britannica.com/technology/electric-circuit
+  - title: Electronic symbol — Wikipedia
+    url: https://en.wikipedia.org/wiki/Electronic_symbol
+  - title: Series and parallel circuits — Wikipedia
+    url: https://en.wikipedia.org/wiki/Series_and_parallel_circuits
+  - title: Short circuit — Wikipedia
+    url: https://en.wikipedia.org/wiki/Short_circuit
+  - title: Electric current (conventional current) — Wikipedia
+    url: https://en.wikipedia.org/wiki/Electric_current

@@ -1,0 +1,47 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Opposite charges attract, the same charges repel',
+    desc: 'Top: a plus charge and a minus charge with arrows pointing toward each other, because they pull together. Below: two minus charges, and then two plus charges, with arrows pointing away from each other, because they push apart.',
+    opposite: 'opposite charges: pull together',
+    same: 'same charges: push apart',
+  },
+  sk: {
+    title: 'Opačné náboje sa priťahujú, rovnaké sa odpudzujú',
+    desc: 'Hore: kladný a záporný náboj so šípkami, ktoré mieria k sebe, lebo sa priťahujú. Dole: dva záporné náboje a potom dva kladné náboje so šípkami, ktoré mieria od seba, lebo sa odpudzujú.',
+    opposite: 'opačné náboje: priťahujú sa',
+    same: 'rovnaké náboje: odpudzujú sa',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+type Charge = { x: number; y: number; plus: boolean };
+const charges: Charge[] = [
+  { x: 110, y: 66, plus: true },
+  { x: 290, y: 66, plus: false },
+  { x: 150, y: 166, plus: false },
+  { x: 250, y: 166, plus: false },
+  { x: 150, y: 224, plus: true },
+  { x: 250, y: 224, plus: true },
+];
+// Plus: a horizontal and a vertical bar; minus: only the horizontal bar.
+const sign = ({ x, y, plus }: Charge) => `M${x - 9} ${y}h18${plus ? `M${x} ${y - 9}v18` : ''}`;
+// One path per arrow, because an arrowhead is drawn only at the end of a path.
+const arrows = [
+  'M140 66H186', 'M260 66H214',
+  'M122 166H78', 'M278 166H322',
+  'M122 224H78', 'M278 224H322',
+];
+---
+<Svg viewBox="0 0 400 250" title={s.title} desc={s.desc} maxWidth="30rem">
+  <text x="12" y="26" class="d-label">{s.opposite}</text>
+  <text x="12" y="128" class="d-label">{s.same}</text>
+  {arrows.map((d) => <path d={d} class="d-line d-arrow" />)}
+  {charges.map((c) => <circle cx={c.x} cy={c.y} r="22" class={c.plus ? 'd-positive' : 'd-electron'} />)}
+  {charges.map((c) => <path d={sign(c)} fill="none" style="stroke: var(--d-fill); stroke-width: 4; stroke-linecap: round" />)}
+</Svg>

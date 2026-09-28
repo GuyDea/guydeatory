@@ -2,9 +2,123 @@
 title: What is an electron?
 term: electron
 slug: electron
-summary: An electron is a tiny particle that moves around the middle of every atom. When lots of electrons move along a wire, electricity flows.
-keywords: [electrons, particle]
+summary: An electron is a tiny particle with a minus charge that moves around the middle of every atom. When lots of electrons move along a wire together, electricity flows.
+keywords: [electrons, particle, subatomic particle, elementary particle, negative charge, free electrons, electron cloud, J. J. Thomson]
 ---
 
-Every [[atom]] has tiny particles called electrons around its middle. They are so light that
-it would take about two thousand of them to weigh as much as the lightest atom's middle.
+import ProtonBalance from './diagrams/ProtonBalance.astro';
+import FreeElectrons from './diagrams/FreeElectrons.astro';
+
+Switch on a lamp, and something starts to move inside the wires. It is far too small to see, and
+it moves without a sound. It is a huge crowd of tiny particles called **electrons**.
+
+## Where do electrons live?
+
+Everything around you is made of [[atom|atoms]]. Every atom has a heavy middle, called the nucleus.
+Around the nucleus, electrons move in a fuzzy cloud.
+
+The nucleus holds particles called protons. Protons carry a plus
+[[electric-charge|electric charge]], and electrons carry a minus charge. Plus and minus pull on each
+other. That pull keeps the electrons close to their atom.
+
+Different atoms have different numbers of electrons. A hydrogen atom has only one. A copper atom has
+29, and a gold atom has 79.
+
+## How small is an electron?
+
+Electrons are even smaller than atoms — much, much smaller. No experiment has ever found any size
+for an electron at all. As far as scientists can tell, it behaves like a tiny point.
+
+Electrons are also very light. A proton weighs almost 2,000 times as much as an electron. So nearly
+all of an atom’s weight sits in its nucleus, not in its electrons.
+
+<Figure caption="One proton weighs as much as almost 2,000 electrons.">
+  <ProtonBalance />
+</Figure>
+
+<FunFact>
+Every electron in the universe is exactly the same as every other one. An electron in your finger
+is a perfect twin of an electron in a faraway star!
+</FunFact>
+
+## Why do metals carry electricity?
+
+In most materials, each electron stays with its own atom. But metals are special. In a metal, some
+electrons are not held by any one atom.
+
+These electrons can wander freely between the atoms, so we call them **free electrons**. On their
+own, they zoom about in all directions, like bees around a hive. All together, they go nowhere.
+
+Now make the wire part of a loop with a battery and a lamp. The battery pushes on the free
+electrons, and they all start to drift the same way along the wire. This flow of electrons is
+called [[electric-current|electric current]]. The push from the battery is called [[voltage]].
+
+<Figure caption="Without a push, free electrons wander in all directions. With a push from a battery, they all drift the same way: that is an electric current." wide>
+  <FreeElectrons />
+</Figure>
+
+That is why wires are made of metal, usually copper. Materials like copper, which let electrons
+flow easily, are called [[conductors-and-insulators|conductors]]. Materials like plastic hold on to
+their electrons tightly. They are called insulators.
+
+<FunFact>
+In a wire, electrons drift forward very slowly — often more slowly than a snail. But the push
+travels along the wire almost as fast as light, so the lamp turns on at once.
+</FunFact>
+
+## What else do electrons do?
+
+Carrying electric current is not their only job. Electrons are busy almost everywhere:
+
+- **Static electricity.** Rub a balloon on your hair, and some electrons jump from your hair onto
+  the balloon. Then the balloon and your hair pull on each other.
+- **Holding atoms together.** Atoms join into bigger groups by sharing or swapping their outer
+  electrons.
+- **Making light.** In an LED lamp, electrons give away some of their [[energy]] as light. In
+  glowing signs, speeding electrons crash into atoms and make them shine.
+
+<FunFact>
+Old, boxy televisions made their pictures by firing beams of electrons at the inside of the
+screen. Wherever the beams hit, the screen glowed.
+</FunFact>
+
+<GoDeeper title="The electron in numbers">
+- **Mass:** about $9.11 \times 10^{-31}$ kg. That is about 1/1836 of the mass of a proton.
+- **Charge:** $-1.602 \times 10^{-19}$ coulombs. A proton carries exactly the same amount of
+  charge, but plus. No free particle has ever been found with a smaller charge.
+- **Size:** none that anyone has measured. The electron is an elementary particle: as far as we
+  know, it has no smaller parts.
+- **Discovery:** J. J. Thomson discovered the electron in 1897. He was studying cathode rays:
+  mysterious rays inside glass tubes with nearly all the air pumped out, which made the glass glow
+  where they hit. He showed that the rays were made of particles far lighter than the lightest
+  atom. The name “electron” had been suggested a few years earlier by George Johnstone Stoney, for
+  the smallest bit of electric charge. You can meet more explorers in the
+  [[history-of-electricity|history of electricity]].
+</GoDeeper>
+
+<GoDeeper title="What free electrons really do">
+Free electrons in copper are anything but slow: they zip about at around 1,500 kilometres per
+second. But they keep bumping into the vibrating atoms and changing direction, so on average they
+get nowhere. A battery adds a slow drift in one direction on top of this — often less than a
+millimetre per second. In copper, each atom lends about one electron to the crowd of free
+electrons.
+
+In a metal wire, the current is carried by electrons. In salty water, in the human body and in the
+liquid or paste inside batteries, current is carried by ions instead: atoms that have gained or
+lost electrons.
+</GoDeeper>
+
+<Remember>
+- Electrons are tiny particles with a minus charge.
+- They move in a fuzzy cloud around the nucleus of every atom.
+- A proton weighs almost 2,000 times as much as an electron.
+- In metals, some electrons are free to wander between the atoms.
+- When free electrons all drift the same way, that is an electric current.
+</Remember>
+
+<Quiz
+  question="Why can electricity flow through a copper wire?"
+  options={["Copper is full of tiny holes", "Some of the electrons in copper are free to move", "Copper is very heavy"]}
+  answer={1}
+  explanation="In metals like copper, some electrons do not belong to any one atom. A push from a battery makes them drift along the wire."
+/>

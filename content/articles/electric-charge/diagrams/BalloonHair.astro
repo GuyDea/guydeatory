@@ -1,0 +1,58 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'A rubbed balloon and hair pulling on each other',
+    desc: 'A smiling face with its hair standing up and reaching toward a balloon. The balloon carries minus charges: it has extra electrons. The tips of the hair carry plus charges: the hair has lost electrons. Opposite charges pull on each other.',
+    hair: 'hair: plus (+)',
+    balloon: 'balloon: minus (−)',
+  },
+  sk: {
+    title: 'Pošúchaný balón a vlasy sa priťahujú',
+    desc: 'Usmiata tvár s vlasmi, ktoré stoja dupkom a naťahujú sa k balónu. Balón má záporné náboje: má elektróny navyše. Končeky vlasov majú kladné náboje: vlasom elektróny chýbajú. Opačné náboje sa priťahujú.',
+    hair: 'vlasy: plus (+)',
+    balloon: 'balón: mínus (−)',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+// Hair strands start on the top of the head and lean toward the balloon.
+const strands = [
+  'M72 188Q52 150 66 118',
+  'M84 172Q76 134 96 106',
+  'M100 163Q100 124 124 100',
+  'M120 160Q126 120 152 98',
+  'M140 163Q152 126 178 106',
+  'M156 172Q176 140 200 124',
+  'M168 188Q194 162 214 148',
+];
+// Small charge badges: plus near the hair tips, minus (extra electrons) on the balloon.
+const pluses = [
+  [52, 104], [112, 86], [184, 92], [226, 136],
+];
+const minuses = [
+  [276, 76], [266, 110], [274, 144], [304, 92], [304, 128], [300, 164],
+];
+const bar = (x: number, y: number, plus: boolean) => `M${x - 5} ${y}h10${plus ? `M${x} ${y - 5}v10` : ''}`;
+const signStyle = 'stroke: var(--d-fill); stroke-width: 3; stroke-linecap: round';
+---
+<Svg viewBox="0 0 400 290" title={s.title} desc={s.desc} maxWidth="30rem">
+  <text x="12" y="26" class="d-label">{s.hair}</text>
+  <text x="392" y="26" text-anchor="end" class="d-label">{s.balloon}</text>
+  {strands.map((d) => <path d={d} class="d-line" style="stroke-width: 3" />)}
+  <circle cx="120" cy="215" r="55" class="d-box" />
+  <circle cx="102" cy="208" r="4.5" style="fill: var(--d-ink)" />
+  <circle cx="138" cy="208" r="4.5" style="fill: var(--d-ink)" />
+  <path d="M100 232Q120 250 140 232" class="d-line" />
+  <path d="M310 186Q298 222 314 256Q322 274 316 288" class="d-line" />
+  <ellipse cx="310" cy="110" rx="58" ry="70" class="d-box d-warm" />
+  <path d="M303 186L317 186L310 178Z" class="d-box d-warm" />
+  {pluses.map(([x, y]) => <circle cx={x} cy={y} r="9" class="d-positive" />)}
+  {pluses.map(([x, y]) => <path d={bar(x, y, true)} fill="none" style={signStyle} />)}
+  {minuses.map(([x, y]) => <circle cx={x} cy={y} r="9" class="d-electron" />)}
+  {minuses.map(([x, y]) => <path d={bar(x, y, false)} fill="none" style={signStyle} />)}
+</Svg>

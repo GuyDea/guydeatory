@@ -1,0 +1,63 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Inside a conductor and inside an insulator',
+    desc: 'Top: a piece of metal. Between its atoms, free electrons move about in all directions. Bottom: a piece of plastic. Each atom holds its own electrons tightly, and no electron is free to move.',
+    metal: 'metal: some electrons move freely',
+    plastic: 'plastic: electrons stay put',
+    atom: 'atom',
+    electron: 'electron',
+  },
+  sk: {
+    title: 'Vnútri vodiča a vnútri izolantu',
+    desc: 'Hore: kúsok kovu. Medzi jeho atómami sa všetkými smermi pohybujú voľné elektróny. Dole: kúsok plastu. Každý atóm pevne drží svoje elektróny a žiadny elektrón sa nemôže voľne pohybovať.',
+    metal: 'kov: niektoré elektróny sú voľné',
+    plastic: 'plast: elektróny sa nepohnú',
+    atom: 'atóm',
+    electron: 'elektrón',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+
+const atomXs = [45, 97, 149, 201, 253, 305, 357];
+const atomYs = [66, 116];
+// Free electrons in the metal: [x, y, direction in degrees].
+const free: [number, number, number][] = [
+  [22, 91, 270], [71, 91, 200], [123, 45, 350], [175, 91, 110], [227, 137, 180],
+  [279, 91, 250], [331, 45, 190], [71, 137, 270], [379, 91, 90],
+];
+const arrow = (x: number, y: number, deg: number) => {
+  const dx = Math.cos((deg * Math.PI) / 180);
+  const dy = Math.sin((deg * Math.PI) / 180);
+  const f = (n: number) => n.toFixed(1);
+  return `M${f(x + dx * 8)} ${f(y + dy * 8)}L${f(x + dx * 26)} ${f(y + dy * 26)}`;
+};
+const ringStyle = 'stroke: var(--d-muted); stroke-width: 1.5';
+---
+<Svg viewBox="0 0 400 356" title={s.title} desc={s.desc} maxWidth="30rem">
+  <text x="12" y="24" class="d-label">{s.metal}</text>
+  <rect x="10" y="36" width="380" height="110" rx="14" class="d-box-alt" />
+  {atomYs.map((y) => atomXs.map((x) => <circle cx={x} cy={y} r="11" class="d-muted" />))}
+  {free.map(([x, y]) => <circle cx={x} cy={y} r="5.5" class="d-electron" />)}
+  {free.map(([x, y, deg]) => <path d={arrow(x, y, deg)} class="d-line d-arrow-electron" />)}
+
+  <g transform="translate(0 170)">
+    <text x="12" y="24" class="d-label">{s.plastic}</text>
+    <rect x="10" y="36" width="380" height="110" rx="14" class="d-box-alt" />
+    {atomYs.map((y) => atomXs.map((x) => <circle cx={x} cy={y} r="17" class="d-line" style={ringStyle} />))}
+    {atomYs.map((y) => atomXs.map((x) => <circle cx={x} cy={y} r="11" class="d-muted" />))}
+    {atomYs.map((y) => atomXs.map((x) => <circle cx={x + 12} cy={y - 12} r="4.5" class="d-electron" />))}
+    {atomYs.map((y) => atomXs.map((x) => <circle cx={x - 12} cy={y + 12} r="4.5" class="d-electron" />))}
+  </g>
+
+  <circle cx="22" cy="338" r="11" class="d-muted" />
+  <text x="40" y="344">{s.atom}</text>
+  <circle cx="132" cy="338" r="5.5" class="d-electron" />
+  <text x="146" y="344">{s.electron}</text>
+</Svg>

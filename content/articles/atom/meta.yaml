@@ -1,6 +1,17 @@
 topics: [matter]
 labels: [high-level]
-related: [electron]
-status: stub
+related: [electron, electric-charge, temperature, conductors-and-insulators]
+status: published
 created: 2026-09-28
-updated: 2026-09-28
+updated: 2026-09-29
+sources:
+  - title: Atom — Wikipedia
+    url: https://en.wikipedia.org/wiki/Atom
+  - title: Atomic nucleus — Wikipedia
+    url: https://en.wikipedia.org/wiki/Atomic_nucleus
+  - title: Chemical element — Wikipedia
+    url: https://en.wikipedia.org/wiki/Chemical_element
+  - title: Atom — Encyclopaedia Britannica
+    url: https://www.britannica.com/science/atom
+  - title: Hair (thickness of a human hair) — Wikipedia
+    url: https://en.wikipedia.org/wiki/Hair

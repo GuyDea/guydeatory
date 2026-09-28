@@ -1,0 +1,44 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'One proton balances almost 2,000 electrons',
+    desc: 'A balance scale stays level. On the left pan lies one proton. On the right pan lies a heap of electrons, labelled almost 2,000 electrons.',
+    proton: '1 proton',
+    count: 'almost 2,000',
+    electrons: 'electrons',
+  },
+  sk: {
+    title: 'Jeden protón vyváži takmer 2 000 elektrónov',
+    desc: 'Váhy sú v rovnováhe. Na ľavej miske leží jeden protón. Na pravej miske leží kôpka elektrónov s popisom takmer 2 000 elektrónov.',
+    proton: '1 protón',
+    count: 'takmer 2 000',
+    electrons: 'elektrónov',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+// A heap of electrons on the right pan: 7 dots at the bottom, then 6, 5 … up to 1 on top.
+const heap: [number, number][] = [];
+for (let row = 0; row < 7; row++) {
+  const count = 7 - row;
+  for (let i = 0; i < count; i++) heap.push([340 - ((count - 1) * 7) / 2 + i * 7, 134 - row * 6]);
+}
+---
+<Svg viewBox="0 36 400 194" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M150 212H250M200 212V64M60 60H340" class="d-wire" />
+  <path d="M188 70L200 52L212 70Z" class="d-box" />
+  <path d="M60 60L34 140M60 60L86 140M340 60L314 140M340 60L366 140" class="d-line" />
+  <path d="M28 140H92Q88 162 60 162Q32 162 28 140Z" class="d-box" />
+  <path d="M308 140H372Q368 162 340 162Q312 162 308 140Z" class="d-box" />
+  <circle cx="60" cy="124" r="15" class="d-positive" />
+  <path d="M52 124h16M60 116v16" fill="none" style="stroke: var(--d-fill); stroke-width: 3.5; stroke-linecap: round" />
+  {heap.map(([x, y]) => <circle cx={x} cy={y} r="3.2" class="d-electron" />)}
+  <text x="60" y="192" text-anchor="middle" class="d-label">{s.proton}</text>
+  <text x="340" y="192" text-anchor="middle" class="d-label">{s.count}</text>
+  <text x="340" y="214" text-anchor="middle" class="d-label">{s.electrons}</text>
+</Svg>

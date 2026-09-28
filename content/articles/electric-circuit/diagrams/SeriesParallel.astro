@@ -1,0 +1,48 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Bulbs one after another and side by side',
+    desc: 'Left: a battery and two shining bulbs in one single loop, one after another. Right: a battery and two shining bulbs side by side, each bulb on its own path between the same two wires.',
+    series: 'one after another',
+    seriesWord: '(in series)',
+    parallel: 'side by side',
+    parallelWord: '(in parallel)',
+  },
+  sk: {
+    title: 'Žiarovky za sebou a vedľa seba',
+    desc: 'Vľavo: batéria a dve svietiace žiarovky v jedinom okruhu, jedna za druhou. Vpravo: batéria a dve svietiace žiarovky vedľa seba, každá na vlastnej ceste medzi tými istými dvoma vodičmi.',
+    series: 'za sebou',
+    seriesWord: '(sériovo)',
+    parallel: 'vedľa seba',
+    parallelWord: '(paralelne)',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const thin = 'stroke-width: 3';
+const thick = 'stroke-width: 8; stroke-linecap: butt';
+const cross = (x: number, y: number) => `M${x - 10} ${y - 10}L${x + 10} ${y + 10}M${x + 10} ${y - 10}L${x - 10} ${y + 10}`;
+const bulbs = [
+  [65, 40], [135, 40], [300, 40], [300, 105],
+];
+const batteries = [100, 300];
+---
+<Svg viewBox="0 0 400 240" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M51 40H20V170H94M106 170H180V40H149M121 40H79" class="d-line" style={thin} />
+  <path d="M286 40H220V170H294M306 170H380V40H314M220 105H286M314 105H380" class="d-line" style={thin} />
+  <circle cx="220" cy="105" r="4.5" style="fill: var(--d-ink)" />
+  <circle cx="380" cy="105" r="4.5" style="fill: var(--d-ink)" />
+  {bulbs.map(([x, y]) => <circle cx={x} cy={y} r="14" class="d-box d-glow" style={thin} />)}
+  {bulbs.map(([x, y]) => <path d={cross(x, y)} class="d-line" style={thin} />)}
+  {batteries.map((x) => <path d={`M${x - 6} 154V186`} class="d-line" style={thin} />)}
+  {batteries.map((x) => <path d={`M${x + 6} 161V179`} class="d-line" style={thick} />)}
+  <text x="100" y="214" text-anchor="middle" class="d-label">{s.series}</text>
+  <text x="100" y="234" text-anchor="middle" class="d-small">{s.seriesWord}</text>
+  <text x="300" y="214" text-anchor="middle" class="d-label">{s.parallel}</text>
+  <text x="300" y="234" text-anchor="middle" class="d-small">{s.parallelWord}</text>
+</Svg>
