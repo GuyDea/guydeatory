@@ -1,5 +1,16 @@
 topics: [electricity]
 labels: [high-level]
-status: stub
+prerequisites: [electron]
+related: [calculating-electric-current, how-electric-current-behaves, voltage, electric-circuit]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Electric current — Wikipedia
+    url: https://en.wikipedia.org/wiki/Electric_current
+  - title: Drift velocity — Wikipedia
+    url: https://en.wikipedia.org/wiki/Drift_velocity
+  - title: Electrical injury — Wikipedia
+    url: https://en.wikipedia.org/wiki/Electrical_injury
+  - title: Lightning — Wikipedia
+    url: https://en.wikipedia.org/wiki/Lightning

@@ -1,8 +1,131 @@
 ---
-title: 'Ako funguje elektrický prúd?'
-term: 'elektrický prúd'
+title: Ako funguje elektrický prúd?
+term: elektrický prúd
 slug: elektricky-prud
-summary: 'Elektrický prúd je tok drobných čiastočiek nazývaných elektróny cez drôt. Batéria alebo zásuvka ich tlačí dookola uzavretým okruhom a vďaka tomu svietia lampy a točia sa motory.'
+summary: Elektrický prúd je tok drobných čiastočiek nazývaných elektróny cez drôt. Batéria alebo zásuvka ich tlačí dookola uzavretým okruhom a vďaka tomu svietia lampy a točia sa motory.
+keywords: [elektrina, prúd, ampér, ampéry, tok elektrónov, ako funguje elektrina]
 ---
 
-Elektrický prúd je elektrina v pohybe: nespočetné drobné čiastočky, ktoré sa spolu posúvajú drôtom. Tečie len vtedy, keď má uzavretý okruh, po ktorom môže obiehať.
+import ElectronFlow from '@widgets/electron-flow/ElectronFlow.svelte';
+import MarbleTube from './diagrams/MarbleTube.astro';
+
+Stlačíš vypínač a lampa sa hneď rozsvieti. Drôtom sa niečo rúti – no nevidíš to, nepočuješ to ani
+necítiš. Čo to je? Poďme na to od úplného začiatku.
+
+## Čo sa vlastne pohybuje?
+
+Všetko okolo teba je postavené z drobných kúskov, ktorým hovoríme [[atom|atómy]]. Okolo stredu
+každého atómu sa pohybujú ešte drobnejšie čiastočky: [[electron|elektróny]].
+
+V kovoch, napríklad v medi vo vnútri kábla, nie sú niektoré elektróny pripútané k jednému atómu.
+Voľne sa túlajú pomedzi atómy ako dav ľudí vo veľkej hale.
+
+Teraz ich všetky postrčíme tým istým smerom. Celý dav sa začne spoločne posúvať po drôte. **Tento
+posun je elektrický prúd**: elektróny tečúce drôtom.
+
+## Čo ich tlačí?
+
+Elektróny tlačí batéria alebo zásuvka. Tomuto tlačeniu hovoríme [[voltage|napätie]].
+
+Elektróny majú záporný [[electric-charge|náboj]]. Batéria natlačí elektróny k svojmu mínusovému
+koncu a na plusovom konci ich nechá príliš málo. Natlačené elektróny sú odtláčané preč od mínusu,
+cez drôt, smerom k plusu.
+
+## Tečie len v okruhu
+
+Elektróny môžu tiecť, len keď majú celú cestu, po ktorej obehnú dookola a vrátia sa do batérie.
+Tomuto okruhu hovoríme [[electric-circuit|elektrický obvod]].
+
+Vypínač je malý mostík v okruhu. Keď ho zapneš, okruh je uzavretý a prúd tečie. Keď ho vypneš,
+vznikne medzera. Elektróny sa zastavia a lampa zhasne.
+
+<Figure caption="Zapni vypínač a potom meň tlačenie batérie. Viac tlačenia znamená väčší prúd a jasnejšiu žiarovku." wide>
+  <ElectronFlow client:visible />
+</Figure>
+
+## Prečo sa lampa rozsvieti hneď?
+
+Toto ťa prekvapí: každý elektrón sa pohybuje veľmi pomaly – často pomalšie ako slimák! Ako je teda
+možné, že sa lampa rozsvieti v tej chvíli, keď stlačíš vypínač?
+
+<Analogy title="Trubica plná guličiek">
+Predstav si dlhú trubicu napchatú guličkami. Keď na jednom konci jednu guličku zatlačíš dnu, na
+druhom konci v tej istej chvíli jedna vypadne. Prvá gulička neprešla celú cestu – prešlo ju iba
+tlačenie.
+</Analogy>
+
+<Figure caption="Drôt je už plný elektrónov. Tlačenie cez ne prebehne takmer okamžite." wide>
+  <MarbleTube />
+</Figure>
+
+Drôt je ako tá trubica: už je plný elektrónov. Keď sa tlačenie začne, elektróny v celom okruhu sa
+pohnú takmer naraz. Preto sa lampa rozsvieti hneď.
+
+## Čo dokáže prúd?
+
+Keď prúd tečie, prenáša [[energy|energiu]] z batérie alebo z elektrárne do všetkého, čo je
+v okruhu. Táto energia sa môže zmeniť na:
+
+- **svetlo** – v lampách a obrazovkách,
+- **teplo** – v kanviciach, hriankovačoch a žehličkách,
+- **pohyb** – vo ventilátoroch, vŕtačkách a elektromobiloch,
+- **zvuk** – v reproduktoroch a slúchadlách.
+
+To, ako rýchlo spotrebič túto energiu míňa, je jeho [[electric-power|výkon]]. Niektoré látky prúdu
+v tečení bránia – hovoríme tomu [[electrical-resistance|odpor]] – a časť energie sa pri tom mení na
+teplo.
+
+## Aký silný je prúd?
+
+Prúd meriame v **ampéroch** a píšeme **A**. Meno pochádza od francúzskeho vedca André-Marie
+Ampèra.
+
+| Čo | Približne aký prúd |
+|---|---|
+| LED lampa | 0,04&nbsp;A |
+| Nabíjajúci sa telefón | 1–2&nbsp;A |
+| Rýchlovarná kanvica | 9&nbsp;A |
+| Blesk | 30&nbsp;000&nbsp;A |
+
+Chceš vedieť, ako sa tieto čísla vypočítajú? Prečítaj si, [[calculating-electric-current|ako sa
+počíta elektrický prúd]]. A čo robí prúd vo väčších obvodoch, zistíš v článku o tom,
+[[how-electric-current-behaves|ako sa správa elektrický prúd]].
+
+<Safety>
+Aj tvoje telo dokáže viesť prúd – a to je nebezpečné. Prúd len 0,03&nbsp;ampéra, ktorý pretečie
+cez hrudník, môže narušiť tlkot srdca. Nikdy sa nedotýkaj zásuviek, odhalených drôtov ani
+elektrického vedenia a nikdy nepoužívaj elektrické prístroje mokrými rukami. Batérie s napätím 1,5
+alebo 9&nbsp;voltov sú na pokusy bezpečné.
+</Safety>
+
+<GoDeeper title="Ktorým smerom prúd tečie?">
+Elektróny tečú z mínusového konca batérie k plusovému. Na schémach obvodov sa však prúd kreslí
+opačne, od plusu k mínusu. Tento „dohodnutý smer prúdu“ sa zvolil v 18. storočí, keď ešte nikto
+o elektrónoch nevedel. Vedci si mysleli, že sa pohybuje niečo kladné. Oba opisy dávajú vo výpočtoch
+rovnaké výsledky, a tak starý zvyk zostal. Viac sa dočítaš v článku o
+[[history-of-electricity|histórii elektriny]].
+</GoDeeper>
+
+<GoDeeper title="Ako pomaly sa elektróny naozaj pohybujú?">
+V bežnom domácom kábli, ktorým tečie niekoľko ampérov, sa elektróny posúvajú dopredu rýchlosťou
+len asi desatiny milimetra za sekundu. Popritom sa náhodne chvejú obrovskými rýchlosťami, no tieto
+náhodné pohyby sa navzájom rušia. Rýchlo sa šíri tlačenie: elektrické pole, ktoré sa drôtom
+rozbehne veľkou časťou rýchlosti svetla. V zásuvke navyše prúd mení smer 50-krát za sekundu – to je
+[[alternating-current|striedavý prúd]] – takže elektróny sa väčšinou len prešľapujú tam a späť na
+mieste.
+</GoDeeper>
+
+<Remember>
+- Elektrický prúd je tok elektrónov cez drôt.
+- Tlačenie dáva batéria alebo zásuvka a hovoríme mu napätie.
+- Prúd tečie len uzavretým okruhom – obvodom.
+- Prúd prenáša energiu, ktorá sa mení na svetlo, teplo, pohyb alebo zvuk.
+- Prúd meriame v ampéroch (A). Prúd zo zásuvky môže zabiť.
+</Remember>
+
+<Quiz
+  question="Prečo sa lampa rozsvieti hneď po stlačení vypínača, aj keď sa elektróny pohybujú pomaly?"
+  options={["Elektróny sú v skutočnosti veľmi rýchle", "Drôt je už plný elektrónov a všetky sa pohnú naraz", "Lampa si svetlo uschováva a potom ho vypustí"]}
+  answer={1}
+  explanation="Ako guličky v plnej trubici: tlačenie prebehne cez elektróny, ktoré už v drôte sú, a lampa zareaguje takmer okamžite."
+/>

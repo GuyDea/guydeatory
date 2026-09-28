@@ -1,8 +1,145 @@
 ---
-title: 'How do we calculate electric current?'
-term: 'calculating electric current'
+title: How do we calculate electric current?
+term: calculating electric current
 slug: calculating-electric-current
-summary: 'We measure current by counting how much electric charge flows past each second, in amperes. With Ohm’s law you can work it out from the voltage and the resistance: current = voltage ÷ resistance.'
+summary: We measure current by counting how much electric charge flows past each second, in amperes. With Ohm’s law you can work it out from the voltage and the resistance, current = voltage ÷ resistance.
+keywords: [amps, amperes, current formula, I = V/R, how many amps, watts, kilowatt-hour, overload]
 ---
 
-Current tells you how much electricity flows past a point every second. Its unit is the ampere. If you know how hard the electricity is pushed and how much the wire resists, you can calculate the current.
+import OhmsLawPlayground from '@widgets/ohms-law/OhmsLawPlayground.svelte';
+import CountingGate from './diagrams/CountingGate.astro';
+
+Imagine standing next to a road and counting the cars that drive past in one minute. Twenty cars?
+Two hundred? That number tells you how busy the road is.
+
+Scientists measure [[electric-current|electric current]] in the same way. They “count” how much
+electricity passes a point in the wire every second. Let’s learn the three rules that let you work
+it out — no counting needed.
+
+## Rule 1: current is charge per second
+
+Electricity is made of moving [[electric-charge|charge]], carried by electrons. Charge is counted
+in **coulombs**, written **C**. One coulomb is a huge crowd of electrons: about
+6.24 billion billion of them.
+
+<Figure caption="Current tells you how much charge passes one spot in the wire every second.">
+  <CountingGate />
+</Figure>
+
+If one coulomb passes every second, the current is **one ampere** (1 A). As a formula:
+
+$$
+I = \frac{Q}{t}
+$$
+
+- $I$ is the current, in amperes (A),
+- $Q$ is the charge that passed, in coulombs (C),
+- $t$ is how long it took, in seconds (s).
+
+**Example:** 30 coulombs pass a point in 10 seconds. The current is $30 \div 10 = 3$ A.
+
+## Rule 2: current = push ÷ resistance
+
+Counting coulombs is hard in real life. Luckily there is an easier way. The current depends on two
+things:
+
+- how hard the electricity is pushed — the [[voltage]], in volts (V),
+- how hard the path is — the [[electrical-resistance|resistance]], in ohms (Ω).
+
+This rule is called [[ohms-law|Ohm’s law]]:
+
+$$
+I = \frac{V}{R}
+$$
+
+Push harder (bigger $V$), and more current flows. Make the path harder (bigger $R$), and less
+current flows.
+
+**Example 1:** a torch bulb has a resistance of about 10 Ω. With a 3 V battery, the current is
+$3 \div 10 = 0.3$ A.
+
+**Example 2:** a car headlight has about 2.6 Ω and runs on the car’s 12 V battery. The current is
+$12 \div 2.6 \approx 4.6$ A. (The sign ≈ means “about”.)
+
+<Figure caption="Try it yourself: change the push and the resistance, or pick a real device. The formula updates live." wide>
+  <OhmsLawPlayground client:visible />
+</Figure>
+
+## Rule 3: power = push × current
+
+The [[electric-power|power]] of a device tells you how much [[energy]] it uses every second. It is
+measured in **watts** (W):
+
+$$
+P = V \cdot I
+$$
+
+**Example:** a phone charger gives 5 V and 2 A. Its power is $5 \cdot 2 = 10$ W.
+
+You can also turn the rule around to find the current: $I = P \div V$. A 2,000 W kettle on a
+230 V socket takes $2000 \div 230 \approx 8.7$ A.
+
+## What does your electricity bill count?
+
+The bill counts energy in **kilowatt-hours** (kWh). One kilowatt-hour is the energy a 1,000 W
+device uses in one hour.
+
+**Example:** the 2,000 W kettle runs for 3 minutes (that is 0.05 hours). It uses
+$2 \text{ kW} \cdot 0.05 \text{ h} = 0.1$ kWh. Boil it ten times, and you have used one whole
+kilowatt-hour.
+
+## Using the rules to stay safe
+
+Most sockets and power strips in Europe are made for at most **16 A**. Let’s check a busy kitchen
+with the rules:
+
+| Device | Power | Current ($P \div 230$ V) |
+|---|---|---|
+| Kettle | 2,000 W | 8.7 A |
+| Heater | 2,000 W | 8.7 A |
+| Microwave | 1,000 W | 4.3 A |
+| **All three on one power strip** | **5,000 W** | **21.7 A** |
+
+21.7 A is much more than 16 A. The cable would get dangerously hot, and a safety switch in your home
+should cut the power.
+
+<Safety>
+Never plug many powerful devices (kettles, heaters, irons, hair dryers) into one power strip, and
+never plug power strips into each other. Too much current makes cables hot enough to start a fire.
+</Safety>
+
+<GoDeeper title="Two more power formulas">
+Put Ohm’s law into $P = V \cdot I$ and you get two more useful forms:
+
+$$
+P = I^2 \cdot R \qquad \text{and} \qquad P = \frac{V^2}{R}
+$$
+
+The first one explains why power lines use very high voltages. The wires waste energy as heat, and
+that loss grows with the *square* of the current. To send the same power with 10 times higher
+voltage, you need only a tenth of the current — and the heat lost in the wires drops to a hundredth.
+That is one reason power grids use [[alternating-current|alternating current]]: its voltage is easy
+to change up and down.
+</GoDeeper>
+
+<GoDeeper title="How current and voltage are measured">
+An **ammeter** measures current. It must be put *into* the loop, so the current has to flow through
+it. A **voltmeter** measures voltage between two points, so it is connected *across* a device, side
+by side with it. A multimeter can do both — but only a grown-up should use one on anything
+connected to the mains.
+</GoDeeper>
+
+<Remember>
+- Current is how much charge flows past each second: $I = Q \div t$, in amperes (A).
+- Ohm’s law: current = voltage ÷ resistance, $I = V \div R$.
+- Power = voltage × current, $P = V \cdot I$, in watts (W).
+- The electricity bill counts energy in kilowatt-hours (kWh).
+- Too much current makes cables hot, so don’t overload sockets.
+</Remember>
+
+<Quiz
+  question="A heater uses 2,300 W from a 230 V socket. What current flows through it?"
+  options={["1 A", "10 A", "100 A"]}
+  answer={1}
+  explanation="Current = power ÷ voltage = 2,300 ÷ 230 = 10 A."
+/>

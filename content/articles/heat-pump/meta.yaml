@@ -1,5 +1,16 @@
 topics: [home-technology, heat]
 labels: [high-level]
-status: stub
+prerequisites: [heat, evaporation-and-condensation]
+related: [coefficient-of-performance, refrigerant, boiling-point, conservation-of-energy]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Heat pump — Wikipedia
+    url: https://en.wikipedia.org/wiki/Heat_pump
+  - title: Air conditioning — Wikipedia
+    url: https://en.wikipedia.org/wiki/Air_conditioning
+  - title: Vapor-compression refrigeration — Wikipedia
+    url: https://en.wikipedia.org/wiki/Vapor-compression_refrigeration
+  - title: Aurel Stodola — Wikipedia
+    url: https://en.wikipedia.org/wiki/Aurel_Stodola

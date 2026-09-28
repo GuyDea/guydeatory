@@ -1,0 +1,34 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'A tube full of marbles',
+    desc: 'A tube is completely full of marbles. When one marble is pushed in at the left end, a marble pops out at the right end at the same moment.',
+    push: 'push one in…',
+    out: '…one pops out',
+  },
+  sk: {
+    title: 'Trubica plná guličiek',
+    desc: 'Trubica je úplne plná guličiek. Keď na ľavom konci jednu guličku zatlačíš dnu, na pravom konci v tej istej chvíli jedna vypadne.',
+    push: 'zatlač jednu…',
+    out: '…jedna vypadne',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const marbles = Array.from({ length: 11 }, (_, i) => 68 + i * 26);
+---
+<Svg viewBox="0 0 400 150" title={s.title} desc={s.desc} maxWidth="30rem">
+  <rect x="50" y="48" width="300" height="36" rx="18" class="d-box-alt" />
+  {marbles.map((x) => <circle cx={x} cy="66" r="11" class="d-electron" />)}
+  <circle cx="22" cy="66" r="11" class="d-electron" />
+  <path d="M4 100H40" class="d-line d-arrow" />
+  <circle cx="382" cy="92" r="11" class="d-electron" />
+  <path d="M360 66C372 66 380 72 382 80" class="d-line d-arrow-electron" />
+  <text x="4" y="130" class="d-small">{s.push}</text>
+  <text x="396" y="130" text-anchor="end" class="d-small">{s.out}</text>
+</Svg>

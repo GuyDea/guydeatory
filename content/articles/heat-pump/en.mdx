@@ -1,8 +1,164 @@
 ---
-title: 'How do air conditioners and heat pumps work?'
-term: 'heat pump'
+title: How do air conditioners and heat pumps work?
+term: heat pump
 slug: heat-pump
-summary: 'Air conditioners and heat pumps don’t make heat or cold. They move heat from one place to another using a special liquid that soaks up heat when it evaporates and gives it back when it condenses.'
+summary: Air conditioners and heat pumps don’t make heat or cold. They move heat from one place to another, using a special liquid that soaks up heat when it evaporates and gives it back when it condenses.
+keywords: [air conditioning, air conditioner, AC, aircon, heat pump, fridge, refrigerator, cooling, heating, split unit, outdoor unit]
 ---
 
-A heat pump carries heat, the way a sponge carries water. In summer it carries heat out of your house; in winter it gathers heat from the cold air outside and brings it in.
+import CopExplorer from '@widgets/cop-explorer/CopExplorer.svelte';
+import HeatPumpCycle from '@widgets/heat-pump-cycle/HeatPumpCycle.svelte';
+import HeatUphill from './diagrams/HeatUphill.astro';
+
+Put your hand near the back of a fridge. It feels warm! A fridge doesn’t “make cold”. It carries
+heat out of its inside and lets it out at the back.
+
+Air conditioners and heat pumps work in exactly the same way — just for a whole house. In summer
+they carry heat out of your home. In winter they carry heat in, even from freezing air outside.
+How is that possible? Let’s build it up step by step.
+
+## Heat flows downhill by itself
+
+[[heat|Heat]] always flows by itself from something warmer to something colder. A hot drink cools
+down in a cold room. An ice cube melts in your warm hand. Heat never flows from cold to warm on its
+own.
+
+To move heat the “wrong” way — out of a cool room into the hot summer air — you need a machine that
+uses [[energy]].
+
+<Analogy>
+Water flows downhill by itself. To get water uphill, you need a pump, and the pump needs
+electricity. A heat pump is a pump for heat: it lifts heat from a colder place to a warmer place.
+</Analogy>
+
+<Figure caption="Heat, like water, flows “downhill” by itself — from warm to cold. A heat pump uses electricity to lift it “uphill”." wide>
+  <HeatUphill />
+</Figure>
+
+## Even cold air holds heat
+
+You might think freezing winter air has no heat at all. But it does! Everything is made of tiny
+particles that are always jiggling. As long as they jiggle, there is heat in them — and at
+−15&nbsp;°C, the particles in the air are still jiggling a lot. A heat pump collects some of this
+heat and carries it inside.
+
+## The secret: a liquid that boils in the cold
+
+Inside every air conditioner, heat pump and fridge flows a special liquid called a
+[[refrigerant]]. Its superpower is that it boils at very low temperatures — far colder than ice.
+
+Two things happen when a liquid changes into a gas and back:
+
+- When a liquid **boils** or [[evaporation-and-condensation|evaporates]], it soaks up heat from
+  around it. That is why wet skin feels cold in the wind.
+- When a gas **condenses** back into a liquid, it gives that heat away again.
+
+The machine can also choose where the refrigerant boils, by changing its [[pressure]]. At low
+pressure it boils even in freezing cold. At high pressure it condenses even when it is hot. You can
+read why in [[boiling-point|why water boils at different temperatures]].
+
+## A trip around the loop
+
+The refrigerant travels round and round a closed loop of pipes. On every lap it passes four stops:
+
+1. **Evaporator:** the cold liquid boils and soaks up heat from the air around it.
+2. **Compressor:** a pump squeezes the gas. Squeezing makes it hot, the way a bicycle pump warms up
+   when you use it. This is the part that uses the electricity.
+3. **Condenser:** the hot gas gives its heat to the air around it and turns back into a liquid.
+4. **Expansion valve:** the liquid squirts through a tiny opening. Its pressure drops, and it
+   becomes very cold again. Then the lap starts over.
+
+<Figure caption="Switch between winter and summer, change the weather outside, and click the parts to see what each one does." wide>
+  <HeatPumpCycle client:visible />
+</Figure>
+
+## Summer: an air conditioner
+
+When it cools, the cold **evaporator** is inside your home. It soaks heat out of the room air, and a
+fan blows the cooled air back into the room.
+
+The hot **condenser** is outside, in the box on the wall with the big fan. That is why the air
+blowing out of that box feels warm: it is the heat from your rooms.
+
+An air conditioner dries the air too. Water vapour from the room condenses on the cold evaporator,
+just like on a cold glass. The water drips out through a small pipe.
+
+## Winter: a heat pump
+
+Now we want the heat to go the other way. A special valve simply turns the refrigerant’s flow
+around. The cold evaporator is now **outside**, soaking up heat even from freezing air. The hot
+condenser is now **inside**, warming the air, the radiators or the floor.
+
+That is why many machines can do both jobs: heating in winter and cooling in summer.
+
+Sometimes, on a cold day, a cloud of steam puffs out of the outdoor unit. Don’t worry: ice has formed
+on its cold coil, and the machine is melting it off.
+
+## Why is it so good at heating?
+
+An electric heater turns 1 unit of electricity into 1 unit of heat. A heat pump uses 1 unit of
+electricity to *move* about 3 to 4 units of heat into your home. This number is called its
+[[coefficient-of-performance|COP]].
+
+Is that magic? No — and it doesn’t break the rule that [[conservation-of-energy|energy can never be
+made from nothing]]. The electricity runs the compressor. The extra heat isn’t made; it is collected
+from the outside air.
+
+The colder it is outside, the harder the heat pump has to work, so it moves a little less heat for
+each unit of electricity.
+
+<Figure caption="Make the weather colder and watch how much heat 1 kilowatt-hour of electricity brings in." wide>
+  <CopExplorer client:visible />
+</Figure>
+
+## Heat pumps all around you
+
+- **Fridges and freezers** are heat pumps too. They carry heat out of the food and release it at the
+  back.
+- **Ground-source heat pumps** collect heat from pipes buried in the garden. Deep in the ground, the
+  temperature stays about the same all year.
+- **Water-source heat pumps** collect heat from a lake or a river.
+
+<FunFact>
+One of the first heat pumps to heat a whole building was designed by a Slovak engineer, Aurel
+Stodola, born in Liptovský Mikuláš. In 1928 he designed a heat pump that took heat from Lake Geneva
+to warm the city hall of Geneva, in Switzerland.
+</FunFact>
+
+<Safety>
+Never open, bend or puncture the pipes of a fridge, freezer, air conditioner or heat pump. The
+refrigerant inside is under high pressure, can freeze your skin, and some kinds can burn. Keep your
+fingers away from the fans in outdoor units.
+</Safety>
+
+<GoDeeper title="Pressures and temperatures in the loop">
+Take a heat pump filled with propane (R-290) on a 0&nbsp;°C winter day. In the outdoor evaporator,
+the propane boils at about −8&nbsp;°C, at roughly 4 bar. The compressor squeezes it to about 14 bar;
+at that pressure it condenses at about 40&nbsp;°C, hot enough to warm a house. The gas leaving the
+compressor is hotter still, often 60–70&nbsp;°C.
+
+The bigger the difference between the cold side and the hot side, the harder the compressor has to
+squeeze, and the lower the COP. That is why heat pumps love underfloor heating: the water only needs
+to be about 35&nbsp;°C, not 55&nbsp;°C as in many radiators.
+</GoDeeper>
+
+<GoDeeper title="How much heat is in cold air?">
+Temperature measures how fast particles jiggle, and the jiggling only stops completely at absolute
+zero: −273.15&nbsp;°C. Air at −15&nbsp;°C is still more than 250 degrees above that, so it holds
+plenty of heat for a heat pump to collect. Heating the water, not finding heat, is the hard part.
+</GoDeeper>
+
+<Remember>
+- Air conditioners and heat pumps move heat; they don’t make it.
+- A refrigerant boils in the cold (soaking up heat) and condenses when squeezed (giving heat away).
+- The four stops are the evaporator, compressor, condenser and expansion valve.
+- In summer the heat goes out of the house; in winter it comes in.
+- 1 unit of electricity can move 3–4 units of heat.
+</Remember>
+
+<Quiz
+  question="In winter, where does most of the heat from a heat pump come from?"
+  options={["From the electricity it uses", "From the cold air outside", "From burning gas inside the machine"]}
+  answer={1}
+  explanation="The electricity only runs the compressor. Most of the heat is collected from the outside air, even when it is freezing."
+/>

@@ -1,0 +1,32 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Counting electrons at a checkpoint',
+    desc: 'A wire with electrons flowing to the right. A dashed checkpoint line crosses the wire. Current means counting how many electrons pass the checkpoint each second.',
+    gate: 'checkpoint',
+    count: 'count them every second',
+  },
+  sk: {
+    title: 'Počítanie elektrónov na kontrolnom bode',
+    desc: 'Drôt, ktorým tečú elektróny doprava. Cez drôt vedie prerušovaná čiara kontrolného bodu. Prúd znamená spočítať, koľko elektrónov prejde kontrolným bodom za každú sekundu.',
+    gate: 'kontrolný bod',
+    count: 'počítaj ich každú sekundu',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const electrons = [40, 80, 120, 160, 250, 290, 330, 370];
+---
+<Svg viewBox="0 0 400 160" title={s.title} desc={s.desc} maxWidth="30rem">
+  <rect x="10" y="50" width="380" height="40" rx="20" class="d-box-alt" />
+  {electrons.map((x) => <circle cx={x} cy="70" r="10" class="d-electron" />)}
+  <path d="M205 30V110" stroke="var(--d-accent)" stroke-width="3" stroke-dasharray="6 6" />
+  <path d="M60 120H140" class="d-line d-arrow-electron" />
+  <text x="205" y="22" text-anchor="middle" class="d-label">{s.gate}</text>
+  <text x="205" y="140" text-anchor="middle" class="d-small">{s.count}</text>
+</Svg>

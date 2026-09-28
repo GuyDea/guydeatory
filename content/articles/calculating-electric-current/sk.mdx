@@ -1,8 +1,146 @@
 ---
-title: 'Ako sa počíta elektrický prúd?'
-term: 'výpočet elektrického prúdu'
+title: Ako sa počíta elektrický prúd?
+term: výpočet elektrického prúdu
 slug: vypocet-elektrickeho-prudu
-summary: 'Prúd meriame tak, že počítame, koľko elektrického náboja pretečie za každú sekundu – v ampéroch. Pomocou Ohmovho zákona ho vypočítaš z napätia a odporu: prúd = napätie ÷ odpor.'
+summary: Prúd meriame tak, že počítame, koľko elektrického náboja pretečie za každú sekundu – v ampéroch. Pomocou Ohmovho zákona ho vypočítaš z napätia a odporu, prúd = napätie ÷ odpor.
+keywords: [ampéry, ampér, vzorec prúdu, I = U/R, koľko ampérov, watty, kilowatthodina, preťaženie]
 ---
 
-Prúd hovorí, koľko elektriny pretečie miestom za jednu sekundu. Jeho jednotkou je ampér. Keď vieš, ako silno je elektrina tlačená a ako veľmi jej drôt bráni, prúd vieš vypočítať.
+import OhmsLawPlayground from '@widgets/ohms-law/OhmsLawPlayground.svelte';
+import CountingGate from './diagrams/CountingGate.astro';
+
+Predstav si, že stojíš pri ceste a počítaš autá, ktoré prejdú za jednu minútu. Dvadsať? Dvesto?
+To číslo povie, aká rušná je cesta.
+
+Vedci merajú [[electric-current|elektrický prúd]] podobne. „Počítajú“, koľko elektriny prejde
+jedným miestom drôtu za každú sekundu. Naučme sa tri pravidlá, vďaka ktorým to vypočítaš – a nič
+počítať nemusíš.
+
+## Pravidlo 1: prúd je náboj za sekundu
+
+Elektrina je pohybujúci sa [[electric-charge|náboj]], ktorý nesú elektróny. Náboj počítame
+v **coulomboch** a píšeme **C**. Jeden coulomb je obrovský dav elektrónov: asi 6,24 miliardy
+miliárd.
+
+<Figure caption="Prúd hovorí, koľko náboja prejde jedným miestom drôtu za každú sekundu.">
+  <CountingGate />
+</Figure>
+
+Keď prejde jeden coulomb za každú sekundu, prúd je **jeden ampér** (1&nbsp;A). Ako vzorec:
+
+$$
+I = \frac{Q}{t}
+$$
+
+- $I$ je prúd v ampéroch (A),
+- $Q$ je náboj, ktorý prešiel, v coulomboch (C),
+- $t$ je čas, za ktorý prešiel, v sekundách (s).
+
+**Príklad:** jedným miestom prejde 30 coulombov za 10 sekúnd. Prúd je $30 \div 10 = 3$&nbsp;A.
+
+## Pravidlo 2: prúd = tlačenie ÷ odpor
+
+Počítať coulomby je v skutočnosti ťažké. Našťastie existuje jednoduchší spôsob. Prúd závisí od
+dvoch vecí:
+
+- ako silno je elektrina tlačená – od [[voltage|napätia]] vo voltoch (V),
+- aká ťažká je cesta – od [[electrical-resistance|odporu]] v ohmoch (Ω).
+
+Toto pravidlo sa volá [[ohms-law|Ohmov zákon]]. V slovenských školách sa napätie vo vzorcoch
+označuje písmenom $U$:
+
+$$
+I = \frac{U}{R}
+$$
+
+Keď tlačíš silnejšie (väčšie $U$), tečie väčší prúd. Keď je cesta ťažšia (väčšie $R$), tečie
+menší prúd.
+
+**Príklad 1:** žiarovka baterky má odpor asi 10&nbsp;Ω. S batériou 3&nbsp;V je prúd
+$3 \div 10 = 0{,}3$&nbsp;A.
+
+**Príklad 2:** svetlomet auta má asi 2,6&nbsp;Ω a napája ho 12-voltová autobatéria. Prúd je
+$12 \div 2{,}6 \approx 4{,}6$&nbsp;A. (Znak ≈ znamená „približne“.)
+
+<Figure caption="Vyskúšaj si to: meň tlačenie a odpor alebo si vyber skutočný spotrebič. Vzorec sa hneď prepočíta." wide>
+  <OhmsLawPlayground client:visible />
+</Figure>
+
+## Pravidlo 3: výkon = tlačenie × prúd
+
+[[electric-power|Výkon]] spotrebiča hovorí, koľko [[energy|energie]] spotrebuje za každú sekundu.
+Meriame ho vo **wattoch** (W):
+
+$$
+P = U \cdot I
+$$
+
+**Príklad:** nabíjačka telefónu dáva 5&nbsp;V a 2&nbsp;A. Jej výkon je $5 \cdot 2 = 10$&nbsp;W.
+
+Pravidlo sa dá aj otočiť a vypočítať z neho prúd: $I = P \div U$. Kanvica s výkonom
+2&nbsp;000&nbsp;W v zásuvke s napätím 230&nbsp;V berie $2000 \div 230 \approx 8{,}7$&nbsp;A.
+
+## Čo počíta účet za elektrinu?
+
+Účet počíta energiu v **kilowatthodinách** (kWh). Jedna kilowatthodina je energia, ktorú spotrebič
+s výkonom 1&nbsp;000&nbsp;W spotrebuje za jednu hodinu.
+
+**Príklad:** kanvica s výkonom 2&nbsp;000&nbsp;W beží 3 minúty (to je 0,05 hodiny). Spotrebuje
+$2 \text{ kW} \cdot 0{,}05 \text{ h} = 0{,}1$&nbsp;kWh. Keď v nej desaťkrát uvaríš vodu, minieš
+celú jednu kilowatthodinu.
+
+## Pravidlá, ktoré chránia
+
+Väčšina zásuviek a predlžovačiek v Európe je stavaná najviac na **16&nbsp;A**. Overme si rušnú
+kuchyňu pomocou pravidiel:
+
+| Spotrebič | Výkon | Prúd ($P \div 230$&nbsp;V) |
+|---|---|---|
+| Kanvica | 2&nbsp;000&nbsp;W | 8,7&nbsp;A |
+| Ohrievač | 2&nbsp;000&nbsp;W | 8,7&nbsp;A |
+| Mikrovlnka | 1&nbsp;000&nbsp;W | 4,3&nbsp;A |
+| **Všetky tri v jednej predlžovačke** | **5&nbsp;000&nbsp;W** | **21,7&nbsp;A** |
+
+21,7&nbsp;A je oveľa viac ako 16&nbsp;A. Kábel by sa nebezpečne zohrial a istič v tvojom dome by mal
+prúd vypnúť.
+
+<Safety>
+Nikdy nezapájaj veľa výkonných spotrebičov (kanvice, ohrievače, žehličky, fény) do jednej
+predlžovačky a nikdy nezapájaj predlžovačky jednu do druhej. Príliš veľký prúd zohreje káble tak,
+že môžu spôsobiť požiar.
+</Safety>
+
+<GoDeeper title="Ďalšie dva vzorce pre výkon">
+Keď do vzorca $P = U \cdot I$ dosadíš Ohmov zákon, dostaneš ďalšie dva užitočné tvary:
+
+$$
+P = I^2 \cdot R \qquad \text{a} \qquad P = \frac{U^2}{R}
+$$
+
+Prvý z nich vysvetľuje, prečo elektrické vedenia používajú veľmi vysoké napätie. Drôty strácajú
+energiu ako teplo a táto strata rastie s *druhou mocninou* prúdu. Ak chceš preniesť rovnaký výkon
+s 10-krát vyšším napätím, potrebuješ len desatinu prúdu – a teplo stratené v drôtoch klesne na
+stotinu. Aj preto elektrické siete používajú [[alternating-current|striedavý prúd]]: jeho napätie
+sa dá ľahko zvyšovať a znižovať.
+</GoDeeper>
+
+<GoDeeper title="Ako sa meria prúd a napätie">
+Prúd meria **ampérmeter**. Musí byť zapojený *do* okruhu, aby ním prúd pretekal. Napätie medzi
+dvoma bodmi meria **voltmeter**, a preto sa pripája *vedľa* spotrebiča, paralelne s ním. Multimeter
+dokáže oboje – no na čokoľvek pripojené do zásuvky ho smie použiť len dospelý.
+</GoDeeper>
+
+<Remember>
+- Prúd je náboj, ktorý pretečie za sekundu: $I = Q \div t$, v ampéroch (A).
+- Ohmov zákon: prúd = napätie ÷ odpor, $I = U \div R$.
+- Výkon = napätie × prúd, $P = U \cdot I$, vo wattoch (W).
+- Účet za elektrinu počíta energiu v kilowatthodinách (kWh).
+- Príliš veľký prúd zohrieva káble, preto zásuvky nepreťažuj.
+</Remember>
+
+<Quiz
+  question="Ohrievač berie zo zásuvky s napätím 230 V výkon 2 300 W. Aký prúd ním tečie?"
+  options={["1 A", "10 A", "100 A"]}
+  answer={1}
+  explanation="Prúd = výkon ÷ napätie = 2 300 ÷ 230 = 10 A."
+/>

@@ -1,8 +1,130 @@
 ---
-title: 'How does electric current work?'
-term: 'electric current'
+title: How does electric current work?
+term: electric current
 slug: electric-current
-summary: 'Electric current is a flow of tiny particles called electrons through a wire. A battery or a socket pushes them around a closed loop, and that flow makes lamps shine and motors spin.'
+summary: Electric current is a flow of tiny particles called electrons through a wire. A battery or a socket pushes them around a closed loop, and that flow makes lamps shine and motors spin.
+keywords: [electricity, current, amps, ampere, flow of electrons, how electricity works]
 ---
 
-Electric current is electricity on the move: countless tiny particles drifting through a wire, all pushed along together. It only flows when there is a complete loop to travel around.
+import ElectronFlow from '@widgets/electron-flow/ElectronFlow.svelte';
+import MarbleTube from './diagrams/MarbleTube.astro';
+
+Flip a switch, and a lamp lights up at once. Something rushes through the wire — but you can’t see
+it, hear it or smell it. What is it? Let’s find out, starting from the very beginning.
+
+## What is moving?
+
+Everything around you is built from tiny pieces called [[atom|atoms]]. Around the middle of every
+atom move even tinier particles: [[electron|electrons]].
+
+In metals, like the copper inside a cable, some electrons are not tied to one atom. They wander
+freely between the atoms, like a crowd of people in a big hall.
+
+Now give them all a push in the same direction. The whole crowd starts to drift along the wire,
+together. **That drift is electric current**: electrons flowing through a wire.
+
+## What pushes them?
+
+A battery or a socket pushes the electrons. We call that push [[voltage]].
+
+Electrons carry a negative [[electric-charge|charge]]. A battery crowds electrons at its minus end
+and leaves too few at its plus end. The crowded electrons are pushed away from the minus end,
+through the wire, towards the plus end.
+
+## It only flows in a loop
+
+Electrons can only flow if they have a complete path to travel around and back to the battery.
+This loop is called an [[electric-circuit|electric circuit]].
+
+A switch is a small bridge in the loop. Close it, and the loop is complete, so current flows. Open
+it, and there is a gap. The electrons stop, and the lamp goes dark.
+
+<Figure caption="Close the switch, then change the battery’s push. More push means more current and a brighter bulb." wide>
+  <ElectronFlow client:visible />
+</Figure>
+
+## Why does the lamp light up at once?
+
+Here is a surprise: each electron moves very slowly — often more slowly than a snail! So how can a
+lamp light up the moment you flip the switch?
+
+<Analogy title="A tube full of marbles">
+Imagine a long tube packed full of marbles. Push one marble in at one end, and at that very moment
+another marble pops out at the other end. The first marble didn’t travel all the way; the push did.
+</Analogy>
+
+<Figure caption="The wire is already full of electrons. The push travels through them almost instantly." wide>
+  <MarbleTube />
+</Figure>
+
+A wire is like that tube: it is already full of electrons. When the push starts, electrons all along
+the loop start moving at almost the same moment. So the lamp lights up at once.
+
+## What can current do?
+
+When current flows, it carries [[energy]] from the battery or the power station to whatever is in
+the loop. That energy can be turned into:
+
+- **light** — in lamps and screens,
+- **heat** — in kettles, toasters and irons,
+- **movement** — in fans, drills and electric cars,
+- **sound** — in speakers and headphones.
+
+How fast a device uses that energy is its [[electric-power|power]]. Some materials make it harder
+for current to flow; that is called [[electrical-resistance|resistance]], and it turns some of the
+energy into heat.
+
+## How strong is a current?
+
+We measure current in **amperes**, or **amps** for short, written **A**. The name comes from the
+French scientist André-Marie Ampère.
+
+| What | About how much current |
+|---|---|
+| An LED lamp | 0.04 A |
+| A phone charging | 1–2 A |
+| A kettle | 9 A |
+| A bolt of lightning | 30,000 A |
+
+Want to know how these numbers are worked out? Read [[calculating-electric-current|how we calculate
+electric current]]. And to see what current does in bigger circuits, read
+[[how-electric-current-behaves|how electric current behaves]].
+
+<Safety>
+Your body can carry current too — and that is dangerous. A current of just 0.03 amps flowing
+through your chest can stop your heart from beating properly. Never touch sockets, open wires or
+power lines, and never use electrical things with wet hands. Batteries of 1.5 or 9 volts are
+safe for experiments.
+</Safety>
+
+<GoDeeper title="Which way does current flow?">
+Electrons flow from the minus end of a battery to the plus end. But on circuit diagrams, current is
+drawn flowing the other way, from plus to minus. This “conventional current” was chosen in the
+1700s, before anyone knew about electrons. Scientists guessed that something positive was moving.
+Both descriptions give the same answers in calculations, so the old habit stayed. Read more in the
+[[history-of-electricity|history of electricity]].
+</GoDeeper>
+
+<GoDeeper title="How slow are the electrons, really?">
+In a household cable carrying a few amps, electrons drift forward at only about a tenth of a
+millimetre per second. They also jiggle randomly at enormous speeds, but those random movements
+cancel out. What travels fast is the push: an electric field that spreads along the wire at a large
+fraction of the speed of light. In a wall socket, the current also swaps direction 50 times every
+second — that is [[alternating-current|alternating current]] — so the electrons mostly shuffle back
+and forth on the spot.
+</GoDeeper>
+
+<Remember>
+- Electric current is a flow of electrons through a wire.
+- A battery or a socket gives the push, called voltage.
+- Current only flows around a closed loop: a circuit.
+- Current carries energy that becomes light, heat, movement or sound.
+- Current is measured in amperes (A). Mains current can kill.
+</Remember>
+
+<Quiz
+  question="Why does a lamp light up the moment you flip the switch, even though electrons move slowly?"
+  options={["Electrons are actually very fast", "The wire is already full of electrons, and they all start moving at once", "The lamp stores light and lets it out"]}
+  answer={1}
+  explanation="Like marbles in a full tube, the push travels through the electrons that are already in the wire, so the lamp reacts almost instantly."
+/>

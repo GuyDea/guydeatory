@@ -1,0 +1,46 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Water flows downhill by itself, but a pump can lift it',
+    desc: 'On the left, water runs down a slope from a high tank into a low pond all by itself. On the right, a pump that needs electricity lifts water from the low pond up into the high tank.',
+    byItself: 'by itself: downhill',
+    pump: 'pump',
+    needs: 'needs electricity',
+    warm: 'warm',
+    cold: 'cold',
+  },
+  sk: {
+    title: 'Voda sama tečie dole kopcom, no čerpadlo ju vie vyniesť hore',
+    desc: 'Vľavo steká voda samovoľne z vysokej nádrže dole do nízkeho jazierka. Vpravo čerpadlo, ktoré potrebuje elektrinu, vynáša vodu z nízkeho jazierka hore do vysokej nádrže.',
+    byItself: 'samo od seba: dole',
+    pump: 'čerpadlo',
+    needs: 'potrebuje elektrinu',
+    warm: 'teplo',
+    cold: 'chladno',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 240" title={s.title} desc={s.desc} maxWidth="30rem">
+  <rect x="20" y="40" width="110" height="60" rx="6" class="d-box" />
+  <rect x="24" y="58" width="102" height="38" rx="3" class="d-warm" />
+  <text x="75" y="30" text-anchor="middle" class="d-label">{s.warm}</text>
+  <path d="M20 205C60 190 100 190 200 205" class="d-box-alt" />
+  <ellipse cx="200" cy="205" rx="90" ry="18" class="d-cool" />
+  <text x="200" y="236" text-anchor="middle" class="d-label">{s.cold}</text>
+  <path d="M80 104C90 150 120 180 150 192" class="d-line d-arrow-cold" stroke-width="3" />
+  <text x="12" y="150" class="d-small">{s.byItself}</text>
+  <rect x="270" y="40" width="110" height="60" rx="6" class="d-box" />
+  <rect x="274" y="58" width="102" height="38" rx="3" class="d-warm" />
+  <text x="325" y="30" text-anchor="middle" class="d-label">{s.warm}</text>
+  <path d="M262 196C290 170 300 140 310 104" class="d-line d-arrow-hot" stroke-width="3" />
+  <circle cx="300" cy="160" r="18" class="d-box" />
+  <text x="326" y="158" class="d-label">{s.pump}</text>
+  <text x="326" y="178" class="d-small d-muted">{s.needs}</text>
+</Svg>

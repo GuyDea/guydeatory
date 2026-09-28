@@ -1,8 +1,135 @@
 ---
-title: 'Ako sa správa elektrický prúd?'
-term: 'správanie elektrického prúdu'
+title: Ako sa správa elektrický prúd?
+term: správanie elektrického prúdu
 slug: ako-sa-sprava-elektricky-prud
-summary: 'Elektrický prúd sa riadi jednoduchými pravidlami: potrebuje uzavretý okruh, delí sa medzi cesty, zohrieva drôty, vyrába magnety a v našich domácnostiach mení smer 50-krát za sekundu.'
+summary: Elektrický prúd sa riadi jednoduchými pravidlami. Potrebuje uzavretý okruh, delí sa medzi cesty, zohrieva drôty, vyrába magnety a v našich domácnostiach mení smer 50-krát za sekundu.
+keywords: [sériový obvod, paralelný obvod, skrat, elektromagnet, poistka, istič, striedavý a jednosmerný prúd]
 ---
 
-Keď elektrina začne tiecť, správa sa tak, že sa to dá predpovedať. Rozdelí sa medzi rôzne cesty, zohrieva veci a dokonca dokáže vyrobiť magnet.
+import AcDc from '@widgets/ac-dc/AcDc.svelte';
+import SeriesParallel from '@widgets/series-parallel/SeriesParallel.svelte';
+import ShortCircuit from './diagrams/ShortCircuit.astro';
+import Electromagnet from './diagrams/Electromagnet.astro';
+
+Už vieš, čo je [[electric-current|elektrický prúd]]: elektróny tečúce drôtom, ktoré tlačí
+[[voltage|napätie]]. Keď prúd začne tiecť, riadi sa niekoľkými pravidlami. Keď ich poznáš, dokážeš
+predpovedať, čo urobí ktorýkoľvek obvod.
+
+## Potrebuje uzavretý okruh
+
+Prúd tečie len vtedy, keď existuje celá cesta z batérie cez drôty a spotrebiče a späť. Táto cesta je
+[[electric-circuit|elektrický obvod]]. Keď okruh kdekoľvek prerušíš – vypneš vypínač, vytiahneš
+zástrčku, pretrhneš drôt –, tok sa zastaví všade naraz.
+
+## V jednom okruhu je prúd všade rovnaký
+
+Veľa ľudí si myslí, že lampa elektrinu „minie“, a tak z nej vychádza menej, ako do nej vchádza. To
+nie je pravda! Každý elektrón, ktorý do lampy vojde, z nej aj vyjde a tečie späť do batérie.
+
+Lampa si berie [[energy|energiu]], nie elektróny. Preto je v jednom okruhu prúd v každom bode presne
+rovnaký: pred lampou, za lampou aj vo vnútri batérie.
+
+## Na rázcestí sa prúd rozdelí
+
+Žiarovky sa dajú zapojiť dvoma spôsobmi:
+
+- **Za sebou (sériovo):** jedna za druhou v jednom okruhu. Delia sa o tlačenie batérie, a tak každá
+  svieti slabšie. A keď sa jedna pokazí, okruh je prerušený – zhasnú všetky.
+- **Vedľa seba (paralelne):** každá žiarovka má vlastnú cestu späť do batérie. Na každom rázcestí sa
+  prúd rozdelí a každá žiarovka dostane plné tlačenie. Keď sa jedna pokazí, ostatné svietia ďalej.
+
+<Figure caption="Prepínaj medzi dvoma spôsobmi a vyskrutkuj žiarovku. Za sebou jedna chýbajúca žiarovka zhasne všetky, vedľa seba ostatné svietia ďalej." wide>
+  <SeriesParallel client:visible />
+</Figure>
+
+Tvoja domácnosť je zapojená vedľa seba. Preto keď vypneš lampu v kuchyni, chladnička sa nevypne.
+
+## Zohrieva veci
+
+Keď sa elektróny predierajú látkou, narážajú do jej atómov. Atómy sa viac rozkmitajú a látka sa
+zohreje. Čím ťažšia je cesta – čím väčší je [[electrical-resistance|odpor]] –, tým viac tepla
+vznikne.
+
+Toto teplo môže byť užitočné. Takto fungujú kanvice, hriankovače, fény aj elektrické ohrievače. No
+môže byť aj nebezpečné: kábel, ktorým tečie príliš veľký prúd, sa zohreje. Preto sú v domácnostiach
+**poistky** a **ističe**. Vypnú prúd skôr, než sa kábel zohreje natoľko, že by mohol spôsobiť požiar.
+
+## Vyrába magnety
+
+V roku 1820 si dánsky vedec Hans Christian Ørsted všimol niečo úžasné. Keď drôtom tiekol prúd,
+strelka kompasu vedľa neho sa otočila. **Každý elektrický prúd robí priestor okolo seba magnetickým.**
+
+Keď drôt stočíš do cievky, magnetický účinok bude oveľa silnejší. Keď do cievky vložíš železný
+klinec, vznikne **elektromagnet**: magnet, ktorý sa dá zapnúť a vypnúť.
+
+<Figure caption="Prúd v cievke zmení železný klinec na magnet. Keď okruh prerušíš, spinky odpadnú.">
+  <Electromagnet />
+</Figure>
+
+Elektromagnety sú všade: v zvončekoch, reproduktoroch, žeriavoch na šrotoviskách a v každom
+elektromotore.
+
+<Safety>
+Tento elektromagnet si môžeš postaviť s dospelým: železný klinec, asi meter tenkého izolovaného drôtu
+a jedna obyčajná batéria AA. Konce drôtu prilož k batérii **len na pár sekúnd** – drôt aj batéria sa
+rýchlo zohrejú. Nikdy to neskúšaj so zásuvkou, s autobatériou ani s batériou z telefónu.
+</Safety>
+
+## Môže tiecť jedným smerom alebo tam a späť
+
+Batéria tlačí elektróny len jedným smerom. To je **jednosmerný prúd (DC)**. Prúd zo zásuvky je iný:
+mení smer tam a späť, v Európe 50-krát za sekundu. To je [[alternating-current|striedavý prúd
+(AC)]].
+
+<Figure caption="Porovnaj dva druhy prúdu. Kmitanie je poriadne spomalené, aby ho bolo vidieť." wide>
+  <AcDc client:visible />
+</Figure>
+
+## Vyberie si najľahšiu cestu
+
+Keď si prúd môže vybrať z viacerých ciest, väčšina sa vyrúti tou najľahšou. Zvyčajne je to v poriadku
+– až kým sa neobjaví nechcená skratka. Holý drôt sa môže dotknúť iného drôtu alebo sa do zástrčky
+dostane voda. Vtedy sa skratkou môže rozbehnúť obrovský prúd.
+
+To je **skrat**. Drôty a batérie sa veľmi zohrejú, môžu lietať iskry a môže vzniknúť požiar.
+
+<Figure caption="Skratka vedľa žiarovky: takmer celý prúd ide ľahkou cestou, žiarovka zhasne a drôty sa zohrievajú.">
+  <ShortCircuit />
+</Figure>
+
+Toto pravidlo vysvetľuje aj to, [[why-birds-on-wires-dont-get-shocked|prečo môžu vtáky bezpečne
+sedieť na drôtoch]] – a prečo sa človek nikdy nesmie stať najľahšou cestou do zeme.
+
+<GoDeeper title="Dve Kirchhoffove pravidlá">
+V roku 1845 zapísal Gustav Kirchhoff dve pravidlá, ktorými sa riadi každý obvod:
+
+- **V každom uzle platí: prúd, ktorý vteká = prúd, ktorý vyteká.** Náboj sa nikde nehromadí ani
+  nestráca.
+- **V každom okruhu sa tlačenia sčítajú.** Napätie batérie sa rozdelí medzi spotrebiče v okruhu.
+  Keď sú na 6-voltovej batérii dve rovnaké žiarovky za sebou, každá dostane 3&nbsp;V.
+
+Druhé pravidlo vysvetľuje, prečo žiarovky za sebou svietia slabo: každá dostane len časť tlačenia,
+a tak všetkými tečie menší prúd.
+</GoDeeper>
+
+<GoDeeper title="Aká rýchla je elektrina?">
+Samotné elektróny sa posúvajú veľmi pomaly: v domácom kábli len asi desatinu milimetra za sekundu.
+No tlačenie, ktoré ich rozhýbe, je elektrické pole, ktoré sa káblom šíri približne dvoma tretinami
+rýchlosti svetla. Preto sa lampa rozsvieti v tej chvíli, keď stlačíš vypínač, hoci žiadny elektrón
+neprejde od vypínača k lampe tak rýchlo.
+</GoDeeper>
+
+<Remember>
+- Prúd potrebuje uzavretý okruh.
+- V jednom okruhu je prúd všade rovnaký; spotrebiče si berú energiu, nie elektróny.
+- Za sebou (sériovo) sa žiarovky delia o tlačenie. Vedľa seba (paralelne) dostane každá plné tlačenie.
+- Prúd zohrieva veci a vyrába magnety.
+- Jednosmerný prúd tečie jedným smerom, striedavý mení smer. Skrat je nebezpečná skratka.
+</Remember>
+
+<Quiz
+  question="Prečo ostatné svetlá v tvojom dome svietia ďalej, keď jednu lampu vypneš?"
+  options={["Lampy sú zapojené vedľa seba a každá má vlastnú cestu", "Ostatné lampy majú silnejšie žiarovky", "Vypínač zastaví len elektróny blízko tej lampy"]}
+  answer={0}
+  explanation="Domácnosti sú zapojené vedľa seba (paralelne). Každá lampa má vlastnú cestu, a keď jednu prerušíš, ostatné fungujú ďalej."
+/>

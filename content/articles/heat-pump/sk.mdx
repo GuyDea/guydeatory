@@ -1,8 +1,166 @@
 ---
-title: 'Ako fungujú klimatizácie a tepelné čerpadlá?'
-term: 'tepelné čerpadlo'
+title: Ako fungujú klimatizácie a tepelné čerpadlá?
+term: tepelné čerpadlo
 slug: tepelne-cerpadlo
-summary: 'Klimatizácie a tepelné čerpadlá teplo ani chlad nevyrábajú. Presúvajú teplo z miesta na miesto pomocou zvláštnej kvapaliny, ktorá pri vyparovaní teplo nasaje a pri kondenzácii ho zasa odovzdá.'
+summary: Klimatizácie a tepelné čerpadlá teplo ani chlad nevyrábajú. Presúvajú teplo z miesta na miesto pomocou zvláštnej kvapaliny, ktorá pri vyparovaní teplo nasaje a pri kondenzácii ho zasa odovzdá.
+keywords: [klimatizácia, klíma, klimoška, tepelné čerpadlo, tepelko, chladnička, chladenie, kúrenie, vonkajšia jednotka, split]
 ---
 
-Tepelné čerpadlo prenáša teplo podobne, ako špongia prenáša vodu. V lete vynáša teplo z domu von a v zime pozbiera teplo zo studeného vzduchu vonku a prinesie ho dnu.
+import CopExplorer from '@widgets/cop-explorer/CopExplorer.svelte';
+import HeatPumpCycle from '@widgets/heat-pump-cycle/HeatPumpCycle.svelte';
+import HeatUphill from './diagrams/HeatUphill.astro';
+
+Prilož ruku k zadnej stene chladničky. Je tam teplo! Chladnička „nevyrába chlad“. Vynáša teplo
+zo svojho vnútra a vypúšťa ho vzadu.
+
+Klimatizácie a tepelné čerpadlá fungujú presne rovnako – len pre celý dom. V lete vynášajú teplo
+z domu von. V zime ho prinášajú dnu, dokonca aj z mrazivého vzduchu vonku. Ako je to možné? Poďme
+to poskladať krok za krokom.
+
+## Teplo samo tečie „z kopca“
+
+[[heat|Teplo]] samo od seba vždy prechádza z teplejšej veci na chladnejšiu. Horúci nápoj v chladnej
+izbe vychladne. Kocka ľadu sa v teplej dlani roztopí. Samo od seba teplo nikdy nejde od studeného
+k teplému.
+
+Ak chceš teplo presunúť „opačne“ – z chladnej izby von do horúceho letného vzduchu –, potrebuješ
+stroj, ktorý na to spotrebuje [[energy|energiu]].
+
+<Analogy>
+Voda sama tečie dole kopcom. Ak ju chceš dostať hore, potrebuješ čerpadlo, a to potrebuje
+elektrinu. Tepelné čerpadlo je čerpadlo na teplo: vynáša teplo z chladnejšieho miesta na teplejšie.
+</Analogy>
+
+<Figure caption="Teplo, podobne ako voda, samo tečie „z kopca“ – od teplého k studenému. Tepelné čerpadlo ho pomocou elektriny vynáša „do kopca“." wide>
+  <HeatUphill />
+</Figure>
+
+## Aj studený vzduch v sebe má teplo
+
+Možno si myslíš, že mrazivý zimný vzduch v sebe nemá žiadne teplo. Ale má! Všetko je z drobných
+čiastočiek, ktoré sa neustále chvejú. Kým sa chvejú, je v nich teplo – a aj pri
+−15&nbsp;°C sa čiastočky vzduchu stále riadne chvejú. Tepelné čerpadlo časť tohto tepla pozbiera a
+prenesie ho dnu.
+
+## Tajomstvo: kvapalina, ktorá vrie v mraze
+
+Vo vnútri každej klimatizácie, tepelného čerpadla aj chladničky obieha zvláštna kvapalina, ktorej
+hovoríme [[refrigerant|chladivo]]. Jej superschopnosť je, že vrie pri veľmi nízkych teplotách –
+oveľa nižších, než je teplota ľadu.
+
+Keď sa kvapalina mení na plyn a späť, stanú sa dve veci:
+
+- Keď kvapalina **vrie** alebo sa [[evaporation-and-condensation|vyparuje]], nasáva teplo zo svojho
+  okolia. Preto mokrá koža vo vetre studí.
+- Keď plyn **kondenzuje** späť na kvapalinu, toto teplo zasa odovzdá.
+
+Stroj si navyše vie vybrať, kde chladivo zovrie – tak, že mení jeho [[pressure|tlak]]. Pri nízkom
+tlaku vrie aj v treskúcej zime. Pri vysokom tlaku kondenzuje, aj keď je horúce. Prečo je to tak,
+sa dočítaš v článku [[boiling-point|prečo voda nevrie vždy pri rovnakej teplote]].
+
+## Cesta dookola okruhom
+
+Chladivo obieha dookola v uzavretom okruhu trubiek. Na každom kole prejde štyrmi zastávkami:
+
+1. **Výparník:** studená kvapalina tu vrie a nasáva teplo zo vzduchu okolo.
+2. **Kompresor:** čerpadlo stlačí plyn. Pri stláčaní sa zohreje – ako sa zohreje pumpa na bicykel,
+   keď ňou pumpuješ. Táto časť spotrebúva elektrinu.
+3. **Kondenzátor** (časť, v ktorej chladivo kondenzuje): horúci plyn tu odovzdá teplo vzduchu okolo
+   a zmení sa späť na kvapalinu.
+4. **Expanzný ventil:** kvapalina prestrekne maličkým otvorom. Jej tlak klesne a znova sa veľmi
+   ochladí. Potom sa kolo začína odznova.
+
+<Figure caption="Prepínaj medzi zimou a letom, meň počasie vonku a klikaj na časti a zisti, čo ktorá robí." wide>
+  <HeatPumpCycle client:visible />
+</Figure>
+
+## Leto: klimatizácia
+
+Keď stroj chladí, studený **výparník** je vo vnútri domu. Nasáva teplo zo vzduchu v izbe a
+ventilátor fúka ochladený vzduch späť do izby.
+
+Horúci **kondenzátor** je vonku – v skrinke na stene s veľkým ventilátorom. Preto je vzduch, ktorý
+z nej fúka, teplý: je to teplo z tvojich izieb.
+
+Klimatizácia vzduch aj vysušuje. Vodná para z izby kondenzuje na studenom výparníku, podobne ako na
+studenom pohári. Voda potom odkvapkáva malou trubičkou.
+
+## Zima: tepelné čerpadlo
+
+Teraz chceme, aby teplo išlo opačne. Zvláštny ventil jednoducho otočí smer, ktorým chladivo tečie.
+Studený výparník je teraz **vonku** a nasáva teplo aj z mrazivého vzduchu. Horúci kondenzátor je
+teraz **vnútri** a ohrieva vzduch, radiátory alebo podlahu.
+
+Preto mnohé stroje zvládnu obe úlohy: v zime kúria a v lete chladia.
+
+Niekedy za studeného dňa z vonkajšej jednotky vyfučí oblak pary. Neboj sa: na jej studenej časti sa
+vytvoril ľad a stroj ho práve rozmrazuje.
+
+## Prečo tak dobre kúri?
+
+Elektrický ohrievač zmení 1 jednotku elektriny na 1 jednotku tepla. Tepelné čerpadlo použije
+1 jednotku elektriny na to, aby *presunulo* do domu približne 3 až 4 jednotky tepla. Tomuto číslu
+hovoríme [[coefficient-of-performance|vykurovací faktor (COP)]].
+
+Je to kúzlo? Nie – a neporušuje to ani pravidlo, že [[conservation-of-energy|energia nikdy nevznikne
+z ničoho]]. Elektrina poháňa kompresor. Teplo navyše sa nevyrobí; pozbiera sa z vonkajšieho
+vzduchu.
+
+Čím je vonku chladnejšie, tým viac sa tepelné čerpadlo musí snažiť, a tak za každú jednotku
+elektriny presunie o trochu menej tepla.
+
+<Figure caption="Ochladzuj počasie a sleduj, koľko tepla prinesie 1 kilowatthodina elektriny." wide>
+  <CopExplorer client:visible />
+</Figure>
+
+## Tepelné čerpadlá všade okolo teba
+
+- **Chladničky a mrazničky** sú tiež tepelné čerpadlá. Vynášajú teplo z jedla a vypúšťajú ho vzadu.
+- **Tepelné čerpadlá zem–voda** zbierajú teplo z trubiek zakopaných v záhrade. Hlboko v zemi je
+  teplota takmer rovnaká po celý rok.
+- **Tepelné čerpadlá voda–voda** zbierajú teplo z jazera alebo rieky.
+
+<FunFact>
+Jedno z prvých tepelných čerpadiel, ktoré vykurovalo celú budovu, navrhol slovenský inžinier Aurel
+Stodola, rodák z Liptovského Mikuláša. V roku 1928 navrhol tepelné čerpadlo, ktoré bralo teplo
+zo Ženevského jazera a vykurovalo radnicu vo švajčiarskej Ženeve.
+</FunFact>
+
+<Safety>
+Nikdy neotváraj, neohýbaj ani neprepichuj trubky chladničky, mrazničky, klimatizácie či tepelného
+čerpadla. Chladivo v nich je pod vysokým tlakom, môže ti omraziť kožu a niektoré druhy horia.
+Prsty drž ďaleko od ventilátorov vo vonkajších jednotkách.
+</Safety>
+
+<GoDeeper title="Tlaky a teploty v okruhu">
+Zober si tepelné čerpadlo naplnené propánom (R-290) v zimný deň s teplotou 0&nbsp;°C. Vo vonkajšom
+výparníku propán vrie pri teplote asi −8&nbsp;°C a tlaku približne 4&nbsp;bary. Kompresor ho stlačí
+na asi 14&nbsp;barov; pri tomto tlaku kondenzuje pri približne 40&nbsp;°C, čo stačí na vykúrenie
+domu. Plyn, ktorý vychádza z kompresora, je ešte teplejší, často 60–70&nbsp;°C.
+
+Čím väčší je rozdiel medzi studenou a horúcou stranou, tým viac musí kompresor stláčať a tým nižší
+je vykurovací faktor. Preto tepelné čerpadlá milujú podlahové kúrenie: voda v ňom stačí mať asi
+35&nbsp;°C, nie 55&nbsp;°C ako v mnohých radiátoroch.
+</GoDeeper>
+
+<GoDeeper title="Koľko tepla je v studenom vzduchu?">
+Teplota meria, ako rýchlo sa čiastočky chvejú, a chvenie sa úplne zastaví až pri absolútnej nule:
+−273,15&nbsp;°C. Vzduch s teplotou −15&nbsp;°C je stále o viac ako 250 stupňov nad ňou, a tak
+v sebe má dosť tepla, ktoré môže tepelné čerpadlo pozbierať. Ťažké nie je teplo nájsť, ale ohriať
+ním vodu.
+</GoDeeper>
+
+<Remember>
+- Klimatizácie a tepelné čerpadlá teplo presúvajú, nevyrábajú ho.
+- Chladivo vrie v chlade (nasáva teplo) a pri stlačení kondenzuje (teplo odovzdáva).
+- Štyri zastávky sú výparník, kompresor, kondenzátor a expanzný ventil.
+- V lete ide teplo z domu von, v zime zvonku dnu.
+- 1 jednotka elektriny dokáže presunúť 3–4 jednotky tepla.
+</Remember>
+
+<Quiz
+  question="Odkiaľ v zime pochádza väčšina tepla z tepelného čerpadla?"
+  options={["Z elektriny, ktorú spotrebuje", "Zo studeného vzduchu vonku", "Zo spaľovania plynu vo vnútri stroja"]}
+  answer={1}
+  explanation="Elektrina len poháňa kompresor. Väčšina tepla sa pozbiera z vonkajšieho vzduchu, aj keď mrzne."
+/>

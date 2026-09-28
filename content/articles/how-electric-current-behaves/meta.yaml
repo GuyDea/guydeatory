@@ -1,5 +1,18 @@
 topics: [electricity]
 labels: [low-level]
-status: stub
+prerequisites: [electric-current, electric-circuit]
+related: [alternating-current, calculating-electric-current, electrical-resistance, why-birds-on-wires-dont-get-shocked]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Series and parallel circuits — Wikipedia
+    url: https://en.wikipedia.org/wiki/Series_and_parallel_circuits
+  - title: Electromagnet — Wikipedia
+    url: https://en.wikipedia.org/wiki/Electromagnet
+  - title: Hans Christian Ørsted — Wikipedia
+    url: https://en.wikipedia.org/wiki/Hans_Christian_%C3%98rsted
+  - title: Short circuit — Wikipedia
+    url: https://en.wikipedia.org/wiki/Short_circuit
+  - title: Kirchhoff's circuit laws — Wikipedia
+    url: https://en.wikipedia.org/wiki/Kirchhoff%27s_circuit_laws

@@ -1,0 +1,39 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'A short circuit',
+    desc: 'A battery and a bulb in a loop. A bare wire connects the two sides of the bulb, making an easy shortcut. Almost all the current rushes through the shortcut, the bulb goes dark and the wires get hot.',
+    bulb: 'bulb (dark)',
+    shortcut: 'easy shortcut',
+    hot: 'hot!',
+  },
+  sk: {
+    title: 'Skrat',
+    desc: 'Batéria a žiarovka v okruhu. Holý drôt spojí obe strany žiarovky a vytvorí ľahkú skratku. Takmer celý prúd sa vyrúti cez skratku, žiarovka zhasne a drôty sa zohrejú.',
+    bulb: 'žiarovka (nesvieti)',
+    shortcut: 'ľahká skratka',
+    hot: 'horúce!',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 230" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M160 195H60V50H340V195H240" class="d-wire" />
+  <circle cx="200" cy="50" r="22" class="d-box" />
+  <path d="M190 57c3-12 7-12 10 0s7 12 10 0" class="d-line" />
+  <text x="200" y="22" text-anchor="middle" class="d-small">{s.bulb}</text>
+  <path d="M150 50V110H250V50" fill="none" stroke="var(--d-hot)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M165 125H235" class="d-line d-arrow-hot" />
+  <text x="200" y="148" text-anchor="middle" class="d-label">{s.shortcut}</text>
+  <rect x="160" y="175" width="80" height="40" rx="7" class="d-box" />
+  <rect x="240" y="186" width="7" height="18" rx="2" class="d-box" />
+  <text x="176" y="202" class="d-label">−</text>
+  <text x="214" y="202" class="d-label">+</text>
+  <text x="330" y="222" text-anchor="end" class="d-label" style="fill: var(--d-hot)">{s.hot}</text>
+</Svg>
