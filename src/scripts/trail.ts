@@ -75,6 +75,8 @@ function update() {
   write(TRAIL_KEY, state);
   write(INTENT_KEY, null);
   render(el, state);
+  // The inline guess in ReadingTrail.astro reserved space; from now on `hidden` is the truth.
+  document.documentElement.classList.remove('trail-expected');
 }
 
 document.addEventListener('click', (event) => {

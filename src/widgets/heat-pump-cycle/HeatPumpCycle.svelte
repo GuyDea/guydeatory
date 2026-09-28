@@ -85,7 +85,7 @@
   <svg
     viewBox="0 0 420 305"
     class="diagram"
-    role="img"
+    role="group"
     aria-label={s.picture({ mode, outside: temp(outdoor), inside: temp(indoor) })}
     use:visibleLoop={{ tick, paused }}
   >
@@ -191,7 +191,7 @@
   }
 
   .heat-label {
-    fill: var(--d-hot);
+    fill: var(--hot);
     font-weight: 700;
   }
 

@@ -66,6 +66,5 @@ if (root) {
   const wanted = (params.get('label') ?? '').split(',').filter(Boolean);
   for (const chip of chips) chip.setAttribute('aria-pressed', String(wanted.includes(chip.dataset.labelChip!)));
   input.value = params.get('q') ?? '';
-  root.querySelector<HTMLElement>('[data-explore-controls]')!.hidden = false;
   apply();
 }

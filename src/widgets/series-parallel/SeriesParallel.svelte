@@ -44,7 +44,7 @@
   <svg
     viewBox="0 0 400 240"
     class="diagram"
-    role="img"
+    role="group"
     aria-label={s.picture({ series, lit: result.bulbs.filter((b) => b.brightness > 0).length, total: totalText })}
   >
     {#each wires as d (d)}

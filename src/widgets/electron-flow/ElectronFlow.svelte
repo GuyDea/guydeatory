@@ -75,7 +75,7 @@
   <svg
     viewBox="0 0 400 250"
     class="diagram"
-    role="img"
+    role="group"
     aria-label={s.picture({ closed, volts: voltsText, amps: ampsText, bulb: s.bulbStates[bulbState] })}
     use:visibleLoop={{ tick, paused }}
   >

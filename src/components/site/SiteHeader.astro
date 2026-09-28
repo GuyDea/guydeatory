@@ -26,7 +26,7 @@ const { lang, alternates, current } = Astro.props;
       <a class="nav-about" href={sectionUrl(lang, 'about')} aria-current={current === 'about' ? 'page' : undefined}>{t(lang, 'nav.about')}</a>
     </nav>
     <div class="tools">
-      <a class="search-trigger" href={sectionUrl(lang, 'search')} data-search-open aria-current={current === 'search' ? 'page' : undefined}>
+      <a class="search-trigger" href={sectionUrl(lang, 'search')} data-search-open aria-label={t(lang, 'nav.search')} aria-current={current === 'search' ? 'page' : undefined}>
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"></circle><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"></path></svg>
         <span class="search-label">{t(lang, 'nav.search')}</span>
         <kbd aria-hidden="true">/</kbd>

@@ -18,6 +18,18 @@ const { lang, id, name } = Astro.props;
   <span class="trail-label">{t(lang, 'trail.label')}</span>
   <ol></ol>
 </nav>
+<script is:inline define:vars={{ id }}>
+  // Before first paint: if this page will show a trail (arrived via a term, or went back along one),
+  // reserve its space now so the page doesn't jump when src/scripts/trail.ts fills it in.
+  try {
+    var intent = JSON.parse(sessionStorage.getItem('gd:intent') || 'null');
+    var items = (JSON.parse(sessionStorage.getItem('gd:trail') || 'null') || { items: [] }).items;
+    var sameLang = items.length > 0 && items[0].lang === document.documentElement.lang;
+    var index = items.findIndex(function (item) { return item.id === id; });
+    var viaTerm = intent && intent.to === id && sameLang && items[items.length - 1].id === intent.from;
+    if (sameLang && (viaTerm || index >= 1)) document.documentElement.classList.add('trail-expected');
+  } catch (e) {}
+</script>
 
 <script>
   import '../../scripts/trail.ts';
@@ -37,8 +49,9 @@ const { lang, id, name } = Astro.props;
     scrollbar-width: thin;
   }
 
-  .trail[hidden] {
-    display: none;
+  :global(.trail-expected) .trail[hidden] {
+    display: flex !important;
+    visibility: hidden;
   }
 
   .trail-label {

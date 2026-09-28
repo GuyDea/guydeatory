@@ -27,7 +27,8 @@ const labels = [...catalog.labels.values()];
     <h1>{t(lang, 'explore.title')}</h1>
     <p class="intro">{t(lang, 'explore.intro')}</p>
 
-    <div class="controls" data-explore-controls hidden>
+    <noscript><style>.controls { display: none !important; }</style></noscript>
+    <div class="controls" data-explore-controls>
       <div class="chips" role="group" aria-label={t(lang, 'explore.show')}>
         <span class="chips-label" aria-hidden="true">{t(lang, 'explore.show')}</span>
         {
@@ -84,10 +85,6 @@ const labels = [...catalog.labels.values()];
     background: var(--surface);
     border: 1.5px solid var(--line);
     border-radius: var(--radius-lg);
-  }
-
-  .controls[hidden] {
-    display: none;
   }
 
   .chips {

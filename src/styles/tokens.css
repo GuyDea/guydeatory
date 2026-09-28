@@ -25,14 +25,14 @@
   --focus: #2548d8;
 
   /* Meaningful colours */
-  --hot: #d9481f;
-  --cold: #1f7fd1;
+  --hot: #bf3a14;
+  --cold: #1870bd;
   --safe: #147a52;
   --danger: #c0262d;
   --caution: #ffc400;
 
   /* Label colours (see content/labels.yaml → color) */
-  --label-sky: #1f6fc5;
+  --label-sky: #1b62b0;
   --label-sky-bg: #e3f0fd;
   --label-violet: #6b46c9;
   --label-violet-bg: #efe9fc;
