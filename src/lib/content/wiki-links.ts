@@ -9,8 +9,22 @@ export const ID_RE = new RegExp(`^${ID_PATTERN}$`);
 /**
  * Global regex; group 1 = target id, group 2 = optional display text.
  * The display text may wrap onto the next line (authors wrap long lines); see normaliseLinkText.
+ * The bar may be escaped as `\|`, which is required inside Markdown table cells.
  */
-export const WIKI_LINK_RE = new RegExp(`\\[\\[(${ID_PATTERN})(?:\\|([^\\]|]*[^\\]|\\s][^\\]|]*))?\\]\\]`, 'g');
+export const WIKI_LINK_RE = new RegExp(`\\[\\[(${ID_PATTERN})(?:\\\\?\\|([^\\]|]*[^\\]|\\s][^\\]|]*))?\\]\\]`, 'g');
+
+/** A table row (starts with `|`) containing `[[id|text]]` with an unescaped bar. */
+const TABLE_ROW_RE = /^\s*\|.*$/gm;
+const UNESCAPED_LINK_BAR_RE = new RegExp(`\\[\\[${ID_PATTERN}\\|[^\\]]*\\]\\]`, 'g');
+
+/** `[[id|text]]` links in table rows whose bar would be read as a column separator. */
+export function findUnescapedTableLinks(markdown: string): string[] {
+  const found: string[] = [];
+  for (const [row] of stripCode(markdown).matchAll(TABLE_ROW_RE)) {
+    for (const [link] of row.matchAll(UNESCAPED_LINK_BAR_RE)) found.push(link);
+  }
+  return found;
+}
 
 const ANY_DOUBLE_BRACKET_RE = /\[\[[^\]]*\]\]/g;
 

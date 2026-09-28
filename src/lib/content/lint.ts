@@ -6,6 +6,7 @@ import type { MdxjsEsm } from 'mdast-util-mdxjs-esm';
 import type { MdxJsxFlowElement, MdxJsxTextElement } from 'mdast-util-mdx-jsx';
 import rehypeKatex from 'rehype-katex';
 import remarkFrontmatter from 'remark-frontmatter';
+import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
@@ -40,7 +41,7 @@ function boundNames(tree: Root): Set<string> {
 
 function unknownComponents(file: string, source: string): Problem[] {
   // Same syntax extensions as the real pipeline, so math like $6{,}24$ is not read as an MDX expression.
-  const tree = unified().use(remarkParse).use(remarkMdx).use(remarkFrontmatter).use(remarkMath).parse(source) as Root;
+  const tree = unified().use(remarkParse).use(remarkMdx).use(remarkFrontmatter).use(remarkGfm).use(remarkMath).parse(source) as Root;
   const known = new Set<string>([...GLOBAL_COMPONENTS, ...boundNames(tree)]);
   const problems: Problem[] = [];
   const isJsx = (node: { type: string }): node is MdxJsxFlowElement | MdxJsxTextElement =>
@@ -62,7 +63,8 @@ async function lintMdx(root: string, file: string): Promise<Problem[]> {
   const vfile = new VFile({ path: join(root, file), value: source });
   try {
     await compile(vfile, {
-      remarkPlugins: [remarkFrontmatter, remarkMath, remarkWikiLinks, remarkInjectLang],
+      // Same syntax as the site: GFM (tables!) is on by default in Astro's unified processor.
+      remarkPlugins: [remarkFrontmatter, remarkGfm, remarkMath, remarkWikiLinks, remarkInjectLang],
       rehypePlugins: [rehypeKatex],
     });
   } catch (error) {

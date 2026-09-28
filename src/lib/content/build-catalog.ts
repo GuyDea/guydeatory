@@ -4,7 +4,7 @@ import { didYouMean, zodProblems } from './problems.ts';
 import { articleMetaSchema, articleTextSchema, homeFileSchema, labelsFileSchema, topicsFileSchema } from './schemas.ts';
 import type { TopicNode } from './schemas.ts';
 import type { Article, ArticleText, Catalog, Label, Problem, RawContent, Topic } from './types.ts';
-import { extractWikiLinks, findMalformedWikiLinks, stripCode, WIKI_LINK_RE } from './wiki-links.ts';
+import { extractWikiLinks, findMalformedWikiLinks, findUnescapedTableLinks, stripCode, WIKI_LINK_RE } from './wiki-links.ts';
 
 export interface BuildOptions {
   /** Drafts are included in dev and excluded from production builds. */
@@ -104,6 +104,12 @@ function buildTexts(raw: RawContent, problems: Problem[]): Map<string, Partial<R
     if (!metaIds.has(entry.id)) {
       problems.push({ file: entry.file, message: `no meta.yaml next to this file (content/articles/${entry.id}/meta.yaml)` });
       continue;
+    }
+    for (const link of findUnescapedTableLinks(entry.body)) {
+      problems.push({
+        file: entry.file,
+        message: `${link} is inside a table, where | separates columns — escape the bar: ${link.replace('|', '\\|')}`,
+      });
     }
     for (const malformed of findMalformedWikiLinks(entry.body)) {
       problems.push({

@@ -1,5 +1,6 @@
 import { evaluate } from '@mdx-js/mdx';
 import type { Root as HastRoot, Element } from 'hast';
+import remarkGfm from 'remark-gfm';
 import { VFile } from 'vfile';
 import { describe, expect, it } from 'vitest';
 import { rehypePagefindIgnoreMath } from '../src/lib/markdown/rehype-pagefind-ignore-math.ts';
@@ -20,7 +21,7 @@ async function render(mdx: string, path = '/project/content/articles/voltage/sk.
   const file = new VFile({ path, value: mdx });
   const { default: Content } = await evaluate(file, {
     ...runtime,
-    remarkPlugins: [remarkWikiLinks, remarkInjectLang],
+    remarkPlugins: [remarkGfm, remarkWikiLinks, remarkInjectLang],
   });
   const calls: { name: string; props: Record<string, unknown> }[] = [];
   const component = (name: string) => (props: Record<string, unknown>) => {
@@ -58,6 +59,11 @@ describe('remarkWikiLinks', () => {
   it('turns a link whose text wraps onto the next line into one Term with single-spaced text', async () => {
     const { calls } = await render('Pravidlo, že [[conservation-of-energy|energia nikdy nevznikne\nz ničoho]] platí.');
     expect(calls.map((c) => [c.props.id, textOf(c.props.children)])).toEqual([['conservation-of-energy', 'energia nikdy nevznikne z ničoho']]);
+  });
+
+  it('turns an escaped link inside a table cell into a Term', async () => {
+    const { calls } = await render('| Device | Uses |\n|---|---|\n| Kettle | a lot of [[electric-power\\|power]] |');
+    expect(calls.map((c) => [c.props.id, textOf(c.props.children)])).toEqual([['electric-power', 'power']]);
   });
 
   it('handles several links in one paragraph and inside emphasis', async () => {

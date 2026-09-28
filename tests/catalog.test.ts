@@ -208,6 +208,14 @@ describe('buildCatalog — validation rules', () => {
     expect(build(raw({ articles: [draft] }), true).problems).toEqual([]);
   });
 
+  it('16. rejects an unescaped [[id|text]] inside a table row, but accepts the escaped form', () => {
+    const table = (link: string) => `| Device | Note |\n|---|---|\n| Kettle | uses a lot of ${link} |\n`;
+    const bad = raw({ articles: [article('atom', { bodyEn: table('[[electron|power]]') }), article('electron')] });
+    expectOneProblem(build(bad).problems, 'content/articles/atom/en.mdx', /table.*\\\|/);
+    const good = raw({ articles: [article('atom', { bodyEn: table('[[electron\\|power]]') }), article('electron')] });
+    expect(build(good).problems).toEqual([]);
+  });
+
   it('14. rejects an article that lists itself', () => {
     const { problems } = build(raw({ articles: [article('atom', { meta: { related: ['atom'] } })] }));
     expectOneProblem(problems, 'content/articles/atom/meta.yaml', /itself/);

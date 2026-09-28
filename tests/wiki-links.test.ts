@@ -19,6 +19,10 @@ describe('extractWikiLinks', () => {
     ]);
   });
 
+  it('accepts an escaped bar, which tables need: [[id\\|text]]', () => {
+    expect(extractWikiLinks('| Kettle | [[electric-power\\|power]] |')).toEqual([{ target: 'electric-power', text: 'power' }]);
+  });
+
   it('ignores links inside fenced and inline code', () => {
     const md = 'Real [[atom]].\n\n```md\n[[electron]]\n```\n\nand `[[proton]]` too.';
     expect(extractWikiLinks(md)).toEqual([{ target: 'atom' }]);
