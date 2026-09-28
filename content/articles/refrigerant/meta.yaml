@@ -1,5 +1,18 @@
 topics: [home-technology, heat]
 labels: [high-level]
-status: stub
+prerequisites: [evaporation-and-condensation, boiling-point]
+related: [heat-pump, coefficient-of-performance, pressure, heat]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Refrigerant — Wikipedia
+    url: https://en.wikipedia.org/wiki/Refrigerant
+  - title: List of refrigerants — Wikipedia
+    url: https://en.wikipedia.org/wiki/List_of_refrigerants
+  - title: Vapor-compression refrigeration — Wikipedia
+    url: https://en.wikipedia.org/wiki/Vapor-compression_refrigeration
+  - title: Montreal Protocol — Wikipedia
+    url: https://en.wikipedia.org/wiki/Montreal_Protocol
+  - title: Global warming potential — Wikipedia
+    url: https://en.wikipedia.org/wiki/Global_warming_potential

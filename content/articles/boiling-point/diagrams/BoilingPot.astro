@@ -1,0 +1,53 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Bubbles of vapour in a pot of boiling water',
+    desc: 'A pot of water over a stove flame. Arrows above the pot show the air pressing down on the water. Inside the water there are bubbles of water vapour. Arrows inside the biggest bubble show the vapour pushing outwards. The water is at 100 degrees Celsius.',
+    air: 'air presses down',
+    bubble: 'vapour bubble pushes back',
+    temp: '100 °C',
+  },
+  sk: {
+    title: 'Bubliny pary v hrnci s vriacou vodou',
+    desc: 'Hrniec s vodou nad plameňom sporáka. Šípky nad hrncom ukazujú, že vzduch tlačí na vodu zhora. Vo vode sú bubliny vodnej pary. Šípky v najväčšej bubline ukazujú, že para tlačí von. Voda má 100 stupňov Celzia.',
+    air: 'vzduch tlačí zhora',
+    bubble: 'bublina pary tlačí naspäť',
+    temp: '100\u00a0°C',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const bubbles = [
+  [138, 210, 9],
+  [258, 150, 11],
+  [150, 136, 7],
+  [250, 214, 8],
+  [118, 168, 6],
+];
+const flames = [140, 170, 200, 230, 260];
+---
+<Svg viewBox="0 0 400 320" title={s.title} desc={s.desc} maxWidth="30rem">
+  <text x="200" y="24" text-anchor="middle" class="d-label">{s.air}</text>
+  <path d="M92 80V232Q92 244 104 244H296Q308 244 308 232V80" class="d-box" />
+  <path d="M92 96H66M308 96H334" class="d-wire" />
+  <path d="M97 110H303V230Q303 239 294 239H106Q97 239 97 230Z" class="d-cool" />
+  <path d="M140 38V90" class="d-line d-arrow" />
+  <path d="M200 38V90" class="d-line d-arrow" />
+  <path d="M260 38V90" class="d-line d-arrow" />
+  {bubbles.map(([x, y, r]) => <circle cx={x} cy={y} r={r} class="d-box" />)}
+  <circle cx="200" cy="176" r="31" class="d-box" />
+  <path d="M200 168V150" class="d-line d-arrow-accent" />
+  <path d="M200 184V202" class="d-line d-arrow-accent" />
+  <path d="M192 176H174" class="d-line d-arrow-accent" />
+  <path d="M208 176H226" class="d-line d-arrow-accent" />
+  {flames.map((x) => <path d={`M${x} 252c6 8 9 14 6 19q-6 7-12 0c-3-5 0-11 6-19z`} class="d-hot" />)}
+  <path d="M118 281H282" class="d-wire" />
+  <text x="42" y="184" text-anchor="middle" class="d-label">{s.temp}</text>
+  <circle cx="74" cy="303" r="9" class="d-box" />
+  <text x="92" y="309" class="d-accent">{s.bubble}</text>
+</Svg>

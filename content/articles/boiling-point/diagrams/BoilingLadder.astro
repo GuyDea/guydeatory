@@ -1,0 +1,50 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'The boiling point of water at different pressures',
+    desc: 'A thermometer scale with four marks. In a pressure cooker, water boils at about 120 degrees Celsius. At sea level it boils at 100 degrees. On top of Gerlachovský štít, 2,655 metres high, it boils at about 91 degrees, and on top of Mount Everest, 8,849 metres high, at about 70 degrees. An arrow on the right points from less pressure at the bottom to more pressure at the top.',
+    marks: [
+      { temp: '120 °C', name: 'pressure cooker', height: '' },
+      { temp: '100 °C', name: 'sea level', height: '' },
+      { temp: '91 °C', name: 'Gerlachovský štít', height: '2,655 m' },
+      { temp: '70 °C', name: 'Mount Everest', height: '8,849 m' },
+    ],
+    more: 'more pressure',
+    less: 'less pressure',
+  },
+  sk: {
+    title: 'Bod varu vody pri rôznom tlaku',
+    desc: 'Stupnica teplomera so štyrmi značkami. V tlakovom hrnci vrie voda asi pri 120 stupňoch Celzia. Pri hladine mora vrie pri 100 stupňoch. Na vrchole Gerlachovského štítu, vysokého 2 655 metrov, vrie asi pri 91 stupňoch a na vrchole Mount Everestu, vysokého 8 849 metrov, asi pri 70 stupňoch. Šípka vpravo smeruje od menšieho tlaku dole k väčšiemu tlaku hore.',
+    marks: [
+      { temp: '120\u00a0°C', name: 'tlakový hrniec', height: '' },
+      { temp: '100\u00a0°C', name: 'hladina mora', height: '' },
+      { temp: '91\u00a0°C', name: 'Gerlachovský štít', height: '2\u00a0655\u00a0m' },
+      { temp: '70\u00a0°C', name: 'Mount Everest', height: '8\u00a0849\u00a0m' },
+    ],
+    more: 'väčší tlak',
+    less: 'menší tlak',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+// 120, 100, 91 and 70 °C on a scale where 60 °C sits at y = 250 and each degree is 3.2 units.
+const ys = [120, 100, 91, 70].map((t) => Math.round(250 - (t - 60) * 3.2));
+const marks = s.marks.map((mark, i) => ({ ...mark, y: ys[i] }));
+---
+<Svg viewBox="0 0 400 290" title={s.title} desc={s.desc} maxWidth="30rem">
+  <rect x="38" y="30" width="24" height="226" rx="12" class="d-box" />
+  <rect x="45" y="58" width="10" height="200" rx="3" class="d-hot" />
+  <circle cx="50" cy="262" r="20" class="d-hot" />
+  {marks.map(({ y }) => <path d={`M62 ${y}H80`} class="d-line" />)}
+  {marks.map(({ temp, y }) => <text x="88" y={y + 6} class="d-label">{temp}</text>)}
+  {marks.map(({ name, y }) => <text x="160" y={y + 6}>{name}</text>)}
+  {marks.map(({ height, y }) => height && <text x="160" y={y + 24} class="d-small">{height}</text>)}
+  <path d="M384 232V58" class="d-line d-arrow-accent" />
+  <text x="394" y="40" text-anchor="end" class="d-small d-accent">{s.more}</text>
+  <text x="394" y="258" text-anchor="end" class="d-small d-accent">{s.less}</text>
+</Svg>

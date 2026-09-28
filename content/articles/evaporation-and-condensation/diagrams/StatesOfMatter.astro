@@ -1,0 +1,64 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Water as a solid, a liquid and a gas',
+    desc: 'Three boxes of water particles. In ice, a solid, the particles sit in neat rows. In liquid water they stay close together but are jumbled. In water vapour, a gas, a few particles fly far apart in different directions. An arrow along the bottom shows that adding heat turns ice into water and water into vapour.',
+    solid: 'solid',
+    liquid: 'liquid',
+    gas: 'gas',
+    ice: 'ice',
+    water: 'water',
+    vapour: 'water vapour',
+    heat: 'add heat',
+  },
+  sk: {
+    title: 'Voda ako pevná látka, kvapalina a plyn',
+    desc: 'Tri škatule s čiastočkami vody. V ľade, teda v pevnej látke, sedia čiastočky v úhľadných radoch. V tekutej vode sú blízko pri sebe, ale neusporiadané. Vo vodnej pare, teda v plyne, poletuje niekoľko čiastočiek ďaleko od seba rôznymi smermi. Šípka dole ukazuje, že pridávaním tepla sa ľad mení na vodu a voda na paru.',
+    solid: 'pevná látka',
+    liquid: 'kvapalina',
+    gas: 'plyn',
+    ice: 'ľad',
+    water: 'voda',
+    vapour: 'vodná para',
+    heat: 'pridávame teplo',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const solid = [29, 53, 77, 101].flatMap((x) => [64, 88, 112, 136].map((y) => [x, y]));
+const liquid = [
+  [163, 86], [187, 80], [211, 87], [236, 81],
+  [169, 110], [194, 105], [218, 111], [241, 105],
+  [160, 135], [184, 131], [209, 137], [233, 132],
+];
+const gas = [
+  { at: [302, 68], move: 'M314 62l14-8' },
+  { at: [360, 74], move: 'M356 87l-6 14' },
+  { at: [322, 112], move: 'M310 117l-14 6' },
+  { at: [368, 138], move: 'M369 125l2-15' },
+  { at: [300, 146], move: 'M313 147h16' },
+];
+---
+<Svg viewBox="0 0 400 240" title={s.title} desc={s.desc} maxWidth="32rem">
+  <text x="65" y="28" text-anchor="middle" class="d-label">{s.solid}</text>
+  <text x="200" y="28" text-anchor="middle" class="d-label">{s.liquid}</text>
+  <text x="335" y="28" text-anchor="middle" class="d-label">{s.gas}</text>
+  <rect x="10" y="40" width="110" height="120" rx="8" class="d-box" />
+  <rect x="145" y="40" width="110" height="120" rx="8" class="d-box" />
+  <rect x="280" y="40" width="110" height="120" rx="8" class="d-box" />
+  {solid.map(([x, y]) => <circle cx={x} cy={y} r="9" class="d-cool" />)}
+  <path d="M152 66q12-6 24 0t24 0t24 0t24 0" class="d-line" style="stroke: var(--d-cool)" />
+  {liquid.map(([x, y]) => <circle cx={x} cy={y} r="9" class="d-cool" />)}
+  {gas.map(({ at: [x, y] }) => <circle cx={x} cy={y} r="9" class="d-cool" />)}
+  {gas.map(({ move }) => <path d={move} class="d-line d-arrow" />)}
+  <text x="65" y="184" text-anchor="middle">{s.ice}</text>
+  <text x="200" y="184" text-anchor="middle">{s.water}</text>
+  <text x="335" y="184" text-anchor="middle">{s.vapour}</text>
+  <path d="M40 204H360" class="d-line d-arrow-hot" />
+  <text x="200" y="231" text-anchor="middle">{s.heat}</text>
+</Svg>

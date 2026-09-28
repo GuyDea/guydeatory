@@ -1,0 +1,73 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Heat from electricity: an electric heater and a heat pump',
+    desc: 'Coloured blocks, each meaning 1 kilowatt-hour. Electric heater: 1 block of electricity turns into 1 block of heat. Heat pump: 1 block of electricity plus 2.5 blocks of heat collected from the outdoor air become 3.5 blocks of heat for the home.',
+    heater: 'electric heater',
+    pump: 'heat pump',
+    electricity: 'electricity',
+    outside: 'heat from outside',
+    delivered: 'heat delivered',
+    one: '1 kWh',
+    collected: '2.5 kWh',
+    total: '3.5 kWh',
+  },
+  sk: {
+    title: 'Teplo z elektriny: elektrický ohrievač a tepelné čerpadlo',
+    desc: 'Farebné kocky, každá znamená 1 kilowatthodinu. Elektrický ohrievač: 1 kocka elektriny sa zmení na 1 kocku tepla. Tepelné čerpadlo: 1 kocka elektriny a 2,5 kocky tepla nazbieraného z vonkajšieho vzduchu sa zmenia na 3,5 kocky tepla pre dom.',
+    heater: 'elektrický ohrievač',
+    pump: 'tepelné čerpadlo',
+    electricity: 'elektrina',
+    outside: 'teplo zvonku',
+    delivered: 'dodané teplo',
+    one: '1\u00a0kWh',
+    collected: '2,5\u00a0kWh',
+    total: '3,5\u00a0kWh',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+// Each full block is 1 kWh (30 units wide); a half-width block is 0.5 kWh.
+const outsideBlocks = [
+  [76, 30],
+  [110, 30],
+  [144, 15],
+];
+const heatBlocks = [
+  [211, 30],
+  [245, 30],
+  [279, 30],
+  [313, 15],
+];
+const legend = [
+  { y: 34, fill: 'd-glow', text: s.electricity },
+  { y: 60, fill: 'd-cool', text: s.outside },
+  { y: 86, fill: 'd-hot', text: s.delivered },
+];
+---
+<Svg viewBox="0 0 400 206" title={s.title} desc={s.desc} maxWidth="32rem">
+  <text x="20" y="24" class="d-label">{s.heater}</text>
+  <rect x="20" y="38" width="30" height="30" rx="4" class="d-glow" />
+  <path d="M58 53H96" class="d-line d-arrow" />
+  <rect x="104" y="38" width="30" height="30" rx="4" class="d-hot" />
+  <text x="35" y="90" text-anchor="middle">{s.one}</text>
+  <text x="119" y="90" text-anchor="middle">{s.one}</text>
+
+  {legend.map(({ y, fill }) => <rect x="210" y={y} width="16" height="16" rx="3" class={fill} />)}
+  {legend.map(({ y, text }) => <text x="234" y={y + 14}>{text}</text>)}
+
+  <text x="20" y="128" class="d-label">{s.pump}</text>
+  <rect x="20" y="142" width="30" height="30" rx="4" class="d-glow" />
+  <text x="63" y="164" text-anchor="middle" class="d-label">+</text>
+  {outsideBlocks.map(([x, w]) => <rect x={x} y="142" width={w} height="30" rx="4" class="d-cool" />)}
+  <path d="M167 157H203" class="d-line d-arrow" />
+  {heatBlocks.map(([x, w]) => <rect x={x} y="142" width={w} height="30" rx="4" class="d-hot" />)}
+  <text x="35" y="194" text-anchor="middle">{s.one}</text>
+  <text x="118" y="194" text-anchor="middle">{s.collected}</text>
+  <text x="270" y="194" text-anchor="middle">{s.total}</text>
+</Svg>

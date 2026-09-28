@@ -1,5 +1,18 @@
 topics: [heat, matter]
 labels: [high-level]
-status: stub
+prerequisites: [temperature, heat]
+related: [boiling-point, refrigerant, heat-pump, pressure]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Evaporation — Wikipedia
+    url: https://en.wikipedia.org/wiki/Evaporation
+  - title: Condensation — Wikipedia
+    url: https://en.wikipedia.org/wiki/Condensation
+  - title: Latent heat — Wikipedia
+    url: https://en.wikipedia.org/wiki/Latent_heat
+  - title: Enthalpy of vaporization — Wikipedia
+    url: https://en.wikipedia.org/wiki/Enthalpy_of_vaporization
+  - title: Evaporative cooler — Wikipedia
+    url: https://en.wikipedia.org/wiki/Evaporative_cooler

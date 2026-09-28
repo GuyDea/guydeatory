@@ -1,8 +1,201 @@
 ---
-title: 'Aké účinné je tepelné čerpadlo?'
-term: 'vykurovací faktor (COP)'
+title: Aké účinné je tepelné čerpadlo?
+term: vykurovací faktor (COP)
 slug: vykurovaci-faktor
-summary: 'Účinnosť tepelného čerpadla opisuje vykurovací faktor COP: koľko jednotiek tepla dodá za každú jednotku elektriny. COP 3 znamená 3 kilowatthodiny tepla z 1 kilowatthodiny elektriny.'
+summary: Vykurovací faktor (COP) hovorí, koľko tepla dodá tepelné čerpadlo za každú jednotku elektriny, ktorú spotrebuje. COP 3,5 znamená 3,5 kilowatthodiny tepla z jedinej kilowatthodiny elektriny.
+keywords: [COP, účinnosť, účinnosť tepelného čerpadla, SCOP, sezónny vykurovací faktor, EER, SEER, chladiaci faktor, Carnot, kilowatthodina, kWh, elektrický ohrievač, podlahové kúrenie, radiátory, tepelko, klimatizácia, klíma]
 ---
 
-Tepelné čerpadlo používa elektrinu na presúvanie tepla, nie na jeho výrobu, takže dokáže dodať viac tepla, ako spotrebuje elektriny. Čím je vonku chladnejšie, tým viac sa musí snažiť.
+import CopBlocks from './diagrams/CopBlocks.astro';
+import TemperatureLift from './diagrams/TemperatureLift.astro';
+import CopExplorer from '@widgets/cop-explorer/CopExplorer.svelte';
+
+Elektrický ohrievač mení elektrinu na teplo. Dáš mu 1 jednotku elektriny a dostaneš 1 jednotku
+tepla.
+
+Tepelné čerpadlo to dokáže oveľa lepšie: z tej istej elektriny ti dá 3 alebo 4 jednotky tepla. Ako
+je to možné a ako sa to meria? Poďme zistiť.
+
+## Energiu meriame v kilowatthodinách
+
+Aby sme mohli ohrievače porovnať, musíme merať [[energy|energiu]]. Na účtoch za elektrinu sa meria
+v **kilowatthodinách**, skrátene **kWh**. Jedna kilowatthodina je energia, ktorú spotrebuje
+ohrievač s výkonom 1&nbsp;000&nbsp;wattov, keď hodinu beží. (Vo wattoch sa meria
+[[electric-power|výkon]] – ako rýchlo sa energia spotrebúva.)
+
+Aj teplo je energia, takže ho môžeme merať v kilowatthodinách. Vďaka tomu vieme porovnať elektrinu,
+ktorá do zariadenia vchádza, s teplom, ktoré z neho vychádza.
+
+## Čo je vykurovací faktor?
+
+**Vykurovací faktor**, skrátene **COP** (z anglického *coefficient of performance*), porovnáva tieto
+dve množstvá:
+
+$$
+\text{COP} = \frac{\text{dodané teplo}}{\text{spotrebovaná elektrina}}
+$$
+
+*Dodané teplo* je teplo, ktoré tepelné čerpadlo odovzdá do domu. *Spotrebovaná elektrina* je
+elektrická energia, ktorú potrebuje na chod. Obe sa merajú v rovnakej jednotke, napríklad v kWh,
+takže COP je obyčajné číslo bez jednotky.
+
+Skúsme to. V mierny zimný deň dodá tepelné čerpadlo do domu 3,5&nbsp;kWh tepla za každú
+kilowatthodinu elektriny, ktorú spotrebuje:
+
+$$
+\text{COP} = \frac{3{,}5\ \text{kWh}}{1\ \text{kWh}} = 3{,}5
+$$
+
+Elektrický ohrievač zmení 1&nbsp;kWh elektriny presne na 1&nbsp;kWh tepla, takže jeho COP je 1.
+Tepelné čerpadlo dá za tú istú elektrinu tri a polkrát viac tepla. To znamená oveľa nižší účet za
+elektrinu.
+
+<Figure caption="Elektrický ohrievač zmení 1 kWh elektriny na 1 kWh tepla. Tepelné čerpadlo k tomu pridá 2,5 kWh tepla nazbieraného z vonkajšieho vzduchu, a tak dodá 3,5 kWh." wide>
+  <CopBlocks />
+</Figure>
+
+## Odkiaľ sa berie teplo navyše?
+
+Počkaj – 3,5&nbsp;kWh tepla len z 1&nbsp;kWh elektriny? Energia nikdy nevznikne z ničoho. Tomuto
+pravidlu hovoríme [[conservation-of-energy|zákon zachovania energie]]. Tak odkiaľ je tých zvyšných
+2,5&nbsp;kWh?
+
+Zvonku! Tepelné čerpadlo teplo nevyrába. Presúva ho, podobne ako špongia prenáša vodu z miesta na
+miesto. Zbiera teplo z vonkajšieho vzduchu a prenáša ho do domu.
+
+Aj studený zimný vzduch obsahuje trochu tepla. V tepelnom čerpadle prúdi [[refrigerant|chladivo]],
+ktoré je ešte studenšie ako vonkajší vzduch, a tak zo vzduchu doň prúdi [[heat|teplo]]. Elektrina
+poháňa najmä kompresor – čerpadlo, ktoré chladivo stláča, aby mohlo teplo odovzdať v dome. Celú
+cestu chladiva nájdeš v článku [[heat-pump|ako fungujú tepelné čerpadlá]].
+
+Energia teda presne sedí: **1&nbsp;kWh** elektriny + **2,5&nbsp;kWh** tepla zvonku =
+**3,5&nbsp;kWh** tepla pre tvoj dom. Žiadna energia nevzniká. Len sa presúva a sčítava.
+
+## Prečo sa vykurovací faktor mení?
+
+Teplo samo od seba prúdi len od teplého k studenému, ako voda, ktorá tečie z kopca. Tepelné čerpadlo
+núti teplo ísť opačne: zo studeného vzduchu vonku do teplého domu. Je to ako nosiť vodu do kopca.
+
+<Analogy title="Nosenie vody do kopca">
+Predstav si, že nosíš vedrá s vodou do kopca. Ak je kopec nízky, každé vedro vynesieš ľahko. Ak je
+kopec vysoký, každé vedro ťa stojí oveľa viac námahy. Pri tepelnom čerpadle je výškou kopca rozdiel
+medzi teplotou vonku a teplotou, pri ktorej teplo dodáva.
+</Analogy>
+
+Vykurovací faktor preto klesá, keď je kopec vyšší:
+
+- **Vonku je väčšia zima.** Tepelné čerpadlo musí zbierať teplo zo studenšieho vzduchu.
+- **Dom potrebuje teplejšiu vodu.** Väčšina tepelných čerpadiel zohrieva vodu, ktorá prúdi
+  radiátormi alebo trubkami pod podlahou. Čím teplejšia má táto voda byť, tým je kopec vyšší.
+
+Preto tepelné čerpadlá milujú **podlahové kúrenie**. Teplá voda prúdi trubkami pod celou podlahou.
+Podlaha je veľká, a tak na vykúrenie izby stačí voda s teplotou asi 30–35&nbsp;°C. Malé radiátory
+často potrebujú vodu s teplotou 50&nbsp;°C a viac.
+
+<Figure caption="Čím väčší je rozdiel medzi vonkajším vzduchom a vodou na kúrenie, tým vyššie musí tepelné čerpadlo teplo vyniesť – a tým nižší je jeho vykurovací faktor." wide>
+  <TemperatureLift />
+</Figure>
+
+Tu sú typické hodnoty pre tepelné čerpadlo, ktoré berie teplo z vonkajšieho vzduchu a zohrieva vodu
+pre podlahové kúrenie:
+
+| Teplota vonku | COP (približne) | Teplo z 1&nbsp;kWh elektriny |
+|---|---|---|
+| +7&nbsp;°C | asi 4 | asi 4&nbsp;kWh |
+| −7&nbsp;°C | asi 2,5–3 | asi 2,5–3&nbsp;kWh |
+| Akékoľvek počasie (elektrický ohrievač) | 1 | 1&nbsp;kWh |
+
+Aj v mrazivý deň dá tepelné čerpadlo dva- až trikrát viac tepla ako elektrický ohrievač.
+
+<Figure caption="Ochladzuj počasie alebo prepni na radiátory a sleduj, koľko tepla prinesie do domu 1 kilowatthodina elektriny." wide>
+  <CopExplorer client:visible />
+</Figure>
+
+Keďže sa vykurovací faktor mení s počasím, výrobcovia uvádzajú aj **sezónny vykurovací faktor
+(SCOP)**: priemer za celú vykurovaciu sezónu.
+
+<GoDeeper title="Carnotova hranica: najlepší možný COP">
+Aj dokonalé tepelné čerpadlo bez akýchkoľvek strát má najvyšší možný vykurovací faktor. Vyplýva
+z práce francúzskeho inžiniera Sadiho Carnota (1824), preto sa volá **Carnotova hranica**:
+
+$$
+\text{COP}_{\max} = \frac{T_1}{T_1 - T_2}
+$$
+
+- $T_1$ je teplota, pri ktorej sa teplo dodáva, napríklad teplota vody pre podlahu.
+- $T_2$ je teplota, z ktorej sa teplo berie, napríklad teplota vonkajšieho vzduchu.
+- Obe musia byť v **kelvinoch (K)**: teplota v °C plus 273,15. Kelvinova stupnica sa začína
+  absolútnou nulou (−273,15&nbsp;°C), najnižšou možnou teplotou.
+
+**Riešený príklad:** voda pre podlahové kúrenie má 35&nbsp;°C, vonkajší vzduch 0&nbsp;°C.
+
+$$
+\begin{aligned}
+T_1 &= 35 + 273{,}15 = 308{,}15\ \text{K} \\
+T_2 &= 0 + 273{,}15 = 273{,}15\ \text{K} \\
+\text{COP}_{\max} &= \frac{308{,}15}{308{,}15 - 273{,}15} = \frac{308{,}15}{35} \approx 8{,}8
+\end{aligned}
+$$
+
+Skutočné tepelné čerpadlá dosahujú približne 40–55&nbsp;% tejto hranice, teda tu asi 3,5 až 4,8.
+
+Teraz skúsme radiátory, ktoré potrebujú vodu s teplotou 55&nbsp;°C, pri rovnakých 0&nbsp;°C vonku:
+
+$$
+\text{COP}_{\max} = \frac{328{,}15}{328{,}15 - 273{,}15} = \frac{328{,}15}{55} \approx 6{,}0
+$$
+
+Skutočný stroj potom dosiahne len asi 2,4 až 3,3. Vzorec ukazuje prečo: väčší rozdiel teplôt
+v menovateli zlomku vykurovací faktor zmenšuje.
+
+Skutočné stroje za hranicou zaostávajú z viacerých dôvodov. Chladivo musí byť studenšie ako vonkajší
+vzduch a teplejšie ako voda, takže skutočný „kopec“ je vyšší ako ten vo vzorci. Elektrinu
+spotrebúvajú aj ventilátory, čerpadlá a trenie a v zime treba vonkajší výmenník z času na čas
+odmraziť.
+</GoDeeper>
+
+<GoDeeper title="Chladenie: chladiaci faktor EER">
+Keď klimatizácia alebo tepelné čerpadlo chladí izbu, záleží na teple, ktoré z izby *odoberie*. Tento
+pomer sa volá **chladiaci faktor (EER)**:
+
+$$
+\text{EER} = \frac{\text{teplo odobraté z izby}}{\text{spotrebovaná elektrina}}
+$$
+
+V Európe je EER obyčajné číslo, podobne ako COP, a bežné klimatizácie dosahujú asi 3 až 4. Jeho
+sezónny priemer sa volá SEER. V USA sa EER udáva v iných jednotkách (v britských tepelných
+jednotkách za hodinu na každý watt), a preto tam čísla vyzerajú asi 3,4-krát väčšie.
+
+Pre ten istý stroj, ktorý pracuje medzi tými istými dvoma teplotami, platí: teplo, ktoré odovzdá, sa
+rovná teplu, ktoré nazbiera, plus spotrebovanej elektrine. Preto je jeho vykurovací faktor asi o 1
+väčší ako jeho chladiaci faktor.
+</GoDeeper>
+
+<GoDeeper title="Prečo COP nevoláme účinnosť">
+Účinnosť porovnáva užitočnú energiu, ktorá zo stroja vychádza, s energiou, ktorá doň vchádza, a preto
+nikdy nemôže byť väčšia ako 100&nbsp;%. Vykurovací faktor tepelného čerpadla je väčší ako 1, lebo
+jeho výstup obsahuje aj teplo, ktoré samo nevyrobilo: teplo nazbierané zvonku. Preto ho inžinieri
+nevolajú účinnosť, ale vykurovací faktor.
+</GoDeeper>
+
+<Remember>
+- COP = dodané teplo ÷ spotrebovaná elektrina.
+- Elektrický ohrievač má COP 1. Tepelné čerpadlo má často COP 3 až 4.
+- Teplo navyše nevzniká z ničoho: tepelné čerpadlo ho nazbiera vonku a prenesie dnu.
+- Vykurovací faktor klesá, keď je vonku väčšia zima alebo keď musí byť voda na kúrenie teplejšia.
+- Podlahové kúrenie pomáha tepelnému čerpadlu pracovať úsporne.
+</Remember>
+
+<Quiz
+  question="Tepelné čerpadlo spotrebuje 2 kWh elektriny a dodá 8 kWh tepla. Aký je jeho vykurovací faktor?"
+  options={["2", "4", "6", "16"]}
+  answer={1}
+  explanation="COP = dodané teplo ÷ spotrebovaná elektrina = 8 kWh ÷ 2 kWh = 4. Zvyšných 6 kWh tepla nazbieralo zvonku."
+/>
+
+<Quiz
+  question="Prečo vykurovací faktor tepelného čerpadla klesá vo veľmi studený deň?"
+  options={["Elektrina je v zime slabšia", "Musí dvíhať teplo z oveľa studenšieho vzduchu, a to si vyžaduje viac elektriny", "Studený vzduch neobsahuje vôbec žiadne teplo"]}
+  answer={1}
+  explanation="Čím je vonkajší vzduch studenší, tým vyšší je kopec, na ktorý treba teplo vyniesť. Každá kilowatthodina tepla potom potrebuje viac elektriny."
+/>

@@ -1,5 +1,18 @@
 topics: [heat, matter]
 labels: [high-level]
-status: stub
+prerequisites: [evaporation-and-condensation, pressure]
+related: [refrigerant, heat-pump, temperature, heat]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Boiling point — Wikipedia
+    url: https://en.wikipedia.org/wiki/Boiling_point
+  - title: Vapour pressure of water — Wikipedia
+    url: https://en.wikipedia.org/wiki/Vapour_pressure_of_water
+  - title: High-altitude cooking — Wikipedia
+    url: https://en.wikipedia.org/wiki/High-altitude_cooking
+  - title: Pressure cooking — Wikipedia
+    url: https://en.wikipedia.org/wiki/Pressure_cooking
+  - title: Propane — Wikipedia
+    url: https://en.wikipedia.org/wiki/Propane

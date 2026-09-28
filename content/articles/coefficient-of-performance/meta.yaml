@@ -1,5 +1,18 @@
 topics: [home-technology, energy]
 labels: [calculation, low-level]
-status: stub
+prerequisites: [heat-pump, energy]
+related: [refrigerant, conservation-of-energy, electric-power, heat]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Coefficient of performance — Wikipedia
+    url: https://en.wikipedia.org/wiki/Coefficient_of_performance
+  - title: Air source heat pump — Wikipedia
+    url: https://en.wikipedia.org/wiki/Air_source_heat_pump
+  - title: Carnot heat engine — Wikipedia
+    url: https://en.wikipedia.org/wiki/Carnot_heat_engine
+  - title: Seasonal energy efficiency ratio (SEER and EER) — Wikipedia
+    url: https://en.wikipedia.org/wiki/Seasonal_energy_efficiency_ratio
+  - title: Underfloor heating — Wikipedia
+    url: https://en.wikipedia.org/wiki/Underfloor_heating

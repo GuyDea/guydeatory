@@ -1,0 +1,63 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'The refrigerant’s round trip',
+    desc: 'A closed loop of pipes that the refrigerant flows around clockwise. On the left, a zigzag coil called the evaporator is cold, and an arrow shows heat flowing into it. At the top, the compressor squeezes the refrigerant, so the pipe after it is hot. On the right, a zigzag coil called the condenser is hot, and an arrow shows heat flowing out of it. At the bottom, the expansion valve makes the refrigerant cold again.',
+    evaporator: 'evaporator',
+    compressor: 'compressor',
+    condenser: 'condenser',
+    valve: 'expansion valve',
+    heat: 'heat',
+    cold: 'cold',
+    hot: 'hot',
+  },
+  sk: {
+    title: 'Okružná cesta chladiva',
+    desc: 'Uzavretý okruh trubiek, ktorým chladivo obieha v smere hodinových ručičiek. Vľavo je studená kľukatá trubka, ktorá sa volá výparník, a šípka ukazuje, že do nej prúdi teplo. Hore kompresor chladivo stláča, takže trubka za ním je horúca. Vpravo je horúca kľukatá trubka, ktorá sa volá kondenzátor, a šípka ukazuje, že z nej teplo odchádza. Dole expanzný ventil chladivo znova ochladí.',
+    evaporator: 'výparník',
+    compressor: 'kompresor',
+    condenser: 'kondenzátor',
+    valve: 'expanzný ventil',
+    heat: 'teplo',
+    cold: 'studené',
+    hot: 'horúce',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const pipe = (color: string) => `fill: none; stroke: var(--d-${color}); stroke-width: 8; stroke-linecap: round; stroke-linejoin: round`;
+---
+<Svg viewBox="0 0 400 290" title={s.title} desc={s.desc} maxWidth="32rem">
+  <path d="M100 100V70H176" style={pipe('cool')} />
+  <path d="M224 70H300V100" style={pipe('hot')} />
+  <path d="M300 100L314 110L286 130L314 150L286 170L314 190L300 200" style={pipe('hot')} />
+  <path d="M300 200V230H216" style={pipe('warm')} />
+  <path d="M184 230H100V200" style={pipe('cold')} />
+  <path d="M100 200L86 190L114 170L86 150L114 130L86 110L100 100" style={pipe('cold')} />
+
+  <circle cx="200" cy="70" r="24" class="d-box" />
+  <path d="M191 58L213 70L191 82Z" class="d-line" />
+  <path d="M184 218L200 230L184 242ZM216 218L200 230L216 242Z" class="d-box" />
+
+  <path d="M124 88H152" class="d-line d-arrow" />
+  <path d="M248 88H276" class="d-line d-arrow" />
+  <path d="M276 212H248" class="d-line d-arrow" />
+  <path d="M152 212H124" class="d-line d-arrow" />
+
+  <text x="200" y="32" text-anchor="middle" class="d-label">{s.compressor}</text>
+  <text x="200" y="274" text-anchor="middle" class="d-label">{s.valve}</text>
+  <text x="128" y="140" class="d-label">{s.evaporator}</text>
+  <text x="272" y="180" text-anchor="end" class="d-label">{s.condenser}</text>
+
+  <path d="M14 150H72" class="d-line d-arrow-hot" />
+  <text x="14" y="138">{s.heat}</text>
+  <text x="14" y="178">{s.cold}</text>
+  <path d="M328 150H386" class="d-line d-arrow-hot" />
+  <text x="328" y="138">{s.heat}</text>
+  <text x="328" y="178">{s.hot}</text>
+</Svg>

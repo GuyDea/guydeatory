@@ -1,0 +1,65 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Evaporation cools, condensation warms',
+    desc: 'Left: a drop of water on skin. Water particles fly up out of the drop, and red arrows show heat flowing from the skin into the drop, so the skin cools. Right: a glass of cold water with ice cubes. Water vapour particles from the air move towards the glass and form drops on its outside, and red arrows show heat flowing into the glass, so the glass warms up.',
+    evaporation: 'evaporation',
+    condensation: 'condensation',
+    skin: 'skin',
+    soaks: 'soaks up heat',
+    gives: 'gives heat back',
+  },
+  sk: {
+    title: 'Vyparovanie ochladzuje, kondenzácia zohrieva',
+    desc: 'Vľavo: kvapka vody na koži. Čiastočky vody vyletujú z kvapky nahor a červené šípky ukazujú, že teplo prechádza z kože do kvapky, takže koža sa ochladzuje. Vpravo: pohár studenej vody s kockami ľadu. Čiastočky vodnej pary zo vzduchu sa blížia k poháru a na jeho vonkajšej strane vytvárajú kvapky. Červené šípky ukazujú, že teplo prechádza do pohára, takže sa pohár zohrieva.',
+    evaporation: 'vyparovanie',
+    condensation: 'kondenzácia',
+    skin: 'koža',
+    soaks: 'nasáva teplo',
+    gives: 'vracia teplo',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const leaving = [
+  [80, 136],
+  [104, 104],
+  [128, 72],
+];
+const drops = [
+  [259, 140], [261, 170], [262, 198], [340, 150], [338, 184],
+];
+---
+<Svg viewBox="0 0 400 260" title={s.title} desc={s.desc} maxWidth="32rem">
+  <path d="M200 14V250" class="d-line" stroke-dasharray="4 6" style="stroke: var(--d-muted)" />
+
+  <text x="100" y="28" text-anchor="middle" class="d-label">{s.evaporation}</text>
+  <rect x="15" y="190" width="170" height="28" rx="8" class="d-box-alt" />
+  <text x="24" y="210">{s.skin}</text>
+  <path d="M55 190a45 30 0 0 1 90 0Z" class="d-cool" />
+  {leaving.map(([x, y]) => <circle cx={x} cy={y} r="7" class="d-cool" />)}
+  {leaving.map(([x, y]) => <path d={`M${x} ${y - 12}v-16`} class="d-line d-arrow" />)}
+  <path d="M88 214V178" class="d-line d-arrow-hot" />
+  <path d="M112 214V178" class="d-line d-arrow-hot" />
+  <text x="100" y="248" text-anchor="middle" class="d-label">{s.soaks}</text>
+
+  <text x="300" y="28" text-anchor="middle" class="d-label">{s.condensation}</text>
+  <path d="M215 218H385" class="d-line" />
+  <path d="M262 92H338L330 218H270Z" class="d-box" />
+  <path d="M266 116H334L327 214H273Z" class="d-cool" />
+  <rect x="280" y="122" width="17" height="17" rx="3" class="d-box-alt" transform="rotate(12 288 130)" />
+  <rect x="303" y="127" width="17" height="17" rx="3" class="d-box-alt" transform="rotate(-10 311 135)" />
+  {drops.map(([x, y]) => <circle cx={x} cy={y} r="5" class="d-cool" />)}
+  <circle cx="222" cy="96" r="7" class="d-cool" />
+  <path d="M231 104l15 13" class="d-line d-arrow" />
+  <circle cx="378" cy="108" r="7" class="d-cool" />
+  <path d="M370 117l-13 13" class="d-line d-arrow" />
+  <path d="M270 172H292" class="d-line d-arrow-hot" />
+  <path d="M330 176H308" class="d-line d-arrow-hot" />
+  <text x="300" y="248" text-anchor="middle" class="d-label">{s.gives}</text>
+</Svg>

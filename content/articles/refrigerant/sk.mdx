@@ -1,8 +1,163 @@
 ---
-title: 'Čo je chladivo?'
-term: 'chladivo'
+title: Čo je chladivo?
+term: chladivo
 slug: chladivo
-summary: 'Chladivo je zvláštna kvapalina v chladničkách, klimatizáciách a tepelných čerpadlách. Vrie pri veľmi nízkych teplotách, takže dokáže nasať teplo aj zo studeného vzduchu a odniesť ho inam.'
+summary: Chladivo je zvláštna tekutina v chladničkách, klimatizáciách a tepelných čerpadlách. Vrie pri veľmi nízkych teplotách, takže dokáže nasať teplo aj zo studeného vzduchu a odniesť ho inam.
+keywords: [chladivá, chladiace médium, freón, freóny, CFC, HFC, R-290, propán, R-600a, izobután, R-32, R-134a, R-744, oxid uhličitý, CO2, ozónová vrstva, Montrealský protokol, F-plyny, chladnička, klimatizácia, klíma, klimoška, tepelko]
 ---
 
-Chladivo obieha dookola v uzavretých trubkách. Na jednom mieste sa vyparí a teplo nasaje, na inom skondenzuje a teplo odovzdá.
+import RefrigerantLoop from './diagrams/RefrigerantLoop.astro';
+
+Polož ruku na bok zapnutej chladničky. Často je teplý! To teplo pochádza z jedla vo vnútri. Von ho
+vyniesla zvláštna tekutina, ktorá v trubkách chladničky obieha dookola: **chladivo**.
+
+## Kvapalina, ktorá vrie v mraze
+
+Voda vrie pri 100&nbsp;°C. Chladivo sa vyberá tak, aby vrelo pri oveľa nižšej teplote, zvyčajne
+hlboko pod 0&nbsp;°C. Napríklad propán, jedno z chladív, vrie asi pri −42&nbsp;°C. Každá kvapalina má svoj
+[[boiling-point|bod varu]] a chladivá ho majú veľmi nízky.
+
+Prečo je to užitočné? Keď sa kvapalina [[evaporation-and-condensation|vyparuje alebo vrie]], nasáva
+[[heat|teplo]] zo svojho okolia. Chladivo vrie, aj keď je mrazivo studené. Preto dokáže nasávať
+teplo zo studených vecí: z jedla v chladničke, ba aj zo zimného vzduchu.
+
+Chladivo je raz kvapalina a raz plyn. Spoločné slovo pre oboje je **tekutina**: všetko, čo dokáže
+tiecť.
+
+## Okružná cesta chladiva
+
+Chladivo putuje v uzavretom okruhu trubiek. Nespotrebúva sa, takže ho netreba dopĺňať – ak trubky
+nikde nepresakujú. Na každej ceste okruhom prejde štyrmi krokmi.
+
+1. **Vyparí sa a nasaje teplo.** V stočenej tenkej trubke, ktorá sa volá **výparník**, má chladivo
+   nízky [[pressure|tlak]]. Tam vrie a mení sa na plyn. Je studenšie ako vzduch okolo trubky, a tak
+   doň prúdi teplo.
+2. **Stlačí sa a zohreje.** Čerpadlo, ktoré sa volá **kompresor**, stlačí plyn do oveľa menšieho
+   priestoru. Stlačený plyn sa zohreje. Trochu to pocítiš, keď pumpuješ bicyklovú pneumatiku: pumpa
+   je potom teplá.
+3. **Skondenzuje a odovzdá teplo.** Horúci plyn prúdi do ďalšej stočenej trubky – do
+   **kondenzátora** (tak sa volá tá časť, kde chladivo kondenzuje). Je horúcejší ako vzduch okolo,
+   a tak mu odovzdá svoje teplo. Pod vysokým tlakom sa pritom zmení späť na kvapalinu, ešte stále
+   teplú.
+4. **Rozpína sa a ochladí sa.** Teplá kvapalina sa pretlačí cez drobný otvor, ktorý sa volá
+   **expanzný ventil**. Za ním tlak klesne a časť chladiva hneď zovrie. Tým sa zvyšok poriadne
+   ochladí a môže začať novú cestu.
+
+<Figure caption="Sleduj okruh: chladivo nasáva teplo na studenej strane a odovzdáva ho na horúcej strane. Kompresor ho zohreje a expanzný ventil ho znova ochladí." wide>
+  <RefrigerantLoop />
+</Figure>
+
+<Analogy>
+Predstav si špongiu. Namočíš ju do mláky a nasaje vodu; vyžmýkaš ju nad vedrom a voda vytečie.
+Chladivo robí to isté s teplom. Tam, kde vrie, teplo nasaje, a keď ho kompresor „vyžmýka“, odovzdá
+ho tam, kde kondenzuje.
+</Analogy>
+
+V chladničke je výparník vo vnútri a kondenzátor vonku – vzadu alebo v bokoch. Teplo sa tak presúva
+z jedla do kuchyne. Klimatizácia presúva teplo z izby von. [[heat-pump|Tepelné čerpadlo]], ktoré
+vykuruje dom, robí opak: presúva teplo z vonkajšieho vzduchu do domu.
+
+## Aké chladivá sa používajú?
+
+Inžinieri dávajú chladivám kódové mená, ktoré sa začínajú písmenom R – od anglického slova
+*refrigerant*, teda chladivo. Tu je niekoľko bežných:
+
+- **R-290** je propán, ten istý plyn, aký ľudia používajú v kempingových varičoch.
+- **R-600a** je izobután, blízky príbuzný propánu. Používa ho väčšina nových chladničiek v Európe.
+- **R-744** je oxid uhličitý (CO₂), plyn, ktorý robí bublinky v perlivej vode.
+- **R-32** je umelo vyrobený plyn, ktorý sa používa v mnohých klimatizáciách a tepelných čerpadlách.
+- **R-134a** je starší umelo vyrobený plyn, ktorý nájdeš v mnohých starších chladničkách
+  a klimatizáciách áut.
+
+## Ako chladivá poškodili oblohu
+
+Prvé chladničky asi pred sto rokmi používali plyny ako čpavok. Fungovali, ale boli jedovaté a pri
+úniku mohli ľudí vážne otráviť. Preto chemici okolo roku 1930 vynašli nové chladivá, ktoré sa volajú
+**freóny** (skratka CFC). Neboli jedovaté a nehoreli, a tak boli čoskoro všade: v chladničkách,
+klimatizáciách aj sprejoch.
+
+Po mnohých rokoch vedci zistili problém. Vysoko na oblohe je tenká vrstva plynu, ktorý sa volá
+**ozón**. Táto **ozónová vrstva** funguje ako opaľovací krém pre celú Zem: zachytáva veľkú časť
+škodlivého ultrafialového (UV) žiarenia zo Slnka. Freóny, ktoré unikli, vystúpali až k nej a pomaly
+ju ničili.
+
+V 80. rokoch 20. storočia sa nad Antarktídou každý rok otvárala obrovská ozónová diera. Preto
+v roku 1987 krajiny z celého sveta podpísali dohodu, ktorá sa volá **Montrealský protokol**,
+a sľúbili prestať vyrábať freóny. Zabralo to. Ozónová vrstva sa dnes pomaly zaceľuje.
+
+## Chladivá a otepľujúca sa planéta
+
+Chladivá, ktoré nahradili freóny, napríklad R-134a, ozónovej vrstve neškodia. Majú však iný problém.
+Keď uniknú do vzduchu, zadržiavajú teplo okolo Zeme oveľa silnejšie ako oxid uhličitý. Tým
+otepľujú podnebie.
+
+Inžinieri preto prechádzajú na chladivá, ktoré otepľujú podnebie oveľa menej, napríklad propán,
+izobután a oxid uhličitý. Zákony v Európe aj v mnohých iných krajinách túto zmenu urýchľujú.
+
+<Safety>
+Nikdy neotváraj, nevŕtaj, neohýbaj ani inak nepoškodzuj trubky chladničky, klimatizácie či
+tepelného čerpadla. Chladivo v nich je pod vysokým tlakom a môže vystreknúť. Môže byť také studené,
+že ti omrazí kožu, a niektoré chladivá, napríklad propán, ľahko horia. Staré chladničky patria na
+zberné miesto, kde z nich chladivo bezpečne odoberú.
+</Safety>
+
+<GoDeeper title="Chladivá v číslach">
+Tu sú niektoré chladivá s bodom varu pri bežnom tlaku vzduchu a s ich **potenciálom globálneho
+otepľovania (GWP)**. GWP porovnáva, ako veľmi otepľuje podnebie 1&nbsp;kg daného plynu za 100 rokov,
+s tým, ako ho otepľuje 1&nbsp;kg oxidu uhličitého.
+
+| Chladivo | Čo to je | Vrie pri (bežnom tlaku) | GWP (100 rokov) |
+|---|---|---|---|
+| R-12 (freón, zakázaný) | dichlórdifluórmetán | asi −30&nbsp;°C | viac ako 10&nbsp;000 |
+| R-134a | tetrafluóretán (HFC) | asi −26&nbsp;°C | asi 1&nbsp;430 |
+| R-32 | difluórmetán (HFC) | asi −52&nbsp;°C | asi 675 |
+| R-290 | propán | asi −42&nbsp;°C | asi 3 |
+| R-744 | oxid uhličitý | pri bežnom tlaku nemôže byť kvapalinou | 1 |
+
+Tieto hodnoty GWP sa uvádzajú najčastejšie. Novšie vedecké odhady sa trochu líšia, no hovoria to
+isté: propán a CO₂ sú oproti umelo vyrobeným plynom nepatrné. R-12 navyše ničil ozón, a preto ho
+zakázali.
+
+Každé chladivo je kompromis:
+
+- Propán a izobután takmer neotepľujú podnebie, ale horia. Zariadenia s nimi preto obsahujú len malé
+  množstvo chladiva a musia spĺňať prísne bezpečnostné pravidlá.
+- R-32 horí len ťažko, ale stále otepľuje podnebie stovky ráz viac ako CO₂.
+- CO₂ nehorí, ale potrebuje veľmi vysoký tlak: na horúcej strane často okolo stonásobku bežného
+  tlaku vzduchu. Pri bežnom tlaku sa pevný CO₂ (suchý ľad) pri −78&nbsp;°C mení priamo na plyn
+  a kvapalinou sa nikdy nestane.
+</GoDeeper>
+
+<GoDeeper title="Kde obrázok so špongiou nesedí">
+- Teplo nie je látka, ktorá by chladivo napĺňala tak, ako voda napĺňa špongiu. Teplo je
+  [[energy|energia]], ktorá prechádza z miesta na miesto. Chladivo energiu prijíma, keď vrie,
+  a odovzdáva, keď kondenzuje.
+- Stláčanie niečo stojí. Kompresor beží na elektrinu a aj táto energia sa nakoniec zmení na teplo.
+  Kondenzátor preto odovzdá teplo nazbierané vo výparníku a k tomu energiu z kompresora. Koľko tepla
+  dostaneš za každú jednotku elektriny, udáva [[coefficient-of-performance|vykurovací faktor (COP)]].
+- V expanznom ventile zovrie len menšia časť chladiva. Väčšina zovrie až vo výparníku, kde nasáva
+  teplo zo vzduchu.
+</GoDeeper>
+
+<Remember>
+- Chladivo je tekutina, ktorá vrie pri veľmi nízkej teplote, zvyčajne pod 0&nbsp;°C.
+- Obieha dookola v uzavretom okruhu: vyparuje sa, stláča sa, kondenzuje a rozpína sa.
+- Tam, kde sa vyparuje, teplo nasáva, a tam, kde kondenzuje, teplo odovzdáva.
+- Staré chladivá – freóny – poškodzovali ozónovú vrstvu, a preto ich Montrealský protokol (1987)
+  zastavil.
+- Nikdy nepoškodzuj trubky chladničky, klimatizácie ani tepelného čerpadla.
+</Remember>
+
+<Quiz
+  question="Prečo musí chladivo vrieť pri veľmi nízkej teplote?"
+  options={["Aby dokázalo nasávať teplo aj zo studeného vzduchu", "Aby chladnička menej hučala", "Aby trubky nehrdzaveli"]}
+  answer={0}
+  explanation="Kvapalina pri vare nasáva teplo. Chladivo vrie pod 0 °C, takže dokáže zbierať teplo aj z jedla v chladničke či zo studeného zimného vzduchu."
+/>
+
+<Quiz
+  question="Čo robí kompresor s chladivom?"
+  options={["Zmrazí ho na ľad", "Stlačí plyn, a tým ho zohreje", "Vypustí ho von"]}
+  answer={1}
+  explanation="Stlačený plyn sa zohreje. Horúce chladivo potom môže v kondenzátore odovzdať svoje teplo."
+/>

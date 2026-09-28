@@ -1,8 +1,169 @@
 ---
-title: 'Why does water boil at different temperatures?'
-term: 'boiling point'
+title: Why does water boil at different temperatures?
+term: boiling point
 slug: boiling-point
-summary: 'The boiling point is the temperature at which a liquid bubbles into gas. It depends on pressure: on a high mountain water boils below 100 °C, and in a pressure cooker above it.'
+summary: The boiling point is the temperature at which a liquid bubbles into a gas, and it depends on how hard the air presses on the liquid. High on a mountain, water boils below 100 °C; in a pressure cooker, it boils above 100 °C.
+keywords: [boiling, boil, boiling temperature, vapour pressure, vapor pressure, pressure cooker, altitude, Mount Everest, Gerlachovský štít, bubbles, steam]
 ---
 
-At sea level water boils at 100 °C. Lower the pressure and it boils at a lower temperature; raise the pressure and it needs to get hotter first.
+import BoilingPot from './diagrams/BoilingPot.astro';
+import BoilingLadder from './diagrams/BoilingLadder.astro';
+import BoilingPoint from '@widgets/boiling-point/BoilingPoint.svelte';
+
+Watch a pot of water on the stove. First, tiny bubbles cling to the bottom. Then big bubbles rush up,
+and the water rolls and splashes: it boils. A thermometer in the water would show about 100 degrees
+Celsius (100 °C).
+
+But water does not always boil at 100 °C. On a high mountain, it boils while it is much cooler. In a
+pressure cooker, it has to get much hotter first. Let’s find out why.
+
+## What happens when water boils?
+
+Water is made of tiny particles that jiggle all the time. The hotter the water, the faster they
+jiggle. That is what [[temperature]] tells us.
+
+Even in cold water, a few fast particles escape from the surface into the air. They become water
+vapour, an invisible gas. This slow escape is called [[evaporation-and-condensation|evaporation]].
+
+As the water heats up, more and more particles escape. At last, water starts turning into vapour
+even deep inside the pot. The vapour gathers into bubbles, which rise and burst at the top. This is
+**boiling**, and the temperature at which it happens is the **boiling point**.
+
+The tiny bubbles you see at the start are different. They are air that was dissolved in the water,
+now coming out.
+
+Once water boils, it stops getting hotter. Turning the stove up only makes it boil faster. The extra
+[[heat]] goes into turning water into vapour.
+
+## Why does the air matter?
+
+Air may feel like nothing, but it has weight. A huge stack of air, many kilometres high, rests on
+everything around you, including the water in the pot. It presses down on the water. This push is
+called air [[pressure]].
+
+A bubble of vapour inside the water has to push back against that pressure. If its push is too weak,
+the bubble gets squashed before it can grow. The vapour pushes as hard as the air only when the water
+is hot enough. Then bubbles can grow, and the water boils.
+
+<Analogy>
+Imagine trying to open a door while a friend leans on it from the other side. If your friend leans
+lightly, a small push opens it. If your friend leans hard, you need a much bigger push. The air is
+the friend leaning on the door, and the hot vapour is you, pushing.
+</Analogy>
+
+<Figure caption="A bubble of water vapour can only grow if it pushes as hard as the air pressing down on the water." wide>
+  <BoilingPot />
+</Figure>
+
+## Boiling on a mountain
+
+The higher you climb, the less air there is above you. So up high, the air presses more lightly on
+the water. The vapour needs less push to make bubbles, and the water boils at a lower temperature.
+
+On top of Gerlachovský štít, the highest mountain in Slovakia (2,655 metres), water boils at about
+91 °C. On Mount Everest, the highest mountain in the world (8,849 metres), it boils at only about
+70 °C.
+
+Water at 70 °C can still burn you badly. But it is not hot enough to cook food well, so pasta and
+eggs take much longer. People who live or climb high in the mountains often cook with a pressure
+cooker.
+
+## The pressure cooker
+
+A pressure cooker works the other way round. Its lid closes tightly, so the steam cannot escape. The
+steam builds up inside and presses on the water — about twice as hard as the air outside.
+
+Now the water must reach about 120 °C before it can boil. Hotter water cooks food faster, so beans,
+soups and stews are ready much sooner.
+
+<Figure caption="The less the air presses on the water, the lower its boiling point. The more it presses, the higher the boiling point." wide>
+  <BoilingLadder />
+</Figure>
+
+<Safety>
+A pressure cooker is full of steam that is hotter than boiling water, and it presses hard on the
+lid. Only a grown-up should use it and open it, and only after letting the pressure out. Stay away
+from pots of boiling water too: steam and hot water burn badly.
+</Safety>
+
+## Every liquid has its own boiling point
+
+Water is not the only liquid that boils. Every liquid has its own boiling point, even with the same
+air pressing on it.
+
+| Liquid | Boils at (normal air pressure) |
+|---|---|
+| Water | 100 °C |
+| Alcohol (ethanol) | about 78 °C |
+| Propane, a gas for camping stoves and barbecues | about −42 °C |
+| Liquid nitrogen | about −196 °C |
+
+Some liquids boil far below 0 °C, the temperature at which water freezes. Liquid propane boils even
+on a freezing winter day, soaking up heat from the cold air around it.
+
+Liquids like this are called [[refrigerant|refrigerants]]. They flow in the pipes of fridges and
+[[heat-pump|heat pumps]]. Squeeze a refrigerant hard, and its boiling point goes up, just like water
+in a pressure cooker. So a heat pump can make its refrigerant boil while it is cold and turn back
+into a liquid while it is hot.
+
+<Figure caption="Move the air pressure up and down, or jump to a famous place. Watch where water starts to boil — and how cold the refrigerant propane boils." wide>
+  <BoilingPoint client:visible />
+</Figure>
+
+<FunFact>
+Scientists can make water boil at room temperature. They pump almost all the air out of a strong
+glass jar with some water inside. The water starts to bubble, even though it is not hot at all.
+</FunFact>
+
+<GoDeeper title="Vapour pressure: when exactly does a liquid boil?">
+Particles escape from a liquid all the time, and some of them fly back in. In a closed jar, the
+vapour above the liquid builds up until as many particles return as escape. The push of that vapour
+is called the liquid’s **vapour pressure**. It grows very fast as the liquid gets hotter.
+
+A liquid boils when its vapour pressure reaches the pressure around it. Then bubbles of pure vapour
+can form inside the liquid and survive.
+
+| Water temperature | Vapour pressure of water | Where water boils at this temperature |
+|---|---|---|
+| 20 °C | about 2.3 kPa | in a jar with almost all the air pumped out |
+| 70 °C | about 31 kPa | around the top of Mount Everest |
+| 91 °C | about 73 kPa | on top of Gerlachovský štít |
+| 100 °C | 101.3 kPa | at sea level |
+| 120 °C | about 200 kPa | in a pressure cooker |
+
+A kilopascal (kPa) is a unit of pressure. Normal air pressure at sea level is about 101 kPa.
+
+Strictly speaking, a bubble at the bottom of a pot must also push against the water above it, and
+against the pull that holds the surface of the bubble together (surface tension). Bubbles therefore
+start on tiny scratches and specks of dirt on the bottom of the pot.
+</GoDeeper>
+
+<GoDeeper title="Where the door picture is too simple">
+- The air does not lean on the water only from above. Pressure pushes in all directions, and the
+  water passes it on to every bubble inside, even at the bottom of the pot.
+- Very clean water in a very smooth cup can get hotter than its boiling point without bubbling. This
+  can happen in a microwave oven. A small shake can then make it boil over all at once, and it can
+  scald. So heat water in a microwave only as long as needed, and take it out carefully.
+</GoDeeper>
+
+<Remember>
+- Boiling means bubbles of vapour form all through a liquid, not only at its surface.
+- A liquid boils when its vapour pushes as hard as the air pressing on it.
+- High on a mountain, the air presses less, so water boils below 100 °C.
+- In a pressure cooker, the steam presses harder, so water boils above 100 °C.
+- Refrigerants boil below 0 °C, so they can soak up heat even from cold air.
+</Remember>
+
+<Quiz
+  question="Why does pasta take longer to cook high up on a mountain?"
+  options={["The thin air cannot carry heat", "Water boils at a lower temperature there, so it is not as hot", "Mountain water has no salt in it"]}
+  answer={1}
+  explanation="Up high, the air presses less on the water, so it boils at a lower temperature. Cooler water cooks food more slowly."
+/>
+
+<Quiz
+  question="What is inside the big bubbles in boiling water?"
+  options={["Air", "Water vapour", "Nothing, they are empty"]}
+  answer={1}
+  explanation="The big bubbles are water that has turned into a gas: water vapour. Only the first tiny bubbles are air that was dissolved in the water."
+/>

@@ -1,8 +1,201 @@
 ---
-title: 'How efficient is a heat pump?'
-term: 'coefficient of performance (COP)'
+title: How efficient is a heat pump?
+term: coefficient of performance (COP)
 slug: coefficient-of-performance
-summary: 'A heat pump’s efficiency is described by its COP: how many units of heat it delivers for each unit of electricity. A COP of 3 means 3 kilowatt-hours of heat from 1 kilowatt-hour of electricity.'
+summary: The coefficient of performance (COP) tells how much heat a heat pump delivers for each unit of electricity it uses. A COP of 3.5 means 3.5 kilowatt-hours of heat from just 1 kilowatt-hour of electricity.
+keywords: [COP, efficiency, heat pump efficiency, SCOP, seasonal COP, EER, SEER, energy efficiency ratio, Carnot, kilowatt-hour, kWh, electric heater, underfloor heating, radiators]
 ---
 
-A heat pump uses electricity to move heat, not to make it, so it can deliver more heat than the electricity it uses. The colder it is outside, the harder it has to work.
+import CopBlocks from './diagrams/CopBlocks.astro';
+import TemperatureLift from './diagrams/TemperatureLift.astro';
+import CopExplorer from '@widgets/cop-explorer/CopExplorer.svelte';
+
+An electric heater turns electricity into heat. Give it 1 unit of electricity, and you get 1 unit of
+heat.
+
+A heat pump can do much better: from the same electricity, it can give you 3 or 4 units of heat. How
+is that possible, and how do we measure it? Let’s find out.
+
+## Measuring energy in kilowatt-hours
+
+To compare heaters, we need to measure [[energy]]. Electricity bills measure it in
+**kilowatt-hours**, written **kWh**. One kilowatt-hour is the energy that a 1,000-watt heater uses
+when it runs for one hour. (Watts measure [[electric-power|power]]: how fast energy is used.)
+
+Heat is energy too, so we can measure it in kilowatt-hours as well. That lets us compare the
+electricity going in with the heat coming out.
+
+## What is COP?
+
+The **coefficient of performance**, or **COP**, compares these two amounts:
+
+$$
+\text{COP} = \frac{\text{heat delivered}}{\text{electricity used}}
+$$
+
+*Heat delivered* is the heat that the heat pump puts into your home. *Electricity used* is the
+electrical energy it needs to run. Both are measured in the same unit, such as kWh, so the COP is a
+plain number without a unit.
+
+Let’s try it. On a mild winter day, a heat pump delivers 3.5 kWh of heat into the house for every
+1 kWh of electricity it uses:
+
+$$
+\text{COP} = \frac{3.5\ \text{kWh}}{1\ \text{kWh}} = 3.5
+$$
+
+An electric heater turns 1 kWh of electricity into exactly 1 kWh of heat, so its COP is 1. The heat
+pump gives three and a half times as much heat for the same electricity. That means a much smaller
+electricity bill.
+
+<Figure caption="The electric heater turns 1 kWh of electricity into 1 kWh of heat. The heat pump adds 2.5 kWh of heat collected from the outdoor air, so it delivers 3.5 kWh." wide>
+  <CopBlocks />
+</Figure>
+
+## Where does the extra heat come from?
+
+Wait — 3.5 kWh of heat from only 1 kWh of electricity? Energy can never appear from nothing. This
+rule is called [[conservation-of-energy|conservation of energy]]. So where do the other 2.5 kWh come
+from?
+
+From outside! A heat pump does not make heat. It moves heat, the way a sponge carries water from one
+place to another. It collects heat from the outdoor air and carries it into your home.
+
+Even cold winter air holds some heat. Inside the heat pump flows a [[refrigerant]] that is even
+colder than the outdoor air, so [[heat]] flows from the air into it. The electricity mostly runs the
+compressor, a pump that squeezes the refrigerant so it can deliver that heat indoors. You can follow
+the whole trip in [[heat-pump|how heat pumps work]].
+
+So the energy adds up perfectly: **1 kWh** of electricity + **2.5 kWh** of heat from outside =
+**3.5 kWh** of heat for your home. No energy is created. It is only moved and added together.
+
+## Why does the COP change?
+
+Heat flows by itself only from warm to cold, like water flowing downhill. A heat pump makes heat go
+the other way: from the cold outdoors into your warm home. That is like carrying water uphill.
+
+<Analogy title="Carrying water uphill">
+Imagine carrying buckets of water up a hill. If the hill is low, each bucket is easy to carry. If the
+hill is high, each bucket takes much more effort. For a heat pump, the height of the hill is the
+difference between the outdoor temperature and the temperature at which it delivers heat.
+</Analogy>
+
+So the COP falls when the hill gets higher:
+
+- **It gets colder outside.** The heat pump must collect heat from colder air.
+- **The home needs hotter water.** Most heat pumps heat water that flows through radiators or
+  through pipes under the floor. The hotter this water must be, the higher the hill.
+
+This is why heat pumps love **underfloor heating**. Warm water flows through pipes under the whole
+floor. Because the floor is so big, water at about 30–35 °C is enough to warm the room. Small
+radiators often need water at 50 °C or more.
+
+<Figure caption="The bigger the gap between the outdoor air and the heating water, the higher the heat pump has to lift the heat, and the lower its COP." wide>
+  <TemperatureLift />
+</Figure>
+
+Here are typical values for a heat pump that takes heat from the outdoor air and heats water for
+underfloor heating:
+
+| Outdoor temperature | COP (roughly) | Heat from 1 kWh of electricity |
+|---|---|---|
+| +7 °C | about 4 | about 4 kWh |
+| −7 °C | about 2.5–3 | about 2.5–3 kWh |
+| Any weather (electric heater) | 1 | 1 kWh |
+
+Even on a frosty day, the heat pump still gives two to three times as much heat as an electric
+heater.
+
+<Figure caption="Make the weather colder, or switch to radiators, and see how much heat 1 kilowatt-hour of electricity brings into the house." wide>
+  <CopExplorer client:visible />
+</Figure>
+
+Because the COP changes with the weather, makers also give a **seasonal COP (SCOP)**: the average
+over a whole heating season.
+
+<GoDeeper title="The Carnot limit: the best COP possible">
+Even a perfect heat pump, with no losses at all, has a highest possible COP. It follows from the work
+of the French engineer Sadi Carnot (1824), so it is called the **Carnot limit**:
+
+$$
+\text{COP}_{\max} = \frac{T_{\text{hot}}}{T_{\text{hot}} - T_{\text{cold}}}
+$$
+
+- $T_{\text{hot}}$ is the temperature at which the heat is delivered, for example the water for the
+  floor.
+- $T_{\text{cold}}$ is the temperature from which the heat is collected, for example the outdoor air.
+- Both must be in **kelvin (K)**: the temperature in °C plus 273.15. The kelvin scale starts at
+  absolute zero (−273.15 °C), the coldest temperature possible.
+
+**Worked example:** water for underfloor heating at 35 °C, outdoor air at 0 °C.
+
+$$
+\begin{aligned}
+T_{\text{hot}} &= 35 + 273.15 = 308.15\ \text{K} \\
+T_{\text{cold}} &= 0 + 273.15 = 273.15\ \text{K} \\
+\text{COP}_{\max} &= \frac{308.15}{308.15 - 273.15} = \frac{308.15}{35} \approx 8.8
+\end{aligned}
+$$
+
+Real heat pumps reach roughly 40–55% of this limit, so about 3.5 to 4.8 here.
+
+Now try radiators that need water at 55 °C, with the same 0 °C outside:
+
+$$
+\text{COP}_{\max} = \frac{328.15}{328.15 - 273.15} = \frac{328.15}{55} \approx 6.0
+$$
+
+A real machine then reaches only about 2.4 to 3.3. The formula shows why: a bigger temperature
+difference at the bottom of the fraction makes the COP smaller.
+
+Real machines fall short of the limit for several reasons. The refrigerant has to be colder than the
+outdoor air and hotter than the water, so the real “hill” is higher than the one in the formula.
+Fans, pumps and friction use electricity too, and in winter the outdoor coil has to be defrosted
+from time to time.
+</GoDeeper>
+
+<GoDeeper title="Cooling: the EER">
+When an air conditioner or a heat pump cools a room, what matters is the heat it takes *out* of the
+room. That ratio is called the **energy efficiency ratio (EER)**:
+
+$$
+\text{EER} = \frac{\text{heat removed from the room}}{\text{electricity used}}
+$$
+
+In Europe the EER is a plain number, like the COP, and typical air conditioners reach about 3 to 4.
+Its seasonal average is called the SEER. In the USA the EER is given in other units (British thermal
+units per hour for each watt), so the numbers there look about 3.4 times bigger.
+
+For the same machine working between the same two temperatures, the heat it gives off equals the
+heat it collects plus the electricity it uses. So its heating COP is about 1 more than its cooling
+EER.
+</GoDeeper>
+
+<GoDeeper title="Why COP is not called an efficiency">
+An efficiency compares the useful energy that comes out with the energy that goes in, so it can
+never be more than 100%. A heat pump’s COP is above 1 because its output includes heat it did not
+make: heat collected from outside. That is why engineers call it a coefficient of performance, not
+an efficiency.
+</GoDeeper>
+
+<Remember>
+- COP = heat delivered ÷ electricity used.
+- An electric heater has a COP of 1. A heat pump often has a COP of 3 to 4.
+- The extra heat is not made from nothing: it is collected outside and moved indoors.
+- The COP falls when it gets colder outside or when the heating water must be hotter.
+- Underfloor heating helps a heat pump work well.
+</Remember>
+
+<Quiz
+  question="A heat pump uses 2 kWh of electricity and delivers 8 kWh of heat. What is its COP?"
+  options={["2", "4", "6", "16"]}
+  answer={1}
+  explanation="COP = heat delivered ÷ electricity used = 8 kWh ÷ 2 kWh = 4. The other 6 kWh of heat were collected from outside."
+/>
+
+<Quiz
+  question="Why does a heat pump’s COP fall on a very cold day?"
+  options={["Electricity is weaker in winter", "It has to lift heat from much colder air, which takes more electricity", "Cold air holds no heat at all"]}
+  answer={1}
+  explanation="The colder the outdoor air, the higher the hill the heat has to be carried up. Each kilowatt-hour of heat then needs more electricity."
+/>

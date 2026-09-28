@@ -1,0 +1,67 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'How high a heat pump has to lift heat',
+    desc: 'Two columns on the same temperature scale. Left, a mild day with underfloor heating: the heat pump lifts heat from outdoor air at plus 7 degrees Celsius to water at 35 degrees. The arrow is short, so the COP is higher. Right, a frosty day with radiators: it lifts heat from minus 7 degrees to water at 55 degrees. The arrow is much longer, so the COP is lower.',
+    mild: 'mild day',
+    frosty: 'frosty day',
+    floor: 'underfloor heating',
+    radiators: 'radiators',
+    outside: 'outside',
+    water: 'water',
+    higher: 'higher COP',
+    lower: 'lower COP',
+    plus7: '+7 °C',
+    minus7: '−7 °C',
+    t35: '35 °C',
+    t55: '55 °C',
+  },
+  sk: {
+    title: 'Ako vysoko musí tepelné čerpadlo teplo vyniesť',
+    desc: 'Dva stĺpce na tej istej teplotnej stupnici. Vľavo mierny deň s podlahovým kúrením: tepelné čerpadlo vynáša teplo z vonkajšieho vzduchu s teplotou plus 7 stupňov Celzia do vody s teplotou 35 stupňov. Šípka je krátka, a preto je vykurovací faktor vyšší. Vpravo mrazivý deň s radiátormi: vynáša teplo z mínus 7 stupňov do vody s teplotou 55 stupňov. Šípka je oveľa dlhšia, a preto je vykurovací faktor nižší.',
+    mild: 'mierny deň',
+    frosty: 'mrazivý deň',
+    floor: 'podlahové kúrenie',
+    radiators: 'radiátory',
+    outside: 'vonku',
+    water: 'voda',
+    higher: 'vyšší COP',
+    lower: 'nižší COP',
+    plus7: '+7\u00a0°C',
+    minus7: '−7\u00a0°C',
+    t35: '35\u00a0°C',
+    t55: '55\u00a0°C',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+// Shared scale: y = 262 − (t + 10) · 3, so +7 °C → 211, 35 °C → 127, −7 °C → 253, 55 °C → 67.
+---
+<Svg viewBox="0 0 400 300" title={s.title} desc={s.desc} maxWidth="30rem">
+  <text x="95" y="22" text-anchor="middle" class="d-label">{s.mild}</text>
+  <text x="95" y="44" text-anchor="middle">{s.floor}</text>
+  <rect x="70" y="123" width="50" height="8" rx="3" class="d-warm" />
+  <rect x="70" y="207" width="50" height="8" rx="3" class="d-cool" />
+  <path d="M95 203V137" class="d-line d-arrow-hot" />
+  <text x="128" y="133" class="d-label">{s.t35}</text>
+  <text x="128" y="217" class="d-label">{s.plus7}</text>
+  <text x="62" y="133" text-anchor="end">{s.water}</text>
+  <text x="62" y="217" text-anchor="end">{s.outside}</text>
+  <text x="95" y="290" text-anchor="middle" class="d-label">{s.higher}</text>
+
+  <text x="280" y="22" text-anchor="middle" class="d-label">{s.frosty}</text>
+  <text x="280" y="44" text-anchor="middle">{s.radiators}</text>
+  <rect x="255" y="63" width="50" height="8" rx="3" class="d-hot" />
+  <rect x="255" y="249" width="50" height="8" rx="3" class="d-cold" />
+  <path d="M280 245V77" class="d-line d-arrow-hot" />
+  <text x="313" y="73" class="d-label">{s.t55}</text>
+  <text x="313" y="259" class="d-label">{s.minus7}</text>
+  <text x="247" y="73" text-anchor="end">{s.water}</text>
+  <text x="247" y="259" text-anchor="end">{s.outside}</text>
+  <text x="280" y="290" text-anchor="middle" class="d-label">{s.lower}</text>
+</Svg>

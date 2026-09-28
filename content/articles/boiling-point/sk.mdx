@@ -1,8 +1,169 @@
 ---
-title: 'Prečo voda nevrie vždy pri rovnakej teplote?'
-term: 'bod varu'
+title: Prečo voda nevrie vždy pri rovnakej teplote?
+term: bod varu
 slug: bod-varu
-summary: 'Bod varu je teplota, pri ktorej kvapalina začne vrieť a meniť sa na plyn. Závisí od tlaku: vysoko v horách voda vrie pod 100 °C a v tlakovom hrnci nad 100 °C.'
+summary: Bod varu je teplota, pri ktorej kvapalina začne vrieť a meniť sa na plyn. Závisí od toho, ako silno na kvapalinu tlačí vzduch – vysoko v horách vrie voda pod 100 °C a v tlakovom hrnci nad 100 °C.
+keywords: [var, vrieť, teplota varu, tlak pary, tlak nasýtenej pary, tlakový hrniec, nadmorská výška, Mount Everest, Gerlachovský štít, bubliny, para]
 ---
 
-Pri hladine mora vrie voda pri 100 °C. Keď tlak znížiš, zovrie pri nižšej teplote; keď ho zvýšiš, musí sa najprv zohriať viac.
+import BoilingPot from './diagrams/BoilingPot.astro';
+import BoilingLadder from './diagrams/BoilingLadder.astro';
+import BoilingPoint from '@widgets/boiling-point/BoilingPoint.svelte';
+
+Pozri sa na hrniec s vodou na sporáku. Najprv sa na dne držia drobné bublinky. Potom sa nahor rútia
+veľké bubliny a voda sa prevaľuje a čľapká: vrie. Teplomer vo vode by ukázal asi 100&nbsp;stupňov Celzia
+(100&nbsp;°C).
+
+Voda však nevrie vždy pri 100&nbsp;°C. Vysoko v horách zovrie, keď je oveľa chladnejšia. V tlakovom
+hrnci sa musí najprv zohriať oveľa viac. Poďme zistiť prečo.
+
+## Čo sa deje, keď voda vrie?
+
+Voda je z drobných čiastočiek, ktoré sa neustále chvejú. Čím je voda teplejšia, tým rýchlejšie sa
+chvejú. Práve to nám prezrádza [[temperature|teplota]].
+
+Aj zo studenej vody unikne z hladiny do vzduchu zopár rýchlych čiastočiek. Stanú sa vodnou parou –
+neviditeľným plynom. Tomuto pomalému unikaniu hovoríme
+[[evaporation-and-condensation|vyparovanie]].
+
+Keď sa voda zohrieva, uniká čoraz viac čiastočiek. Nakoniec sa voda mení na paru aj hlboko v hrnci
+a para sa zhromažďuje do bublín. Bubliny stúpajú nahor a na hladine praskajú. Tomu hovoríme **var**
+a teplota, pri ktorej sa to deje, je **bod varu**.
+
+Drobné bublinky na začiatku sú niečo iné. Je to vzduch, ktorý bol vo vode rozpustený a teraz z nej
+uniká.
+
+Keď voda vrie, už sa ďalej nezohrieva. Silnejší oheň pod hrncom len urýchli var. Ďalšie
+[[heat|teplo]] sa spotrebuje na premenu vody na paru.
+
+## Prečo záleží na vzduchu?
+
+Vzduch sa môže zdať ako nič, ale má svoju váhu. Na všetkom okolo teba spočíva obrovský stĺpec
+vzduchu, vysoký mnoho kilometrov – aj na vode v hrnci. Tlačí na ňu zhora. Tomuto tlačeniu hovoríme
+[[pressure|tlak]] vzduchu.
+
+Bublina pary vo vode musí proti tomuto tlaku tlačiť naspäť. Ak tlačí príliš slabo, stlačí sa skôr,
+ako stihne narásť. Para tlačí rovnako silno ako vzduch, až keď je voda dosť horúca. Vtedy môžu
+bubliny rásť a voda vrie.
+
+<Analogy>
+Predstav si, že otváraš dvere a z druhej strany sa o ne opiera kamarát. Ak sa opiera zľahka, stačí
+malé zatlačenie. Ak sa opiera silno, musíš tlačiť oveľa viac. Vzduch je ten kamarát opretý o dvere
+a horúca para si ty, keď tlačíš.
+</Analogy>
+
+<Figure caption="Bublina vodnej pary môže narásť, len ak tlačí rovnako silno ako vzduch, ktorý tlačí na vodu zhora." wide>
+  <BoilingPot />
+</Figure>
+
+## Var vysoko v horách
+
+Čím vyššie vystúpiš, tým menej vzduchu je nad tebou. Vysoko v horách preto vzduch tlačí na vodu
+slabšie. Pare stačí menšia sila na vytvorenie bublín, a tak voda vrie pri nižšej teplote.
+
+Na vrchole Gerlachovského štítu, najvyššej hory Slovenska (2&nbsp;655&nbsp;m), vrie voda asi pri
+91&nbsp;°C. Na Mount Evereste, najvyššej hore sveta (8&nbsp;849&nbsp;m), vrie len asi pri 70&nbsp;°C.
+
+Voda s teplotou 70&nbsp;°C ťa ešte stále vážne popáli. Na poriadne uvarenie jedla však nie je dosť
+horúca, takže cestoviny či vajcia sa varia oveľa dlhšie. Ľudia, ktorí žijú vysoko v horách, aj
+horolezci preto často varia v tlakovom hrnci.
+
+## Tlakový hrniec
+
+Tlakový hrniec funguje opačne. Jeho pokrievka tesne dolieha, takže para nemôže uniknúť. Para sa vo
+vnútri hromadí a tlačí na vodu – asi dvakrát silnejšie ako vzduch vonku.
+
+Voda sa teraz musí zohriať asi na 120&nbsp;°C, kým začne vrieť. Horúcejšia voda uvarí jedlo
+rýchlejšie, takže fazuľa, polievka či guláš sú hotové oveľa skôr.
+
+<Figure caption="Čím slabšie vzduch tlačí na vodu, tým nižší je jej bod varu. Čím silnejšie tlačí, tým je bod varu vyšší." wide>
+  <BoilingLadder />
+</Figure>
+
+<Safety>
+Tlakový hrniec je plný pary, ktorá je horúcejšia ako vriaca voda, a silno tlačí na pokrievku.
+Používať a otvárať ho smie len dospelý, a to až po vypustení tlaku. Drž sa ďalej aj od hrncov
+s vriacou vodou: para aj horúca voda vážne popália.
+</Safety>
+
+## Každá kvapalina má svoj bod varu
+
+Voda nie je jediná kvapalina, ktorá vrie. Každá kvapalina má svoj vlastný bod varu, aj keď na ňu
+tlačí rovnaký vzduch.
+
+| Kvapalina | Vrie pri (bežnom tlaku vzduchu) |
+|---|---|
+| Voda | 100&nbsp;°C |
+| Lieh (etanol) | asi 78&nbsp;°C |
+| Propán, plyn do kempingových varičov a grilov | asi −42&nbsp;°C |
+| Tekutý dusík | asi −196&nbsp;°C |
+
+Niektoré kvapaliny vrú hlboko pod 0&nbsp;°C, teda pod teplotou, pri ktorej zamŕza voda. Tekutý
+propán vrie aj v mrazivý zimný deň a nasáva pritom teplo zo studeného vzduchu okolo seba.
+
+Takýmto kvapalinám hovoríme [[refrigerant|chladivá]]. Prúdia v trubkách chladničiek
+a [[heat-pump|tepelných čerpadiel]]. Keď sa chladivo silno stlačí, jeho bod varu stúpne – presne ako
+pri vode v tlakovom hrnci. Vďaka tomu môže chladivo v tepelnom čerpadle vrieť, keď je studené,
+a znova skvapalnieť, keď je horúce.
+
+<Figure caption="Meň tlak vzduchu alebo skoč na známe miesto. Sleduj, kedy voda začne vrieť – a pri akej nízkej teplote vrie chladivo propán." wide>
+  <BoilingPoint client:visible />
+</Figure>
+
+<FunFact>
+Vedci vedia prinútiť vodu vrieť pri izbovej teplote. Z pevnej sklenenej nádoby s trochou vody
+odčerpajú takmer všetok vzduch. Voda začne bublať, hoci vôbec nie je horúca.
+</FunFact>
+
+<GoDeeper title="Tlak pary: kedy presne kvapalina vrie?">
+Z kvapaliny neustále unikajú čiastočky a niektoré sa do nej zasa vracajú. V uzavretej nádobe sa nad
+kvapalinou hromadí para, až kým sa nevracia toľko čiastočiek, koľko ich uniká. Tlak tejto pary sa
+volá **tlak nasýtenej pary**. Keď sa kvapalina zohrieva, tento tlak veľmi rýchlo rastie.
+
+Kvapalina vrie, keď tlak jej nasýtenej pary dosiahne tlak okolia. Vtedy môžu vo vnútri kvapaliny
+vznikať bubliny čistej pary a vydržať.
+
+| Teplota vody | Tlak nasýtenej vodnej pary | Kde voda pri tejto teplote vrie |
+|---|---|---|
+| 20&nbsp;°C | asi 2,3&nbsp;kPa | v nádobe, z ktorej odčerpali takmer všetok vzduch |
+| 70&nbsp;°C | asi 31&nbsp;kPa | približne na vrchole Mount Everestu |
+| 91&nbsp;°C | asi 73&nbsp;kPa | na vrchole Gerlachovského štítu |
+| 100&nbsp;°C | 101,3&nbsp;kPa | pri hladine mora |
+| 120&nbsp;°C | asi 200&nbsp;kPa | v tlakovom hrnci |
+
+Kilopascal (kPa) je jednotka tlaku. Bežný tlak vzduchu pri hladine mora je asi 101&nbsp;kPa.
+
+Presnejšie povedané, bublina na dne hrnca musí tlačiť aj proti vode nad sebou a proti sile, ktorá
+drží povrch bubliny pohromade (povrchové napätie). Bubliny preto vznikajú na drobných škrabancoch
+a zrnkách nečistôt na dne hrnca.
+</GoDeeper>
+
+<GoDeeper title="Kde obrázok s dverami nesedí">
+- Vzduch netlačí na vodu len zhora. Tlak pôsobí všetkými smermi a voda ho prenáša na každú bublinu
+  vo vnútri, aj na dne hrnca.
+- Veľmi čistá voda vo veľmi hladkej šálke sa môže zohriať nad bod varu a nezovrieť. Môže sa to stať
+  v mikrovlnnej rúre. Malé zatrasenie potom spôsobí, že naraz prudko zovrie, a môže oparíť. Vodu
+  preto v mikrovlnke zohrievaj len tak dlho, ako treba, a vyberaj ju opatrne.
+</GoDeeper>
+
+<Remember>
+- Pri vare vznikajú bubliny pary v celej kvapaline, nielen na jej hladine.
+- Kvapalina vrie, keď jej para tlačí rovnako silno ako vzduch, ktorý na ňu tlačí.
+- Vysoko v horách tlačí vzduch slabšie, a tak voda vrie pod 100&nbsp;°C.
+- V tlakovom hrnci tlačí para silnejšie, a tak voda vrie nad 100&nbsp;°C.
+- Chladivá vrú pod 0&nbsp;°C, a tak dokážu nasávať teplo aj zo studeného vzduchu.
+</Remember>
+
+<Quiz
+  question="Prečo sa cestoviny vysoko v horách varia dlhšie?"
+  options={["Riedky vzduch neprenáša teplo", "Voda tam vrie pri nižšej teplote, takže nie je taká horúca", "Horská voda neobsahuje soľ"]}
+  answer={1}
+  explanation="Vysoko v horách vzduch tlačí na vodu slabšie, a tak vrie pri nižšej teplote. Chladnejšia voda varí jedlo pomalšie."
+/>
+
+<Quiz
+  question="Čo je vo veľkých bublinách vo vriacej vode?"
+  options={["Vzduch", "Vodná para", "Nič, sú prázdne"]}
+  answer={1}
+  explanation="Veľké bubliny tvorí voda, ktorá sa zmenila na plyn – vodná para. Len prvé drobné bublinky sú vzduch, ktorý bol vo vode rozpustený."
+/>
