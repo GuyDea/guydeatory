@@ -1,0 +1,51 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'A kettle and an LED bulb using the same energy',
+    desc: 'A 2,000-watt kettle running for 3 minutes and a 10-watt LED bulb shining for 10 hours. Arrows from both lead to the same result: 0.1 kilowatt-hours of energy.',
+    kettlePower: '2,000 W',
+    kettleTime: '× 3 minutes',
+    bulbPower: '10 W',
+    bulbTime: '× 10 hours',
+    same: 'same energy',
+    energy: '0.1 kWh',
+  },
+  sk: {
+    title: 'Kanvica a LED žiarovka spotrebujú rovnakú energiu',
+    desc: 'Kanvica s výkonom 2 000 wattov, ktorá beží 3 minúty, a LED žiarovka s výkonom 10 wattov, ktorá svieti 10 hodín. Šípky od oboch vedú k rovnakému výsledku: 0,1 kilowatthodiny energie.',
+    kettlePower: '2 000 W',
+    kettleTime: '× 3 minúty',
+    bulbPower: '10 W',
+    bulbTime: '× 10 hodín',
+    same: 'rovnaká energia',
+    energy: '0,1 kWh',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 222" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M30 92L38 44H78L86 92Z" class="d-box" />
+  <rect x="50" y="37" width="16" height="7" rx="2" class="d-box" />
+  <path d="M80 54C102 54 102 86 84 86" class="d-line" style="stroke-width: 5" />
+  <path d="M37 60L17 46" class="d-line" style="stroke-width: 6" />
+  <rect x="24" y="92" width="68" height="8" rx="3" class="d-box-alt" />
+  <path d="M14 36q-5-6 0-12t0-12M26 34q-5-6 0-12t0-12" class="d-line" style="stroke: var(--d-muted)" />
+  <text x="110" y="58" class="d-label">{s.kettlePower}</text>
+  <text x="110" y="84">{s.kettleTime}</text>
+  <circle cx="54" cy="150" r="22" class="d-glow" />
+  <rect x="44" y="170" width="20" height="18" rx="3" class="d-box" />
+  <path d="M54 116v-10M24 150H14M84 150h10M33 129l-7-7M75 129l7-7" class="d-line" style="stroke: var(--d-warm); stroke-width: 3" />
+  <text x="110" y="156" class="d-label">{s.bulbPower}</text>
+  <text x="110" y="182">{s.bulbTime}</text>
+  <path d="M232 66L274 100" class="d-line d-arrow" />
+  <path d="M232 168L274 134" class="d-line d-arrow" />
+  <text x="334" y="84" text-anchor="middle" class="d-small d-muted">{s.same}</text>
+  <rect x="282" y="94" width="104" height="46" rx="8" class="d-box" />
+  <text x="334" y="124" text-anchor="middle" class="d-label">{s.energy}</text>
+</Svg>

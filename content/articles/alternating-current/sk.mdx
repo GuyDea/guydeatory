@@ -2,7 +2,196 @@
 title: 'Čo je striedavý prúd?'
 term: 'striedavý prúd'
 slug: striedavy-prud
-summary: 'Striedavý prúd (AC) neustále mení smer: v európskych domácnostiach sa elektróny kývu sem a tam 50-krát za sekundu. Batérie dávajú jednosmerný prúd (DC), ktorý tečie len jedným smerom.'
+summary: 'Striedavý prúd (AC) neustále mení smer: v európskych domácnostiach sa elektróny kývajú tam a späť 50-krát za sekundu. Batérie dávajú jednosmerný prúd (DC), ktorý tečie len jedným smerom.'
+keywords: [AC, DC, jednosmerný prúd, striedavý prúd, sieťové napätie, 230 V, 50 Hz, frekvencia, transformátor, vojna prúdov, Tesla, Edison]
 ---
 
-Elektrina z batérie tečie jedným smerom. Elektrina zo zásuvky neustále mení smer, tam a späť, mnohokrát za sekundu.
+import DcAc from './diagrams/DcAc.astro';
+import PowerGrid from './diagrams/PowerGrid.astro';
+import SineWave from './diagrams/SineWave.astro';
+import AcDc from '@widgets/ac-dc/AcDc.svelte';
+
+Autíčko na diaľkové ovládanie jazdí na batérie. Chladnička beží na elektrinu zo zásuvky. Obe
+používajú [[electric-current|elektrický prúd]], no medzi nimi je prekvapivý rozdiel.
+
+Prúd z batérie tečie vždy rovnakým smerom. Prúd zo zásuvky sa stále obracia!
+
+## Jedným smerom: jednosmerný prúd
+
+Batéria má mínusový koniec (−) a plusový koniec (+). Tlačí [[electron|elektróny]] von z mínusového
+konca, cez [[electric-circuit|obvod]] a späť do plusového konca. Idú stále rovnakým smerom.
+
+Prúd, ktorý tečie stále jedným smerom, sa volá **jednosmerný prúd**, skrátene **DC**. Jednosmerný
+prúd vyrábajú batérie a solárne panely.
+
+## Tam a späť: striedavý prúd
+
+Elektrina v zásuvke funguje inak. Jej tlačenie stále mení stranu. Najprv tlačí elektróny jedným
+smerom, potom druhým, potom znova späť, stále dokola.
+
+Elektróny v drôtoch preto necestujú dookola obvodom. Kývajú sa tam a späť na mieste, o menej, než je
+hrúbka vlasu. Prúd, ktorý takto neustále mení smer, sa volá **striedavý prúd**, skrátene **AC**.
+
+<Figure caption="Pri jednosmernom prúde sa elektróny posúvajú jedným smerom. Pri striedavom prúde sa kývajú tam a späť, takže prúd neustále mení smer." wide>
+  <DcAc />
+</Figure>
+
+<Figure caption="Prepínaj medzi jednosmerným a striedavým prúdom a sleduj elektróny a graf. Kmitanie je poriadne spomalené, aby ho bolo vidieť." wide>
+  <AcDc client:visible />
+</Figure>
+
+<Analogy title="Ako píla">
+Predstav si pílu, ktorá reže drevo. Pohybuje sa len tam a späť a nikam neodchádza, a predsa svoju
+prácu urobí. So striedavým prúdom je to podobné. Elektróny sa len kývajú tam a späť, no kanvica sa
+aj tak zohreje a lampa svieti.
+</Analogy>
+
+Kanvica sa zohreje pri oboch druhoch prúdu. Jej elektróny narážajú do atómov, nech sa pohybujú
+ktorýmkoľvek smerom, a každý náraz vytvára teplo. Presne to robí [[electrical-resistance|odpor]].
+
+## Čo vychádza zo zásuvky?
+
+V Európe je tlačenie v zásuvke, teda [[voltage|napätie]], asi 230&nbsp;voltov. Kýve sa tam a späť
+50-krát za sekundu. Hovoríme, že má **frekvenciu** 50&nbsp;**hertzov** (Hz). Jeden hertz znamená raz
+za sekundu.
+
+Iné krajiny používajú iné čísla. V Severnej Amerike dávajú zásuvky 120&nbsp;voltov pri
+60&nbsp;hertzoch. Mnohé nabíjačky zvládnu oboje, no niektoré spotrebiče fungujú len v krajinách, pre
+ktoré ich vyrobili.
+
+<FunFact>
+Japonsko používa oboje! Východné Japonsko s Tokiom má 50&nbsp;hertzov, západné Japonsko s Osakou
+60&nbsp;hertzov. V 90. rokoch 19. storočia kúpilo Tokio generátory od nemeckej firmy a Osaka od
+americkej. Tento rozdiel pretrváva dodnes.
+</FunFact>
+
+<Safety>
+Elektrina v zásuvke môže zabiť. Striedavý prúd navyše dokáže stiahnuť svaly. Človek, ktorý chytí
+drôt pod prúdom, sa ho potom možno nedokáže pustiť.
+
+Nikdy nič nestrkaj do zásuvky. Nikdy neotváraj nabíjačku ani spotrebič, kým je zapojený, a nikdy sa
+nedotýkaj poškodeného kábla. Drž sa ďaleko od elektrického vedenia: nikdy pri ňom nepúšťaj šarkana
+ani neliez na stromy.
+</Safety>
+
+## Prečo používame striedavý prúd?
+
+Elektrárne sú často ďaleko od miest, ktoré elektrinu potrebujú. Elektrina tam putuje dlhými
+elektrickými vedeniami. Cestou drôty časť energie premárnia na teplo, pretože majú odpor.
+
+Koľko energie sa premárni, závisí od prúdu. Veľký prúd drôty veľmi zohrieva, malý prúd len trošku.
+
+[[electric-power|Výkon]] je tlačenie krát tok. Inžinieri preto posielajú ten istý výkon s obrovským
+tlačením a malým tokom: so stovkami tisíc voltov. Cestou sa tak premárni oveľa menej energie.
+
+Také vysoké napätie by však bolo doma smrteľné. Preto sa musí znova znížiť a so striedavým prúdom je
+to ľahké.
+
+Stroj, ktorý sa volá **transformátor**, dokáže napätie striedavého prúdu zvýšiť alebo znížiť. Nemá
+žiadne pohyblivé časti, len dve cievky drôtu navinuté na kuse železa. S jednosmerným prúdom
+transformátor nefunguje.
+
+<Figure caption="Transformátor pri elektrárni zvýši napätie na dlhú cestu. Blízko domov ho iné transformátory postupne znížia na 230&nbsp;voltov." wide>
+  <PowerGrid />
+</Figure>
+
+## Nabíjačky menia AC na DC
+
+Telefóny, notebooky a väčšina ďalších prístrojov potrebujú malý, stály jednosmerný prúd. Ich
+nabíjačky preto robia dve veci. Znížia napätie z 230&nbsp;voltov na niekoľko voltov, napríklad na
+5&nbsp;voltov pre mnohé telefóny. A zmenia striedavý prúd na jednosmerný.
+
+Televízory a počítače majú podobné časti zabudované vo vnútri.
+
+## Vojna prúdov
+
+Asi pred 140&nbsp;rokmi sa ľudia vášnivo hádali, ktorý druh prúdu používať. Thomas Edison postavil v
+roku 1882 v New Yorku jednu z prvých elektrických sietí. Používala jednosmerný prúd, ktorý sa dostal
+len do domov vzdialených od elektrárne menej ako asi 1,5&nbsp;kilometra.
+
+Vynálezca Nikola Tesla a podnikateľ George Westinghouse naopak stavili na striedavý prúd. Vďaka
+transformátorom sa dostal oveľa ďalej. Edison varoval, že vysoké napätie striedavého prúdu je
+nebezpečné.
+
+V roku 1893 rozžiaril striedavý prúd obrovskú svetovú výstavu v Chicagu. Čoskoro túto „vojnu prúdov“
+vyhral. Celý príbeh si môžeš prečítať v článku o [[history-of-electricity|histórii elektriny]].
+
+<GoDeeper title="Tvar striedavého prúdu">
+V európskej zásuvke napätie neskáče medzi dvoma hodnotami. Plynulo stúpa a klesá podľa krivky, ktorá
+sa volá **sínusoida**.
+
+<Figure caption="Napätie v európskej zásuvke v čase. Kýve sa medzi približne +325 a −325&nbsp;voltmi a jeden celý kmit trvá 20&nbsp;milisekúnd.">
+  <SineWave />
+</Figure>
+
+- Jeden celý kmit sa volá **perióda**. Pri 50&nbsp;Hz trvá jedna perióda $\frac{1}{50}$ sekundy,
+  teda 20&nbsp;milisekúnd. Prúd počas každej periódy dvakrát zmení smer, teda 100-krát za sekundu.
+- Napätie v každom okamihu je $u(t) = U_\text{m} \cdot \sin(2\pi f t)$. Tu $u(t)$ je napätie v čase
+  $t$ (v sekundách), $U_\text{m}$ je najväčšie napätie (amplitúda) a $f$ je frekvencia (50&nbsp;Hz).
+- Prečo hovoríme 230&nbsp;voltov, keď je vrchol asi 325? Hodnota 230&nbsp;V je istý druh priemeru,
+  ktorý sa volá **efektívna hodnota** (anglicky RMS). Striedavé napätie 230&nbsp;V zohreje kanvicu
+  presne tak ako stále jednosmerné napätie 230&nbsp;V. Pri sínusoide je vrchol $\sqrt{2}$-krát, teda
+  asi 1,41-krát väčší: $230\ \text{V} \cdot \sqrt{2} \doteq 325\ \text{V}$.
+</GoDeeper>
+
+<GoDeeper title="Ako funguje transformátor">
+Transformátor má dve cievky drôtu navinuté na tom istom železnom jadre. Striedavý prúd v prvej
+cievke vytvára magnetické pole, ktoré sa neustále zväčšuje, zmenšuje a obracia. Toto meniace sa pole
+vytvára napätie v druhej cievke. Tento jav, elektromagnetickú indukciu, objavil Michael Faraday v
+roku 1831. Napätia sú v rovnakom pomere ako počty závitov:
+
+$$
+\frac{U_2}{U_1} = \frac{N_2}{N_1}
+$$
+
+Tu $U_1$ a $U_2$ sú napätia na prvej a druhej cievke a $N_1$ a $N_2$ sú ich počty závitov. Stály
+jednosmerný prúd vytvára stále pole, ktoré nevytvorí žiadne napätie. Výkon zostáva takmer rovnaký:
+keď napätie stúpne, prúd klesne.
+</GoDeeper>
+
+<GoDeeper title="Koľko ušetrí vysoké napätie?">
+Výkon, ktorý sa vo vedení premárni na teplo, je $P_\text{straty} = R \cdot I^2$, kde $I$ je prúd a
+$R$ je odpor vedenia (pozri [[electric-power|elektrický výkon]]). Predstav si, že posielaš jeden
+milión wattov (1&nbsp;MW):
+
+- pri 10&nbsp;000&nbsp;V je prúd 1&nbsp;000&nbsp;000 : 10&nbsp;000 = 100&nbsp;A;
+- pri 400&nbsp;000&nbsp;V je prúd 1&nbsp;000&nbsp;000 : 400&nbsp;000 = 2,5&nbsp;A.
+
+Prúd je 40-krát menší, takže teplo premárnené v tom istom drôte je až 1&nbsp;600-krát menšie (lebo
+$40^2 = 1\,600$).
+
+Jednosmerný prúd sa však vracia. Niektoré veľmi dlhé vedenia a podmorské káble používajú
+vysokonapäťový jednosmerný prúd (HVDC). Moderná elektronika už dokáže meniť napätie aj pri
+jednosmernom prúde a na veľmi dlhé vzdialenosti, najmä pod morom, funguje jednosmerný prúd lepšie
+ako striedavý.
+</GoDeeper>
+
+<GoDeeper title="Kde obrázok s pílou nesedí">
+Píla dobre ukazuje kývanie, no nie to, odkiaľ sa berie energia. Elektróny v kanvici nikdy neprišli z
+elektrárne: zostávajú v drôte kanvice a len sa kývajú tam a späť. Po vedení sa šíri tlačenie, a to
+takmer rýchlosťou svetla. Energia tak tečie jedným smerom, z elektrárne do kanvice, hoci elektróny
+nikam nejdú.
+</GoDeeper>
+
+<Remember>
+- Jednosmerný prúd (DC) tečie jedným smerom. Vyrábajú ho batérie a solárne panely.
+- Striedavý prúd (AC) neustále mení smer. Európske zásuvky dávajú asi 230&nbsp;voltov pri
+  50&nbsp;hertzoch.
+- Transformátory dokážu ľahko zvýšiť aj znížiť napätie striedavého prúdu.
+- Vysoké napätie premárni v dlhých vedeniach menej energie.
+- Nabíjačky menia striedavý prúd zo zásuvky na jednosmerný, ktorý potrebujú telefóny.
+</Remember>
+
+<Quiz
+  question="Prečo elektrické vedenia prenášajú elektrinu pri veľmi vysokom napätí?"
+  options={["Vysoké napätie tečie rýchlejšie", "Cestou sa premárni menej energie na teplo", "Vtáky nemôžu sedieť na vedení s vysokým napätím"]}
+  answer={1}
+  explanation="Pri veľkom tlačení stačí na ten istý výkon malý prúd. Malý prúd premárni oveľa menej energie na zohrievanie drôtov."
+/>
+
+<Quiz
+  question="Koľkokrát za sekundu sa tlačenie v európskej zásuvke kývne tam a späť?"
+  options={["Raz", "50-krát", "230-krát"]}
+  answer={1}
+  explanation="Európske zásuvky majú frekvenciu 50&nbsp;hertzov: 50 kmitov tam a späť za sekundu. Číslo 230 je napätie, nie frekvencia."
+/>

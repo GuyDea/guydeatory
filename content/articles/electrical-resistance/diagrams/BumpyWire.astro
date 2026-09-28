@@ -1,0 +1,47 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Electrons bumping into atoms inside a wire',
+    desc: 'A close-up of the metal inside a wire. Atoms sit in neat rows and jiggle. An electron zigzags between them from left to right, bumping into atom after atom. Wavy arrows show heat rising from the wire.',
+    atom: 'atom',
+    electron: 'electron',
+    heat: 'heat',
+  },
+  sk: {
+    title: 'Elektróny narážajú do atómov vo vnútri drôtu',
+    desc: 'Pohľad zblízka na kov vo vnútri drôtu. Atómy sedia v úhľadných radoch a chvejú sa. Elektrón kľučkuje pomedzi ne zľava doprava a naráža do jedného atómu za druhým. Vlnité šípky ukazujú teplo, ktoré z drôtu stúpa.',
+    atom: 'atóm',
+    electron: 'elektrón',
+    heat: 'teplo',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const outer = [42, 97, 152, 207, 262, 317, 372];
+const inner = [69, 124, 179, 234, 289, 344];
+const atoms = [...outer.map((x) => [x, 83]), ...inner.map((x) => [x, 133]), ...outer.map((x) => [x, 183])];
+const jiggling = [[97, 83], [262, 83], [179, 133], [344, 133], [152, 183], [317, 183]];
+const electrons = [[28, 108], [138, 108], [248, 108], [358, 108], [345, 158]];
+---
+<Svg viewBox="0 0 400 252" title={s.title} desc={s.desc} maxWidth="30rem">
+  <rect x="10" y="58" width="380" height="150" rx="14" class="d-box-alt" />
+  {atoms.map(([x, y]) => <circle cx={x} cy={y} r="14" class="d-positive" />)}
+  {
+    jiggling.map(([x, y]) => (
+      <path d={`M${x - 20} ${y - 7}q-4 7 0 14M${x + 20} ${y - 7}q4 7 0 14`} class="d-line" style="stroke: var(--d-muted)" />
+    ))
+  }
+  <path d="M12 158L42 168L69 148L97 168L124 148L152 168L179 148L207 168L234 148L262 168L281 159" class="d-line" style="stroke: var(--d-electron); stroke-width: 2.5" stroke-dasharray="7 4" />
+  <circle cx="289" cy="157" r="7" class="d-electron" />
+  {electrons.map(([x, y]) => <circle cx={x} cy={y} r="7" class="d-electron" />)}
+  {[170, 205, 240].map((x) => <path d={`M${x} 54q-7-8 0-16t0-16`} class="d-line d-arrow-hot" />)}
+  <text x="262" y="40" class="d-label">{s.heat}</text>
+  <path d="M97 199V222M289 166V222" class="d-line" />
+  <text x="97" y="243" text-anchor="middle" class="d-label">{s.atom}</text>
+  <text x="289" y="243" text-anchor="middle" class="d-label">{s.electron}</text>
+</Svg>

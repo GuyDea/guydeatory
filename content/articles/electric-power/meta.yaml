@@ -1,5 +1,18 @@
 topics: [electricity, energy]
 labels: [high-level, calculation]
-status: stub
+prerequisites: [energy, voltage, electric-current]
+related: [ohms-law, alternating-current, electrical-resistance, conservation-of-energy, heat-pump]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Electric power — Wikipedia
+    url: https://en.wikipedia.org/wiki/Electric_power
+  - title: Watt — Wikipedia
+    url: https://en.wikipedia.org/wiki/Watt
+  - title: Kilowatt-hour — Wikipedia
+    url: https://en.wikipedia.org/wiki/Kilowatt-hour
+  - title: Horsepower — Wikipedia
+    url: https://en.wikipedia.org/wiki/Horsepower
+  - title: Estimating appliance and home electronic energy use — U.S. Department of Energy
+    url: https://www.energy.gov/energysaver/estimating-appliance-and-home-electronic-energy-use

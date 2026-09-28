@@ -1,0 +1,41 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Current against voltage for a wire, a bulb and an LED',
+    desc: 'A graph with voltage along the bottom and current up the side. The wire gives a straight line from zero. The bulb filament gives a curve that rises quickly at first and then bends over. The LED stays near zero current and then shoots up steeply.',
+    voltage: 'voltage',
+    current: 'current',
+    wire: 'wire',
+    bulb: 'bulb',
+    led: 'LED',
+  },
+  sk: {
+    title: 'Prúd v závislosti od napätia pre drôt, žiarovku a LED',
+    desc: 'Graf s napätím na vodorovnej osi a prúdom na zvislej osi. Drôt dáva priamku, ktorá vychádza z nuly. Vlákno žiarovky dáva krivku, ktorá najprv rýchlo stúpa a potom sa ohýba. LED dióda má takmer nulový prúd a potom prúd prudko vyskočí.',
+    voltage: 'napätie',
+    current: 'prúd',
+    wire: 'drôt',
+    bulb: 'žiarovka',
+    led: 'LED',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 262" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M50 222H378" class="d-line d-arrow" />
+  <path d="M50 222V16" class="d-line d-arrow" />
+  <text x="376" y="250" text-anchor="end" class="d-small">{s.voltage}</text>
+  <text x="62" y="26" class="d-small">{s.current}</text>
+  <path d="M50 222L190 44" class="d-line" style="stroke: var(--d-electron); stroke-width: 3.5" />
+  <text x="198" y="48" class="d-label">{s.wire}</text>
+  <path d="M50 222C120 165 220 122 368 104" class="d-line" style="stroke: var(--d-warm); stroke-width: 3.5" />
+  <text x="388" y="92" text-anchor="end" class="d-label">{s.bulb}</text>
+  <path d="M50 220L200 217C236 214 252 178 264 40" class="d-line" style="stroke: var(--d-accent); stroke-width: 3.5" />
+  <text x="274" y="46" class="d-label">{s.led}</text>
+</Svg>

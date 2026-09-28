@@ -1,0 +1,40 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'A 12-volt battery and a 6-ohm coil in a circuit',
+    desc: 'A battery of 12 volts is connected by wires to a coil of wire with a resistance of 6 ohms. Electrons flow around the loop, and the current is 2 amps.',
+    current: 'current',
+  },
+  sk: {
+    title: 'Batéria s napätím 12 voltov a špirála s odporom 6 ohmov v obvode',
+    desc: 'Batéria s napätím 12 voltov je drôtmi spojená so špirálou z drôtu, ktorá má odpor 6 ohmov. Elektróny tečú dookola obvodom a prúd je 2 ampéry.',
+    current: 'prúd',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const electrons = [
+  [60, 160], [60, 120], [60, 80], [105, 50], [140, 50], [260, 50], [295, 50], [340, 80], [340, 120], [340, 160], [110, 195], [290, 195],
+];
+---
+<Svg viewBox="0 0 400 250" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M160 195H60V50H160M240 50H340V195H240" class="d-wire" />
+  <path d="M160 50l6-14l10 28l10-28l10 28l10-28l10 28l10-28l8 14h6" class="d-line" style="stroke: var(--d-hot); stroke-width: 4" />
+  <text x="200" y="24" text-anchor="middle" class="d-label" style="font-size: 22px">6 Ω</text>
+  <rect x="160" y="175" width="80" height="40" rx="7" class="d-box" />
+  <rect x="240" y="186" width="7" height="18" rx="2" class="d-box" />
+  <text x="178" y="203" class="d-label">−</text>
+  <text x="212" y="203" class="d-label">+</text>
+  <text x="200" y="243" text-anchor="middle" class="d-label" style="font-size: 22px">12 V</text>
+  {electrons.map(([x, y]) => <circle cx={x} cy={y} r="6" class="d-electron" />)}
+  <path d="M82 175V125" class="d-line d-arrow-electron" />
+  <path d="M95 72H145" class="d-line d-arrow-electron" />
+  <path d="M318 90V140" class="d-line d-arrow-electron" />
+  <text x="200" y="108" text-anchor="middle" class="d-small d-muted">{s.current}</text>
+  <text x="200" y="142" text-anchor="middle" class="d-label" style="font-size: 32px">2 A</text>
+</Svg>

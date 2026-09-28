@@ -1,0 +1,43 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'A short, thick wire and a long, thin wire',
+    desc: 'At the top, a short, thick wire lets many electrons through side by side: low resistance. At the bottom, a long, thin wire winds back and forth, and only a few electrons squeeze through: high resistance.',
+    shortThick: 'short and thick',
+    low: 'low resistance',
+    longThin: 'long and thin',
+    high: 'high resistance',
+  },
+  sk: {
+    title: 'Krátky hrubý drôt a dlhý tenký drôt',
+    desc: 'Hore krátky hrubý drôt púšťa veľa elektrónov vedľa seba: malý odpor. Dole sa dlhý tenký drôt kľukatí sem a tam a pretlačí sa ním len zopár elektrónov: veľký odpor.',
+    shortThick: 'krátky a hrubý',
+    low: 'malý odpor',
+    longThin: 'dlhý a tenký',
+    high: 'veľký odpor',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const many = [55, 80, 105, 130, 155].flatMap((x) => [[x, 47], [x + 12, 65]]);
+const thinPath = 'M20 130H200V162H20V194H206';
+const few = [[70, 130], [160, 162], [120, 194]];
+---
+<Svg viewBox="0 0 400 214" title={s.title} desc={s.desc} maxWidth="30rem">
+  <rect x="28" y="30" width="160" height="52" rx="26" class="d-box-alt" />
+  {many.map(([x, y]) => <circle cx={x} cy={y} r="6" class="d-electron" />)}
+  <path d="M196 56H236" class="d-line d-arrow-electron" style="stroke-width: 5" />
+  <text x="250" y="50">{s.shortThick}</text>
+  <text x="250" y="75" class="d-label">{s.low}</text>
+  <path d={thinPath} fill="none" stroke="var(--d-ink)" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" />
+  <path d={thinPath} fill="none" stroke="var(--d-fill-alt)" stroke-width="8" stroke-linejoin="round" stroke-linecap="round" />
+  {few.map(([x, y]) => <circle cx={x} cy={y} r="4" class="d-electron" />)}
+  <path d="M214 194H232" class="d-line d-arrow-electron" />
+  <text x="250" y="156">{s.longThin}</text>
+  <text x="250" y="181" class="d-label">{s.high}</text>
+</Svg>

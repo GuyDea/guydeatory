@@ -2,7 +2,192 @@
 title: 'What is Ohm’s law?'
 term: 'Ohm’s law'
 slug: ohms-law
-summary: 'Ohm’s law links voltage, current and resistance: current equals voltage divided by resistance. Push harder and more current flows; make the path harder and less flows.'
+summary: 'Ohm’s law is the rule that connects voltage, current and resistance: current equals voltage divided by resistance. Push harder and more current flows; make the path harder and less flows.'
+keywords: [Ohm, Georg Ohm, Ohm’s law triangle, I = V/R, V = IR, R = V/I, voltage current resistance formula]
 ---
 
-Ohm’s law is a simple rule that tells you how much current will flow if you know the push (voltage) and how hard the path is (resistance).
+import CircuitNumbers from './diagrams/CircuitNumbers.astro';
+import OhmTriangle from './diagrams/OhmTriangle.astro';
+import CurrentCurves from './diagrams/CurrentCurves.astro';
+import OhmsLawPlayground from '@widgets/ohms-law/OhmsLawPlayground.svelte';
+
+Before you switch on a lamp, can you tell how much electricity will flow through it? You can, with
+one simple rule. It is called **Ohm’s law**, and it is one of the most useful rules about
+electricity.
+
+## Three things to know first
+
+Ohm’s law connects three ideas you may have met already:
+
+- **[[voltage|Voltage]]** is the push that makes electricity flow. It is measured in volts (V).
+- **[[electric-current|Current]]** is how much electricity flows past each second. It is measured in
+  amperes, or amps (A).
+- **[[electrical-resistance|Resistance]]** is how much something holds the flow back. It is measured
+  in ohms (Ω).
+
+In formulas, each of them gets a letter: **V** for voltage, **I** for current and **R** for
+resistance. In Slovakia, Germany and some other countries, voltage is written with the letter **U**
+instead.
+
+<FunFact>
+Why does current get the letter I? It comes from French. André-Marie Ampère, the scientist the amp
+is named after, wrote about the *intensité du courant*: the strength of the current.
+</FunFact>
+
+## The rule
+
+Here is Ohm’s law:
+
+$$
+I = \frac{V}{R}
+$$
+
+In words: the current ($I$) equals the voltage ($V$) divided by the resistance ($R$). With a
+division sign, you can write it as I = V ÷ R.
+
+The rule tells us two things:
+
+- **More push, more flow.** If the voltage doubles, the current doubles too.
+- **More resistance, less flow.** If the resistance doubles, the current drops to half.
+
+<Analogy>
+Think of water in a pipe again. A stronger pump pushes more water through the pipe each second. A
+narrower pipe lets less water through. How much water flows depends on both: how hard the pump
+pushes, and how narrow the pipe is.
+</Analogy>
+
+<Figure caption="Change the push and the resistance, or try a real device. The formula updates as you go." wide>
+  <OhmsLawPlayground client:visible />
+</Figure>
+
+## Let’s calculate!
+
+**Example 1.** A car battery gives a push of 12 volts. We connect it to a coil of wire with a
+resistance of 6 ohms. How much current flows?
+
+$$
+I = \frac{V}{R} = \frac{12\ \text{V}}{6\ \Omega} = 2\ \text{A}
+$$
+
+Twelve divided by six is two, so a current of 2 amps flows around the circuit.
+
+<Figure caption="The battery pushes with 12 volts, and the coil has a resistance of 6 ohms. So a current of 2 amps flows around the circuit." wide>
+  <CircuitNumbers />
+</Figure>
+
+**Example 2.** An electric kettle is plugged into a 230-volt socket. Its heating part has a
+resistance of about 26 ohms. How much current flows?
+
+$$
+I = \frac{230\ \text{V}}{26\ \Omega} \approx 9\ \text{A}
+$$
+
+That is about 9 amps, which is a big current. It makes the heating part very hot, very fast.
+
+<Safety>
+Your body has resistance too. Wet skin can have a hundred times less resistance than dry skin. By
+Ohm’s law, less resistance means more current — and at a 230-volt socket, that current can kill.
+Never touch plugs, switches or electrical devices with wet hands, and keep them away from baths,
+showers and sinks.
+</Safety>
+
+## Turning the rule around
+
+Ohm’s law can also find the voltage or the resistance. You only need to turn it around:
+
+- To find the **voltage**, multiply the current by the resistance: V = I × R.
+- To find the **resistance**, divide the voltage by the current: R = V ÷ I.
+
+Here is a trick to remember all three. Draw a triangle with V at the top, and I and R side by side
+at the bottom. Cover the letter you want to find. What is left tells you what to do.
+
+<Figure caption="Cover the letter you want to find. One letter above another means divide; two letters side by side mean multiply." wide>
+  <OhmTriangle />
+</Figure>
+
+**Example 3.** A current of half an amp (0.5 A) flows through a resistor of 6 ohms. A **resistor**
+is a small part made to have a certain resistance. What voltage pushes the current?
+
+$$
+V = I \times R = 0.5\ \text{A} \times 6\ \Omega = 3\ \text{V}
+$$
+
+That is the push of two ordinary AA batteries, with 1.5 volts each.
+
+**Example 4.** A toaster in a 230-volt socket lets 4 amps flow. What is its resistance?
+
+$$
+R = \frac{V}{I} = \frac{230\ \text{V}}{4\ \text{A}} = 57.5\ \Omega
+$$
+
+So the toaster’s hot wires have a resistance of about 58 ohms.
+
+## Who was Ohm?
+
+Georg Simon Ohm was a German teacher who loved experiments. In the 1820s, he taught mathematics and
+physics at a school in the city of Cologne. Next to his teaching, he ran experiments with electric
+circuits.
+
+He made wires of different lengths and thicknesses and measured the current in each one. He built
+much of his equipment himself. Again and again, the current followed the same simple pattern.
+
+In 1827, he described his rule in a book. At first, many scientists ignored it, and some even made
+fun of it. In 1841, the Royal Society in London gave him a famous science prize, the Copley Medal.
+Today, the unit of resistance carries his name.
+
+<GoDeeper title="Not everything follows Ohm’s law">
+Ohm’s law works very well for metal wires that stay at the same temperature. Their resistance stays
+the same whatever the voltage, so a graph of current against voltage is a straight line. Such things
+are called **ohmic**. Many things are **non-ohmic**:
+
+- **A light bulb filament.** As it heats up, its resistance rises. A cold filament can have more
+  than ten times less resistance than a glowing one. So when an old-style bulb is switched on, a big
+  rush of current flows for a moment. That is why such bulbs often fail at the moment they are
+  switched on.
+- **An LED.** Below about 2 volts (for a red LED) or 3 volts (for a white one), hardly any current
+  flows. Above that, a tiny increase in voltage makes the current shoot up. That is why an LED
+  always needs a resistor or a special circuit to limit its current.
+
+You can still work out $R = V / I$ at any moment, but for these parts R keeps changing, so one
+number cannot describe them.
+
+Even the water picture has limits. Water flowing slowly and smoothly through a thin pipe follows a
+rule very like Ohm’s law. But when water rushes and swirls, twice the push gives less than twice the
+flow.
+
+<Figure caption="Current against voltage: a straight line for a wire, a bending curve for a bulb filament and a sudden rise for an LED.">
+  <CurrentCurves />
+</Figure>
+</GoDeeper>
+
+<GoDeeper title="How Ohm got a steady push">
+The batteries of the 1820s gave a push that grew weaker as they worked. So Ohm switched to a
+thermocouple: two different metals, bismuth and copper, joined at both ends. He kept one joint in
+boiling water and the other in ice. The difference in temperature made a small, steady voltage.
+
+To measure the current, he hung a magnetised needle on a thin wire above the circuit. The bigger the
+current, the more the needle turned. His results fit a simple formula. In today’s letters, it reads
+$V = I \times R$.
+</GoDeeper>
+
+<Remember>
+- Ohm’s law says: current = voltage ÷ resistance, or I = V ÷ R.
+- More push gives more current. More resistance gives less current.
+- The same rule gives V = I × R and R = V ÷ I. The triangle helps you remember.
+- Georg Ohm published the rule in 1827.
+- Wet skin has less resistance, so a socket can push a deadly current through wet hands.
+</Remember>
+
+<Quiz
+  question="A 12-volt battery is connected to a heating wire of 4 ohms. How much current flows?"
+  options={["48 amps", "3 amps", "8 amps"]}
+  answer={1}
+  explanation="Current = voltage ÷ resistance = 12 ÷ 4 = 3 amps."
+/>
+
+<Quiz
+  question="The resistance stays the same, but the voltage doubles. What happens to the current?"
+  options={["It drops to half", "It stays the same", "It doubles"]}
+  answer={2}
+  explanation="Current = voltage ÷ resistance. With the same resistance, twice the push gives twice the current."
+/>

@@ -2,7 +2,167 @@
 title: 'What is electric power?'
 term: 'electric power'
 slug: electric-power
-summary: 'Electric power tells you how fast a device uses electrical energy, measured in watts. A kettle uses thousands of watts, a phone charger only a few.'
+summary: 'Electric power tells how fast a device uses electrical energy. It is measured in watts (W): a kettle uses thousands of watts, a small LED lamp only a few.'
+keywords: [watt, watts, kilowatt, kilowatt-hour, kWh, energy use, electricity bill, power consumption, James Watt, P = VI]
 ---
 
-Power is about speed: how quickly energy is used up or delivered. More watts means more energy every second.
+import SameEnergy from './diagrams/SameEnergy.astro';
+import WaterWheel from './diagrams/WaterWheel.astro';
+
+A kettle and an LED lamp can be plugged into the same kind of socket. But the kettle boils water in
+a few minutes, while the lamp stays only a little warm. The kettle uses [[energy]] much, much
+faster. How fast something uses energy is called its **power**.
+
+## Power is about speed
+
+<Analogy>
+Imagine going up the stairs to the top floor. You can walk up slowly or run up fast. Either way,
+your legs do the same job: they lift you to the same height. But running does the job faster, so it
+takes more power.
+</Analogy>
+
+Electric devices work the same way. Power tells us how much electrical energy a device uses every
+second. A kettle, a heater or a hair dryer uses a lot every second. A phone charger or an LED lamp
+uses only a little.
+
+## Watts and kilowatts
+
+Power is measured in **watts**, written **W**. The unit is named after James Watt, a Scottish
+engineer who built much better steam engines about 250 years ago.
+
+One watt is a small amount of power. For bigger amounts, we use **kilowatts** (kW). One kilowatt is
+1,000 watts, the same way one kilogram is 1,000 grams.
+
+You can often find a device’s power printed on a small label, for example on the bottom of a kettle.
+
+<FunFact>
+James Watt compared his steam engines with horses. One “horsepower” is about 750 watts. So a
+2,000-watt kettle works as hard as almost three horses!
+</FunFact>
+
+## How much power do things use?
+
+| Device | Power |
+|---|---|
+| LED light bulb | 5–10 W |
+| Phone charger, while charging | 5–20 W |
+| Laptop | 20–60 W |
+| Old-style light bulb | 40–100 W |
+| TV | 50–150 W |
+| Microwave oven | 1,000–1,500 W |
+| Electric heater | 1,000–2,500 W |
+| Electric kettle | 2,000–3,000 W |
+
+An LED bulb gives as much light as an old-style bulb, but it needs many times less power. The old
+bulb turns most of its energy into heat instead of light.
+
+## Push times flow
+
+The power of a device depends on two things: the push and the flow. The push is the [[voltage]], and
+the flow is the [[electric-current|current]]. To find the power, multiply them:
+
+$$
+P = V \times I
+$$
+
+- $P$ is the power, in watts (W).
+- $V$ is the voltage, in volts (V).
+- $I$ is the current, in amperes (A).
+
+<Analogy title="Like a water wheel">
+Water falling onto a water wheel makes it turn. The higher the water falls from, the harder it hits
+the wheel. The more water falls every second, the harder the wheel turns as well. The wheel’s power
+grows with both: the height (the push) and the amount of water (the flow).
+</Analogy>
+
+<Figure caption="A higher fall (more push) and more water every second (more flow) both give the water wheel more power." wide>
+  <WaterWheel />
+</Figure>
+
+A kettle in a 230-volt socket takes a current of about 9 amps. Its power is 230 × 9 = 2,070 watts,
+which is about 2,000 watts.
+
+A phone charger gives a phone 5 volts and 2 amps. Its power is 5 × 2 = 10 watts. That is two hundred
+times less than the kettle.
+
+## Energy is power × time
+
+The electricity bill for your home is mostly about **energy**: how much power was used, and for how
+long. To find the energy, multiply the power by the time:
+
+$$
+E = P \times t
+$$
+
+- $E$ is the energy, in kilowatt-hours (kWh).
+- $P$ is the power, in kilowatts (kW).
+- $t$ is the time, in hours (h).
+
+One **kilowatt-hour** is the energy that a 1,000-watt device uses in one hour. A meter in every home
+counts the kilowatt-hours, and each one costs money.
+
+**Example.** A 2,000-watt kettle boils water for 3 minutes. How much energy does it use?
+
+In a whole hour, the kettle would use 2 kWh. But 3 minutes is only a twentieth of an hour, because
+60 ÷ 3 = 20. So the kettle uses 2 ÷ 20 = 0.1 kWh.
+
+A 10-watt LED bulb uses the same 0.1 kWh when it shines for 10 hours. The kettle uses energy fast,
+for a short time. The bulb uses it slowly, for a long time. In the end, they use the same amount.
+
+<Figure caption="The kettle uses energy fast, for a short time. The LED bulb uses it slowly, for a long time. Both use the same energy: 0.1 kilowatt-hours." wide>
+  <SameEnergy />
+</Figure>
+
+<Safety>
+Powerful devices such as kettles, heaters and irons take big currents. Never plug several of them
+into one extension lead or multi-plug adapter: the cables can overheat and start a fire. And never
+touch a plug, a switch or a device with wet hands.
+</Safety>
+
+<GoDeeper title="Two more power formulas">
+You can combine $P = V \cdot I$ with [[ohms-law|Ohm’s law]], $V = I \cdot R$. This gives two more
+formulas for the power turned into heat in a resistance $R$ (in ohms):
+
+$$
+P = I^2 \cdot R \qquad\qquad P = \frac{V^2}{R}
+$$
+
+- The first one shows that the heat made in a wire grows with the **square** of the current. Twice
+  the current makes four times the heat. That is why power lines carry electricity at a very high
+  voltage and a small current (see [[alternating-current|alternating current]]).
+- The second one fits a kettle. Its heating part of about 26.45 Ω on 230 V gives
+  $P = \frac{230^2}{26.45} = \frac{52{,}900}{26.45} = 2{,}000\ \text{W}$.
+</GoDeeper>
+
+<GoDeeper title="Watts, joules and kilowatt-hours">
+- The scientific unit of energy is the **joule** (J). One watt means one joule every second:
+  $1\ \text{W} = 1\ \text{J/s}$.
+- A kilowatt-hour is 1,000 watts for 3,600 seconds, which is 3,600,000 joules (3.6 MJ).
+- The power on a label is the most a device uses. Many devices use less most of the time. A fridge,
+  for example, switches its motor on and off.
+- The energy a device uses never disappears. It changes form, and in the end most of it becomes
+  heat. Read more in [[conservation-of-energy|conservation of energy]].
+</GoDeeper>
+
+<GoDeeper title="Who was James Watt?">
+James Watt (1736–1819) did not invent the steam engine, but he made it far better. In the steam
+engines of his time, the same cylinder was heated and cooled again at every stroke, which wasted a
+lot of coal. Watt added a separate chamber, called a condenser, where the steam was cooled. His
+engines used much less coal and helped to power the Industrial Revolution. In 1882, a scientist
+proposed naming the unit of power after him, and today every lamp and kettle is labelled in watts.
+</GoDeeper>
+
+<Remember>
+- Power is how fast something uses energy.
+- It is measured in watts (W). One kilowatt (kW) is 1,000 watts.
+- Power = voltage × current, or P = V × I.
+- Energy = power × time. Electricity bills count it in kilowatt-hours (kWh).
+- A kettle has a big power, and an LED lamp a small one.
+</Remember>
+
+<Quiz
+  question="Which uses more energy: a 2,000-watt kettle for 3 minutes, or a 10-watt LED bulb for 10 hours?"
+  options={["The kettle", "The LED bulb", "Both use the same"]}
+  answer={2}
+  explanation="The kettle uses 2 kW × 0.05 h = 0.1 kWh. The bulb uses 0.01 kW × 10 h = 0.1 kWh. The kettle uses energy faster, but for a much shorter time."
+/>

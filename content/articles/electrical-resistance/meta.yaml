@@ -1,5 +1,18 @@
 topics: [electricity]
 labels: [high-level]
-status: stub
+prerequisites: [electric-current, voltage]
+related: [ohms-law, conductors-and-insulators, electric-power, heat]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Electrical resistance and conductance — Wikipedia
+    url: https://en.wikipedia.org/wiki/Electrical_resistance_and_conductance
+  - title: Electrical resistivity and conductivity — Wikipedia
+    url: https://en.wikipedia.org/wiki/Electrical_resistivity_and_conductivity
+  - title: Joule heating — Wikipedia
+    url: https://en.wikipedia.org/wiki/Joule_heating
+  - title: Superconductivity — Wikipedia
+    url: https://en.wikipedia.org/wiki/Superconductivity
+  - title: Incandescent light bulb — Wikipedia
+    url: https://en.wikipedia.org/wiki/Incandescent_light_bulb

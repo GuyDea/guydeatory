@@ -2,7 +2,170 @@
 title: 'Čo je elektrický výkon?'
 term: 'elektrický výkon'
 slug: elektricky-vykon
-summary: 'Elektrický výkon hovorí, ako rýchlo spotrebič míňa elektrickú energiu – meria sa vo wattoch. Rýchlovarná kanvica potrebuje tisíce wattov, nabíjačka telefónu len niekoľko.'
+summary: 'Elektrický výkon hovorí, ako rýchlo spotrebič míňa elektrickú energiu. Meria sa vo wattoch (W): kanvica potrebuje tisíce wattov, malá LED lampa len niekoľko.'
+keywords: [watt, watty, kilowatt, kilowatthodina, kWh, príkon, spotreba elektriny, účet za elektrinu, James Watt, P = U · I]
 ---
 
-Výkon je o rýchlosti: ako rýchlo sa energia spotrebúva alebo dodáva. Viac wattov znamená viac energie každú sekundu.
+import SameEnergy from './diagrams/SameEnergy.astro';
+import WaterWheel from './diagrams/WaterWheel.astro';
+
+Kanvicu aj LED lampu môžeš zapojiť do rovnakej zásuvky. Kanvica však uvarí vodu za pár minút, kým
+lampa zostane len trošku teplá. Kanvica míňa [[energy|energiu]] oveľa, oveľa rýchlejšie. Tomu, ako
+rýchlo niečo míňa energiu, hovoríme **výkon**.
+
+## Výkon je o rýchlosti
+
+<Analogy>
+Predstav si, že ideš po schodoch na najvyššie poschodie. Môžeš ísť pomaly alebo vybehnúť rýchlo.
+Tvoje nohy urobia v oboch prípadoch rovnakú prácu: vynesú ťa do rovnakej výšky. Beh však tú prácu
+urobí rýchlejšie, a preto potrebuje väčší výkon.
+</Analogy>
+
+S elektrickými spotrebičmi je to rovnaké. Výkon hovorí, koľko elektrickej energie spotrebič minie
+každú sekundu. Kanvica, ohrievač či fén minú každú sekundu veľa. Nabíjačka telefónu alebo LED lampa
+minú len málo.
+
+## Watty a kilowatty
+
+Výkon meriame vo **wattoch** a píšeme **W**. Jednotka dostala meno podľa Jamesa Watta, škótskeho
+inžiniera, ktorý asi pred 250&nbsp;rokmi zostrojil oveľa lepšie parné stroje.
+
+Jeden watt je malý výkon. Pre väčšie hodnoty používame **kilowatty** (kW). Jeden kilowatt je
+1&nbsp;000&nbsp;wattov, podobne ako jeden kilogram je 1&nbsp;000&nbsp;gramov.
+
+Výkon spotrebiča často nájdeš na malom štítku, napríklad na spodku kanvice. Na štítku sa mu hovorí
+**príkon** – je to výkon, ktorý si spotrebič berie zo zásuvky.
+
+<FunFact>
+James Watt porovnával svoje parné stroje s koňmi. Jedna „konská sila“ je asi 750&nbsp;wattov.
+Kanvica s výkonom 2&nbsp;000&nbsp;wattov teda pracuje ako takmer tri kone!
+</FunFact>
+
+## Koľko výkonu potrebujú rôzne veci?
+
+| Spotrebič | Výkon |
+|---|---|
+| LED žiarovka | 5–10&nbsp;W |
+| Nabíjačka telefónu počas nabíjania | 5–20&nbsp;W |
+| Notebook | 20–60&nbsp;W |
+| Klasická žiarovka | 40–100&nbsp;W |
+| Televízor | 50–150&nbsp;W |
+| Mikrovlnná rúra | 1&nbsp;000–1&nbsp;500&nbsp;W |
+| Elektrický ohrievač | 1&nbsp;000–2&nbsp;500&nbsp;W |
+| Rýchlovarná kanvica | 2&nbsp;000–3&nbsp;000&nbsp;W |
+
+LED žiarovka dá rovnako veľa svetla ako klasická žiarovka, ale potrebuje niekoľkokrát menší výkon.
+Klasická žiarovka mení väčšinu energie na teplo namiesto svetla.
+
+## Tlačenie krát tok
+
+Výkon spotrebiča závisí od dvoch vecí: od tlačenia a od toku. Tlačenie je [[voltage|napätie]] a tok
+je [[electric-current|prúd]]. Výkon zistíš, keď ich vynásobíš:
+
+$$
+P = U \cdot I
+$$
+
+- $P$ je výkon vo wattoch (W).
+- $U$ je napätie vo voltoch (V).
+- $I$ je prúd v ampéroch (A).
+
+<Analogy title="Ako vodné koleso">
+Voda, ktorá padá na vodné koleso, ho roztáča. Čím z väčšej výšky voda padá, tým silnejšie do kolesa
+udrie. Čím viac vody spadne každú sekundu, tým silnejšie sa koleso točí. Výkon kolesa rastie s
+oboma: s výškou (tlačením) aj s množstvom vody (tokom).
+</Analogy>
+
+<Figure caption="Vyšší pád (viac tlačenia) aj viac vody každú sekundu (väčší tok) dávajú vodnému kolesu väčší výkon." wide>
+  <WaterWheel />
+</Figure>
+
+Kanvica v zásuvke s napätím 230&nbsp;voltov berie prúd asi 9&nbsp;ampérov. Jej výkon je
+230 · 9 = 2&nbsp;070&nbsp;wattov, teda asi 2&nbsp;000&nbsp;wattov.
+
+Nabíjačka dáva telefónu napätie 5&nbsp;voltov a prúd 2&nbsp;ampéry. Jej výkon je
+5 · 2 = 10&nbsp;wattov. To je dvestokrát menej ako kanvica.
+
+## Energia je výkon krát čas
+
+Účet za elektrinu je hlavne o **energii**: aký výkon sa používal a ako dlho. Energiu zistíš, keď
+vynásobíš výkon časom:
+
+$$
+E = P \cdot t
+$$
+
+- $E$ je energia v kilowatthodinách (kWh).
+- $P$ je výkon v kilowattoch (kW).
+- $t$ je čas v hodinách (h).
+
+Jedna **kilowatthodina** je energia, ktorú spotrebič s výkonom 1&nbsp;000&nbsp;wattov minie za jednu
+hodinu. Elektromer v každej domácnosti počíta kilowatthodiny a každá z nich stojí peniaze.
+
+**Príklad.** Kanvica s výkonom 2&nbsp;000&nbsp;wattov varí vodu 3&nbsp;minúty. Koľko energie minie?
+
+Za celú hodinu by kanvica minula 2&nbsp;kWh. Lenže 3&nbsp;minúty sú len dvadsatina hodiny, lebo
+60 : 3 = 20. Kanvica teda minie 2 : 20 = 0,1&nbsp;kWh.
+
+LED žiarovka s výkonom 10&nbsp;wattov minie tých istých 0,1&nbsp;kWh, keď svieti 10&nbsp;hodín.
+Kanvica míňa energiu rýchlo a krátko. Žiarovka ju míňa pomaly a dlho. Nakoniec obe minú rovnako
+veľa.
+
+<Figure caption="Kanvica míňa energiu rýchlo a krátko. LED žiarovka ju míňa pomaly a dlho. Obe minú rovnakú energiu: 0,1&nbsp;kilowatthodiny." wide>
+  <SameEnergy />
+</Figure>
+
+<Safety>
+Silné spotrebiče, ako sú kanvice, ohrievače a žehličky, berú veľký prúd. Nikdy ich nezapájaj
+niekoľko naraz do jednej predlžovačky alebo rozdvojky: káble sa môžu prehriať a spôsobiť požiar. A
+nikdy sa nedotýkaj zástrčky, vypínača ani spotrebiča mokrými rukami.
+</Safety>
+
+<GoDeeper title="Ďalšie dva vzorce pre výkon">
+Vzorec $P = U \cdot I$ môžeš spojiť s [[ohms-law|Ohmovým zákonom]] $U = R \cdot I$. Tak dostaneš
+ďalšie dva vzorce pre výkon, ktorý sa v odpore $R$ (v ohmoch) mení na teplo:
+
+$$
+P = R \cdot I^2 \qquad\qquad P = \frac{U^2}{R}
+$$
+
+- Prvý ukazuje, že teplo, ktoré vzniká v drôte, rastie s **druhou mocninou** prúdu. Dvojnásobný prúd
+  vytvorí štvornásobné teplo. Preto elektrické vedenia prenášajú elektrinu pri veľmi vysokom napätí
+  a malom prúde (pozri [[alternating-current|striedavý prúd]]).
+- Druhý sa hodí na kanvicu. Jej ohrevné teleso s odporom asi 26,45&nbsp;Ω dáva pri napätí 230&nbsp;V
+  výkon $P = \frac{230^2}{26{,}45} = \frac{52\,900}{26{,}45} = 2\,000\ \text{W}$.
+</GoDeeper>
+
+<GoDeeper title="Watty, jouly a kilowatthodiny">
+- Vedecká jednotka energie je **joule** (J). Jeden watt znamená jeden joule každú sekundu:
+  $1\ \text{W} = 1\ \text{J/s}$.
+- Kilowatthodina je 1&nbsp;000&nbsp;wattov počas 3&nbsp;600&nbsp;sekúnd, teda
+  3&nbsp;600&nbsp;000&nbsp;joulov (3,6&nbsp;MJ).
+- Výkon na štítku je najväčší výkon spotrebiča. Mnohé spotrebiče väčšinou berú menej. Napríklad
+  chladnička svoj motor stále zapína a vypína.
+- Energia, ktorú spotrebič minie, nikdy nezmizne. Mení sa na iné formy a nakoniec sa väčšina z nej
+  zmení na teplo. Viac sa dočítaš v článku o [[conservation-of-energy|zákone zachovania energie]].
+</GoDeeper>
+
+<GoDeeper title="Kto bol James Watt?">
+James Watt (1736–1819) parný stroj nevynašiel, ale výrazne ho zlepšil. V parných strojoch jeho čias
+sa pri každom zdvihu ten istý valec zohrieval a znova ochladzoval, čo spotrebovalo veľa uhlia. Watt
+pridal samostatnú komoru – kondenzátor –, v ktorej sa para ochladzovala. Jeho stroje spotrebovali
+oveľa menej uhlia a pomohli rozbehnúť priemyselnú revolúciu. V roku 1882 istý vedec navrhol
+pomenovať jednotku výkonu podľa neho a dnes nájdeš watty na každej lampe aj kanvici.
+</GoDeeper>
+
+<Remember>
+- Výkon hovorí, ako rýchlo niečo míňa energiu.
+- Meriame ho vo wattoch (W). Jeden kilowatt (kW) je 1&nbsp;000&nbsp;wattov.
+- Výkon = napätie · prúd, teda P = U · I.
+- Energia = výkon · čas. Účty za elektrinu ju počítajú v kilowatthodinách (kWh).
+- Kanvica má veľký výkon, LED lampa malý.
+</Remember>
+
+<Quiz
+  question="Čo minie viac energie: kanvica s výkonom 2&nbsp;000&nbsp;wattov za 3&nbsp;minúty, alebo LED žiarovka s výkonom 10&nbsp;wattov za 10&nbsp;hodín?"
+  options={["Kanvica", "LED žiarovka", "Obe rovnako veľa"]}
+  answer={2}
+  explanation="Kanvica minie 2&nbsp;kW · 0,05&nbsp;h = 0,1&nbsp;kWh. Žiarovka minie 0,01&nbsp;kW · 10&nbsp;h = 0,1&nbsp;kWh. Kanvica míňa energiu rýchlejšie, ale oveľa kratší čas."
+/>

@@ -2,7 +2,177 @@
 title: 'What is electrical resistance?'
 term: 'resistance'
 slug: electrical-resistance
-summary: 'Resistance is how much a material or a device holds back the flow of electricity. Thin, long wires resist more than thick, short ones — and the struggle turns some electrical energy into heat.'
+summary: 'Resistance is how much something holds back the flow of electricity. Long, thin wires hold it back more than short, thick ones — and the holding back turns electrical energy into heat.'
+keywords: [ohm, ohms, resistor, resistivity, heating element, electrical resistance, why do wires get warm]
 ---
 
-Some paths are easy for electricity and some are hard. How hard a path is we call resistance, and it is measured in ohms.
+import BumpyWire from './diagrams/BumpyWire.astro';
+import NarrowPipe from './diagrams/NarrowPipe.astro';
+import WireShapes from './diagrams/WireShapes.astro';
+
+Try drinking a thick milkshake through a thin straw. You suck as hard as you can, but only a little
+comes up. The straw holds the milkshake back.
+
+Electricity gets held back too, as it flows through wires, lamps and toasters. This holding back is
+called **resistance**. Let’s find out where it comes from, and why it makes things hot.
+
+## What holds electricity back?
+
+Electricity in a wire is a flow of tiny particles called [[electron|electrons]]. A push called
+[[voltage]] makes them drift along the wire, all together. This flow is the
+[[electric-current|electric current]].
+
+But a wire is not an empty tube. It is packed with metal [[atom|atoms]], sitting in neat rows. The
+atoms are never still: they jiggle all the time, even in a cold wire.
+
+As the electrons drift along, they keep bumping into the jiggling atoms. Every bump slows them down.
+How strongly something holds back the flow is called its **resistance**.
+
+<Figure caption="Electrons zigzag through the metal and keep bumping into its atoms. Every bump slows them down and makes the atoms jiggle harder, which warms the wire." wide>
+  <BumpyWire />
+</Figure>
+
+## Like a narrow pipe
+
+<Analogy>
+Think of electricity as water flowing through pipes. The same pump pushes water into a wide pipe and
+into a narrow one. Lots of water gushes through the wide pipe, but only a trickle squeezes through
+the narrow one. A pipe clogged with sand holds the water back too.
+</Analogy>
+
+<Figure caption="The same push sends lots of water through a wide pipe, but only a trickle through a narrow one. A narrow pipe is like a path with a high resistance." wide>
+  <NarrowPipe />
+</Figure>
+
+Electricity works the same way. With the same push, a lot of current flows through something with a
+low resistance. Only a little flows through something with a high resistance.
+
+## What makes resistance bigger or smaller?
+
+Four things decide how much a wire holds electricity back:
+
+- **The material.** Copper and silver let electrons through very easily, so electric cables are made
+  of copper. Other metals, such as iron, hold electrons back more. Plastic and rubber hold them back
+  so much that almost nothing flows: they are [[conductors-and-insulators|insulators]].
+- **The length.** In a long wire, the electrons have more atoms to get past. A wire twice as long
+  has twice the resistance.
+- **The thickness.** A thick wire has more room, like a wide corridor where many people can walk
+  side by side. The thicker the wire, the lower its resistance.
+- **The [[temperature]].** When metal gets hotter, its atoms jiggle harder. The electrons bump into
+  them more often, so the resistance goes up.
+
+<Figure caption="A long, thin wire holds electrons back much more than a short, thick one." wide>
+  <WireShapes />
+</Figure>
+
+<FunFact>
+Some materials lose their resistance completely when they get cold enough. In 1911, a scientist
+cooled the metal mercury to about −269 °C, and its resistance suddenly vanished. Such materials are
+called superconductors. Hospitals use them in MRI scanners, the big machines that take pictures of
+the inside of the body.
+</FunFact>
+
+## How do we measure resistance?
+
+Resistance is measured in **ohms**. The short sign for an ohm is **Ω**, the Greek letter omega. The
+unit is named after Georg Ohm, a German scientist. He found the rule that connects voltage, current
+and resistance: [[ohms-law|Ohm’s law]].
+
+| What | Resistance |
+|---|---|
+| 1 metre of copper wire in a house cable | about 0.01 Ω |
+| The heating part of a 2,000-watt kettle | about 26 Ω |
+| An old-style 60-watt light bulb, while it glows | about 900 Ω |
+| A piece of plastic the size of a sugar cube | more than a million million Ω |
+
+A small part whose only job is to have a certain resistance is called a **resistor**. Almost every
+electronic gadget has resistors inside.
+
+## Resistance makes heat
+
+Every time an electron bumps into an atom, the atom jiggles a little harder. And faster jiggling
+atoms mean a hotter material. So resistance turns electrical [[energy]] into [[heat]].
+
+Sometimes that heat is exactly what we want. A toaster, a kettle and a hair dryer all contain wires
+with a high resistance. When current flows through them, they get hot — hot enough to toast bread or
+boil water.
+
+An old-style light bulb works the same way. Its very thin wire, called a filament, gets hotter than
+2,000 °C, so hot that it glows white. But only a tiny part of the energy becomes light. Almost all
+of it becomes heat, which is why these bulbs waste so much electricity.
+
+At other times, the heat is a waste. Cables, chargers and laptops get warm while they work. To keep
+this waste small, cables are made of copper. Cables for things that use lots of electricity, such as
+an electric cooker, are extra thick.
+
+How fast something uses up electrical energy is called its [[electric-power|power]].
+
+<Safety>
+Toasters, kettles, irons and heaters get very hot. Never touch their hot parts.
+
+Never poke anything into a toaster, not even a fork to free stuck bread. Ask a grown-up for help
+instead. Don’t plug lots of powerful devices into one extension lead, because its cable can overheat
+and start a fire.
+</Safety>
+
+<GoDeeper title="The formula for a wire’s resistance">
+The resistance of a wire depends on its material, its length and its thickness:
+
+$$
+R = \rho \cdot \frac{L}{A}
+$$
+
+- $R$ is the resistance, in ohms (Ω).
+- $\rho$ (the Greek letter rho) is the **resistivity** of the material: how strongly the material
+  itself holds electrons back. Copper has about $1.7 \times 10^{-8}\ \Omega \cdot \text{m}$
+  (ohm-metres). Nichrome, a mix of nickel and chromium used in heating elements, has about 65 times
+  more.
+- $L$ is the length of the wire, in metres (m).
+- $A$ is the area of the wire’s cross-section (the size of its cut end), in square metres (m²).
+
+For example, 1 metre of copper wire with a cross-section of 1.5 mm²
+($1.5 \times 10^{-6}\ \text{m}^2$), a common size in house cables, has a resistance of:
+
+$$
+R = 1.7 \times 10^{-8}\ \Omega \cdot \text{m} \cdot \frac{1\ \text{m}}{1.5 \times 10^{-6}\ \text{m}^2} \approx 0.011\ \Omega
+$$
+
+A wire twice as long has twice the resistance. A wire twice as wide has a cut end four times as big,
+so its resistance is only a quarter.
+</GoDeeper>
+
+<GoDeeper title="What really slows the electrons down">
+- In a metal, every atom lets go of one or two of its outer electrons. These free electrons wander
+  through the whole metal. The atoms, now called ions, stay in a regular pattern called a crystal.
+- Electrons bouncing off atoms like balls is a simplified picture. Quantum physics shows that a
+  perfectly regular crystal whose atoms stood perfectly still would hardly hold electrons back at
+  all. What scatters them are the vibrations of the atoms, which grow with temperature, and flaws in
+  the crystal: missing atoms, atoms of other elements and the borders between tiny crystals.
+- That is why the resistance of copper rises by about 0.4 % for every degree Celsius, and why mixes
+  of metals, such as nichrome, resist far more than pure metals.
+- Not every material behaves like a metal. In many thermistors (small parts used in electronic
+  thermometers), the resistance goes *down* as they warm up.
+</GoDeeper>
+
+<GoDeeper title="Where the pipe picture goes wrong">
+- Water rubs against the walls of a pipe, so it is held back mostly near the walls. In a wire, the
+  whole metal holds electrons back, all the way across. The pipe picture gets the result right —
+  longer and thinner means more resistance — but not the reason.
+- Resistance does not use up electrons. Every second, as many electrons flow out of a toaster’s
+  heating wire as flow into it. What the electrons lose on the way is energy, and it becomes heat.
+</GoDeeper>
+
+<Remember>
+- Resistance is how much something holds back the flow of electricity.
+- It is like a narrow or clogged pipe for water.
+- Long, thin wires resist more than short, thick ones. Copper resists very little.
+- Resistance is measured in ohms (Ω).
+- Resistance turns electrical energy into heat: useful in a toaster, wasted in a cable.
+</Remember>
+
+<Quiz
+  question="Which wire has the lowest resistance?"
+  options={["A long, thin copper wire", "A short, thick copper wire", "A short, thick iron wire"]}
+  answer={1}
+  explanation="Copper holds electrons back less than iron, and a short, thick wire gives them the easiest path of all."
+/>

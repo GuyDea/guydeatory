@@ -1,5 +1,18 @@
 topics: [electricity]
 labels: [high-level]
-status: stub
+prerequisites: [electric-current, voltage]
+related: [history-of-electricity, electric-power, electrical-resistance, how-electric-current-behaves, why-birds-on-wires-dont-get-shocked]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Alternating current — Wikipedia
+    url: https://en.wikipedia.org/wiki/Alternating_current
+  - title: Mains electricity by country — Wikipedia
+    url: https://en.wikipedia.org/wiki/Mains_electricity_by_country
+  - title: War of the currents — Wikipedia
+    url: https://en.wikipedia.org/wiki/War_of_the_currents
+  - title: Electric power transmission — Wikipedia
+    url: https://en.wikipedia.org/wiki/Electric_power_transmission
+  - title: Utility frequency — Wikipedia
+    url: https://en.wikipedia.org/wiki/Utility_frequency

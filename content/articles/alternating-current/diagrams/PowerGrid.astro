@@ -1,0 +1,56 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'From the power station to your home',
+    desc: 'A power station sends electricity to a transformer, which raises the voltage. Tall pylons carry the power line at 400,000 volts. Near the town, another transformer lowers the voltage, and a house receives 230 volts.',
+    station: 'power station',
+    transformer: 'transformer',
+    high: '400,000 V',
+    home: '230 V',
+  },
+  sk: {
+    title: 'Z elektrárne až k vám domov',
+    desc: 'Elektráreň posiela elektrinu do transformátora, ktorý zvýši napätie. Vysoké stožiare nesú vedenie s napätím 400 000 voltov. Pri meste iný transformátor napätie zníži a do domu prichádza 230 voltov.',
+    station: 'elektráreň',
+    transformer: 'transformátor',
+    high: '400 000 V',
+    home: '230 V',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const pylons = [158, 264];
+const transformers = [105, 315];
+---
+<Svg viewBox="0 0 400 206" title={s.title} desc={s.desc} maxWidth="30rem">
+  <rect x="6" y="118" width="60" height="52" rx="4" class="d-box" />
+  <path d="M41 124L29 146H37L32 164L47 140H39L44 124Z" class="d-glow" />
+  <text x="6" y="106" class="d-small">{s.station}</text>
+  <path d="M66 146H86M124 146H134V74H146M278 74H288V146H296M334 146H350" class="d-wire" />
+  <path d="M172 74Q211 96 250 74" class="d-wire" />
+  {
+    pylons.map((x) => (
+      <path d={`M${x - 12} 170L${x} 62L${x + 12} 170M${x - 14} 74H${x + 14}M${x - 8} 134L${x + 5} 104M${x + 8} 134L${x - 5} 104`} class="d-line" />
+    ))
+  }
+  <text x="211" y="50" text-anchor="middle" class="d-label">{s.high}</text>
+  {
+    transformers.map((x) => (
+      <>
+        <circle cx={x - 7} cy="146" r="12" class="d-line" />
+        <circle cx={x + 7} cy="146" r="12" class="d-line" />
+        <text x={x} y="196" text-anchor="middle" class="d-small">{s.transformer}</text>
+      </>
+    ))
+  }
+  <path d="M105 130V110" class="d-line d-arrow-hot" style="stroke-width: 3" />
+  <path d="M315 110V130" class="d-line d-arrow-cold" style="stroke-width: 3" />
+  <path d="M350 170V142L373 120L396 142V170Z" class="d-box" />
+  <rect x="366" y="150" width="14" height="20" class="d-box-alt" />
+  <text x="373" y="106" text-anchor="middle" class="d-label">{s.home}</text>
+</Svg>

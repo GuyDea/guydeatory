@@ -2,7 +2,189 @@
 title: 'Čo je Ohmov zákon?'
 term: 'Ohmov zákon'
 slug: ohmov-zakon
-summary: 'Ohmov zákon spája napätie, prúd a odpor: prúd sa rovná napätiu vydelenému odporom. Keď tlačíš silnejšie, tečie viac prúdu; keď je cesta ťažšia, tečie menej.'
+summary: 'Ohmov zákon je pravidlo, ktoré spája napätie, prúd a odpor: prúd sa rovná napätiu vydelenému odporom. Silnejšie tlačenie znamená väčší prúd, ťažšia cesta menší prúd.'
+keywords: [Ohm, Georg Ohm, Ohmov trojuholník, I = U/R, U = R · I, R = U/I, vzorec pre prúd, napätie prúd odpor]
 ---
 
-Ohmov zákon je jednoduché pravidlo, ktoré povie, koľko prúdu potečie, keď poznáš tlak (napätie) a to, aká ťažká je cesta (odpor).
+import CircuitNumbers from './diagrams/CircuitNumbers.astro';
+import OhmTriangle from './diagrams/OhmTriangle.astro';
+import CurrentCurves from './diagrams/CurrentCurves.astro';
+import OhmsLawPlayground from '@widgets/ohms-law/OhmsLawPlayground.svelte';
+
+Skôr než zapneš lampu, vieš povedať, koľko elektriny ňou potečie? Vieš – stačí na to jedno
+jednoduché pravidlo. Volá sa **Ohmov zákon** a patrí medzi najužitočnejšie pravidlá o elektrine.
+
+## Tri veci, ktoré treba poznať
+
+Ohmov zákon spája tri pojmy, ktoré možno už poznáš:
+
+- **[[voltage|Napätie]]** je tlačenie, ktoré rozhýbe elektrinu. Meriame ho vo voltoch (V).
+- **[[electric-current|Prúd]]** hovorí, koľko elektriny pretečie každú sekundu. Meriame ho v
+  ampéroch (A).
+- **[[electrical-resistance|Odpor]]** hovorí, ako veľmi niečo brzdí tok elektriny. Meriame ho v
+  ohmoch (Ω).
+
+Vo vzorcoch má každý z nich svoje písmeno: **U** je napätie, **I** je prúd a **R** je odpor. V
+anglicky hovoriacich krajinách sa napätie označuje písmenom **V**.
+
+<FunFact>
+Prečo má prúd písmeno I? Pochádza z francúzštiny. André-Marie Ampère, vedec, podľa ktorého dostal
+meno ampér, písal o *intensité du courant*, čiže o „sile prúdu“.
+</FunFact>
+
+## Pravidlo
+
+Ohmov zákon vyzerá takto:
+
+$$
+I = \frac{U}{R}
+$$
+
+Slovami: prúd ($I$) sa rovná napätiu ($U$) vydelenému odporom ($R$). So znamienkom delenia ho môžeš
+napísať aj ako I = U : R.
+
+Pravidlo nám hovorí dve veci:
+
+- **Viac tlačenia, väčší tok.** Keď sa napätie zdvojnásobí, zdvojnásobí sa aj prúd.
+- **Väčší odpor, menší tok.** Keď sa odpor zdvojnásobí, prúd klesne na polovicu.
+
+<Analogy>
+Spomeň si na vodu v rúrke. Silnejšie čerpadlo pretlačí rúrkou každú sekundu viac vody. Užšou rúrkou
+pretečie vody menej. Koľko vody pretečie, závisí od oboch vecí: od toho, ako silno čerpadlo tlačí, a
+od toho, aká úzka je rúrka.
+</Analogy>
+
+<Figure caption="Meň tlačenie a odpor alebo vyskúšaj skutočný spotrebič. Vzorec sa prepočítava priebežne." wide>
+  <OhmsLawPlayground client:visible />
+</Figure>
+
+## Poďme počítať!
+
+**Príklad 1.** Autobatéria tlačí s napätím 12&nbsp;voltov. Pripojíme k nej špirálu z drôtu s odporom
+6&nbsp;ohmov. Aký prúd potečie?
+
+$$
+I = \frac{U}{R} = \frac{12\ \text{V}}{6\ \Omega} = 2\ \text{A}
+$$
+
+Keďže 12 : 6 = 2, obvodom potečie prúd 2&nbsp;ampéry.
+
+<Figure caption="Batéria tlačí s napätím 12&nbsp;voltov a špirála má odpor 6&nbsp;ohmov. Obvodom preto tečie prúd 2&nbsp;ampéry." wide>
+  <CircuitNumbers />
+</Figure>
+
+**Príklad 2.** Rýchlovarná kanvica je zapojená do zásuvky s napätím 230&nbsp;voltov. Jej ohrevné
+teleso má odpor asi 26&nbsp;ohmov. Aký prúd potečie?
+
+$$
+I = \frac{230\ \text{V}}{26\ \Omega} \doteq 9\ \text{A}
+$$
+
+To je asi 9&nbsp;ampérov, čo je veľký prúd. Ohrevné teleso sa vďaka nemu rozpáli veľmi rýchlo.
+
+<Safety>
+Aj tvoje telo má odpor. Mokrá koža môže mať až stokrát menší odpor ako suchá. Podľa Ohmovho zákona
+znamená menší odpor väčší prúd – a pri zásuvke s napätím 230&nbsp;voltov môže byť taký prúd
+smrteľný. Nikdy sa nedotýkaj zástrčiek, vypínačov ani elektrických spotrebičov mokrými rukami a drž
+ich ďaleko od vane, sprchy a umývadla.
+</Safety>
+
+## Pravidlo naopak
+
+Ohmov zákon vie nájsť aj napätie alebo odpor. Stačí ho obrátiť:
+
+- **Napätie** zistíš, keď vynásobíš prúd odporom: U = I · R.
+- **Odpor** zistíš, keď vydelíš napätie prúdom: R = U : I.
+
+Na zapamätanie všetkých troch tvarov je tu trik. Nakresli trojuholník, hore daj U a dole vedľa seba
+I a R. Zakry písmeno, ktoré hľadáš. To, čo zostane, ti povie, čo máš robiť.
+
+<Figure caption="Zakry písmeno, ktoré hľadáš. Písmeno nad písmenom znamená delenie, dve písmená vedľa seba znamenajú násobenie." wide>
+  <OhmTriangle />
+</Figure>
+
+**Príklad 3.** Rezistorom s odporom 6&nbsp;ohmov tečie prúd pol ampéra (0,5&nbsp;A). **Rezistor** je
+malá súčiastka, ktorá má presne určený odpor. Aké napätie tlačí tento prúd?
+
+$$
+U = I \cdot R = 0{,}5\ \text{A} \cdot 6\ \Omega = 3\ \text{V}
+$$
+
+To je tlačenie dvoch obyčajných tužkových batérií (AA), z ktorých každá má 1,5&nbsp;voltu.
+
+**Príklad 4.** Hriankovačom zapojeným do zásuvky s napätím 230&nbsp;voltov tečie prúd 4&nbsp;ampéry.
+Aký má odpor?
+
+$$
+R = \frac{U}{I} = \frac{230\ \text{V}}{4\ \text{A}} = 57{,}5\ \Omega
+$$
+
+Rozpálené drôty hriankovača majú teda odpor asi 58&nbsp;ohmov.
+
+## Kto bol Ohm?
+
+Georg Simon Ohm bol nemecký učiteľ, ktorý miloval pokusy. V 20. rokoch 19. storočia učil matematiku
+a fyziku na škole v meste Kolín nad Rýnom. Popri vyučovaní robil pokusy s elektrickými obvodmi.
+
+Vyrobil drôty rôznej dĺžky a hrúbky a v každom meral prúd. Veľkú časť svojich prístrojov si
+zostrojil sám. Prúd sa znova a znova riadil tým istým jednoduchým pravidlom.
+
+V roku 1827 opísal svoje pravidlo v knihe. Spočiatku ho mnohí vedci prehliadali a niektorí sa mu
+dokonca posmievali. V roku 1841 mu Kráľovská spoločnosť v Londýne udelila slávnu vedeckú cenu –
+Copleyho medailu. Dnes nesie jeho meno jednotka odporu.
+
+<GoDeeper title="Nie všetko sa riadi Ohmovým zákonom">
+Ohmov zákon veľmi dobre platí pre kovové drôty, ktorých teplota sa nemení. Ich odpor zostáva rovnaký
+pri akomkoľvek napätí, takže graf závislosti prúdu od napätia je priamka. Takým vodičom hovoríme
+**ohmické**. Mnohé veci sú však **neohmické**:
+
+- **Vlákno žiarovky.** Keď sa zohrieva, jeho odpor rastie. Studené vlákno môže mať viac ako
+  desaťkrát menší odpor ako rozžeravené. Pri zapnutí klasickej žiarovky preto na okamih prebehne
+  veľký nával prúdu. Preto sa takéto žiarovky často prepália práve vo chvíli, keď ich zapneš.
+- **LED dióda.** Pod napätím asi 2&nbsp;volty (pri červenej LED) alebo 3&nbsp;volty (pri bielej) ňou
+  netečie takmer žiadny prúd. Nad touto hranicou stačí maličké zvýšenie napätia a prúd prudko
+  vyskočí. Preto LED vždy potrebuje rezistor alebo špeciálny obvod, ktorý jej prúd obmedzí.
+
+Aj pre ne sa dá v každej chvíli vypočítať $R = U / I$, no R sa neustále mení, takže ich nemožno
+opísať jedným číslom.
+
+Aj obrázok s vodou má svoje hranice. Voda, ktorá tečie tenkou rúrkou pomaly a pokojne, sa riadi
+pravidlom veľmi podobným Ohmovmu zákonu. Keď sa však valí a víri, dvojnásobné tlačenie dá menej ako
+dvojnásobný tok.
+
+<Figure caption="Prúd v závislosti od napätia: priamka pre drôt, ohnutá krivka pre vlákno žiarovky a prudký nárast pre LED.">
+  <CurrentCurves />
+</Figure>
+</GoDeeper>
+
+<GoDeeper title="Ako Ohm získal stále tlačenie">
+Batérie z tých čias tlačili počas práce čoraz slabšie. Ohm preto prešiel na termočlánok: dva rôzne
+kovy, bizmut a meď, spojené na oboch koncoch. Jeden spoj držal vo vriacej vode a druhý v ľade.
+Rozdiel teplôt vytváral malé, ale stále napätie.
+
+Na meranie prúdu zavesil nad obvod na tenký drôtik zmagnetizovanú ihlu. Čím väčší bol prúd, tým viac
+sa ihla otočila. Jeho výsledky zodpovedali jednoduchému vzorcu. V dnešnom zápise vyzerá takto:
+$U = R \cdot I$.
+</GoDeeper>
+
+<Remember>
+- Ohmov zákon hovorí: prúd = napätie : odpor, teda I = U : R.
+- Viac tlačenia znamená väčší prúd. Väčší odpor znamená menší prúd.
+- To isté pravidlo dáva U = I · R a R = U : I. Pomôže ti trojuholník.
+- Georg Ohm uverejnil toto pravidlo v roku 1827.
+- Mokrá koža má menší odpor, a preto môže zásuvka pretlačiť cez mokré ruky smrteľný prúd.
+</Remember>
+
+<Quiz
+  question="Batériu s napätím 12&nbsp;voltov pripojíme k ohrevnému drôtu s odporom 4&nbsp;ohmy. Aký prúd potečie?"
+  options={["48\u00a0ampérov", "3\u00a0ampéry", "8\u00a0ampérov"]}
+  answer={1}
+  explanation="Prúd = napätie : odpor = 12 : 4 = 3&nbsp;ampéry."
+/>
+
+<Quiz
+  question="Odpor zostane rovnaký, ale napätie sa zdvojnásobí. Čo sa stane s prúdom?"
+  options={["Klesne na polovicu", "Zostane rovnaký", "Zdvojnásobí sa"]}
+  answer={2}
+  explanation="Prúd = napätie : odpor. Pri rovnakom odpore dvojnásobné tlačenie dá dvojnásobný prúd."
+/>

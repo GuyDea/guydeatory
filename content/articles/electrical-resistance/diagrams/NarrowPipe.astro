@@ -1,0 +1,45 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Two identical pumps pushing water through a wide pipe and a narrow pipe',
+    desc: 'Two identical pumps push water with the same push. The top one pushes into a wide pipe, and lots of water flows out of its end. The bottom one pushes into a narrow pipe, and only a trickle comes out.',
+    pump: 'two identical pumps',
+    wide: 'wide pipe: lots of water',
+    narrow: 'narrow pipe: only a trickle',
+  },
+  sk: {
+    title: 'Dve rovnaké čerpadlá tlačia vodu širokou a úzkou rúrkou',
+    desc: 'Dve rovnaké čerpadlá tlačia vodu rovnako silno. Horné ju tlačí do širokej rúrky a z jej konca vyteká veľa vody. Dolné ju tlačí do úzkej rúrky a vyteká z nej len tenký pramienok.',
+    pump: 'dve rovnaké čerpadlá',
+    wide: 'široká rúrka: veľa vody',
+    narrow: 'úzka rúrka: len pramienok',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const pumps = [70, 172];
+---
+<Svg viewBox="0 0 400 232" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M70 70H280" fill="none" stroke="var(--d-wire)" stroke-width="38" />
+  <path d="M70 70H282" fill="none" stroke="var(--d-cool)" stroke-width="28" />
+  <path d="M70 172H280" fill="none" stroke="var(--d-wire)" stroke-width="12" />
+  <path d="M70 172H282" fill="none" stroke="var(--d-cool)" stroke-width="5" />
+  {
+    pumps.map((y) => (
+      <>
+        <circle cx="46" cy={y} r="27" class="d-box" />
+        <path d={`M34 ${y + 7}a13 13 0 1 1 12 7`} class="d-line d-arrow" />
+      </>
+    ))
+  }
+  <text x="20" y="28" class="d-small d-muted">{s.pump}</text>
+  {[[58, 340], [70, 352], [82, 340]].map(([y, end]) => <path d={`M292 ${y}H${end}`} class="d-line d-arrow-cold" style="stroke-width: 3" />)}
+  <path d="M292 172H314" class="d-line d-arrow-cold" />
+  <text x="84" y="116" class="d-label">{s.wide}</text>
+  <text x="84" y="210" class="d-label">{s.narrow}</text>
+</Svg>

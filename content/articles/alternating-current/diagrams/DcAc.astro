@@ -1,0 +1,57 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Direct current and alternating current',
+    desc: 'Top: in direct current, electrons in a wire all drift one way, and a graph of the current over time is a flat line. Bottom: in alternating current, electrons rock back and forth, and the graph of the current is a wave that keeps crossing zero.',
+    dc: 'DC: one way',
+    ac: 'AC: back and forth',
+    current: 'current',
+    time: 'time',
+  },
+  sk: {
+    title: 'Jednosmerný a striedavý prúd',
+    desc: 'Hore: pri jednosmernom prúde sa všetky elektróny v drôte posúvajú jedným smerom a graf prúdu v čase je rovná čiara. Dole: pri striedavom prúde sa elektróny kývu tam a späť a graf prúdu je vlna, ktorá neustále prechádza cez nulu.',
+    dc: 'DC: jedným smerom',
+    ac: 'AC: tam a späť',
+    current: 'prúd',
+    time: 'čas',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const electronsX = [32, 72, 112, 152, 192];
+const wave = Array.from({ length: 57 }, (_, i) => {
+  const x = 246 + i * 2.3;
+  const y = 196 - 30 * Math.sin((i / 56) * 4 * Math.PI);
+  return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)} ${y.toFixed(1)}`;
+}).join('');
+---
+<Svg viewBox="0 0 400 252" title={s.title} desc={s.desc} maxWidth="30rem">
+  <text x="12" y="26" class="d-label">{s.dc}</text>
+  <path d="M12 76H212" class="d-wire" />
+  {electronsX.map((x) => <circle cx={x} cy="76" r="7" class="d-electron" />)}
+  <path d="M40 54H186" class="d-line d-arrow-electron" style="stroke-width: 3" />
+  <path d="M246 104V38" class="d-line d-arrow" />
+  <path d="M246 96H390" class="d-line d-arrow" />
+  <path d="M246 60H382" class="d-line" style="stroke: var(--d-electron); stroke-width: 3" />
+  <text x="254" y="42" class="d-small d-muted">{s.current}</text>
+  <text x="390" y="118" text-anchor="end" class="d-small d-muted">{s.time}</text>
+  <text x="12" y="150" class="d-label">{s.ac}</text>
+  <path d="M12 196H212" class="d-wire" />
+  {electronsX.map((x) => <circle cx={x} cy="196" r="7" class="d-electron" />)}
+  {
+    [52, 132].map((x) => (
+      <path d={`M${x - 18} 174H${x + 18}`} class="d-line d-arrow-electron" style="marker-start: url(#d-arrow-electron); stroke-width: 3" />
+    ))
+  }
+  <path d="M246 238V154" class="d-line d-arrow" />
+  <path d="M246 196H390" class="d-line d-arrow" />
+  <path d={wave} class="d-line" style="stroke: var(--d-electron); stroke-width: 3" />
+  <text x="254" y="158" class="d-small d-muted">{s.current}</text>
+  <text x="390" y="244" text-anchor="end" class="d-small d-muted">{s.time}</text>
+</Svg>

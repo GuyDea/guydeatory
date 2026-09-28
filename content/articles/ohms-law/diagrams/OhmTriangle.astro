@@ -1,0 +1,49 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'The Ohm’s law triangle',
+    desc: 'A big triangle has V at the top and I and R side by side at the bottom. Below it, three small triangles each have one letter covered. Covering I leaves V over R, so I equals V divided by R. Covering V leaves I next to R, so V equals I times R. Covering R leaves V over I, so R equals V divided by I.',
+    v: 'V',
+    formulas: ['I = V ÷ R', 'V = I × R', 'R = V ÷ I'],
+  },
+  sk: {
+    title: 'Trojuholník pre Ohmov zákon',
+    desc: 'Veľký trojuholník má hore písmeno U a dole vedľa seba písmená I a R. Pod ním sú tri malé trojuholníky a v každom je jedno písmeno zakryté. Keď zakryješ I, zostane U nad R, takže I sa rovná U delené R. Keď zakryješ U, zostane I vedľa R, takže U sa rovná I krát R. Keď zakryješ R, zostane U nad I, takže R sa rovná U delené I.',
+    v: 'U',
+    formulas: ['I = U : R', 'U = I · R', 'R = U : I'],
+  },
+} as const;
+const s = strings[Astro.props.lang];
+// Small triangles: which letter is covered (I, V or R) and where its cover sits.
+const small = [
+  { cx: 70, cover: [52, 264] },
+  { cx: 200, cover: [200, 226] },
+  { cx: 330, cover: [348, 264] },
+];
+---
+<Svg viewBox="0 0 400 330" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M200 12L300 172H100Z" class="d-box" />
+  <path d="M144 102H256M200 102V172" class="d-line" />
+  <text x="200" y="86" text-anchor="middle" class="d-label" style="font-size: 36px">{s.v}</text>
+  <text x="166" y="157" text-anchor="middle" class="d-label" style="font-size: 34px">I</text>
+  <text x="234" y="157" text-anchor="middle" class="d-label" style="font-size: 34px">R</text>
+  {
+    small.map(({ cx, cover: [x, y] }, i) => (
+      <>
+        <path d={`M${cx} 196L${cx + 58} 284H${cx - 58}Z`} class="d-box" />
+        <path d={`M${cx - 29} 240H${cx + 29}M${cx} 240V284`} class="d-line" />
+        <text x={cx} y="233" text-anchor="middle" class="d-label" style="font-size: 22px">{s.v}</text>
+        <text x={cx - 18} y="272" text-anchor="middle" class="d-label" style="font-size: 22px">I</text>
+        <text x={cx + 18} y="272" text-anchor="middle" class="d-label" style="font-size: 22px">R</text>
+        <circle cx={x} cy={y} r="14" class="d-glow" />
+        <text x={cx} y="316" text-anchor="middle" class="d-label">{s.formulas[i]}</text>
+      </>
+    ))
+  }
+</Svg>

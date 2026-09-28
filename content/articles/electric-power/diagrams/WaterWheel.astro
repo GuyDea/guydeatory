@@ -1,0 +1,46 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'A water wheel turned by falling water',
+    desc: 'Water runs along a channel and falls from a height onto the paddles of a water wheel, which turns. The height of the fall stands for the push, or voltage. The amount of water falling each second stands for the flow, or current. Together they give the wheel its power.',
+    flow: 'water each second = flow',
+    height: 'height',
+    push: '= push',
+    power: 'power',
+  },
+  sk: {
+    title: 'Vodné koleso, ktoré roztáča padajúca voda',
+    desc: 'Voda tečie žľabom a padá z výšky na lopatky vodného kolesa, ktoré sa točí. Výška pádu predstavuje tlačenie, teda napätie. Množstvo vody, ktoré spadne každú sekundu, predstavuje tok, teda prúd. Spolu dávajú kolesu jeho výkon.',
+    flow: 'voda za sekundu = tok',
+    height: 'výška',
+    push: '= tlačenie',
+    power: 'výkon',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const cx = 230;
+const cy = 172;
+const angles = [0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (deg * Math.PI) / 180);
+const at = (a: number, r: number) => `${(cx + r * Math.cos(a)).toFixed(1)} ${(cy + r * Math.sin(a)).toFixed(1)}`;
+---
+<Svg viewBox="0 0 400 256" title={s.title} desc={s.desc} maxWidth="30rem">
+  <text x="12" y="22" class="d-small">{s.flow}</text>
+  <path d="M10 38H196" fill="none" stroke="var(--d-wire)" stroke-width="18" />
+  <path d="M10 38H196" fill="none" stroke="var(--d-cool)" stroke-width="10" />
+  <path d="M190 40C200 58 202 78 200 104" fill="none" stroke="var(--d-cool)" stroke-width="12" stroke-linecap="round" />
+  <path d="M168 54V116" class="d-line d-arrow" style="marker-start: url(#d-arrow)" />
+  <text x="156" y="82" text-anchor="end" class="d-label">{s.height}</text>
+  <text x="156" y="106" text-anchor="end" class="d-label">{s.push}</text>
+  <circle cx={cx} cy={cy} r="62" class="d-box-alt" style="stroke-width: 4" />
+  {angles.map((a) => <path d={`M${at(a, 0)}L${at(a, 62)}`} class="d-line" />)}
+  {angles.map((a) => <path d={`M${at(a, 60)}L${at(a, 84)}`} class="d-line" style="stroke: var(--d-wire); stroke-width: 13; stroke-linecap: butt" />)}
+  <circle cx={cx} cy={cy} r="8" class="d-box" />
+  <path d="M322 210A88 88 0 0 0 322 134" class="d-line d-arrow-accent" style="stroke-width: 3" />
+  <text x="338" y="178" class="d-label">{s.power}</text>
+</Svg>

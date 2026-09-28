@@ -1,5 +1,18 @@
 topics: [electricity]
 labels: [calculation, low-level]
-status: stub
+prerequisites: [voltage, electric-current, electrical-resistance]
+related: [calculating-electric-current, electric-power, how-electric-current-behaves, electric-circuit]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Ohm’s law — Wikipedia
+    url: https://en.wikipedia.org/wiki/Ohm%27s_law
+  - title: Georg Ohm — Encyclopaedia Britannica
+    url: https://www.britannica.com/biography/Georg-Ohm
+  - title: Georg Ohm — Wikipedia
+    url: https://en.wikipedia.org/wiki/Georg_Ohm
+  - title: Electrical injury — Wikipedia
+    url: https://en.wikipedia.org/wiki/Electrical_injury
+  - title: Light-emitting diode — Wikipedia
+    url: https://en.wikipedia.org/wiki/Light-emitting_diode

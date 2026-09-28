@@ -1,0 +1,54 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'The voltage of a European socket over time',
+    desc: 'A sine wave on a graph of voltage against time. It rises to about plus 325 volts, falls through zero to about minus 325 volts and comes back, twice in 40 milliseconds. A dashed line marks 230 volts, the RMS value. A bracket shows that one cycle lasts 20 milliseconds.',
+    voltage: 'voltage',
+    time: 'time',
+    peak: '+325 V',
+    rms: '230 V',
+    trough: '−325 V',
+    cycle: '20 ms',
+  },
+  sk: {
+    title: 'Napätie v európskej zásuvke v čase',
+    desc: 'Sínusoida v grafe napätia v závislosti od času. Stúpne približne na plus 325 voltov, klesne cez nulu na približne mínus 325 voltov a vráti sa späť, dvakrát za 40 milisekúnd. Prerušovaná čiara označuje 230 voltov, efektívnu hodnotu. Zátvorka ukazuje, že jedna perióda trvá 20 milisekúnd.',
+    voltage: 'napätie',
+    time: 'čas',
+    peak: '+325 V',
+    rms: '230 V',
+    trough: '−325 V',
+    cycle: '20 ms',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+// Two cycles (40 ms) over 320 units: 8 units per millisecond. 325 V peak = 90 units.
+const x0 = 64;
+const zero = 124;
+const wave = Array.from({ length: 129 }, (_, i) => {
+  const x = x0 + i * 2.5;
+  const y = zero - 90 * Math.sin((i / 128) * 4 * Math.PI);
+  return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)} ${y.toFixed(1)}`;
+}).join('');
+const rmsY = zero - 90 * (230 / 325);
+---
+<Svg viewBox="0 0 400 258" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d={`M${x0} 232V14`} class="d-line d-arrow" />
+  <path d={`M${x0} ${zero}H394`} class="d-line d-arrow" />
+  <text x={x0 + 8} y="18" class="d-small d-muted">{s.voltage}</text>
+  <text x="394" y={zero - 10} text-anchor="end" class="d-small d-muted">{s.time}</text>
+  <path d={`M${x0} ${rmsY.toFixed(1)}H384`} class="d-line" style="stroke: var(--d-muted)" stroke-dasharray="6 5" />
+  <path d={wave} class="d-line" style="stroke: var(--d-electron); stroke-width: 3" />
+  <text x={x0 - 6} y="40" text-anchor="end" class="d-small">{s.peak}</text>
+  <text x={x0 - 6} y={(rmsY + 5).toFixed(1)} text-anchor="end" class="d-small">{s.rms}</text>
+  <text x={x0 - 6} y={zero + 5} text-anchor="end" class="d-small">0</text>
+  <text x={x0 - 6} y="219" text-anchor="end" class="d-small">{s.trough}</text>
+  <path d={`M${x0} 236V244H${x0 + 160}V236`} class="d-line" />
+  <text x={x0 + 80} y="238" text-anchor="middle" class="d-small">{s.cycle}</text>
+</Svg>

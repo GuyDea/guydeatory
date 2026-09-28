@@ -2,7 +2,176 @@
 title: 'Čo je elektrický odpor?'
 term: 'odpor'
 slug: elektricky-odpor
-summary: 'Odpor hovorí, ako veľmi látka alebo spotrebič brzdí tok elektriny. Tenké a dlhé drôty kladú väčší odpor ako hrubé a krátke – a pri tom sa časť elektrickej energie mení na teplo.'
+summary: 'Odpor hovorí, ako veľmi niečo brzdí tok elektriny. Dlhé a tenké drôty ho brzdia viac ako krátke a hrubé – a pri tomto brzdení sa elektrická energia mení na teplo.'
+keywords: [ohm, ohmy, rezistor, rezistivita, merný odpor, elektrický odpor, ohrevné teleso, prečo sa drôt zohrieva]
 ---
 
-Niektoré cesty sú pre elektrinu ľahké a iné ťažké. Tomu, aká ťažká je cesta, hovoríme odpor a meriame ho v ohmoch.
+import BumpyWire from './diagrams/BumpyWire.astro';
+import NarrowPipe from './diagrams/NarrowPipe.astro';
+import WireShapes from './diagrams/WireShapes.astro';
+
+Skús piť hustý mliečny kokteil cez tenkú slamku. Saješ zo všetkých síl, ale hore vyjde len troška.
+Slamka kokteil brzdí.
+
+Aj elektrinu niečo brzdí, keď tečie drôtmi, žiarovkami či hriankovačmi. Tomuto brzdeniu hovoríme
+**odpor**. Poďme zistiť, odkiaľ sa berie a prečo sa pri ňom veci zohrievajú.
+
+## Čo brzdí elektrinu?
+
+Elektrina v drôte je tok drobných čiastočiek, ktoré sa volajú [[electron|elektróny]]. Tlačenie,
+ktorému hovoríme [[voltage|napätie]], ich spoločne posúva po drôte. Tomuto toku hovoríme
+[[electric-current|elektrický prúd]].
+
+Lenže drôt nie je prázdna rúrka. Je plný kovových [[atom|atómov]], ktoré sedia v úhľadných radoch.
+Atómy nikdy nie sú v pokoji: neustále sa chvejú, aj v studenom drôte.
+
+Ako sa elektróny posúvajú, stále narážajú do chvejúcich sa atómov. Každý náraz ich spomalí. Tomu,
+ako silno niečo brzdí tok elektriny, hovoríme **odpor**.
+
+<Figure caption="Elektróny kľučkujú pomedzi atómy kovu a stále do nich narážajú. Každý náraz ich spomalí a atómy sa rozochvejú ešte viac – a tak sa drôt zohrieva." wide>
+  <BumpyWire />
+</Figure>
+
+## Ako úzka rúrka
+
+<Analogy>
+Predstav si elektrinu ako vodu, ktorá tečie rúrkami. Rovnaké čerpadlo tlačí vodu do širokej aj do
+úzkej rúrky. Širokou rúrkou sa valí veľa vody, no úzkou sa pretlačí len tenký pramienok. Vodu brzdí
+aj rúrka upchatá pieskom.
+</Analogy>
+
+<Figure caption="Rovnaké tlačenie pretlačí širokou rúrkou veľa vody, no úzkou len tenký pramienok. Úzka rúrka je ako cesta s veľkým odporom." wide>
+  <NarrowPipe />
+</Figure>
+
+S elektrinou je to rovnaké. Pri rovnakom tlačení tečie cez malý odpor veľký prúd. Cez veľký odpor
+tečie len malý prúd.
+
+## Čo robí odpor väčším alebo menším?
+
+O tom, ako veľmi drôt brzdí elektrinu, rozhodujú štyri veci:
+
+- **Materiál.** Meď a striebro púšťajú elektróny veľmi ľahko, preto sa elektrické káble robia z
+  medi. Iné kovy, napríklad železo, brzdia elektróny viac. Plast a guma ich brzdia tak veľmi, že
+  nimi netečie takmer nič: sú to [[conductors-and-insulators|izolanty]].
+- **Dĺžka.** V dlhom drôte musia elektróny prejsť popri väčšom počte atómov. Dvakrát dlhší drôt má
+  dvakrát väčší odpor.
+- **Hrúbka.** Hrubý drôt má viac miesta – ako široká chodba, kde môže ísť veľa ľudí vedľa seba. Čím
+  je drôt hrubší, tým má menší odpor.
+- **[[temperature|Teplota]].** Keď sa kov zohreje, jeho atómy sa chvejú divokejšie. Elektróny do
+  nich narážajú častejšie, a tak odpor stúpne.
+
+<Figure caption="Dlhý tenký drôt brzdí elektróny oveľa viac ako krátky hrubý drôt." wide>
+  <WireShapes />
+</Figure>
+
+<FunFact>
+Niektoré látky pri veľkom chlade úplne stratia odpor. V roku 1911 istý vedec ochladil kov ortuť asi
+na −269&nbsp;°C a jej odpor zrazu zmizol. Takým látkam hovoríme supravodiče. Nemocnice ich používajú
+v prístrojoch na magnetickú rezonanciu, ktoré robia snímky vnútra tela.
+</FunFact>
+
+## Ako meriame odpor?
+
+Odpor meriame v **ohmoch**. Značka ohmu je **Ω** – grécke písmeno omega. Jednotka dostala meno podľa
+Georga Ohma, nemeckého vedca. Objavil pravidlo, ktoré spája napätie, prúd a odpor:
+[[ohms-law|Ohmov zákon]].
+
+| Čo | Odpor |
+|---|---|
+| 1&nbsp;meter medeného drôtu v kábli v dome | asi 0,01&nbsp;Ω |
+| Ohrevné teleso kanvice s výkonom 2&nbsp;000&nbsp;W | asi 26&nbsp;Ω |
+| Klasická 60-wattová žiarovka, keď svieti | asi 900&nbsp;Ω |
+| Kúsok plastu veľký ako kocka cukru | viac ako milión miliónov ohmov |
+
+Malej súčiastke, ktorej jedinou úlohou je mať určitý odpor, hovoríme **rezistor**. Rezistory nájdeš
+takmer v každom elektronickom zariadení.
+
+## Odpor zohrieva
+
+Pri každom náraze elektrónu sa atóm rozochveje o kúsok viac. A čím rýchlejšie sa atómy chvejú, tým
+je látka teplejšia. Odpor teda mení elektrickú [[energy|energiu]] na [[heat|teplo]].
+
+Niekedy je to teplo presne to, čo chceme. Hriankovač, rýchlovarná kanvica aj fén majú v sebe drôty s
+veľkým odporom. Keď nimi tečie prúd, rozpália sa – dosť na to, aby sa dal opiecť chlieb alebo uvariť
+voda.
+
+Klasická žiarovka funguje rovnako. Jej veľmi tenký drôtik, ktorý sa volá vlákno, sa rozpáli na viac
+ako 2&nbsp;000&nbsp;°C – tak veľmi, že svieti na bielo. Na svetlo sa však zmení len maličká časť
+energie. Takmer všetko sa zmení na teplo, a preto takéto žiarovky plytvajú elektrinou.
+
+Inokedy je teplo zbytočné. Káble, nabíjačky aj notebooky sa pri práci zohrievajú. Aby sa takto
+strácalo čo najmenej energie, káble sa robia z medi. Káble pre spotrebiče, ktoré berú veľa
+elektriny, napríklad pre elektrický sporák, sú extra hrubé.
+
+Tomu, ako rýchlo niečo míňa elektrickú energiu, hovoríme [[electric-power|výkon]].
+
+<Safety>
+Hriankovače, kanvice, žehličky a ohrievače sú veľmi horúce. Nikdy sa nedotýkaj ich horúcich častí.
+
+Nikdy nič nestrkaj do hriankovača, ani vidličku, keď v ňom uviazne chlieb. Radšej popros o pomoc
+dospelých. Nezapájaj veľa silných spotrebičov do jednej predlžovačky, lebo jej kábel sa môže
+prehriať a spôsobiť požiar.
+</Safety>
+
+<GoDeeper title="Vzorec pre odpor drôtu">
+Odpor drôtu závisí od jeho materiálu, dĺžky a hrúbky:
+
+$$
+R = \rho \cdot \frac{l}{S}
+$$
+
+- $R$ je odpor v ohmoch (Ω).
+- $\rho$ (grécke písmeno ró) je **merný elektrický odpor** (rezistivita) látky: ako silno brzdí
+  elektróny samotný materiál. Meď má asi $1{,}7 \cdot 10^{-8}\ \Omega \cdot \text{m}$. Nichróm,
+  zliatina niklu a chrómu, z ktorej sa robia ohrevné telesá, má asi 65-krát viac.
+- $l$ je dĺžka drôtu v metroch (m).
+- $S$ je obsah prierezu drôtu (veľkosť jeho odrezaného konca) v štvorcových metroch (m²).
+
+Napríklad 1&nbsp;meter medeného drôtu s prierezom 1,5&nbsp;mm² ($1{,}5 \cdot 10^{-6}\ \text{m}^2$),
+aký býva v kábloch v domoch, má odpor:
+
+$$
+R = 1{,}7 \cdot 10^{-8}\ \Omega \cdot \text{m} \cdot \frac{1\ \text{m}}{1{,}5 \cdot 10^{-6}\ \text{m}^2} \doteq 0{,}011\ \Omega
+$$
+
+Dvakrát dlhší drôt má dvakrát väčší odpor. Drôt s dvakrát väčším priemerom má štyrikrát väčší
+prierez, a preto má len štvrtinový odpor.
+</GoDeeper>
+
+<GoDeeper title="Čo elektróny naozaj brzdí">
+- V kove každý atóm pustí jeden či dva svoje vonkajšie elektróny. Tieto voľné elektróny sa túlajú
+  celým kovom. Atómy, ktorým teraz hovoríme ióny, zostávajú v pravidelnom usporiadaní – v
+  kryštálovej mriežke.
+- Obrázok elektrónov, ktoré sa odrážajú od atómov ako loptičky, je zjednodušený. Kvantová fyzika
+  ukazuje, že dokonale pravidelný kryštál, ktorého atómy by stáli úplne bez pohybu, by elektróny
+  takmer vôbec nebrzdil. Elektróny rozptyľujú kmity atómov, ktoré s teplotou rastú, a chyby v
+  kryštáli: chýbajúce atómy, atómy iných prvkov a hranice medzi drobnými kryštálikmi.
+- Preto odpor medi stúpne asi o 0,4&nbsp;% s každým stupňom Celzia a zliatiny kovov, napríklad
+  nichróm, majú oveľa väčší odpor ako čisté kovy.
+- Nie každá látka sa správa ako kov. Mnohým termistorom (malým súčiastkam v elektronických
+  teplomeroch) sa pri zohriatí odpor *zmenšuje*.
+</GoDeeper>
+
+<GoDeeper title="Kde obrázok s rúrkou nesedí">
+- Voda sa trie o steny rúrky, takže ju brzdia hlavne steny. V drôte brzdí elektróny celý kov, v
+  celej jeho hrúbke. Obrázok s rúrkou dáva správny výsledok – dlhší a tenší drôt má väčší odpor –,
+  ale nie správny dôvod.
+- Odpor nespotrebúva elektróny. Z ohrevného drôtu hriankovača každú sekundu vytečie toľko
+  elektrónov, koľko doň vtečie. Elektróny cestou strácajú energiu a tá sa mení na teplo.
+</GoDeeper>
+
+<Remember>
+- Odpor hovorí, ako veľmi niečo brzdí tok elektriny.
+- Je ako úzka alebo upchatá rúrka pre vodu.
+- Dlhé a tenké drôty majú väčší odpor ako krátke a hrubé. Meď má veľmi malý odpor.
+- Odpor meriame v ohmoch (Ω).
+- Odpor mení elektrickú energiu na teplo: v hriankovači je to užitočné, v kábli je to strata.
+</Remember>
+
+<Quiz
+  question="Ktorý drôt má najmenší odpor?"
+  options={["Dlhý tenký medený drôt", "Krátky hrubý medený drôt", "Krátky hrubý železný drôt"]}
+  answer={1}
+  explanation="Meď brzdí elektróny menej ako železo a krátky hrubý drôt im ponúka najľahšiu cestu zo všetkých."
+/>

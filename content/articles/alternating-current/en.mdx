@@ -2,7 +2,200 @@
 title: 'What is alternating current?'
 term: 'alternating current'
 slug: alternating-current
-summary: 'Alternating current (AC) keeps changing direction: in European homes the electrons wiggle back and forth 50 times every second. Batteries give direct current (DC), which flows one way only.'
+summary: 'Alternating current (AC) keeps changing direction: in European homes it swings back and forth 50 times every second. Batteries give direct current (DC), which flows one way only.'
+keywords: [AC, DC, direct current, mains electricity, 230 volts, 50 hertz, frequency, transformer, war of the currents, Tesla, Edison]
 ---
 
-Electricity from a battery flows in one direction. Electricity from a wall socket keeps switching direction, back and forth, many times a second.
+import DcAc from './diagrams/DcAc.astro';
+import PowerGrid from './diagrams/PowerGrid.astro';
+import SineWave from './diagrams/SineWave.astro';
+import AcDc from '@widgets/ac-dc/AcDc.svelte';
+
+A remote-controlled car runs on batteries. A fridge runs on electricity from a wall socket. Both use
+[[electric-current|electric current]], but there is a surprising difference between them.
+
+The current from a battery always flows the same way. The current from a socket keeps turning
+around!
+
+## One way: direct current
+
+A battery has a minus end (−) and a plus end (+). It pushes [[electron|electrons]] out of its minus
+end, around the [[electric-circuit|circuit]] and back into its plus end. They always go the same
+way.
+
+A current that always flows in one direction is called **direct current**, or **DC** for short.
+Batteries and solar panels make direct current.
+
+## Back and forth: alternating current
+
+The electricity in a wall socket works differently. Its push keeps swapping sides. First it pushes
+the electrons one way, then the other way, then back again, over and over.
+
+So the electrons in the wires do not travel around the circuit. They rock back and forth on the
+spot, by less than the width of a hair. A current that keeps changing direction like this is called
+**alternating current**, or **AC**.
+
+<Figure caption="In direct current, the electrons drift one way. In alternating current, they rock back and forth, so the current keeps changing direction." wide>
+  <DcAc />
+</Figure>
+
+<Figure caption="Switch between direct and alternating current and watch the electrons and the graph. The swinging is slowed right down so you can see it." wide>
+  <AcDc client:visible />
+</Figure>
+
+<Analogy title="Like a saw">
+Think of a saw cutting wood. It only moves back and forth and never goes anywhere, yet it still gets
+the job done. Alternating current is similar. The electrons only rock back and forth, but a kettle
+still gets hot and a lamp still shines.
+</Analogy>
+
+A kettle heats up with either kind of current. Its electrons bump into atoms whichever way they
+move, and every bump makes heat. That is what [[electrical-resistance|resistance]] does.
+
+## What comes out of a socket?
+
+In Europe, the push in a wall socket, the [[voltage]], is about 230 volts. It swings back and forth
+50 times every second. We say it has a **frequency** of 50 **hertz** (Hz). One hertz means once
+every second.
+
+Other countries use different numbers. In North America, sockets give 120 volts at 60 hertz. Many
+chargers work with both, but some devices only work in the countries they were made for.
+
+<FunFact>
+Japan uses both! Eastern Japan, with Tokyo, runs at 50 hertz, and western Japan, with Osaka, runs at
+60 hertz. In the 1890s, Tokyo bought generators from a German company, and Osaka bought them from an
+American one. The difference has stayed ever since.
+</FunFact>
+
+<Safety>
+The electricity in a socket can kill. Alternating current can also make muscles clench. A person who
+grabs a wire with electricity in it may not be able to let go.
+
+Never poke anything into a socket. Never open a charger or a device while it is plugged in, and
+never touch a damaged cable. Stay far away from power lines: never fly a kite or climb a tree near
+them.
+</Safety>
+
+## Why do we use alternating current?
+
+Power stations are often far away from the towns that need electricity. The electricity travels
+there through long power lines. On the way, the wires waste some energy as heat, because of their
+resistance.
+
+How much energy is wasted depends on the current. A big current heats the wires a lot, and a small
+current heats them only a little.
+
+[[electric-power|Power]] is push times flow. So engineers send the same power with a huge push and a
+small flow: hundreds of thousands of volts. Much less energy is wasted on the way.
+
+But such a high voltage would be deadly in a home. So it must be lowered again, and alternating
+current makes that easy.
+
+A machine called a **transformer** can raise or lower the voltage of alternating current. It has no
+moving parts, only two coils of wire wound around a block of iron. A transformer does not work with
+direct current.
+
+<Figure caption="At the power station, a transformer raises the voltage for the long journey. Near your home, other transformers lower it again, step by step, to 230 volts." wide>
+  <PowerGrid />
+</Figure>
+
+## Chargers turn AC into DC
+
+Phones, laptops and most gadgets need a small, steady direct current. So their chargers do two jobs.
+They lower the voltage from 230 volts to a few volts, for example 5 volts for many phones. And they
+turn alternating current into direct current.
+
+TVs and computers have similar parts built inside.
+
+## The war of the currents
+
+About 140 years ago, people argued fiercely about which kind of current to use. Thomas Edison built
+one of the first power networks, in New York in 1882. It used direct current, which could only reach
+homes less than about 1.5 kilometres from the power station.
+
+Nikola Tesla, an inventor, and George Westinghouse, a businessman, bet on alternating current
+instead. With transformers, it could travel much farther. Edison warned that its high voltages were
+dangerous.
+
+In 1893, alternating current lit up a huge world fair in Chicago. Soon it had won this “war of the
+currents”. You can read the whole story in the [[history-of-electricity|history of electricity]].
+
+<GoDeeper title="The shape of alternating current">
+In a European socket, the voltage does not jump between two values. It rises and falls smoothly,
+following a curve called a **sine wave**.
+
+<Figure caption="The voltage in a European socket over time. It swings between about +325 and −325 volts, and one full swing takes 20 milliseconds.">
+  <SineWave />
+</Figure>
+
+- One full swing is called a **cycle**. At 50 Hz, one cycle takes $\frac{1}{50}$ of a second, which
+  is 20 milliseconds. The current changes direction twice in every cycle, so 100 times a second.
+- The voltage at any moment is $v(t) = V_\text{peak} \cdot \sin(2\pi f t)$. Here $v(t)$ is the
+  voltage at time $t$ (in seconds), $V_\text{peak}$ is the highest voltage and $f$ is the frequency
+  (50 Hz).
+- Why do we say 230 volts, when the peak is about 325? The 230 V is a kind of average called the
+  **RMS value** (root mean square). An AC voltage of 230 V heats a kettle exactly as much as a
+  steady DC voltage of 230 V would. For a sine wave, the peak is $\sqrt{2} \approx 1.41$ times
+  bigger: $230\ \text{V} \times \sqrt{2} \approx 325\ \text{V}$.
+</GoDeeper>
+
+<GoDeeper title="How a transformer works">
+A transformer has two coils of wire wound around the same iron core. Alternating current in the
+first coil makes a magnetic field that keeps growing, shrinking and flipping. This changing field
+creates a voltage in the second coil. Michael Faraday discovered this effect, called electromagnetic
+induction, in 1831. The voltages are in the same ratio as the numbers of turns:
+
+$$
+\frac{V_2}{V_1} = \frac{N_2}{N_1}
+$$
+
+Here $V_1$ and $V_2$ are the voltages of the first and the second coil, and $N_1$ and $N_2$ are
+their numbers of turns. A steady direct current makes a steady field, which creates no voltage at
+all. The power stays almost the same: when the voltage goes up, the current goes down.
+</GoDeeper>
+
+<GoDeeper title="How much does a high voltage save?">
+The power wasted as heat in a line is $P_\text{loss} = I^2 \cdot R$, where $I$ is the current and
+$R$ is the resistance of the line (see [[electric-power|electric power]]). Imagine sending one
+million watts (1 MW):
+
+- at 10,000 V, the current is 1,000,000 ÷ 10,000 = 100 A;
+- at 400,000 V, the current is 1,000,000 ÷ 400,000 = 2.5 A.
+
+The current is 40 times smaller, so the heat wasted in the same wire is $40^2 = 1{,}600$ times
+smaller.
+
+Direct current is making a comeback, though. Some very long power lines and undersea cables use
+high-voltage direct current (HVDC). Modern electronics can now change the voltage of DC too, and
+over very long distances, especially under the sea, DC works better than AC.
+</GoDeeper>
+
+<GoDeeper title="Where the saw picture goes wrong">
+A saw is a good picture of the rocking, but not of where the energy comes from. The electrons in
+your kettle never came from the power station: they stay in the kettle’s wire and only rock back and
+forth. What travels along the power lines is the push, and it moves almost as fast as light. So
+energy flows one way, from the power station to the kettle, even though the electrons go nowhere.
+</GoDeeper>
+
+<Remember>
+- Direct current (DC) flows one way. Batteries and solar panels make it.
+- Alternating current (AC) keeps changing direction. European sockets give about 230 volts at 50
+  hertz.
+- Transformers can easily raise and lower the voltage of AC.
+- High voltage wastes less energy in long power lines.
+- Chargers turn the AC from a socket into the DC that phones need.
+</Remember>
+
+<Quiz
+  question="Why do power lines carry electricity at a very high voltage?"
+  options={["High voltage flows faster", "Less energy is wasted as heat on the way", "Birds cannot sit on high-voltage lines"]}
+  answer={1}
+  explanation="With a big push, the same power needs only a small current. A small current wastes much less energy heating the wires."
+/>
+
+<Quiz
+  question="How many times a second does the push in a European socket swing back and forth?"
+  options={["Once", "50 times", "230 times"]}
+  answer={1}
+  explanation="European sockets have a frequency of 50 hertz: 50 swings back and forth every second. The 230 is the voltage, not the frequency."
+/>
