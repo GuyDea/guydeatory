@@ -1,0 +1,61 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Where the heat from a heat pump comes from',
+    desc: 'One square of electricity goes into a heat pump from above. Two squares of heat come into it from the cold air outdoors. Three squares of heat come out of it into the house. Nothing is made from nothing: 2 plus 1 makes 3.',
+    electricity: 'electricity',
+    pump1: 'heat',
+    pump2: 'pump',
+    outdoors: 'outdoors',
+    coldAir: 'cold air',
+    indoors: 'indoors',
+    heat: 'heat',
+  },
+  sk: {
+    title: 'Odkiaľ berie tepelné čerpadlo teplo',
+    desc: 'Zhora vstupuje do tepelného čerpadla jeden štvorček elektriny. Zo studeného vzduchu vonku doň prichádzajú dva štvorčeky tepla. Von do domu z neho vychádzajú tri štvorčeky tepla. Nič nevzniká z ničoho: 2 a 1 je spolu 3.',
+    electricity: 'elektrina',
+    pump1: 'tepelné',
+    pump2: 'čerpadlo',
+    outdoors: 'vonku',
+    coldAir: 'studený vzduch',
+    indoors: 'dnu',
+    heat: 'teplo',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 250" title={s.title} desc={s.desc} maxWidth="30rem">
+  <text x="200" y="22" text-anchor="middle" class="d-label">{s.electricity}</text>
+  <rect x="188" y="34" width="24" height="24" rx="3" class="d-accent" />
+  <path d="M200 64V92" class="d-line d-arrow-accent" />
+
+  <rect x="140" y="100" width="120" height="64" rx="8" class="d-box" />
+  <text x="200" y="127" text-anchor="middle" class="d-label">{s.pump1}</text>
+  <text x="200" y="150" text-anchor="middle" class="d-label">{s.pump2}</text>
+
+  <text x="57" y="98" text-anchor="middle" class="d-label">{s.outdoors}</text>
+  <rect x="16" y="110" width="82" height="44" rx="8" class="d-cool" />
+  <rect x="28" y="120" width="24" height="24" rx="3" class="d-hot" />
+  <rect x="62" y="120" width="24" height="24" rx="3" class="d-hot" />
+  <text x="57" y="176" text-anchor="middle" class="d-small d-muted">{s.coldAir}</text>
+  <path d="M102 132H132" class="d-line d-arrow-hot" />
+
+  <path d="M266 132H290" class="d-line d-arrow-hot" />
+  <path d="M296 118L342 84L388 118V182H296Z" class="d-box" />
+  <rect x="306" y="146" width="22" height="22" rx="3" class="d-hot" />
+  <rect x="331" y="146" width="22" height="22" rx="3" class="d-hot" />
+  <rect x="356" y="146" width="22" height="22" rx="3" class="d-hot" />
+  <text x="342" y="72" text-anchor="middle" class="d-label">{s.indoors}</text>
+
+  <rect x="100" y="216" width="16" height="16" rx="2" class="d-hot" />
+  <text x="122" y="230">{s.heat}</text>
+  <rect x="192" y="216" width="16" height="16" rx="2" class="d-accent" />
+  <text x="214" y="230">{s.electricity}</text>
+</Svg>

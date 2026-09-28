@@ -1,5 +1,17 @@
 topics: [matter]
 labels: [high-level]
-status: stub
+related: [boiling-point, heat-pump, temperature, heat]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Pressure — Wikipedia
+    url: https://en.wikipedia.org/wiki/Pressure
+  - title: Atmospheric pressure — Wikipedia
+    url: https://en.wikipedia.org/wiki/Atmospheric_pressure
+  - title: Atmosphere of Earth — Wikipedia
+    url: https://en.wikipedia.org/wiki/Atmosphere_of_Earth
+  - title: Ideal gas law — Wikipedia
+    url: https://en.wikipedia.org/wiki/Ideal_gas_law
+  - title: Adiabatic process — Wikipedia
+    url: https://en.wikipedia.org/wiki/Adiabatic_process

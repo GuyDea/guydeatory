@@ -1,0 +1,62 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Particles in a cold thing and in a hot thing',
+    desc: 'Two boxes with the same particles. In the cold box on the left, short arrows show that the particles move slowly. In the hot box on the right, long arrows show that they move fast.',
+    cold: 'cold',
+    hot: 'hot',
+    slow: 'slow jiggling',
+    fast: 'fast jiggling',
+  },
+  sk: {
+    title: 'Čiastočky v studenej a v horúcej veci',
+    desc: 'Dve škatule s rovnakými čiastočkami. V studenej škatuli vľavo krátke šípky ukazujú, že sa čiastočky pohybujú pomaly. V horúcej škatuli vpravo dlhé šípky ukazujú, že sa pohybujú rýchlo.',
+    cold: 'studené',
+    hot: 'horúce',
+    slow: 'pomalé chvenie',
+    fast: 'rýchle chvenie',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 240" title={s.title} desc={s.desc} maxWidth="30rem">
+  <text x="105" y="32" text-anchor="middle" class="d-label">{s.cold}</text>
+  <text x="295" y="32" text-anchor="middle" class="d-label">{s.hot}</text>
+  <rect x="20" y="46" width="170" height="150" rx="10" class="d-box" style="stroke: var(--d-cold); stroke-width: 4" />
+  <rect x="210" y="46" width="170" height="150" rx="10" class="d-box" style="stroke: var(--d-hot); stroke-width: 4" />
+
+  <circle cx="55" cy="86" r="9" class="d-box-alt" />
+  <circle cx="130" cy="84" r="9" class="d-box-alt" />
+  <circle cx="165" cy="91" r="9" class="d-box-alt" />
+  <circle cx="60" cy="156" r="9" class="d-box-alt" />
+  <circle cx="130" cy="146" r="9" class="d-box-alt" />
+  <circle cx="150" cy="174" r="9" class="d-box-alt" />
+  <path d="M65 86H77" class="d-line d-arrow" />
+  <path d="M122.9 76.9L114.5 68.5" class="d-line d-arrow" />
+  <path d="M165 101V113" class="d-line d-arrow" />
+  <path d="M67.1 148.9L75.5 140.5" class="d-line d-arrow" />
+  <path d="M120 146H108" class="d-line d-arrow" />
+  <path d="M158 168L167.6 160.8" class="d-line d-arrow" />
+
+  <circle cx="245" cy="86" r="9" class="d-box-alt" />
+  <circle cx="320" cy="84" r="9" class="d-box-alt" />
+  <circle cx="355" cy="91" r="9" class="d-box-alt" />
+  <circle cx="250" cy="156" r="9" class="d-box-alt" />
+  <circle cx="320" cy="146" r="9" class="d-box-alt" />
+  <circle cx="340" cy="174" r="9" class="d-box-alt" />
+  <path d="M255 86H281" class="d-line d-arrow" />
+  <path d="M312.9 76.9L294.5 58.5" class="d-line d-arrow" />
+  <path d="M355 101V127" class="d-line d-arrow" />
+  <path d="M257.1 148.9L275.5 130.5" class="d-line d-arrow" />
+  <path d="M310 146H284" class="d-line d-arrow" />
+  <path d="M348 168L368.8 152.4" class="d-line d-arrow" />
+
+  <text x="105" y="224" text-anchor="middle">{s.slow}</text>
+  <text x="295" y="224" text-anchor="middle">{s.fast}</text>
+</Svg>

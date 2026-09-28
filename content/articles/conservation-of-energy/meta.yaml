@@ -1,5 +1,18 @@
 topics: [energy]
 labels: [high-level]
-status: stub
+prerequisites: [energy]
+related: [heat, heat-pump, coefficient-of-performance, temperature]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Conservation of energy — Wikipedia
+    url: https://en.wikipedia.org/wiki/Conservation_of_energy
+  - title: First law of thermodynamics — Wikipedia
+    url: https://en.wikipedia.org/wiki/First_law_of_thermodynamics
+  - title: Mechanical equivalent of heat (Joule's experiments) — Wikipedia
+    url: https://en.wikipedia.org/wiki/Mechanical_equivalent_of_heat
+  - title: Perpetual motion — Wikipedia
+    url: https://en.wikipedia.org/wiki/Perpetual_motion
+  - title: Heat pump — Wikipedia
+    url: https://en.wikipedia.org/wiki/Heat_pump

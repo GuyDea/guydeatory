@@ -1,0 +1,56 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'A swing turning height into speed and back',
+    desc: 'A swing hangs from a bar. It is shown in three places: high on the left, at the bottom, and high on the right, a little lower than at the start. Under each place, a bar shows its energy. High up, the energy is stored in height. At the bottom, it is movement. A small part has turned into heat, and that part grows with every swing. All three bars have the same total size.',
+    high: 'high',
+    fast: 'fast',
+    height: 'height',
+    movement: 'movement',
+    heat: 'heat',
+  },
+  sk: {
+    title: 'Hojdačka mení výšku na rýchlosť a späť',
+    desc: 'Hojdačka visí na tyči. Je nakreslená na troch miestach: vysoko vľavo, úplne dole a vysoko vpravo, o niečo nižšie ako na začiatku. Pod každým miestom ukazuje stĺpec jej energiu. Vysoko je energia uložená vo výške. Dole je to pohyb. Malá časť sa zmenila na teplo a s každým zhupnutím jej pribúda. Všetky tri stĺpce sú spolu rovnako veľké.',
+    high: 'vysoko',
+    fast: 'rýchlo',
+    height: 'výška',
+    movement: 'pohyb',
+    heat: 'teplo',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 335" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M140 26H260" class="d-wire" />
+  <path d="M88.5 126.4A150 150 0 0 0 302.3 135.7" class="d-line" style="stroke: var(--d-muted)" stroke-dasharray="4 6" />
+  <path d="M200 26L88.5 126.4M200 26V176M200 26L302.3 135.7" class="d-line" />
+  <circle cx="88.5" cy="126.4" r="13" class="d-box-alt" />
+  <circle cx="200" cy="176" r="13" class="d-box-alt" />
+  <circle cx="302.3" cy="135.7" r="13" class="d-box-alt" />
+  <text x="68" y="132" text-anchor="end" class="d-label">{s.high}</text>
+  <text x="200" y="210" text-anchor="middle" class="d-label">{s.fast}</text>
+  <text x="323" y="141" class="d-label">{s.high}</text>
+
+  <rect x="68.5" y="225" width="40" height="70" class="d-accent" />
+  <rect x="180" y="225" width="40" height="7" class="d-hot" />
+  <rect x="180" y="232" width="40" height="63" class="d-glow" />
+  <rect x="282.3" y="225" width="40" height="14" class="d-hot" />
+  <rect x="282.3" y="239" width="40" height="56" class="d-accent" />
+  <rect x="68.5" y="225" width="40" height="70" class="d-line" />
+  <rect x="180" y="225" width="40" height="70" class="d-line" />
+  <rect x="282.3" y="225" width="40" height="70" class="d-line" />
+
+  <rect x="62" y="310" width="16" height="16" class="d-accent" />
+  <text x="84" y="324">{s.height}</text>
+  <rect x="162" y="310" width="16" height="16" class="d-glow" />
+  <text x="184" y="324">{s.movement}</text>
+  <rect x="280" y="310" width="16" height="16" class="d-hot" />
+  <text x="302" y="324">{s.heat}</text>
+</Svg>

@@ -1,5 +1,18 @@
 topics: [heat]
 labels: [high-level]
-status: stub
+prerequisites: [energy]
+related: [temperature, evaporation-and-condensation, heat-pump, conservation-of-energy]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Heat — Wikipedia
+    url: https://en.wikipedia.org/wiki/Heat
+  - title: Heat transfer — Wikipedia
+    url: https://en.wikipedia.org/wiki/Heat_transfer
+  - title: Second law of thermodynamics — Wikipedia
+    url: https://en.wikipedia.org/wiki/Second_law_of_thermodynamics
+  - title: Specific heat capacity — Wikipedia
+    url: https://en.wikipedia.org/wiki/Specific_heat_capacity
+  - title: Vacuum flask — Wikipedia
+    url: https://en.wikipedia.org/wiki/Vacuum_flask

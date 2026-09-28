@@ -1,8 +1,175 @@
 ---
-title: 'What is temperature?'
-term: 'temperature'
+title: What is temperature?
+term: temperature
 slug: temperature
-summary: 'Temperature tells how hot or cold something is. Everything is made of tiny particles that are always jiggling, and the faster they jiggle, the higher the temperature.'
+summary: Temperature tells how hot or cold something is. Everything is made of tiny particles that are always jiggling — the faster they jiggle, the higher the temperature.
+keywords: [degrees Celsius, Celsius, °C, thermometer, how hot, how cold, body temperature, freezing point, Fahrenheit, kelvin, absolute zero]
 ---
 
-We measure temperature with a thermometer, usually in degrees Celsius (°C). Water freezes at 0 °C and boils at 100 °C.
+import Jiggle from './diagrams/Jiggle.astro';
+import MetalAndWood from './diagrams/MetalAndWood.astro';
+
+Is today a jacket day or a T-shirt day? Is the bath too hot? Do you have a fever? To answer questions
+like these, we need to know the **temperature**: how hot or cold something is.
+
+## What makes something hot or cold?
+
+Everything is made of tiny particles: [[atom|atoms]], and little groups of atoms stuck together.
+They are far too small to see, even with an ordinary microscope.
+
+These particles never stop moving. In a solid, like an ice cube or a spoon, they jiggle in place. In
+a liquid, like water, they jiggle and slide past each other. In a gas, like air, they zoom around
+and bump into each other.
+
+When something gets warmer, its particles jiggle faster. When it cools down, they slow down. So
+temperature tells how fast the particles are jiggling: the faster they jiggle, the higher the
+temperature.
+
+<Figure caption="The arrows show how fast each particle moves. In a cold thing the particles jiggle slowly. In a hot thing they jiggle fast." wide>
+  <Jiggle />
+</Figure>
+
+<FunFact>
+The particles of air in your room zoom around at about 500 metres every second. That is faster than
+a jet plane! But they crash into each other billions of times a second, so they never get far.
+</FunFact>
+
+## How do we measure temperature?
+
+We measure temperature with a **thermometer**. Many thermometers are thin glass tubes with a
+coloured liquid inside.
+
+When the liquid warms up, it takes up a little more space, so it climbs up the tube. When it cools,
+it shrinks back down. The numbers on the side show the temperature.
+
+Many digital thermometers have a tiny electronic part at the tip instead. Electricity flows through it
+more easily or less easily, depending on how warm it is. A small chip turns this into a number on
+the screen.
+
+<Safety>
+Very old glass thermometers may have a silvery liquid inside. It is mercury, which is poisonous. If
+one breaks, do not touch it, and call a grown-up at once.
+</Safety>
+
+## Degrees Celsius
+
+In most countries, we measure temperature in **degrees Celsius**, written **°C**. The scale uses
+water as its guide:
+
+- At **0 °C**, water freezes into ice, and ice melts.
+- At **100 °C**, water boils, at least at sea level.
+
+On a high mountain, water boils at a lower temperature. Find out why in
+[[boiling-point|why water boils at different temperatures]].
+
+Temperatures colder than freezing get a minus sign. So −18 °C means 18 degrees below freezing.
+
+The scale is named after Anders Celsius, a Swedish astronomer. He described it in 1742.
+
+<FunFact>
+Celsius first made his scale upside down! In his version, water boiled at 0 degrees and froze at
+100. Soon after, other scientists turned it the right way round.
+</FunFact>
+
+## From the freezer to the Sun
+
+Here are some temperatures to compare:
+
+| What | Temperature |
+|---|---|
+| The coldest air ever measured on Earth, in Antarctica | about −89 °C |
+| Inside a freezer | −18 °C |
+| Water freezes, ice melts | 0 °C |
+| Inside a fridge | about 4 °C |
+| A comfortable room | about 20 °C |
+| Your body | about 37 °C |
+| Water boils (at sea level) | 100 °C |
+| A hot oven | about 200 °C |
+| The surface of the Sun | about 5,500 °C |
+
+Your body keeps itself at about 37 °C, in summer and in winter. When you are ill, it can climb a
+little higher. That is a fever.
+
+## An experiment: metal and wood
+
+Here is a safe experiment with a surprise. Find a metal spoon and a wooden spoon that have been
+lying in the same room for at least an hour. Now they both have the same temperature as the room.
+
+Touch them, one after the other. The metal spoon feels much colder! But a thermometer would show
+the same temperature for both. How can that be?
+
+Your hand is warmer than the room, so [[heat]] flows out of your hand into anything you touch.
+Metal passes heat along very quickly. It pulls heat out of your skin fast, and your skin cools down.
+Wood passes heat along slowly, so your skin stays warm.
+
+Your skin does not feel the temperature of the thing you touch. It feels how fast it is losing heat.
+Fast means "cold!", and slow means "not so cold".
+
+<Figure caption="Both blocks are at 20 °C. Heat rushes out of your finger into the metal, so it feels cold. It seeps slowly into the wood, so the wood feels warmer." wide>
+  <MetalAndWood />
+</Figure>
+
+<Safety>
+Only do this experiment with things at room temperature, never with hot pans. In freezing weather,
+never touch frozen metal with your tongue or with wet skin. It can freeze stuck to it.
+</Safety>
+
+<GoDeeper title="Degrees Fahrenheit">
+In the United States, people measure temperature in degrees **Fahrenheit** (°F). On this scale,
+water freezes at 32 °F and boils at 212 °F, and a healthy body is about 98.6 °F. To change degrees
+Celsius into degrees Fahrenheit:
+
+$$
+F = C \cdot \frac{9}{5} + 32
+$$
+
+Here $C$ is the temperature in degrees Celsius and $F$ is the same temperature in degrees
+Fahrenheit. A room at 20 °C is $20 \cdot \frac{9}{5} + 32 = 68$ °F.
+</GoDeeper>
+
+<GoDeeper title="Kelvin and absolute zero">
+Can things get colder and colder forever? No. The colder something gets, the slower its particles
+jiggle, and there is a limit: **absolute zero**, at −273.15 °C. There, the particles have the
+smallest jiggle possible. They cannot give away any more energy, so nothing can ever be colder.
+(Quantum physics says that a tiny jiggle remains, even at absolute zero.)
+
+Scientists often use the **kelvin** scale (K), which starts at absolute zero. One kelvin is the same
+step as one degree Celsius:
+
+$$
+T_{\text{K}} = T_{\text{C}} + 273.15
+$$
+
+Here $T_{\text{C}}$ is the temperature in degrees Celsius and $T_{\text{K}}$ is the same temperature
+in kelvins. Water freezes at 273.15 K, a room is about 293 K, and the surface of the Sun is about
+5,800 K. Kelvins are written without the degree sign.
+
+Nobody has ever reached absolute zero. But scientists have cooled atoms to less than a billionth of
+a degree above it.
+</GoDeeper>
+
+<GoDeeper title="What temperature measures, precisely">
+Temperature is linked to the *average* movement [[energy]] of the particles, not to their total
+energy. That is why a bathtub of warm water holds far more heat energy than a cup of hot tea: the
+tea's particles move faster, but the bath has many more of them.
+
+Our skin is a poor thermometer. It senses its own temperature, which drops quickly when a material
+draws heat away fast. Metals and stone do this strongly; wood, cork and wool hardly at all.
+Engineers call this property **thermal effusivity**.
+</GoDeeper>
+
+<Remember>
+- Everything is made of tiny particles that are always jiggling.
+- Temperature tells how fast they jiggle: faster means hotter.
+- We measure temperature with a thermometer, usually in degrees Celsius (°C).
+- Water freezes at 0 °C and boils at 100 °C at sea level. Your body is about 37 °C.
+- Metal feels colder than wood at the same temperature, because it pulls heat out of your skin
+  faster.
+</Remember>
+
+<Quiz
+  question="A metal spoon and a wooden spoon have been lying in the same room all day. Which one is colder?"
+  options={["The metal spoon", "The wooden spoon", "Neither: they have the same temperature"]}
+  answer={2}
+  explanation="Both have the temperature of the room. The metal only feels colder because it pulls heat out of your hand faster."
+/>

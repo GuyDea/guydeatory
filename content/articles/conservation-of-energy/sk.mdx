@@ -1,8 +1,201 @@
 ---
-title: 'Prečo energia nikdy nezmizne?'
-term: 'zákon zachovania energie'
+title: Prečo energia nikdy nezmizne?
+term: zákon zachovania energie
 slug: zakon-zachovania-energie
-summary: 'Energia nikdy nevznikne z ničoho a nikdy nezanikne. Len sa presúva z miesta na miesto alebo mení podobu – napríklad z elektriny na svetlo a teplo.'
+summary: Energia nikdy nevznikne z ničoho a nikdy nezanikne. Len sa presúva z miesta na miesto alebo mení podobu – a keď sa zdá, že zmizla, väčšinou sa zmenila na teplo.
+keywords: [zachovanie energie, prvý termodynamický zákon, prvý zákon termodynamiky, energia sa nestráca, perpetuum mobile, večný stroj, trenie, kyvadlo, hojdačka]
 ---
 
-Vedci to overili znova a znova: celkové množstvo energie zostáva vždy rovnaké. Keď sa zdá, že energia zmizla, v skutočnosti sa len zmenila na inú podobu, často na teplo.
+import SwingEnergy from './diagrams/SwingEnergy.astro';
+import HeatPumpBalance from './diagrams/HeatPumpBalance.astro';
+
+Pusti loptu na zem a odskočí späť nahor. Každý odskok je však o kúsok nižší ako ten predošlý, až kým
+lopta nezostane ležať na zemi. Kam sa podela jej [[energy|energia]]? Zmizla?
+
+Vedci to overovali znova a znova, v tisícoch pokusov. Odpoveď je vždy rovnaká. Energia nikdy
+nezmizne. Len sa presunie inam alebo sa zmení na inú podobu.
+
+## Pravidlo, ktoré sa nikdy neporuší
+
+Je to jedno z najdôležitejších pravidiel celej vedy. Volá sa **zákon zachovania energie**. Slovo
+„zachovanie“ tu znamená, že množstvo energie zostáva rovnaké.
+
+Pravidlo má dve časti:
+
+- Energia nikdy nevznikne z ničoho.
+- Energia nikdy nezanikne.
+
+Energia sa môže iba presúvať z jedného miesta na iné alebo meniť z jednej podoby na inú. Sčítaj všetku
+energiu predtým, ako sa niečo stane, a všetku energiu potom. Vždy ti vyjde rovnaké množstvo.
+
+<Analogy>
+Prelej vodu z džbánu do pohára, potom do misky a potom späť do džbánu. Zakaždým má iný tvar, ale ak
+nevyleješ ani kvapku, stále máš rovnako veľa vody. Energia sa správa rovnako.
+
+A aj keď sa trochu energie „vyleje“, nie je preč. Stále tu je, ako voda na podlahe – len sa už
+oveľa ťažšie dá použiť.
+</Analogy>
+
+## Hojdačka: výška a rýchlosť sa striedajú
+
+Sadni si na hojdačku a popros niekoho, aby ťa potiahol dozadu, vysoko hore. V najvyššom bode sa na
+chvíľu zastavíš. Energia hojdania je teraz celá uložená vo výške.
+
+Potom sa spustíš dole. Výška sa mení na rýchlosť a v najnižšom bode sa pohybuješ najrýchlejšie. Teraz
+sa z nej stala pohybová energia.
+
+Na druhej strane zase stúpaš a spomaľuješ. Rýchlosť sa mení späť na výšku. Výška, rýchlosť, výška,
+rýchlosť: energia sa stále mení z jednej podoby na druhú.
+
+<Figure caption="Hore je energia uložená vo výške. Dole sa z nej stal pohyb. Pri každom zhupnutí sa trochu zmení na teplo, no spolu jej je stále rovnako." wide>
+  <SwingEnergy />
+</Figure>
+
+Ak ťa však nikto neroztláča, hojdačka vyletí zakaždým o kúsok nižšie. Nakoniec sa zastaví.
+Zmizla jej energia?
+
+Nie! Reťaze sa trú o háky a hojdačka odtláča zo svojej cesty vzduch. Zakaždým sa tak kúsok pohybu
+zmení na [[heat|teplo]]. Háky aj vzduch sa nepatrne zohrejú.
+
+Keď sa dve veci o seba trú, pohyb sa mení na teplo. Tento jav sa volá **trenie**.
+
+Môžeš si to vyskúšať: desať sekúnd si rýchlo šúchaj dlane o seba. Cítiš, ako sa zohriali? To, čo cítiš, je
+pohybová energia, ktorá sa zmenila na teplo.
+
+## Skákajúca lopta
+
+Skákajúca lopta rozpráva ten istý príbeh. Keď padá, jej výška sa mení na rýchlosť. Keď narazí na
+zem, trochu sa stlačí ako pružina. Potom sa odrazí a vyletí späť nahor.
+
+Každý odskok je však nižší. Pri každom náraze sa časť energie zmení na teplo v lopte a v podlahe.
+Časť sa zmení na zvuk odrazu a aj zvuk postupne utíchne a zmení sa na teplo.
+
+Teraz to všetko sčítaj: teplo, zvuk aj energiu, ktorá v lopte ešte zostala. Spolu to dá presne toľko
+energie, koľko mala lopta na začiatku.
+
+<FunFact>
+Hráči squashu pred zápasom udrú do loptičky aj niekoľko desiatok ráz, aby ju zohriali. Každý úder
+zmení trochu pohybu na teplo. Studená loptička na squash takmer neskáče, no zohriata skáče dobre.
+</FunFact>
+
+## Kam sa podeje „minutá“ energia?
+
+Často hovoríme, že sa energia „minula“. Batéria sa vybije a autu dôjde palivo. Energia však nezmizla.
+Zmenila sa na podoby, ktoré už nevieme využiť – väčšinou na teplo.
+
+Pozri sa na vreckovú baterku. Energia uložená v batérii sa zmení na elektrinu a potom na svetlo.
+Svetlo dopadne na steny a nepatrne ich zohreje. Nakoniec sa všetka energia zmení na teplo, ktoré sa
+rozptýli po celej izbe.
+
+Rozptýlené teplo sa dá znova využiť len veľmi ťažko. Je to ako s hradom z piesku, ktorý vietor
+rozfúkal po celej pláži. Žiadne zrnko piesku nezmizlo, ale hrad z neho už nepostavíš.
+
+Preto stále potrebujeme novú, užitočnú energiu. Naše telo potrebuje jedlo, autá palivo a domácnosti
+elektrinu z elektrární.
+
+## Prečo žiadny stroj nemôže bežať večne
+
+Stovky rokov snívali vynálezcovia o stroji, ktorý by bežal navždy bez akéhokoľvek postrčenia.
+Niektorí dúfali, že bude dokonca zadarmo vyrábať energiu navyše. Takémuto vysnívanému stroju sa
+hovorí **perpetuum mobile**. Po latinsky to znamená „večne sa pohybujúce“.
+
+Ani jeden z nich nikdy nefungoval a ani fungovať nebude. Stroj nedokáže vyrobiť energiu z ničoho. A
+každý skutočný stroj stráca kúsok svojho pohybu trením – mení sa na teplo. Bez novej energie sa
+spomalí a zastaví.
+
+<FunFact>
+Vynálezcovia posielajú svoje nápady na patentový úrad, ktorý zapisuje, kto čo vynašiel. Na patentový
+úrad v Spojených štátoch prišlo toľko plánov na perpetuum mobile, že tam zaviedli zvláštne pravidlo.
+Len pri týchto strojoch môže úrad chcieť, aby vynálezca priniesol model, ktorý naozaj funguje.
+</FunFact>
+
+## Hádanka s tepelným čerpadlom
+
+Tu je hádanka. [[heat-pump|Tepelné čerpadlo]] dokáže dodať domu asi trikrát viac tepla, než koľko
+spotrebuje elektriny. Porušuje to pravidlo? Vyrába energiu z ničoho?
+
+Nie. Väčšina tohto tepla vôbec nepochádza z elektriny. Tepelné čerpadlo používa elektrinu na to, aby
+presúvalo teplo, ktoré už existuje. Aj studený zimný vzduch má v sebe trochu tepla, ktoré tepelné
+čerpadlo pozbiera a prenesie do domu.
+
+Keď všetko spočítaš, pravidlo stále platí. Teplo odobraté zvonku spolu s elektrinou dá presne toľko
+tepla, koľko príde do domu. Nič nevzniká z ničoho.
+
+<Figure caption="Tepelné čerpadlo použije 1 diel elektriny, aby prenieslo 2 diely tepla zo studeného vzduchu vonku. Do domu tak prídu 3 diely tepla." wide>
+  <HeatPumpBalance />
+</Figure>
+
+<Analogy>
+Tepelné čerpadlo funguje trochu ako špongia, ktorá prenáša vodu. Špongia žiadnu vodu nevyrába. Na
+jednom mieste ju nasaje a na inom ju vyžmýka. Malá námaha presunie veľa vody.
+</Analogy>
+
+<GoDeeper title="Prvý termodynamický zákon">
+**Termodynamika** je veda o teple a energii. Jej prvý zákon je práve zákon zachovania energie,
+zapísaný pre jeden predmet:
+
+$$
+\Delta U = Q + W
+$$
+
+Tu $\Delta U$ je zmena energie uloženej vo vnútri predmetu (jeho **vnútornej energie**), $Q$ je
+teplo, ktoré doň vtečie, a $W$ je práca, ktorú na ňom niekto vykoná – napríklad keď ho stláča alebo
+mieša. Všetky tri veličiny meriame v jouloch (J).
+
+Energia nemôže zmiznúť, ale môže sa stať menej užitočnou. Rozptýlené teplo sa už nikdy nedá celé
+premeniť späť na pohyb. To opisuje **druhý termodynamický zákon** (pozri článok [[heat|teplo]]).
+
+Pravidlo obstálo v každej skúške, od hojdačiek až po hviezdy. Pri jadrových reakciách sa za energiu
+považuje aj hmotnosť – podľa slávneho Einsteinovho vzťahu $E = m c^2$: energia sa rovná hmotnosti
+krát druhej mocnine rýchlosti svetla. Keď ju započítame, celkové množstvo energie zostáva rovnaké.
+</GoDeeper>
+
+<GoDeeper title="Pokus s lopatkovým kolesom">
+V 40. rokoch 19. storočia James Prescott Joule ukázal, že teplo a pohyb sú dve podoby tej istej
+veci. Nechal padajúce závažie roztáčať lopatkové koleso v uzavretej nádobe s vodou. Lopatky vodu
+miešali a voda sa nepatrne zohriala.
+
+Joule meral veľmi presne. Rovnaké množstvo padania vždy prinieslo rovnaké zohriatie: asi 4,2 joulu
+pohybu zohreje 1 gram vody o 1&nbsp;°C. Pred Joulom si mnohí vedci mysleli, že teplo je neviditeľná
+tekutina, „tepelná látka“ (kalorikum). Jeho pokusy pomohli ukázať, že teplo je podoba energie. Po
+ňom je pomenovaná aj jednotka energie – joule.
+</GoDeeper>
+
+<GoDeeper title="Ako spočítať energiu tepelného čerpadla">
+Inžinieri opisujú tepelné čerpadlo jeho [[coefficient-of-performance|vykurovacím faktorom (COP)]]:
+je to teplo, ktoré čerpadlo dodá, vydelené elektrinou, ktorú spotrebuje. COP 3 znamená 3&nbsp;kWh
+tepla z 1&nbsp;kWh elektriny.
+
+Tie 2&nbsp;kWh navyše nevznikli z ničoho. Čerpadlo ich vzalo z vonkajšieho vzduchu, zo zeme alebo
+z vody v jazere či rieke. Čím je vonku chladnejšie, tým viac sa musí tepelné čerpadlo namáhať a tým
+je jeho COP nižší.
+</GoDeeper>
+
+<GoDeeper title="Kde obrázok s vodou nesedí">
+- Voda je látka, ktorú vidíš a môžeš sa jej dotknúť. Energia nie: je to veličina, číslo, ktoré sa dá
+  vypočítať a ktoré príroda udržiava stále rovnaké.
+- Vyliatu vodu môžeš utrieť a naliať späť do džbánu. Rozptýlené teplo sa samo nikdy nezhromaždí späť
+  na jedno miesto. Aby sa dalo znova pozbierať, treba stroj, ktorý spotrebuje ďalšiu energiu.
+</GoDeeper>
+
+<Remember>
+- Energia nikdy nevznikne z ničoho a nikdy nezanikne.
+- Len sa presúva z miesta na miesto alebo mení podobu.
+- Na hojdačke sa striedajú výška a rýchlosť a zakaždým sa trochu energie zmení na teplo.
+- „Minutá“ energia sa väčšinou zmenila na rozptýlené teplo, ktoré sa ťažko znova využíva.
+- Žiadny stroj nemôže bežať večne. Tepelné čerpadlo energiu nevyrába – presúva teplo.
+</Remember>
+
+<Quiz
+  question="Prečo sa hojdačka pomaly zastaví, keď ju nikto neroztláča?"
+  options={["Jej energia zmizne", "Jej pohyb sa pomaly mení na teplo – trením a odtláčaním vzduchu", "Zem ju prestane priťahovať"]}
+  answer={1}
+  explanation="Energia nezmizne. Trenie v hákoch a odpor vzduchu pomaly menia pohyb hojdačky na teplo."
+/>
+
+<Quiz
+  question="Tepelné čerpadlo dodá domu trikrát viac tepla, než koľko spotrebuje elektriny. Ako je to možné?"
+  options={["Vyrába energiu z ničoho", "Presúva teplo zo vzduchu vonku do domu", "Elektrina je trikrát silnejšia ako teplo"]}
+  answer={1}
+  explanation="Aj studený vzduch má v sebe trochu tepla. Tepelné čerpadlo ho prenesie dnu. Teplo zvonku spolu s elektrinou dá teplo, ktoré dostane dom."
+/>

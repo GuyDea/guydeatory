@@ -1,0 +1,90 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'The journey of energy from the Sun to you',
+    desc: 'Five steps from top to bottom, joined by arrows. Sunlight reaches a plant. The plant stores the energy in sugar. You eat food made from plants. Your muscles use the energy to run. In the end the energy spreads into the air as heat.',
+    sun: 'sunlight',
+    sunNote: 'light energy',
+    plant: 'plants',
+    plantNote: 'store it in sugar',
+    food: 'food',
+    foodNote: 'you eat it',
+    run: 'you run',
+    runNote: 'movement energy',
+    heat: 'heat',
+    heatNote: 'spreads into the air',
+  },
+  sk: {
+    title: 'Cesta energie od Slnka až k tebe',
+    desc: 'Päť krokov zhora nadol spojených šípkami. Slnečné svetlo dopadá na rastlinu. Rastlina uloží energiu do cukru. Zješ jedlo z rastlín. Svaly využijú energiu na beh. Nakoniec sa energia rozptýli do vzduchu ako teplo.',
+    sun: 'slnečné svetlo',
+    sunNote: 'energia svetla',
+    plant: 'rastliny',
+    plantNote: 'uložia ju do cukru',
+    food: 'jedlo',
+    foodNote: 'zješ ho',
+    run: 'bežíš',
+    runNote: 'pohybová energia',
+    heat: 'teplo',
+    heatNote: 'rozptýli sa do vzduchu',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 465" title={s.title} desc={s.desc} maxWidth="24rem">
+  <!-- 1. Sun -->
+  <g transform="translate(100 48)">
+    <circle r="20" class="d-glow" />
+    <path d="M26 0H34M18.4 18.4L24 24M0 26V34M-18.4 18.4L-24 24M-26 0H-34M-18.4-18.4L-24-24M0-26V-34M18.4-18.4L24-24" class="d-line" style="stroke: var(--d-glow); stroke-width: 4" />
+  </g>
+  <text x="160" y="46" class="d-label">{s.sun}</text>
+  <text x="160" y="70" class="d-small d-muted">{s.sunNote}</text>
+  <path d="M100 88V108" class="d-line d-arrow" />
+
+  <!-- 2. Plant -->
+  <g transform="translate(100 143)">
+    <path d="M-22 26H22" class="d-line" />
+    <path d="M0 26V-20" class="d-line" style="stroke-width: 3" />
+    <path d="M0 8C-12 8-22 0-24-12C-12-14-2-6 0 8Z" class="d-box-alt" />
+    <path d="M0-6C12-6 22-14 24-26C12-28 2-20 0-6Z" class="d-box-alt" />
+  </g>
+  <text x="160" y="141" class="d-label">{s.plant}</text>
+  <text x="160" y="165" class="d-small d-muted">{s.plantNote}</text>
+  <path d="M100 179V203" class="d-line d-arrow" />
+
+  <!-- 3. Food (an apple) -->
+  <g transform="translate(100 238)">
+    <path d="M0-14C-8-21-24-19-24-1C-24 16-12 28 0 24C12 28 24 16 24-1C24-19 8-21 0-14Z" class="d-box" />
+    <path d="M0-14C0-20 2-24 6-27" class="d-line" />
+    <path d="M4-21C8-28 16-29 20-27C16-21 10-20 4-21Z" class="d-box-alt" />
+  </g>
+  <text x="160" y="236" class="d-label">{s.food}</text>
+  <text x="160" y="260" class="d-small d-muted">{s.foodNote}</text>
+  <path d="M100 274V298" class="d-line d-arrow" />
+
+  <!-- 4. You, running -->
+  <g transform="translate(100 333)">
+    <circle cx="6" cy="-24" r="8" class="d-box" />
+    <path d="M3-15L-4 6" class="d-line" style="stroke-width: 3" />
+    <path d="M1-10L-11-8L-16-17M1-10L11-2L18-8M-4 6L8 14L6 27M-4 6L-12 18L-24 20" class="d-line" style="stroke-width: 3" />
+    <path d="M-44-18H-30M-48-4H-32M-44 10H-30" class="d-line" style="stroke: var(--d-muted)" />
+  </g>
+  <text x="160" y="331" class="d-label">{s.run}</text>
+  <text x="160" y="355" class="d-small d-muted">{s.runNote}</text>
+  <path d="M100 369V393" class="d-line d-arrow" />
+
+  <!-- 5. Heat rising into the air -->
+  <g transform="translate(100 428)">
+    <path d="M-22 26c-6-8 6-14 0-20s6-14 0-20v-6" class="d-line d-arrow-hot" style="stroke-width: 3" />
+    <path d="M0 26c-6-8 6-14 0-20s6-14 0-20v-6" class="d-line d-arrow-hot" style="stroke-width: 3" />
+    <path d="M22 26c-6-8 6-14 0-20s6-14 0-20v-6" class="d-line d-arrow-hot" style="stroke-width: 3" />
+  </g>
+  <text x="160" y="426" class="d-label">{s.heat}</text>
+  <text x="160" y="450" class="d-small d-muted">{s.heatNote}</text>
+</Svg>

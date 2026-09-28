@@ -1,0 +1,49 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Three ways heat travels',
+    desc: 'A pot of soup hangs over a campfire, with a metal spoon in it. Heat creeps up the spoon handle: conduction. The soup rises in the middle and sinks at the sides, carrying heat around: convection. Wavy arrows spread out from the fire through the air: radiation, which you feel even from a distance.',
+    conduction: 'conduction',
+    convection: 'convection',
+    radiation: 'radiation',
+  },
+  sk: {
+    title: 'Tri spôsoby, ako sa šíri teplo',
+    desc: 'Nad táborákom visí hrniec s polievkou a v ňom je kovová lyžica. Teplo sa šíri hore rúčkou lyžice: vedenie. Polievka v strede stúpa a po stranách klesá a roznáša teplo: prúdenie. Z ohňa sa cez vzduch šíria vlnité šípky: žiarenie, ktoré cítiš aj z diaľky.',
+    conduction: 'vedenie',
+    convection: 'prúdenie',
+    radiation: 'žiarenie',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 300" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M140 196L118 286M260 196L282 286" class="d-line" style="stroke-width: 3" />
+  <path d="M232 150L300 64" class="d-line" style="stroke: var(--d-wire); stroke-width: 6" />
+  <path d="M136 108H264V176C264 190 254 198 240 198H160C146 198 136 190 136 176Z" class="d-box" />
+  <path d="M141 124H259V175C259 186 251 193 240 193H160C149 193 141 186 141 175Z" class="d-box-alt" />
+  <path d="M232 150L256 120" class="d-line" style="stroke: var(--d-wire); stroke-width: 6" />
+  <path d="M192 184V142Q192 136 186 136H162Q156 136 156 142V172" class="d-line d-arrow-hot" style="stroke-width: 3" />
+  <path d="M208 184V142Q208 136 214 136H236Q242 136 242 142V160" class="d-line d-arrow-hot" style="stroke-width: 3" />
+  <path d="M276 115L292 95" class="d-line d-arrow-hot" style="stroke-width: 3" />
+
+  <path d="M168 288L234 270M166 270L232 288" class="d-line" style="stroke: var(--d-wire); stroke-width: 9" />
+  <path d="M200 206C216 224 228 238 224 256C222 268 212 276 200 276C188 276 178 268 176 256C172 238 184 224 200 206Z" class="d-hot" />
+  <path d="M200 232C208 242 212 250 210 260C208 267 204 270 200 270C196 270 192 267 190 260C188 250 192 242 200 232Z" class="d-glow" />
+
+  <path d="M166 232c-6-6-12 6-18 0s-12 6-18 0s-12 6-18 0s-12 6-18 0h-8" class="d-line d-arrow-hot" style="stroke-width: 3" />
+  <path d="M166 252c-6-6-12 6-18 0s-12 6-18 0s-12 6-18 0s-12 6-18 0h-8" class="d-line d-arrow-hot" style="stroke-width: 3" />
+  <path d="M234 232c6-6 12 6 18 0s12 6 18 0s12 6 18 0s12 6 18 0h8" class="d-line d-arrow-hot" style="stroke-width: 3" />
+  <path d="M234 252c6-6 12 6 18 0s12 6 18 0s12 6 18 0s12 6 18 0h8" class="d-line d-arrow-hot" style="stroke-width: 3" />
+
+  <text x="302" y="52" text-anchor="middle" class="d-label">{s.conduction}</text>
+  <text x="128" y="150" text-anchor="end" class="d-label">{s.convection}</text>
+  <text x="70" y="290" text-anchor="middle" class="d-label">{s.radiation}</text>
+  <text x="330" y="290" text-anchor="middle" class="d-label">{s.radiation}</text>
+</Svg>

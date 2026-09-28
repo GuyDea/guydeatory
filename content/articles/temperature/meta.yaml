@@ -1,5 +1,18 @@
 topics: [heat]
 labels: [high-level]
-status: stub
+prerequisites: [atom]
+related: [heat, boiling-point, pressure, energy]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Temperature — Wikipedia
+    url: https://en.wikipedia.org/wiki/Temperature
+  - title: Celsius — Wikipedia
+    url: https://en.wikipedia.org/wiki/Celsius
+  - title: Absolute zero — Wikipedia
+    url: https://en.wikipedia.org/wiki/Absolute_zero
+  - title: Thermometer — Wikipedia
+    url: https://en.wikipedia.org/wiki/Thermometer
+  - title: Lowest temperature recorded on Earth — Wikipedia
+    url: https://en.wikipedia.org/wiki/Lowest_temperature_recorded_on_Earth

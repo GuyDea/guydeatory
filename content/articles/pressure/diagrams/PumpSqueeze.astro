@@ -1,0 +1,67 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Squeezing air in a bicycle pump',
+    desc: 'Two pictures of the same bicycle pump with the same amount of air. On the left, the handle is up and the air particles have lots of space. On the right, the handle is pushed down, so the same particles are squeezed into a much smaller space. There the air has a higher pressure and is warmer.',
+    push: 'push',
+    space: 'lots of space',
+    squeezed: 'squeezed',
+    result: 'higher pressure, warmer',
+  },
+  sk: {
+    title: 'Stláčanie vzduchu v pumpe na bicykel',
+    desc: 'Dva obrázky tej istej pumpy s rovnakým množstvom vzduchu. Vľavo je rúčka hore a čiastočky vzduchu majú veľa miesta. Vpravo je rúčka stlačená dole, takže tie isté čiastočky sú natlačené v oveľa menšom priestore. Tam má vzduch vyšší tlak a je teplejší.',
+    push: 'zatlač',
+    space: 'veľa miesta',
+    squeezed: 'stlačený',
+    result: 'vyšší tlak, teplejší',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 285" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M95 90V28M65 28H125" class="d-line" style="stroke-width: 5" />
+  <rect x="44" y="90" width="102" height="12" rx="2" class="d-box-alt" />
+  <circle cx="62" cy="116" r="6" class="d-box-alt" />
+  <circle cx="98" cy="122" r="6" class="d-box-alt" />
+  <circle cx="130" cy="114" r="6" class="d-box-alt" />
+  <circle cx="74" cy="146" r="6" class="d-box-alt" />
+  <circle cx="116" cy="150" r="6" class="d-box-alt" />
+  <circle cx="56" cy="176" r="6" class="d-box-alt" />
+  <circle cx="94" cy="180" r="6" class="d-box-alt" />
+  <circle cx="134" cy="172" r="6" class="d-box-alt" />
+  <circle cx="70" cy="204" r="6" class="d-box-alt" />
+  <circle cx="112" cy="208" r="6" class="d-box-alt" />
+  <circle cx="136" cy="218" r="6" class="d-box-alt" />
+  <circle cx="54" cy="218" r="6" class="d-box-alt" />
+  <path d="M40 84V230H150V84M150 216H174" class="d-line" style="stroke-width: 4" />
+
+  <path d="M305 22V68" class="d-line d-arrow" style="stroke-width: 4" />
+  <text x="318" y="50">{s.push}</text>
+  <path d="M305 140V78M275 78H335" class="d-line" style="stroke-width: 5" />
+  <rect x="254" y="152" width="102" height="76" class="d-warm" />
+  <rect x="254" y="140" width="102" height="12" rx="2" class="d-box-alt" />
+  <circle cx="266" cy="166" r="6" class="d-box-alt" />
+  <circle cx="290" cy="164" r="6" class="d-box-alt" />
+  <circle cx="316" cy="168" r="6" class="d-box-alt" />
+  <circle cx="342" cy="165" r="6" class="d-box-alt" />
+  <circle cx="278" cy="190" r="6" class="d-box-alt" />
+  <circle cx="303" cy="192" r="6" class="d-box-alt" />
+  <circle cx="328" cy="189" r="6" class="d-box-alt" />
+  <circle cx="348" cy="196" r="6" class="d-box-alt" />
+  <circle cx="264" cy="214" r="6" class="d-box-alt" />
+  <circle cx="289" cy="216" r="6" class="d-box-alt" />
+  <circle cx="314" cy="214" r="6" class="d-box-alt" />
+  <circle cx="338" cy="217" r="6" class="d-box-alt" />
+  <path d="M250 84V230H360V84M360 216H384" class="d-line" style="stroke-width: 4" />
+
+  <text x="95" y="258" text-anchor="middle" class="d-label">{s.space}</text>
+  <text x="305" y="258" text-anchor="middle" class="d-label">{s.squeezed}</text>
+  <text x="305" y="279" text-anchor="middle" class="d-small">{s.result}</text>
+</Svg>

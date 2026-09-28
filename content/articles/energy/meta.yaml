@@ -1,5 +1,15 @@
 topics: [energy]
 labels: [high-level]
-status: stub
+related: [conservation-of-energy, heat, temperature, electric-power]
+status: published
 created: 2026-09-29
 updated: 2026-09-29
+sources:
+  - title: Energy — Wikipedia
+    url: https://en.wikipedia.org/wiki/Energy
+  - title: Kinetic energy — Wikipedia
+    url: https://en.wikipedia.org/wiki/Kinetic_energy
+  - title: Joule — Wikipedia
+    url: https://en.wikipedia.org/wiki/Joule
+  - title: Food energy — Wikipedia
+    url: https://en.wikipedia.org/wiki/Food_energy

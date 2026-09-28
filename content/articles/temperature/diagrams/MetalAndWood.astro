@@ -1,0 +1,52 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Metal and wood at the same temperature',
+    desc: 'A finger touches a metal block and another finger touches a wooden block. Both blocks are at 20 °C. Three big arrows show heat rushing out of the finger into the metal, so the metal feels cold. One small arrow shows heat seeping slowly into the wood, so the wood feels warmer.',
+    metal: 'metal',
+    wood: 'wood',
+    temp: '20 °C',
+    metalFeel: 'feels cold',
+    woodFeel: 'feels warmer',
+  },
+  sk: {
+    title: 'Kov a drevo s rovnakou teplotou',
+    desc: 'Jeden prst sa dotýka kovového kvádra a druhý dreveného kvádra. Oba kvádre majú teplotu 20 °C. Tri veľké šípky ukazujú, ako teplo rýchlo uniká z prsta do kovu, a preto kov studí. Jedna malá šípka ukazuje, ako teplo pomaly prechádza do dreva, a preto sa drevo zdá teplejšie.',
+    metal: 'kov',
+    wood: 'drevo',
+    temp: '20 °C',
+    metalFeel: 'studí',
+    woodFeel: 'zdá sa teplejšie',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 285" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M85 16V100C85 112 93 118 102 118C111 118 119 112 119 100V16" class="d-box" />
+  <path d="M281 16V100C281 112 289 118 298 118C307 118 315 112 315 100V16" class="d-box" />
+  <path d="M119 80C111 82 108 92 110 104C112 108 116 108 119 102" class="d-box-alt" />
+  <path d="M315 80C307 82 304 92 306 104C308 108 312 108 315 102" class="d-box-alt" />
+
+  <rect x="40" y="118" width="124" height="78" rx="4" class="d-box-alt" />
+  <path d="M136 188L156 150M146 190L160 164" class="d-line" style="stroke: var(--d-muted)" />
+  <path d="M102 124V170" class="d-line d-arrow-hot" style="stroke-width: 4" />
+  <path d="M94 124L66 156" class="d-line d-arrow-hot" style="stroke-width: 4" />
+  <path d="M110 124L138 156" class="d-line d-arrow-hot" style="stroke-width: 4" />
+
+  <rect x="236" y="118" width="124" height="78" rx="4" class="d-box-alt" />
+  <path d="M246 156c18-8 36 8 54 0s36 8 50 0M246 178c18-8 36 8 54 0s36 8 50 0" class="d-line" style="stroke: var(--d-muted)" />
+  <path d="M298 124V138" class="d-line d-arrow-hot" style="stroke-width: 3" />
+
+  <text x="102" y="222" text-anchor="middle" class="d-label">{s.metal}</text>
+  <text x="102" y="244" text-anchor="middle">{s.temp}</text>
+  <text x="102" y="270" text-anchor="middle" class="d-label">{s.metalFeel}</text>
+  <text x="298" y="222" text-anchor="middle" class="d-label">{s.wood}</text>
+  <text x="298" y="244" text-anchor="middle">{s.temp}</text>
+  <text x="298" y="270" text-anchor="middle" class="d-label">{s.woodFeel}</text>
+</Svg>

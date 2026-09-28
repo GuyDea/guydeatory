@@ -1,0 +1,58 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Which way heat flows',
+    desc: 'Top: heat flows by itself from a hot block to a cold block. Bottom: heat can be moved from a cold block to a warm block only through a machine, and the machine needs energy to do it.',
+    byItself: 'by itself',
+    withMachine: 'only with a machine',
+    heat: 'heat',
+    hot: 'hot',
+    cold: 'cold',
+    warm: 'warm',
+    machine: 'machine',
+    energy: 'energy',
+  },
+  sk: {
+    title: 'Ktorým smerom tečie teplo',
+    desc: 'Hore: teplo tečie samo od seba z horúceho kvádra do studeného. Dole: zo studeného kvádra do teplého sa dá teplo presunúť len cez stroj a stroj na to potrebuje energiu.',
+    byItself: 'samo od seba',
+    withMachine: 'len pomocou stroja',
+    heat: 'teplo',
+    hot: 'horúce',
+    cold: 'studené',
+    warm: 'teplé',
+    machine: 'stroj',
+    energy: 'energia',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 300" title={s.title} desc={s.desc} maxWidth="30rem">
+  <text x="20" y="24" class="d-label">{s.byItself}</text>
+  <rect x="40" y="38" width="80" height="56" rx="6" class="d-hot" />
+  <rect x="280" y="38" width="80" height="56" rx="6" class="d-cold" />
+  <path d="M130 66H268" class="d-line d-arrow-hot" style="stroke-width: 4" />
+  <text x="199" y="54" text-anchor="middle">{s.heat}</text>
+  <text x="80" y="116" text-anchor="middle" class="d-label">{s.hot}</text>
+  <text x="320" y="116" text-anchor="middle" class="d-label">{s.cold}</text>
+
+  <path d="M20 138H380" class="d-line" style="stroke: var(--d-muted)" stroke-dasharray="4 6" />
+
+  <text x="20" y="166" class="d-label">{s.withMachine}</text>
+  <text x="212" y="194">{s.energy}</text>
+  <path d="M200 178V204" class="d-line d-arrow-accent" style="stroke-width: 3" />
+  <rect x="40" y="206" width="80" height="56" rx="6" class="d-cold" />
+  <rect x="158" y="212" width="84" height="44" rx="8" class="d-box" />
+  <text x="200" y="240" text-anchor="middle">{s.machine}</text>
+  <rect x="280" y="206" width="80" height="56" rx="6" class="d-warm" />
+  <path d="M126 234H152" class="d-line d-arrow-hot" style="stroke-width: 4" />
+  <path d="M248 234H274" class="d-line d-arrow-hot" style="stroke-width: 4" />
+  <text x="80" y="284" text-anchor="middle" class="d-label">{s.cold}</text>
+  <text x="320" y="284" text-anchor="middle" class="d-label">{s.warm}</text>
+</Svg>

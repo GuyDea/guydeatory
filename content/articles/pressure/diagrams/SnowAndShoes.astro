@@ -1,0 +1,45 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'A boot and a snowshoe on deep snow',
+    desc: 'Two feet push down on snow with the same push. On the left, a boot presses on a small area and sinks deep into the snow. On the right, a wide snowshoe spreads the same push over a big area and stays on top of the snow.',
+    push: 'same push',
+    smallArea: 'small area',
+    sinks: 'sinks in',
+    bigArea: 'big area',
+    staysUp: 'stays on top',
+  },
+  sk: {
+    title: 'Topánka a snežnica v hlbokom snehu',
+    desc: 'Dve nohy tlačia na sneh rovnakou silou. Vľavo tlačí topánka na malú plochu a hlboko sa zaborí do snehu. Vpravo široká snežnica rozloží tú istú silu na veľkú plochu a zostane navrchu.',
+    push: 'rovnaká sila',
+    smallArea: 'malá plocha',
+    sinks: 'zaborí sa',
+    bigArea: 'veľká plocha',
+    staysUp: 'zostane navrchu',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 290" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M10 150H70V200H130V150H236V160H372V150H390V232H10Z" class="d-box-alt" />
+
+  <path d="M85 20V64" class="d-line d-arrow" style="stroke-width: 4" />
+  <path d="M71 70H99V172H117C124 172 129 178 129 185V199H71Z" class="d-box" />
+
+  <path d="M296 30V74" class="d-line d-arrow" style="stroke-width: 4" />
+  <path d="M282 80H310V136H328C335 136 340 142 340 149V152H282Z" class="d-box" />
+  <ellipse cx="304" cy="155" rx="66" ry="6" class="d-box" />
+  <text x="190" y="46" text-anchor="middle">{s.push}</text>
+
+  <text x="100" y="256" text-anchor="middle" class="d-label">{s.smallArea}</text>
+  <text x="100" y="278" text-anchor="middle">{s.sinks}</text>
+  <text x="304" y="256" text-anchor="middle" class="d-label">{s.bigArea}</text>
+  <text x="304" y="278" text-anchor="middle">{s.staysUp}</text>
+</Svg>

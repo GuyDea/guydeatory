@@ -1,8 +1,173 @@
 ---
-title: 'Čo je teplota?'
-term: 'teplota'
+title: Čo je teplota?
+term: teplota
 slug: teplota
-summary: 'Teplota hovorí, aké teplé alebo studené niečo je. Všetko je z drobných čiastočiek, ktoré sa neustále chvejú – a čím rýchlejšie sa chvejú, tým je teplota vyššia.'
+summary: Teplota hovorí, aké teplé alebo studené niečo je. Všetko je z drobných čiastočiek, ktoré sa neustále chvejú – čím rýchlejšie sa chvejú, tým je teplota vyššia.
+keywords: [stupne Celzia, Celzius, °C, teplomer, aké je teplo, aká je zima, telesná teplota, bod mrazu, Fahrenheit, kelvin, absolútna nula]
 ---
 
-Teplotu meriame teplomerom, zvyčajne v stupňoch Celzia (°C). Voda zamŕza pri 0 °C a vrie pri 100 °C.
+import Jiggle from './diagrams/Jiggle.astro';
+import MetalAndWood from './diagrams/MetalAndWood.astro';
+
+Je dnes deň na bundu, alebo na tričko? Nie je voda vo vani príliš horúca? Nemáš horúčku? Na takéto
+otázky potrebujeme poznať **teplotu** – aké teplé alebo studené niečo je.
+
+## Prečo je niečo teplé alebo studené?
+
+Všetko sa skladá z drobných čiastočiek: z [[atom|atómov]] a z malých skupiniek atómov, ktoré držia
+pokope. Sú oveľa menšie, než aby sa dali uvidieť, dokonca aj obyčajným mikroskopom.
+
+Tieto čiastočky sa nikdy neprestanú hýbať. V pevnej látke, napríklad v kocke ľadu alebo v lyžici, sa
+chvejú na mieste. V kvapaline, napríklad vo vode, sa chvejú a kĺžu popri sebe. V plyne, napríklad vo
+vzduchu, lietajú sem a tam a narážajú do seba.
+
+Keď sa niečo zohreje, jeho čiastočky sa chvejú rýchlejšie. Keď sa ochladí, spomalia sa. Teplota teda
+hovorí, ako rýchlo sa čiastočky chvejú: čím rýchlejšie, tým je teplota vyššia.
+
+<Figure caption="Šípky ukazujú, ako rýchlo sa každá čiastočka pohybuje. V studenej veci sa čiastočky chvejú pomaly, v horúcej rýchlo." wide>
+  <Jiggle />
+</Figure>
+
+<FunFact>
+Čiastočky vzduchu v tvojej izbe lietajú rýchlosťou asi 500 metrov za sekundu. To je rýchlejšie ako
+prúdové lietadlo! Každú sekundu však do seba narazia miliardy ráz, takže sa nikam ďaleko nedostanú.
+</FunFact>
+
+## Ako meriame teplotu?
+
+Teplotu meriame **teplomerom**. Mnohé teplomery sú tenké sklené trubičky s farebnou kvapalinou
+vnútri.
+
+Keď sa kvapalina zohreje, zaberie trochu viac miesta, a tak v trubičke stúpa. Keď sa ochladí, zase
+klesne. Čísla na stupnici ukazujú teplotu.
+
+Mnohé digitálne teplomery majú namiesto toho na špičke drobnú elektronickú súčiastku. Elektrina ňou
+prechádza ľahšie alebo ťažšie podľa toho, aká je teplá. Malý čip z toho vypočíta číslo na displeji.
+
+<Safety>
+Veľmi staré sklené teplomery môžu mať vnútri striebornú kvapalinu. Je to ortuť a je jedovatá. Ak sa
+taký teplomer rozbije, nedotýkaj sa ho a hneď zavolaj dospelého.
+</Safety>
+
+## Stupne Celzia
+
+Vo väčšine krajín meriame teplotu v **stupňoch Celzia**, ktoré píšeme **°C**. Stupnica sa riadi
+vodou:
+
+- Pri **0&nbsp;°C** voda zamŕza na ľad a ľad sa topí.
+- Pri **100&nbsp;°C** voda vrie – aspoň pri hladine mora.
+
+Vysoko v horách vrie voda pri nižšej teplote. Prečo, to zistíš v článku
+[[boiling-point|prečo voda nevrie vždy pri rovnakej teplote]].
+
+Teploty pod bodom mrazu majú pred číslom znamienko mínus. Takže −18&nbsp;°C znamená 18 stupňov pod
+bodom mrazu.
+
+Stupnica má meno po Andersovi Celsiovi, švédskom astronómovi. Opísal ju v roku 1742.
+
+<FunFact>
+Celsius mal pôvodne svoju stupnicu naopak! Voda u neho vrela pri 0 stupňoch a zamŕzala pri 100.
+Čoskoro potom ju iní vedci otočili správne.
+</FunFact>
+
+## Od mrazničky až po Slnko
+
+Tu je niekoľko teplôt na porovnanie:
+
+| Čo | Teplota |
+|---|---|
+| Najstudenší vzduch, aký kedy na Zemi namerali, v Antarktíde | asi −89&nbsp;°C |
+| V mrazničke | −18&nbsp;°C |
+| Voda zamŕza, ľad sa topí | 0&nbsp;°C |
+| V chladničke | asi 4&nbsp;°C |
+| Príjemná izba | asi 20&nbsp;°C |
+| Tvoje telo | asi 37&nbsp;°C |
+| Voda vrie (pri hladine mora) | 100&nbsp;°C |
+| Horúca rúra na pečenie | asi 200&nbsp;°C |
+| Povrch Slnka | asi 5&nbsp;500&nbsp;°C |
+
+Tvoje telo si udržiava teplotu asi 37&nbsp;°C, v lete aj v zime. Keď ochorieš, môže vystúpiť o
+niečo vyššie. Vtedy máš horúčku.
+
+## Pokus: kov a drevo
+
+Tu je bezpečný pokus s prekvapením. Nájdi kovovú a drevenú lyžicu, ktoré aspoň hodinu ležali v tej
+istej izbe. Teraz majú obe rovnakú teplotu ako izba.
+
+Dotkni sa ich, jednej po druhej. Kovová lyžica studí oveľa viac! Teplomer by však pri oboch ukázal
+rovnakú teplotu. Ako je to možné?
+
+Tvoja ruka je teplejšia ako izba, takže z nej do všetkého, čoho sa dotkneš, tečie [[heat|teplo]].
+Kov vedie teplo veľmi rýchlo. Rýchlo ti ho odoberá z kože, a tá sa ochladí. Drevo vedie teplo
+pomaly, takže koža zostane teplá.
+
+Tvoja koža necíti teplotu veci, ktorej sa dotýkaš. Cíti, ako rýchlo stráca teplo. Rýchlo znamená
+„studené!“ a pomaly znamená „nie až také studené“.
+
+<Figure caption="Oba kvádre majú 20 °C. Z prsta sa do kovu rýchlo valí teplo, a preto kov studí. Do dreva teplo prechádza pomaly, a preto sa drevo zdá teplejšie." wide>
+  <MetalAndWood />
+</Figure>
+
+<Safety>
+Tento pokus rob len s vecami s izbovou teplotou, nikdy nie s horúcimi hrncami. V mrazivom počasí sa
+nikdy nedotýkaj zamrznutého kovu jazykom ani mokrou kožou. Môžeš k nemu primrznúť.
+</Safety>
+
+<GoDeeper title="Stupne Fahrenheita">
+V Spojených štátoch merajú teplotu v stupňoch **Fahrenheita** (°F). Na tejto stupnici voda zamŕza
+pri 32&nbsp;°F a vrie pri 212&nbsp;°F a zdravé telo má asi 98,6&nbsp;°F. Stupne Celzia na stupne
+Fahrenheita prepočítaš takto:
+
+$$
+F = C \cdot \frac{9}{5} + 32
+$$
+
+Tu $C$ je teplota v stupňoch Celzia a $F$ je tá istá teplota v stupňoch Fahrenheita. Izba
+s teplotou 20&nbsp;°C má $20 \cdot \frac{9}{5} + 32 = 68$&nbsp;°F.
+</GoDeeper>
+
+<GoDeeper title="Kelvin a absolútna nula">
+Dajú sa veci ochladzovať donekonečna? Nie. Čím je niečo chladnejšie, tým pomalšie sa jeho čiastočky
+chvejú – a existuje hranica: **absolútna nula**, −273,15&nbsp;°C. Tam majú čiastočky najmenšie možné
+chvenie. Nemôžu odovzdať už žiadnu energiu, takže nič nemôže byť chladnejšie. (Kvantová fyzika
+hovorí, že nepatrné chvenie zostáva aj pri absolútnej nule.)
+
+Vedci často používajú **Kelvinovu stupnicu** (K), ktorá začína pri absolútnej nule. Jeden kelvin je
+rovnako veľký dielik ako jeden stupeň Celzia:
+
+$$
+T_{\text{K}} = T_{\text{C}} + 273{,}15
+$$
+
+Tu $T_{\text{C}}$ je teplota v stupňoch Celzia a $T_{\text{K}}$ tá istá teplota v kelvinoch. Voda
+zamŕza pri 273,15&nbsp;K, izba má asi 293&nbsp;K a povrch Slnka asi 5&nbsp;800&nbsp;K. Kelviny sa
+píšu bez znaku stupňa.
+
+Absolútnu nulu ešte nikto nedosiahol. Vedci však ochladili atómy na menej ako miliardtinu stupňa nad
+ňou.
+</GoDeeper>
+
+<GoDeeper title="Čo teplota presne meria">
+Teplota súvisí s *priemernou* pohybovou [[energy|energiou]] čiastočiek, nie s ich celkovou energiou.
+Preto má vaňa teplej vody oveľa viac tepelnej energie ako hrnček horúceho čaju: čiastočky čaju sa
+pohybujú rýchlejšie, ale vo vani je ich oveľa viac.
+
+Naša koža je zlý teplomer. Cíti vlastnú teplotu a tá rýchlo klesne, keď materiál odoberá teplo
+rýchlo. Kovy a kameň to robia výrazne, drevo, korok a vlna takmer vôbec. Inžinieri túto vlastnosť
+nazývajú **tepelná prijímavosť** (efuzivita).
+</GoDeeper>
+
+<Remember>
+- Všetko sa skladá z drobných čiastočiek, ktoré sa neustále chvejú.
+- Teplota hovorí, ako rýchlo sa chvejú: rýchlejšie znamená teplejšie.
+- Teplotu meriame teplomerom, zvyčajne v stupňoch Celzia (°C).
+- Pri hladine mora voda zamŕza pri 0&nbsp;°C a vrie pri 100&nbsp;°C. Tvoje telo má asi 37&nbsp;°C.
+- Kov sa zdá studenší ako drevo s rovnakou teplotou, pretože ti rýchlejšie odoberá teplo z kože.
+</Remember>
+
+<Quiz
+  question="Kovová a drevená lyžica ležia celý deň v tej istej izbe. Ktorá z nich je studenšia?"
+  options={["Kovová lyžica", "Drevená lyžica", "Ani jedna: majú rovnakú teplotu"]}
+  answer={2}
+  explanation="Obe majú teplotu izby. Kov sa zdá studenší len preto, že ti rýchlejšie odoberá teplo z ruky."
+/>
