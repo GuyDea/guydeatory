@@ -1,0 +1,33 @@
+---
+/** A diagram, image or widget with a caption. `wide` lets it grow past the text column. */
+interface Props {
+  lang?: string;
+  caption?: string;
+  wide?: boolean;
+}
+const { caption, wide = false } = Astro.props;
+---
+<figure class:list={['figure', { wide }]}>
+  <div class="figure-body"><slot /></div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .figure {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .figure-body {
+    padding: var(--space-4);
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-lg);
+  }
+
+  figcaption {
+    font-size: var(--text-sm);
+    color: var(--ink-soft);
+    max-width: var(--measure);
+  }
+</style>

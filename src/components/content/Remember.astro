@@ -1,0 +1,13 @@
+---
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+import Callout from './Callout.astro';
+
+interface Props {
+  lang: LangCode;
+  /** Optional heading instead of the default "Remember". */
+  title?: string;
+}
+const { lang, title } = Astro.props;
+---
+<Callout kind="remember" heading={title ?? t(lang, 'content.remember')}><slot /></Callout>

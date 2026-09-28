@@ -1,0 +1,21 @@
+/* Global styles for elements created by scripts (not scoped to a component). */
+.term-preview {
+  position: absolute;
+  z-index: 50;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  box-shadow: 5px 5px 0 var(--highlight);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+  pointer-events: auto;
+}
+
+.term-preview strong {
+  display: block;
+  font-family: var(--font-display-stack);
+  font-size: 1.05rem;
+  margin-bottom: var(--space-1);
+}

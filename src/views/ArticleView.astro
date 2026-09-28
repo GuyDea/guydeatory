@@ -15,7 +15,11 @@ import { getCatalog } from '@lib/content/catalog';
 import { localized, topicAncestry } from '@lib/content/queries';
 import { foldDiacritics } from '@lib/text';
 import { absolute, articleAlternates, articleUrl, homeUrl, SITE, topicUrl } from '@lib/urls';
+import DiagramDefs from '@components/diagram/DiagramDefs.astro';
+import 'katex/dist/katex.min.css';
 import '@styles/prose.css';
+import '@styles/content.css';
+import '@styles/diagram.css';
 
 interface Props {
   lang: LangCode;
@@ -66,6 +70,7 @@ const jsonLd = [
 ];
 ---
 <BaseLayout lang={lang} title={text.title} description={text.summary} canonical={url} alternates={articleAlternates(article)} ogType="article" jsonLd={jsonLd}>
+  <DiagramDefs />
   <div class="page article-page">
     <TopicPath lang={lang} topics={topicPath} />
     <ReadingTrail lang={lang} id={id} name={trailName} />
@@ -96,6 +101,7 @@ const jsonLd = [
 
 <script>
   import '../scripts/toc.ts';
+  import '../scripts/term-preview.ts';
 </script>
 
 <style>

@@ -1,0 +1,117 @@
+---
+/** Shared frame for Analogy, FunFact, Safety and Remember: an icon, a short heading, then the content. */
+interface Props {
+  kind: 'imagine' | 'fun-fact' | 'safety' | 'remember';
+  heading: string;
+}
+const { kind, heading } = Astro.props;
+---
+<aside class:list={['callout', `callout-${kind}`]} role="note">
+  <p class="callout-heading">
+    <span class="callout-icon" aria-hidden="true">
+      {kind === 'imagine' && <svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.9V16h5v-.2c0-.8.4-1.5 1-1.9A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" /></svg>}
+      {kind === 'fun-fact' && <svg viewBox="0 0 24 24"><path d="m12 2 2.6 6.2 6.7.6-5.1 4.4 1.5 6.6L12 16.3l-5.7 3.5 1.5-6.6-5.1-4.4 6.7-.6z" fill="currentColor" /></svg>}
+      {kind === 'safety' && <svg viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3z" fill="currentColor" /><path d="M12 9v5M12 16.5v.5" stroke="#1a2640" stroke-width="2.4" stroke-linecap="round" /></svg>}
+      {kind === 'remember' && <svg viewBox="0 0 24 24"><path d="M9 3h6l-1 5 3 3v2H7v-2l3-3-1-5zM12 13v8" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /></svg>}
+    </span>
+    {heading}
+  </p>
+  <div class="callout-body"><slot /></div>
+</aside>
+
+<style>
+  .callout {
+    position: relative;
+    max-width: var(--measure);
+    padding: var(--space-4) var(--space-5) var(--space-5);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+  }
+
+  .callout-heading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+    font-family: var(--font-display-stack);
+    font-weight: 750;
+    font-size: 1.05rem;
+  }
+
+  .callout-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+  .callout-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .callout-body > :global(* + *) {
+    margin-top: 0.8em;
+  }
+
+  .callout-body :global(ul),
+  .callout-body :global(ol) {
+    padding-left: 1.3em;
+  }
+
+  /* Imagine: a thought, so a soft dashed outline. */
+  .callout-imagine {
+    border: 2px dashed var(--label-sky);
+    background: var(--label-sky-bg);
+  }
+
+  .callout-imagine .callout-icon {
+    background: var(--label-sky);
+    color: var(--surface);
+  }
+
+  /* Fun fact: a small burst of amber. */
+  .callout-fun-fact .callout-icon {
+    background: var(--label-amber-bg);
+    color: var(--label-amber);
+  }
+
+  .callout-fun-fact {
+    border-color: var(--label-amber-bg);
+    border-width: 2px;
+  }
+
+  /* Safety: caution tape along the left edge. */
+  .callout-safety {
+    padding-left: calc(var(--space-5) + 12px);
+    border: 2px solid var(--caution);
+    background: var(--highlight-soft);
+    overflow: hidden;
+  }
+
+  .callout-safety::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 12px;
+    background: repeating-linear-gradient(-45deg, #1a2640 0 8px, var(--caution) 8px 16px);
+  }
+
+  .callout-safety .callout-icon {
+    color: var(--caution);
+  }
+
+  /* Remember: an index card — white, lifted off the page, with the red rule index cards have. */
+  .callout-remember {
+    border: 0;
+    border-top: 4px solid var(--hot);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-raised);
+  }
+
+  .callout-remember .callout-icon {
+    color: var(--hot);
+  }
+</style>

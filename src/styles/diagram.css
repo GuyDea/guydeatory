@@ -1,0 +1,118 @@
+/*
+ * Diagram vocabulary. Static diagrams (Svg.astro) and widgets draw with these classes,
+ * so every colour comes from the --d-* tokens and follows light/dark mode.
+ */
+.diagram {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-inline: auto;
+  font-family: var(--font-body-stack);
+  overflow: visible;
+}
+
+.diagram text {
+  fill: var(--d-ink);
+  font-size: 16px;
+}
+
+.diagram .d-label {
+  font-weight: 700;
+}
+
+.diagram .d-small {
+  font-size: 13px;
+}
+
+.diagram .d-muted {
+  fill: var(--d-muted);
+}
+
+.diagram .d-line {
+  fill: none;
+  stroke: var(--d-ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.diagram .d-wire {
+  fill: none;
+  stroke: var(--d-wire);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.diagram .d-box {
+  fill: var(--d-fill);
+  stroke: var(--d-ink);
+  stroke-width: 2;
+}
+
+.diagram .d-box-alt {
+  fill: var(--d-fill-alt);
+  stroke: var(--d-ink);
+  stroke-width: 2;
+}
+
+.diagram .d-arrow {
+  marker-end: url(#d-arrow);
+}
+
+.diagram .d-arrow-accent {
+  stroke: var(--d-accent);
+  marker-end: url(#d-arrow-accent);
+}
+
+.diagram .d-arrow-electron {
+  stroke: var(--d-electron);
+  marker-end: url(#d-arrow-electron);
+}
+
+.diagram .d-arrow-hot {
+  stroke: var(--d-hot);
+  marker-end: url(#d-arrow-hot);
+}
+
+.diagram .d-arrow-cold {
+  stroke: var(--d-cold);
+  marker-end: url(#d-arrow-cold);
+}
+
+.diagram .d-electron {
+  fill: var(--d-electron);
+}
+
+.diagram .d-positive {
+  fill: var(--d-positive);
+}
+
+.diagram .d-glow {
+  fill: var(--d-glow);
+}
+
+.diagram .d-hot {
+  fill: var(--d-hot);
+}
+
+.diagram .d-warm {
+  fill: var(--d-warm);
+}
+
+.diagram .d-cool {
+  fill: var(--d-cool);
+}
+
+.diagram .d-cold {
+  fill: var(--d-cold);
+}
+
+.diagram .d-accent {
+  fill: var(--d-accent);
+}
+
+.diagram .d-on-color {
+  fill: #fff;
+  font-weight: 700;
+}

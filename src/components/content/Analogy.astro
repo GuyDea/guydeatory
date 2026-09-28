@@ -1,0 +1,13 @@
+---
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+import Callout from './Callout.astro';
+
+interface Props {
+  lang: LangCode;
+  /** Optional heading instead of the default "Imagine this". */
+  title?: string;
+}
+const { lang, title } = Astro.props;
+---
+<Callout kind="imagine" heading={title ?? t(lang, 'content.imagine')}><slot /></Callout>
