@@ -1,0 +1,64 @@
+# The topic tree. Articles point to topics by id in their meta.yaml (`topics:`).
+# Ids and slugs are permanent (they are in URLs). Rules and planned domains: docs/taxonomy.md.
+# A topic without articles (directly or below it) is hidden automatically.
+
+- id: science
+  icon: 🔬
+  slug: { en: science, sk: veda }
+  name: { en: Science, sk: Veda }
+  description:
+    en: How nature works — from tiny atoms to huge stars.
+    sk: Ako funguje príroda — od drobných atómov po obrovské hviezdy.
+  children:
+    - id: physics
+      icon: 🧲
+      slug: { en: physics, sk: fyzika }
+      name: { en: Physics, sk: Fyzika }
+      description:
+        en: Matter, energy, forces and motion — the rules everything follows.
+        sk: Látka, energia, sily a pohyb — pravidlá, ktorými sa riadi všetko.
+      children:
+        - id: electricity
+          icon: ⚡
+          slug: { en: electricity, sk: elektrina }
+          name: { en: Electricity, sk: Elektrina }
+          description:
+            en: Charges, currents and circuits — why lamps shine and phones charge.
+            sk: Náboje, prúdy a obvody — prečo svietia lampy a nabíjajú sa telefóny.
+        - id: energy
+          icon: 🔋
+          slug: { en: energy, sk: energia }
+          name: { en: Energy, sk: Energia }
+          description:
+            en: What energy is, where it comes from and why it never disappears.
+            sk: Čo je energia, odkiaľ sa berie a prečo nikdy nezmizne.
+        - id: heat
+          icon: 🌡️
+          slug: { en: heat-and-temperature, sk: teplo-a-teplota }
+          name: { en: Heat & temperature, sk: Teplo a teplota }
+          description:
+            en: Why things get warm or cold, and how heat moves around.
+            sk: Prečo sa veci zohrievajú či chladnú a ako sa teplo presúva.
+        - id: matter
+          icon: 🧊
+          slug: { en: atoms-and-matter, sk: atomy-a-latky }
+          name: { en: Atoms & matter, sk: Atómy a látky }
+          description:
+            en: What everything is made of — atoms, solids, liquids and gases.
+            sk: Z čoho je všetko — atómy, pevné látky, kvapaliny a plyny.
+
+- id: technology
+  icon: 🛠️
+  slug: { en: technology, sk: technika }
+  name: { en: Technology, sk: Technika }
+  description:
+    en: How the machines and gadgets around us work.
+    sk: Ako fungujú stroje a prístroje okolo nás.
+  children:
+    - id: home-technology
+      icon: 🏠
+      slug: { en: technology-at-home, sk: technika-v-domacnosti }
+      name: { en: Technology at home, sk: Technika v domácnosti }
+      description:
+        en: The appliances that heat, cool and power our homes.
+        sk: Spotrebiče, ktoré nám doma kúria, chladia a dodávajú energiu.

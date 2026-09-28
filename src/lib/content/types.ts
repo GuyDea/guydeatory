@@ -83,4 +83,6 @@ export interface RawContent {
   topics: { file: string; data: unknown };
   labels: { file: string; data: unknown };
   home: { file: string; data: unknown };
+  /** Syntax errors found while reading files (reported before validation problems). */
+  loadProblems?: Problem[];
 }

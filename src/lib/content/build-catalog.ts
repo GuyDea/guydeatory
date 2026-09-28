@@ -137,7 +137,7 @@ function buildTexts(raw: RawContent, problems: Problem[]): Map<string, Partial<R
 }
 
 export function buildCatalog(raw: RawContent, options: BuildOptions): { catalog: Catalog; problems: Problem[] } {
-  const problems: Problem[] = [];
+  const problems: Problem[] = [...(raw.loadProblems ?? [])];
   const labels = buildLabels(raw, problems);
   const { topics, rootTopics } = buildTopics(raw, problems);
   const textsByArticle = buildTexts(raw, problems);

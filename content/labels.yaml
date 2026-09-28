@@ -1,0 +1,37 @@
+# Labels describe the TYPE of explanation an article gives. Order here = order in the UI.
+# `color` is a token name defined in src/styles/tokens.css (--label-<color>). Rules: docs/taxonomy.md.
+
+- id: high-level
+  color: sky
+  name: { en: Big picture, sk: Celkový obraz }
+  description:
+    en: What it is and why it matters — intuition first, little or no math.
+    sk: Čo to je a prečo je to dôležité — najprv intuícia, takmer bez matematiky.
+
+- id: low-level
+  color: violet
+  name: { en: Under the hood, sk: Pod kapotou }
+  description:
+    en: How it works in detail — the mechanism step by step, with precise words.
+    sk: Ako to funguje do detailu — mechanizmus krok za krokom, s presnými pojmami.
+
+- id: calculation
+  color: green
+  name: { en: Numbers & formulas, sk: Čísla a vzorce }
+  description:
+    en: How to calculate it, with formulas and worked examples.
+    sk: Ako sa to počíta — vzorce a vyriešené príklady.
+
+- id: trivia
+  color: amber
+  name: { en: Fun facts, sk: Zaujímavosti }
+  description:
+    en: Surprising facts, myths and curious questions.
+    sk: Prekvapivé fakty, mýty a zvedavé otázky.
+
+- id: history
+  color: rose
+  name: { en: History, sk: História }
+  description:
+    en: Who discovered or invented it, and how it happened.
+    sk: Kto to objavil alebo vynašiel a ako sa to stalo.
