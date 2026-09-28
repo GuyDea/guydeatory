@@ -82,6 +82,11 @@ button {
   border-radius: 2px;
 }
 
+/* The hidden attribute must always win over component display rules. */
+[hidden] {
+  display: none !important;
+}
+
 .visually-hidden {
   position: absolute !important;
   width: 1px;

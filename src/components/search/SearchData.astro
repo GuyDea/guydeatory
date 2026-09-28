@@ -1,0 +1,21 @@
+---
+/** Labels and strings the search scripts need to render results in the page language. */
+import type { LangCode } from '@i18n/languages';
+import { DICTIONARIES, t } from '@i18n/t';
+import { getCatalog } from '@lib/content/catalog';
+import { localized } from '@lib/content/queries';
+
+interface Props {
+  lang: LangCode;
+}
+const { lang } = Astro.props;
+const catalog = await getCatalog();
+const data = {
+  labels: Object.fromEntries([...catalog.labels.values()].map((l) => [l.id, { name: localized(l.name, lang), color: l.color }])),
+  count: DICTIONARIES[lang]['search.count'],
+  none: t(lang, 'search.none'),
+  unavailable: t(lang, 'search.unavailable'),
+  hint: t(lang, 'search.hint'),
+};
+---
+<script type="application/json" id="search-data" set:html={JSON.stringify(data)} />

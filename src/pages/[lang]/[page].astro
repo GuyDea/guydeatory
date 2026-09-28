@@ -10,7 +10,7 @@ import { getCatalog } from '@lib/content/catalog';
 import AboutView from '@views/AboutView.astro';
 import ArticleView from '@views/ArticleView.astro';
 import ExploreView from '@views/ExploreView.astro';
-import SectionView from '@views/SectionView.astro';
+import SearchView from '@views/SearchView.astro';
 
 type Props = { kind: 'article'; id: string } | { kind: 'explore' | 'search' | 'about' };
 
@@ -36,4 +36,4 @@ const props = Astro.props as Props;
 {props.kind === 'article' && <ArticleView lang={lang} id={props.id} />}
 {props.kind === 'explore' && <ExploreView lang={lang} />}
 {props.kind === 'about' && <AboutView lang={lang} />}
-{props.kind === 'search' && <SectionView lang={lang} kind="search" />}
+{props.kind === 'search' && <SearchView lang={lang} />}

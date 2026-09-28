@@ -1,0 +1,125 @@
+---
+/** Quick search, opened from the header button, "/" or Ctrl/⌘ K. Without JS the header link opens the search page. */
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+import { getCatalog } from '@lib/content/catalog';
+import { localized } from '@lib/content/queries';
+import { sectionUrl } from '@lib/urls';
+import '@styles/search.css';
+import SearchData from './SearchData.astro';
+
+interface Props {
+  lang: LangCode;
+}
+const { lang } = Astro.props;
+const catalog = await getCatalog();
+const labels = [...catalog.labels.values()];
+---
+<SearchData lang={lang} />
+<dialog class="search-dialog" data-search-dialog aria-label={t(lang, 'search.label')} data-search-page={sectionUrl(lang, 'search')}>
+  <div class="search-head">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"></circle><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"></path></svg>
+    <input type="search" data-search-input aria-label={t(lang, 'search.label')} placeholder={t(lang, 'search.placeholder')} autocomplete="off" enterkeyhint="search" />
+    <button type="button" class="search-close" data-search-close aria-label={t(lang, 'search.close')}>Esc</button>
+  </div>
+  <div class="search-filters" role="group" aria-label={t(lang, 'search.filters')}>
+    {
+      labels.map((label) => (
+        <button type="button" class="search-chip" data-search-label={label.id} aria-pressed="false" style={`--chip: var(--label-${label.color}); --chip-bg: var(--label-${label.color}-bg)`}>
+          {localized(label.name, lang)}
+        </button>
+      ))
+    }
+  </div>
+  <p class="search-status" data-search-status aria-live="polite"></p>
+  <ul class="hits" data-search-results></ul>
+  <a class="search-all" data-search-all href={sectionUrl(lang, 'search')} hidden>{t(lang, 'search.seeAll')}</a>
+</dialog>
+
+<script>
+  import '../../scripts/search-dialog.ts';
+</script>
+
+<style>
+  .search-dialog {
+    width: min(42rem, calc(100vw - 2rem));
+    max-height: min(80vh, 44rem);
+    margin: 8vh auto auto;
+    padding: var(--space-4);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius-lg);
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 8px 8px 0 var(--highlight);
+    overflow: auto;
+  }
+
+  .search-dialog::backdrop {
+    background: rgb(14 23 41 / 0.45);
+    backdrop-filter: blur(3px);
+  }
+
+  .search-dialog[open] {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+  }
+
+  .search-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0 var(--space-2) 0 var(--space-3);
+    border: 2px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+  }
+
+  .search-head:focus-within {
+    border-color: var(--accent);
+  }
+
+  .search-head svg {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    color: var(--ink-soft);
+  }
+
+  .search-head input {
+    flex: 1;
+    min-width: 0;
+    min-height: 3rem;
+    border: 0;
+    background: transparent;
+    font-size: var(--text-lg);
+  }
+
+  .search-head input:focus {
+    outline: none;
+  }
+
+  .search-close {
+    min-height: 36px;
+    min-width: var(--touch);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--surface-sunk);
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+  }
+
+  .search-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .search-all {
+    justify-self: start;
+    min-height: var(--touch);
+    display: inline-flex;
+    align-items: center;
+    font-weight: 700;
+  }
+</style>

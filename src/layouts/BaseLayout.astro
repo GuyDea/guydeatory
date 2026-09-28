@@ -3,6 +3,7 @@ import { Font } from 'astro:assets';
 import '@styles/tokens.css';
 import '@styles/base.css';
 import SiteFooter from '@components/site/SiteFooter.astro';
+import SearchDialog from '@components/search/SearchDialog.astro';
 import SiteHeader from '@components/site/SiteHeader.astro';
 import type { Alternate } from '@lib/urls';
 import { DEFAULT_LANG, getLanguage } from '@i18n/languages';
@@ -75,5 +76,6 @@ const xDefault = available.find((alt) => alt.lang === DEFAULT_LANG) ?? available
       <slot />
     </main>
     <SiteFooter lang={lang} alternates={alternates} />
+    {current !== 'search' && <SearchDialog lang={lang} />}
   </body>
 </html>

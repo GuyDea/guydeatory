@@ -1,0 +1,75 @@
+/* Search results (rendered by scripts in the dialog and on the search page). */
+.hits {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hit {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.hit:hover,
+.hit:focus-visible {
+  border-color: var(--accent);
+  outline-offset: 0;
+}
+
+.hit-title {
+  font-family: var(--font-display-stack);
+  font-weight: 750;
+  font-size: 1.15rem;
+}
+
+.hit-summary {
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.hit-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.hit-chip {
+  padding: 0 0.6em;
+  border-radius: var(--radius-pill);
+  background: var(--chip-bg);
+  color: var(--chip);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.search-chip {
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--chip);
+  background: var(--surface);
+  color: var(--chip);
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.search-chip[aria-pressed='true'] {
+  background: var(--chip);
+  color: var(--surface);
+}
+
+.search-status {
+  min-height: 1.6em;
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+}

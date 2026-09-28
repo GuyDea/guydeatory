@@ -1,0 +1,141 @@
+---
+import SearchData from '@components/search/SearchData.astro';
+import type { LangCode } from '@i18n/languages';
+import { t } from '@i18n/t';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getCatalog } from '@lib/content/catalog';
+import { localized, topicHasContent } from '@lib/content/queries';
+import { sectionAlternates, sectionUrl } from '@lib/urls';
+import '@styles/search.css';
+
+interface Props {
+  lang: LangCode;
+}
+const { lang } = Astro.props;
+const catalog = await getCatalog();
+const labels = [...catalog.labels.values()];
+const topics = [...catalog.topics.values()].filter((topic) => topicHasContent(catalog, topic.id, lang));
+---
+<BaseLayout
+  lang={lang}
+  title={t(lang, 'nav.search')}
+  description={t(lang, 'search.label')}
+  canonical={sectionUrl(lang, 'search')}
+  alternates={sectionAlternates('search')}
+  current="search"
+  noindex
+>
+  <SearchData lang={lang} />
+  <div class="page search-page" data-search-page>
+    <h1>{t(lang, 'nav.search')}</h1>
+    <form class="search-form" action={sectionUrl(lang, 'search')} method="get" role="search" data-search-form>
+      <label class="visually-hidden" for="search-q">{t(lang, 'search.label')}</label>
+      <input id="search-q" name="q" type="search" placeholder={t(lang, 'search.placeholder')} autocomplete="off" enterkeyhint="search" />
+      <button type="submit">{t(lang, 'nav.search')}</button>
+    </form>
+    <div class="filters">
+      <div class="chips" role="group" aria-label={t(lang, 'search.filters')}>
+        {
+          labels.map((label) => (
+            <button type="button" class="search-chip" data-search-label={label.id} aria-pressed="false" style={`--chip: var(--label-${label.color}); --chip-bg: var(--label-${label.color}-bg)`}>
+              {localized(label.name, lang)}
+            </button>
+          ))
+        }
+      </div>
+      <label class="topic">
+        <span>{t(lang, 'search.topic')}</span>
+        <select data-search-topic>
+          <option value="">{t(lang, 'search.anyTopic')}</option>
+          {topics.map((topic) => <option value={topic.id}>{' '.repeat(topic.depth)}{localized(topic.name, lang)}</option>)}
+        </select>
+      </label>
+    </div>
+    <p class="search-status" data-search-status aria-live="polite">{t(lang, 'search.hint')}</p>
+    <ul class="hits" data-search-results></ul>
+  </div>
+</BaseLayout>
+
+<script>
+  import '../scripts/search-page.ts';
+</script>
+
+<style>
+  .search-page {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-7);
+    max-width: 52rem;
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    font-weight: 800;
+  }
+
+  .search-form {
+    display: flex;
+    padding: var(--space-1);
+    background: var(--surface);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius-pill);
+    box-shadow: 5px 5px 0 var(--highlight);
+  }
+
+  .search-form:focus-within {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  .search-form input {
+    flex: 1;
+    min-width: 0;
+    min-height: 3rem;
+    padding: 0 var(--space-4);
+    border: 0;
+    background: transparent;
+    font-size: var(--text-lg);
+  }
+
+  .search-form input:focus {
+    outline: none;
+  }
+
+  .search-form button {
+    min-height: 3rem;
+    padding: 0 var(--space-5);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 700;
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: var(--space-4);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .topic {
+    display: grid;
+    gap: var(--space-1);
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+
+  .topic select {
+    min-height: var(--touch);
+    padding: 0 var(--space-3);
+    border: 2px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+  }
+</style>
