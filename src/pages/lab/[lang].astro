@@ -1,0 +1,54 @@
+---
+/**
+ * Widget lab: every widget on one page, for development. Built only in `astro dev`
+ * or when building with WIDGET_LAB=1 (e.g. `WIDGET_LAB=1 npm run build && npm run preview`).
+ */
+import DiagramDefs from '@components/diagram/DiagramDefs.astro';
+import { LANG_CODES } from '@i18n/languages';
+import type { LangCode } from '@i18n/languages';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import '@styles/content.css';
+import '@styles/diagram.css';
+import AcDc from '@widgets/ac-dc/AcDc.svelte';
+import BoilingPoint from '@widgets/boiling-point/BoilingPoint.svelte';
+import CopExplorer from '@widgets/cop-explorer/CopExplorer.svelte';
+import ElectronFlow from '@widgets/electron-flow/ElectronFlow.svelte';
+import HeatPumpCycle from '@widgets/heat-pump-cycle/HeatPumpCycle.svelte';
+import OhmsLawPlayground from '@widgets/ohms-law/OhmsLawPlayground.svelte';
+import SeriesParallel from '@widgets/series-parallel/SeriesParallel.svelte';
+
+export function getStaticPaths() {
+  const enabled = import.meta.env.DEV || process.env.WIDGET_LAB === '1';
+  return enabled ? LANG_CODES.map((lang) => ({ params: { lang } })) : [];
+}
+
+const lang = Astro.params.lang as LangCode;
+const alternates = LANG_CODES.map((code) => ({ lang: code, href: `/lab/${code}/` }));
+---
+<BaseLayout lang={lang} title="Widget lab" description="Every Guydeatory widget on one page, for development." canonical={`/lab/${lang}/`} alternates={alternates} noindex>
+  <DiagramDefs />
+  <div class="page lab">
+    <h1>Widget lab</h1>
+    <section id="electron-flow"><h2>ElectronFlow</h2><ElectronFlow client:visible lang={lang} /></section>
+    <section id="ohms-law"><h2>OhmsLawPlayground</h2><OhmsLawPlayground client:visible lang={lang} /></section>
+    <section id="series-parallel"><h2>SeriesParallel</h2><SeriesParallel client:visible lang={lang} /></section>
+    <section id="ac-dc"><h2>AcDc</h2><AcDc client:visible lang={lang} /></section>
+    <section id="heat-pump-cycle"><h2>HeatPumpCycle</h2><HeatPumpCycle client:visible lang={lang} /></section>
+    <section id="cop-explorer"><h2>CopExplorer</h2><CopExplorer client:visible lang={lang} /></section>
+    <section id="boiling-point"><h2>BoilingPoint</h2><BoilingPoint client:visible lang={lang} /></section>
+  </div>
+</BaseLayout>
+
+<style>
+  .lab {
+    display: grid;
+    gap: var(--space-7);
+    padding-block: var(--space-7);
+    max-width: 56rem;
+  }
+
+  h2 {
+    font-size: var(--text-h3);
+    margin-bottom: var(--space-3);
+  }
+</style>

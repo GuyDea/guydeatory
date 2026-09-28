@@ -114,8 +114,10 @@
   .stage :global(svg) {
     display: block;
     width: 100%;
+    max-width: 34rem;
     height: auto;
     max-height: 60vh;
+    margin-inline: auto;
   }
 
   .controls {

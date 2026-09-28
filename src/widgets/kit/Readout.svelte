@@ -4,11 +4,13 @@
     label: string;
     value: string;
     tone?: 'default' | 'accent' | 'hot' | 'cold';
+    /** Smaller type for words rather than numbers. */
+    compact?: boolean;
   }
-  let { label, value, tone = 'default' }: Props = $props();
+  let { label, value, tone = 'default', compact = false }: Props = $props();
 </script>
 
-<div class="readout" data-tone={tone}>
+<div class="readout" class:compact data-tone={tone}>
   <span class="label">{label}</span>
   <span class="value" aria-live="polite" aria-atomic="true">{value}</span>
 </div>
@@ -35,6 +37,11 @@
     font-size: 1.6rem;
     line-height: 1.1;
     font-variant-numeric: tabular-nums;
+  }
+
+  .compact .value {
+    font-size: 1.15rem;
+    line-height: 1.25;
   }
 
   [data-tone='accent'] .value {
