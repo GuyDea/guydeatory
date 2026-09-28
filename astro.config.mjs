@@ -5,6 +5,9 @@ import svelte from '@astrojs/svelte';
 import { unified } from '@astrojs/markdown-remark';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import { remarkWikiLinks } from './src/lib/markdown/remark-wiki-links.ts';
+import { remarkInjectLang } from './src/lib/markdown/remark-inject-lang.ts';
+import { rehypePagefindIgnoreMath } from './src/lib/markdown/rehype-pagefind-ignore-math.ts';
 
 // https://docs.astro.build/en/reference/configuration-reference/
 export default defineConfig({
@@ -15,8 +18,9 @@ export default defineConfig({
   compressHTML: true,
   markdown: {
     processor: unified({
-      remarkPlugins: [remarkMath],
-      rehypePlugins: [rehypeKatex],
+      // Order matters: wiki-links create <Term> elements that inject-lang then gives a `lang`.
+      remarkPlugins: [remarkMath, remarkWikiLinks, remarkInjectLang],
+      rehypePlugins: [rehypeKatex, rehypePagefindIgnoreMath],
     }),
   },
   integrations: [mdx(), svelte()],
