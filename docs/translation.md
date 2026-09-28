@@ -37,6 +37,7 @@ exists in both, with the same structure. More languages can be added later (see 
 | Units | non-breaking space between number and unit | 230 V, 50 Hz, 20 °C, 3 kWh |
 | Percent | space before % | 50 % |
 | Math (KaTeX) | decimal comma inside braces | `$1{,}5$` |
+| Formula symbols | voltage is **U** in Slovak formulas (English uses V); the unit stays volt (V) | `$I = \frac{U}{R}$`, `$P = U \cdot I$` |
 | Ordinals | number with a period | 1. poschodie |
 
 In MDX, type non-breaking spaces as `&nbsp;` or the real U+00A0 character. English uses "1.5 A",

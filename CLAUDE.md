@@ -66,9 +66,9 @@ Read `docs/vision.md` once per session if you are unsure what the product is for
 | `src/i18n/` | `languages.ts` (languages, localized URL sections) and `ui/<lang>.ts` (typed UI strings) |
 | `src/components/content/` | Authoring components available in all MDX files: Term, GoDeeper, Analogy, FunFact, Safety, Remember, Figure, Quiz |
 | `src/components/diagram/` | `Svg.astro` wrapper + shared arrow markers. Styles are in `src/styles/diagram.css`. |
-| `src/widgets/<name>/` | Interactive Svelte widgets: component + `strings.ts` + `model.ts` (tested) |
+| `src/widgets/<name>/` | Interactive Svelte widgets: component + `strings.ts` + `model.ts` (tested). Preview all of them at `/lab/en/` in dev. |
 | `src/views/`, `src/pages/` | Page views and routes. `[lang]/[page].astro` serves articles and the explore, search and about sections. |
-| `infra/`, `scripts/deploy.sh` | AWS: S3 + CloudFront + ACM + Route53 (CloudFormation), CloudFront router function |
+| `infra/`, `scripts/deploy.sh` | AWS: `infra/site.template.yml` (CloudFormation), `infra/cloudfront/router.js` (router function), `infra/render.ts` (inlines the router and the language list) |
 | `docs/` | Guides (below) and `superpowers/specs|plans` (design history) |
 | `.claude/skills/` | Project skills: `write-article`, `create-widget`, `add-language` |
 

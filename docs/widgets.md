@@ -101,6 +101,12 @@ picture.
 </WidgetFrame>
 ```
 
+## Widget lab
+
+`src/pages/lab/[lang].astro` shows every widget on one page in both languages. It is built only in
+`npm run dev` (open `/lab/en/`) or when building with `WIDGET_LAB=1 npm run build`; production builds
+skip it. Add every new widget there.
+
 ## Testing
 
 - `tests/widgets/<name>.test.ts` covers the model, with values checked by hand: Ohm's law, the COP
