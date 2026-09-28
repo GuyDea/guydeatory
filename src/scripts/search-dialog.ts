@@ -1,6 +1,6 @@
 /** Opens the quick-search dialog and runs searches as the reader types. */
-import { runSearch } from './search-client.ts';
-import { countText, renderHits, searchData } from './search-render.ts';
+import { loadPagefind, runSearch } from './search-client.ts';
+import { countText, renderHits, searchData, withSearchingNotice } from './search-render.ts';
 
 const dialog = document.querySelector<HTMLDialogElement>('[data-search-dialog]');
 
@@ -27,7 +27,7 @@ if (dialog && typeof dialog.showModal === 'function') {
       all.hidden = true;
       return;
     }
-    const outcome = await runSearch(query, { labels, limit: 8 });
+    const outcome = await withSearchingNotice(status, data, runSearch(query, { labels, limit: 8 }));
     if (outcome === null) return; // superseded by a newer keystroke
     if (outcome === 'unavailable') {
       status.textContent = data.unavailable;
@@ -42,6 +42,7 @@ if (dialog && typeof dialog.showModal === 'function') {
 
   function open() {
     if (dialog!.open) return;
+    void loadPagefind(); // start fetching the index while the reader types
     dialog!.showModal();
     input.focus();
     input.select();
@@ -71,6 +72,12 @@ if (dialog && typeof dialog.showModal === 'function') {
     else if (index <= 0) input.focus();
     else links[index - 1]!.focus();
   });
+
+  // Warm up the search engine as soon as the reader shows interest in the search button.
+  for (const trigger of document.querySelectorAll('[data-search-open]')) {
+    trigger.addEventListener('pointerenter', () => void loadPagefind(), { once: true });
+    trigger.addEventListener('focus', () => void loadPagefind(), { once: true });
+  }
 
   document.addEventListener('click', (event) => {
     const trigger = (event.target as Element | null)?.closest('[data-search-open]');

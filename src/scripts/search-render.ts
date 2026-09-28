@@ -7,10 +7,21 @@ export interface SearchData {
   none: string;
   unavailable: string;
   hint: string;
+  searching: string;
 }
 
 export function searchData(): SearchData {
   return JSON.parse(document.getElementById('search-data')!.textContent!) as SearchData;
+}
+
+/** Shows "Searching…" only if a search takes long enough to notice (e.g. the first one, which loads the index). */
+export async function withSearchingNotice<T>(status: HTMLElement, data: SearchData, work: Promise<T>): Promise<T> {
+  const timer = window.setTimeout(() => (status.textContent = data.searching), 250);
+  try {
+    return await work;
+  } finally {
+    window.clearTimeout(timer);
+  }
 }
 
 export function countText(data: SearchData, n: number): string {

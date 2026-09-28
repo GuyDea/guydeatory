@@ -73,6 +73,7 @@ export const sk = {
   'search.anyTopic': 'Všetky témy',
   'search.none': 'Nič sa nenašlo. Skús iné slovo alebo menej filtrov.',
   'search.unavailable': 'Vyhľadávanie v tomto náhľade nefunguje. Funguje na zverejnenej stránke.',
+  'search.searching': 'Hľadám…',
   'search.seeAll': 'Zobraziť všetky výsledky',
   'search.hint': 'Napíš slovo alebo celú otázku, alebo si vyber druh vysvetlenia.',
   'article.readingTime': '{minutes} min čítania',

@@ -75,6 +75,7 @@ export const en = {
   'search.anyTopic': 'Any topic',
   'search.none': 'Nothing found. Try another word, or fewer filters.',
   'search.unavailable': 'Search is not available in this preview. It works on the published site.',
+  'search.searching': 'Searching…',
   'search.seeAll': 'See all results',
   'search.hint': 'Type a word or a whole question, or pick a kind of explanation.',
   'article.readingTime': '{minutes} min read',

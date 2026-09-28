@@ -1,6 +1,6 @@
 /** The full search page: query + label + topic filters, with the state kept in the URL. */
 import { runSearch } from './search-client.ts';
-import { countText, renderHits, searchData } from './search-render.ts';
+import { countText, renderHits, searchData, withSearchingNotice } from './search-render.ts';
 
 const page = document.querySelector<HTMLElement>('[data-search-page]');
 
@@ -29,7 +29,7 @@ if (page) {
       results.replaceChildren();
       return;
     }
-    const outcome = await runSearch(query, { labels: chosen, topic: topic.value, limit: 50 });
+    const outcome = await withSearchingNotice(status, data, runSearch(query, { labels: chosen, topic: topic.value, limit: 50 }));
     if (outcome === null) return;
     if (outcome === 'unavailable') {
       status.textContent = data.unavailable;
