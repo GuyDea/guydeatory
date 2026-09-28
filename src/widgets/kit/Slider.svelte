@@ -3,6 +3,7 @@
   import { onMount } from 'svelte';
   import type { LangCode } from '../../i18n/languages.ts';
   import { formatQuantity } from './format.ts';
+  import { logPosition, logValue } from './scale.ts';
 
   interface Props {
     label: string;
@@ -24,12 +25,8 @@
   onMount(() => (hydrated = true));
 
   const LOG_STEPS = 1000;
-  const toPosition = (v: number) => (scale === 'log' ? (Math.log(v / min) / Math.log(max / min)) * LOG_STEPS : v);
-  const fromPosition = (p: number) => {
-    if (scale !== 'log') return p;
-    const raw = min * Math.pow(max / min, p / LOG_STEPS);
-    return Math.min(max, Math.max(min, Math.round(raw / step) * step));
-  };
+  const toPosition = (v: number) => (scale === 'log' ? logPosition(v, min, max, LOG_STEPS) : v);
+  const fromPosition = (p: number) => (scale === 'log' ? logValue(p, min, max, LOG_STEPS, step) : p);
 
   const text = $derived(format ? format(value) : unit ? formatQuantity(value, unit, lang, digits) : String(value));
 </script>
