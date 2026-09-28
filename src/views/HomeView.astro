@@ -153,6 +153,7 @@ const children = (id: string) =>
 
   .search input {
     flex: 1;
+    width: 0; /* inputs have a ~20ch intrinsic width that would stop the form from shrinking */
     min-width: 0;
     min-height: 3.2rem;
     padding: 0 var(--space-5);
