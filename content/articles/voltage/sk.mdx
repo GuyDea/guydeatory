@@ -1,0 +1,127 @@
+---
+title: Čo je elektrické napätie?
+term: napätie
+slug: napatie
+summary: Napätie je tlačenie, ktoré rozhýbe elektrinu. Batéria alebo zásuvka tlačí drobné elektróny cez drôty – čím väčšie napätie, tým silnejšie ich tlačí.
+keywords: [volt, volty, rozdiel potenciálov, elektrické napätie, napätie batérie]
+---
+
+import BatteryLoop from './diagrams/BatteryLoop.astro';
+import WaterTanks from './diagrams/WaterTanks.astro';
+
+Otvoríš kohútik a voda vystrekne. Nikto ju nevylieva. Vodu von *tlačí* voda, ktorá je za ňou. Aj
+elektrinu musí niečo tlačiť a to tlačenie má svoje meno: **napätie**.
+
+## Čo sa vlastne tlačí?
+
+Drôty sú z kovu a kov je plný drobných čiastočiek, ktoré sa volajú [[electron|elektróny]]. Sú také
+malé, že ich neuvidíš ani mikroskopom.
+
+Keď na ne niečo zatlačí, začnú sa spoločne posúvať po drôte. Tomuto toku elektrónov hovoríme
+[[electric-current|elektrický prúd]].
+
+<FunFact>
+Kúsok medeného drôtu malý ako hlavička špendlíka obsahuje viac voľných elektrónov, než je zrniek
+piesku na všetkých plážach sveta.
+</FunFact>
+
+## Odkiaľ sa tlačenie berie?
+
+Batéria má dva konce. Jeden je označený **−** (mínus) a druhý **+** (plus). Vo vnútri batérie
+chemická reakcia natlačí elektróny k mínusovému koncu a z plusového konca ich odoberá.
+
+Elektróny majú záporný [[electric-charge|náboj]] a navzájom sa odtláčajú. Natlačené elektróny na
+mínusovom konci preto chcú ujsť k plusovému koncu, kde ich je málo. Keď oba konce spojíš drôtom,
+rozbehnú sa dookola okruhom.
+
+<Figure caption="Batéria tlačí elektróny z mínusového konca cez drôt a žiarovku späť do plusového konca." wide>
+  <BatteryLoop />
+</Figure>
+
+To, ako silno batéria tlačí, je napätie. Meriame ho vo **voltoch** a píšeme **V**. Meno pochádza od
+Alessandra Voltu, talianskeho vedca, ktorý v roku 1800 zostrojil prvú batériu. Zoznámiš sa s ním
+v článku o [[history-of-electricity|histórii elektriny]].
+
+## Tlačenie medzi dvoma miestami
+
+<Analogy>
+Predstav si dve nádrže na vodu spojené rúrkou. Ak je jedna nádrž vyššie ako druhá, voda steká
+rúrkou do nižšej nádrže. Ak sú obe v rovnakej výške, netečie vôbec nič.
+</Analogy>
+
+<Figure caption="Voda tečie, lebo jedna nádrž je vyššie ako druhá. Elektrina tečie vďaka rozdielu v tlačení – vďaka napätiu." wide>
+  <WaterTanks />
+</Figure>
+
+S napätím je to rovnaké. Je to vždy **rozdiel** medzi dvoma bodmi, napríklad medzi dvoma koncami
+batérie. Bez rozdielu nič netečie.
+
+Preto môžu vtáky sedieť na elektrickom vedení bez úhony. Oboma nohami sa dotýkajú toho istého
+drôtu, takže medzi nimi nie je žiadny rozdiel napätia. Viac sa dozvieš v článku
+[[why-birds-on-wires-dont-get-shocked|prečo sú vtáky na drôtoch v bezpečí]].
+
+## Malé a veľké napätia
+
+| Kde | Napätie |
+|---|---|
+| Jedna tužková batéria (AA) | 1,5&nbsp;V |
+| USB nabíjačka telefónu | 5&nbsp;V |
+| Autobatéria | 12&nbsp;V |
+| Zásuvka v Európe | 230&nbsp;V |
+| Najväčšie elektrické vedenia v Európe | až 400&nbsp;000&nbsp;V |
+| Blesk | stovky miliónov voltov |
+
+<Safety>
+Napätie v zásuvke je dosť silné na to, aby cez tvoje telo pretlačilo smrteľný prúd. Nikdy nič
+nestrkaj do zásuvky, nedotýkaj sa poškodených káblov a drž sa ďaleko od elektrického vedenia.
+S batériami s napätím 1,5 alebo 9&nbsp;voltov môžeš bezpečne experimentovať – ale nikdy nedávaj
+batériu do úst. Malé okrúhle gombíkové batérie sú pri prehltnutí veľmi nebezpečné.
+</Safety>
+
+## Viac tlačenia, viac toku
+
+Zober ten istý drôt a tlač dvakrát silnejšie – zdvojnásob napätie. Teraz ním každú sekundu pretečie
+dvakrát viac elektrónov.
+
+To, ako veľmi drôt alebo žiarovka elektróny brzdí, sa volá [[electrical-resistance|odpor]].
+Pravidlo, ktoré spája napätie, prúd a odpor, je [[ohms-law|Ohmov zákon]].
+
+<GoDeeper title="Čo volt naozaj meria">
+Napätie hovorí, koľko [[energy|energie]] získa alebo stratí každý kúsok elektrického náboja medzi
+dvoma bodmi. Jeden volt znamená jeden joule energie na každý coulomb náboja:
+
+$$
+1\ \text{V} = 1\ \frac{\text{J}}{\text{C}}
+$$
+
+Coulomb (C) je náboj približne 6,2 miliardy miliárd elektrónov ($6{,}24 \cdot 10^{18}$). Batéria
+s napätím 1,5&nbsp;V teda dodá každému coulombu, ktorý obehne obvod, 1,5 joulu energie. Žiarovka si
+túto energiu vezme a zmení ju na svetlo a teplo.
+
+Presný názov pre napätie je **rozdiel potenciálov**. Porovnáva *elektrický potenciál* v dvoch
+bodoch – podobne, ako sa dá porovnať výška dvoch miest na kopci.
+</GoDeeper>
+
+<GoDeeper title="Kde obrázok s vodou nesedí">
+- Batéria neskladuje elektróny, ktoré by sa jej minuli. Elektróny už v drôtoch sú; batéria ich len
+  tlačí dookola okruhom. Minie sa chemická energia batérie.
+- Tlačenie sa drôtom šíri takmer rýchlosťou svetla, no každý elektrón sa posúva len pomaly – často
+  pomalšie ako slimák.
+- Z prerezanej rúrky voda vyteká, ale z prerezaného drôtu elektróny nevytekajú. Bez uzavretého
+  okruhu sa jednoducho zastavia.
+</GoDeeper>
+
+<Remember>
+- Napätie je tlačenie, ktoré rozhýbe elektrinu.
+- Je to vždy rozdiel medzi dvoma bodmi, napríklad medzi koncami batérie.
+- Meriame ho vo voltoch (V).
+- Väčšie napätie pretlačí tým istým drôtom väčší prúd.
+- Zásuvky a elektrické vedenia majú nebezpečné napätie.
+</Remember>
+
+<Quiz
+  question="Prečo vtáka, ktorý sedí na elektrickom vedení, nezasiahne prúd?"
+  options={["Perie nepustí elektrinu", "Oboma nohami sa dotýka toho istého drôtu, takže medzi nimi nie je rozdiel napätia", "Vo vedení je len maličké napätie"]}
+  answer={1}
+  explanation="Elektrina tečie len vtedy, keď je medzi dvoma bodmi rozdiel v tlačení. Obe nohy sú na tom istom drôte, takže žiadny rozdiel nie je."
+/>

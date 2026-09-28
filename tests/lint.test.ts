@@ -91,6 +91,15 @@ describe('lintContent', () => {
     expect(problems).toEqual([{ file: 'content/articles/atom/en.mdx', message: expect.stringMatching(/<Unknwn>.*not a global component.*not imported/) }]);
   });
 
+  it('accepts math with braces (parsed as math, not as MDX expressions)', async () => {
+    const dir = await project({
+      'content/articles/atom/meta.yaml': META,
+      'content/articles/atom/en.mdx': `${frontmatter('atom')}\nAbout $6{,}24 \\cdot 10^{18}$ electrons.\n\n$$\n1\\ \\text{V} = 1\\ \\frac{\\text{J}}{\\text{C}}\n$$\n`,
+      'content/articles/atom/sk.mdx': `${frontmatter('atom-sk')}\nTelo.\n`,
+    });
+    expect(await lintContent(dir)).toEqual([]);
+  });
+
   it('includes catalog validation problems', async () => {
     const dir = await project({
       'content/articles/atom/meta.yaml': META,

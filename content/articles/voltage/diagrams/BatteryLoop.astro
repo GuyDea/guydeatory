@@ -1,0 +1,44 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'A battery pushing electrons around a loop',
+    desc: 'A battery with a minus and a plus end is connected by a wire loop through a bulb. Electrons leave the minus end, travel around the loop through the bulb and return to the plus end.',
+    battery: 'battery',
+    bulb: 'bulb',
+    electrons: 'electrons',
+  },
+  sk: {
+    title: 'Batéria tlačí elektróny dookola okruhom',
+    desc: 'Batéria s mínusovým a plusovým koncom je drôtom spojená so žiarovkou do okruhu. Elektróny vychádzajú z mínusového konca, obehnú okruh cez žiarovku a vrátia sa do plusového konca.',
+    battery: 'batéria',
+    bulb: 'žiarovka',
+    electrons: 'elektróny',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const electrons = [
+  [60, 150], [60, 110], [60, 70], [110, 40], [150, 40], [250, 40], [290, 40], [340, 70], [340, 110], [340, 150], [110, 195], [290, 195],
+];
+---
+<Svg viewBox="0 0 400 250" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M160 195H60V40H340V195H240" class="d-wire" />
+  <rect x="160" y="175" width="80" height="40" rx="7" class="d-box" />
+  <rect x="240" y="186" width="7" height="18" rx="2" class="d-box" />
+  <text x="178" y="203" class="d-label">−</text>
+  <text x="212" y="203" class="d-label">+</text>
+  <text x="200" y="240" text-anchor="middle" class="d-label">{s.battery}</text>
+  <circle cx="200" cy="40" r="24" class="d-glow" />
+  <path d="M190 48c3-12 7-12 10 0s7 12 10 0" class="d-line" />
+  <text x="200" y="88" text-anchor="middle" class="d-label">{s.bulb}</text>
+  {electrons.map(([x, y]) => <circle cx={x} cy={y} r="6" class="d-electron" />)}
+  <path d="M80 175V125" class="d-line d-arrow-electron" />
+  <path d="M95 60H145" class="d-line d-arrow-electron" />
+  <path d="M320 80V130" class="d-line d-arrow-electron" />
+  <text x="92" y="120" class="d-small d-muted">{s.electrons}</text>
+</Svg>

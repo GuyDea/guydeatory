@@ -39,7 +39,8 @@ function boundNames(tree: Root): Set<string> {
 }
 
 function unknownComponents(file: string, source: string): Problem[] {
-  const tree = unified().use(remarkParse).use(remarkMdx).use(remarkFrontmatter).parse(source) as Root;
+  // Same syntax extensions as the real pipeline, so math like $6{,}24$ is not read as an MDX expression.
+  const tree = unified().use(remarkParse).use(remarkMdx).use(remarkFrontmatter).use(remarkMath).parse(source) as Root;
   const known = new Set<string>([...GLOBAL_COMPONENTS, ...boundNames(tree)]);
   const problems: Problem[] = [];
   const isJsx = (node: { type: string }): node is MdxJsxFlowElement | MdxJsxTextElement =>
@@ -77,7 +78,11 @@ async function lintMdx(root: string, file: string): Promise<Problem[]> {
     return [{ file, message: at(line ?? place?.start?.line ?? place?.line ?? (embedded ? Number(embedded) : undefined), text) }];
   }
   const warnings = vfile.messages.map((m) => ({ file, message: at(m.line ?? undefined, m.reason) }));
-  return [...warnings, ...unknownComponents(file, source)];
+  try {
+    return [...warnings, ...unknownComponents(file, source)];
+  } catch (error) {
+    return [...warnings, { file, message: `could not scan components: ${(error as Error).message}` }];
+  }
 }
 
 /**

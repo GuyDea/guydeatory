@@ -1,0 +1,16 @@
+topics: [electricity]
+labels: [high-level]
+prerequisites: [electron]
+related: [electric-current, electrical-resistance, ohms-law, why-birds-on-wires-dont-get-shocked]
+status: published
+created: 2026-09-29
+updated: 2026-09-29
+sources:
+  - title: Voltage — Wikipedia
+    url: https://en.wikipedia.org/wiki/Voltage
+  - title: Mains electricity by country — Wikipedia
+    url: https://en.wikipedia.org/wiki/Mains_electricity_by_country
+  - title: Drift velocity — Wikipedia
+    url: https://en.wikipedia.org/wiki/Drift_velocity
+  - title: Lightning — Wikipedia
+    url: https://en.wikipedia.org/wiki/Lightning

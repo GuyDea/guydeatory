@@ -1,0 +1,41 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Two water tanks at different heights',
+    desc: 'A high tank and a low tank are joined by a pipe. Water flows down the pipe from the high tank to the low one. The difference in height stands for voltage, and the flow stands for current.',
+    height: 'difference in height',
+    voltage: '= voltage',
+    flow: 'flow = current',
+  },
+  sk: {
+    title: 'Dve nádrže na vodu v rôznej výške',
+    desc: 'Vyššia a nižšia nádrž sú spojené rúrkou. Voda tečie rúrkou z vyššej nádrže do nižšej. Rozdiel výšok predstavuje napätie a tok vody predstavuje prúd.',
+    height: 'rozdiel výšok',
+    voltage: '= napätie',
+    flow: 'tok = prúd',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+---
+<Svg viewBox="0 0 400 260" title={s.title} desc={s.desc} maxWidth="30rem">
+  <rect x="20" y="20" width="110" height="90" rx="6" class="d-box" />
+  <rect x="24" y="42" width="102" height="64" rx="3" class="d-cool" />
+  <rect x="270" y="150" width="110" height="90" rx="6" class="d-box" />
+  <rect x="274" y="196" width="102" height="40" rx="3" class="d-cool" />
+  <path d="M130 96H180V218H270" fill="none" stroke="var(--d-wire)" stroke-width="16" stroke-linejoin="round" />
+  <path d="M130 96H180V218H270" fill="none" stroke="var(--d-cool)" stroke-width="10" stroke-linejoin="round" />
+  <path d="M152 84H176" class="d-line d-arrow-cold" />
+  <path d="M195 150V190" class="d-line d-arrow-cold" />
+  <path d="M215 236H255" class="d-line d-arrow-cold" />
+  <path d="M235 44V194" class="d-line d-arrow" style="marker-start: url(#d-arrow)" />
+  <path d="M130 42H250M255 196H270" class="d-line d-muted" stroke-dasharray="4 5" style="stroke: var(--d-muted)" />
+  <text x="248" y="100" class="d-label">{s.height}</text>
+  <text x="248" y="124" class="d-label">{s.voltage}</text>
+  <text x="200" y="258" text-anchor="middle" class="d-small">{s.flow}</text>
+</Svg>

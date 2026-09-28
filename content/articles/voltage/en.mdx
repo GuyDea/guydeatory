@@ -1,0 +1,129 @@
+---
+title: What is voltage?
+term: voltage
+slug: voltage
+summary: Voltage is the push that makes electricity flow. A battery or a socket pushes tiny electrons through the wires — the bigger the voltage, the harder the push.
+keywords: [volt, volts, potential difference, electric pressure, battery voltage]
+---
+
+import BatteryLoop from './diagrams/BatteryLoop.astro';
+import WaterTanks from './diagrams/WaterTanks.astro';
+
+Turn on a tap and water rushes out. Nobody is pouring it. The water is *pushed* out by the water
+behind it. Electricity needs a push too, and that push has a name: **voltage**.
+
+## What is being pushed?
+
+Wires are made of metal, and metal is full of tiny particles called [[electron|electrons]]. They are
+far too small to see, even with a microscope.
+
+When something pushes on these electrons, they start to drift along the wire, all together. This
+flow of electrons is called [[electric-current|electric current]].
+
+<FunFact>
+A piece of copper wire as small as a pinhead holds more free electrons than there are grains of
+sand on all the beaches on Earth.
+</FunFact>
+
+## Where does the push come from?
+
+A battery has two ends. One is marked **−** (minus) and the other **+** (plus). Inside the battery,
+a chemical reaction crowds electrons together at the minus end and takes them away from the plus
+end.
+
+Electrons carry a negative [[electric-charge|charge]], and they push each other away. So the crowded
+electrons at the minus end want to escape to the plus end, where there are too few. Connect the two
+ends with a wire, and off they go around the loop.
+
+<Figure caption="The battery pushes electrons out of its minus end, around the wire and through the bulb, and back into its plus end." wide>
+  <BatteryLoop />
+</Figure>
+
+How strong this push is — that is the voltage. We measure it in **volts**, written **V**. The name
+comes from Alessandro Volta, an Italian scientist who built the first battery in 1800. You can
+meet him in the [[history-of-electricity|history of electricity]].
+
+## A push between two places
+
+<Analogy>
+Imagine two water tanks joined by a pipe. If one tank sits higher than the other, water flows down
+the pipe into the lower tank. If both tanks are at the same height, nothing flows at all.
+</Analogy>
+
+<Figure caption="Water flows because one tank is higher than the other. Electricity flows because of a difference in push: the voltage." wide>
+  <WaterTanks />
+</Figure>
+
+Voltage works the same way. It is always a **difference** between two points, like the two ends of a
+battery. No difference means no flow.
+
+That is why birds can sit on a power line without getting hurt. Both of their feet touch the same
+wire, so there is no difference in voltage between them. Read more in
+[[why-birds-on-wires-dont-get-shocked|why birds are safe on wires]].
+
+## Small and big voltages
+
+| Where | Voltage |
+|---|---|
+| One AA battery | 1.5 V |
+| A USB phone charger | 5 V |
+| A car battery | 12 V |
+| A wall socket in Europe | 230 V |
+| The biggest power lines in Europe | up to 400,000 V |
+| A bolt of lightning | hundreds of millions of volts |
+
+<Safety>
+The voltage in a wall socket is strong enough to push a deadly current through your body. Never
+poke anything into a socket, never touch damaged cables, and stay far away from power lines.
+Batteries of 1.5 or 9 volts are safe for experiments — but never put a battery in your mouth.
+Small round button batteries are very dangerous if swallowed.
+</Safety>
+
+## More push, more flow
+
+Take the same wire and push twice as hard: double the voltage. Now twice as many electrons flow
+through it every second.
+
+How much a wire or a lamp holds the electrons back is called [[electrical-resistance|resistance]].
+The rule that connects voltage, current and resistance is [[ohms-law|Ohm’s law]].
+
+<GoDeeper title="What a volt really measures">
+Voltage tells how much [[energy]] each bit of electric charge gains or loses between two points.
+One volt means one joule of energy for every coulomb of charge:
+
+$$
+1\ \text{V} = 1\ \frac{\text{J}}{\text{C}}
+$$
+
+A coulomb (C) is the charge of about 6.2 billion billion electrons ($6.24 \times 10^{18}$). So a
+1.5 V battery gives every coulomb that travels around the circuit 1.5 joules of energy. The bulb
+takes that energy and turns it into light and heat.
+
+The exact name for voltage is **potential difference**. It compares the *electric potential* at
+two points, the same way the height of two places on a hill can be compared.
+</GoDeeper>
+
+<GoDeeper title="Where the water picture goes wrong">
+- A battery does not store electrons and then run out of them. The electrons are already in the
+  wires; the battery keeps pushing them around the loop. What gets used up is the battery’s
+  chemical energy.
+- The push travels along a wire almost as fast as light, but each electron only creeps forward —
+  often more slowly than a snail.
+- Water pours out of a cut pipe, but electrons do not pour out of a cut wire. Without a closed loop,
+  they simply stop moving.
+</GoDeeper>
+
+<Remember>
+- Voltage is the push that makes electricity flow.
+- It is always a difference between two points, like the two ends of a battery.
+- It is measured in volts (V).
+- More voltage pushes more current through the same wire.
+- Sockets and power lines have dangerous voltages.
+</Remember>
+
+<Quiz
+  question="Why doesn't a bird sitting on a power line get a shock?"
+  options={["Its feathers block electricity", "Both feet touch the same wire, so there is no difference in voltage", "Power lines carry only a tiny voltage"]}
+  answer={1}
+  explanation="Electricity only flows when there is a difference in push between two points. Both feet are on the same wire, so there is no difference."
+/>
