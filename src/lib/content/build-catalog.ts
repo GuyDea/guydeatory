@@ -105,6 +105,7 @@ function buildTexts(raw: RawContent, problems: Problem[]): Map<string, Partial<R
       problems.push({ file: entry.file, message: `no meta.yaml next to this file (content/articles/${entry.id}/meta.yaml)` });
       continue;
     }
+    if (entry.data === null) continue; // unreadable file, already reported by the loader
     for (const link of findUnescapedTableLinks(entry.body)) {
       problems.push({
         file: entry.file,

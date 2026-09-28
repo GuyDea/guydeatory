@@ -100,6 +100,16 @@ describe('lintContent', () => {
     expect(await lintContent(dir)).toEqual([]);
   });
 
+  it('reports broken frontmatter once, without also claiming the translation is missing', async () => {
+    const dir = await project({
+      'content/articles/atom/meta.yaml': META,
+      'content/articles/atom/en.mdx': `${frontmatter('atom')}\nBody.\n`,
+      'content/articles/atom/sk.mdx': `---\ntitle: Atóm\nslug: atom-sk\nsummary: prúd = napätie : odpor a ešte kúsok textu.\n---\nTelo.\n`,
+    });
+    const problems = await lintContent(dir);
+    expect(problems).toEqual([{ file: 'content/articles/atom/sk.mdx', message: expect.stringMatching(/invalid frontmatter/) }]);
+  });
+
   it('includes catalog validation problems', async () => {
     const dir = await project({
       'content/articles/atom/meta.yaml': META,

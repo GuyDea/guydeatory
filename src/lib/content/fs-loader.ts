@@ -63,6 +63,8 @@ export async function loadRawContent(root: string): Promise<RawContent> {
         texts.push({ id, lang, entryId: `${id}/${lang}`, file, data: parsed.data, body: parsed.content });
       } catch (error) {
         loadProblems.push({ file, message: `invalid frontmatter: ${(error as Error).message}` });
+        // Keep the file in the list (it exists), so it is not also reported as a missing translation.
+        texts.push({ id, lang, entryId: `${id}/${lang}`, file, data: null, body: '' });
       }
     }
   }
