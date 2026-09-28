@@ -6,6 +6,8 @@ export interface Strings {
   hint: string;
   /** Formula symbol for voltage: V in English, U in Slovak schools. */
   voltageSymbol: string;
+  /** Division sign as taught at school: ÷ in English, : in Slovak. */
+  divide: string;
   voltage: string;
   resistance: string;
   current: string;
@@ -23,6 +25,7 @@ export const strings: Record<LangCode, Strings> = {
     title: 'Ohm’s law playground',
     hint: 'Change the push and the resistance. The current is always the push divided by the resistance.',
     voltageSymbol: 'V',
+    divide: '÷',
     voltage: 'Push (voltage)',
     resistance: 'Resistance',
     current: 'Current',
@@ -38,6 +41,7 @@ export const strings: Record<LangCode, Strings> = {
     title: 'Ihrisko Ohmovho zákona',
     hint: 'Meň tlačenie a odpor. Prúd je vždy tlačenie vydelené odporom.',
     voltageSymbol: 'U',
+    divide: ':',
     voltage: 'Tlačenie (napätie)',
     resistance: 'Odpor',
     current: 'Prúd',
@@ -47,6 +51,6 @@ export const strings: Record<LangCode, Strings> = {
     push: 'tlačenie',
     narrow: 'odpor',
     flow: 'prúd',
-    picture: ({ amps, volts, ohms }) => `Prúd sa rovná napätiu vydelenému odporom: ${amps} = ${volts} ÷ ${ohms}.`,
+    picture: ({ amps, volts, ohms }) => `Prúd sa rovná napätiu vydelenému odporom: ${amps} = ${volts} : ${ohms}.`,
   },
 };

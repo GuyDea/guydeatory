@@ -38,6 +38,8 @@ exists in both, with the same structure. More languages can be added later (see 
 | Percent | space before % | 50 % |
 | Math (KaTeX) | decimal comma inside braces | `$1{,}5$` |
 | Formula symbols | voltage is **U** in Slovak formulas (English uses V); the unit stays volt (V) | `$I = \frac{U}{R}$`, `$P = U \cdot I$` |
+| Division, "about" | `:` for division (never ÷) and `≐` (`\doteq` in KaTeX) for "approximately" | `12 : 6 = 2`, `$230 : 26 \doteq 9$` |
+| Multiplication | `·` (`\cdot`), not × | `$U = R \cdot I$` |
 | Ordinals | number with a period | 1. poschodie |
 
 In MDX, type non-breaking spaces as `&nbsp;` or the real U+00A0 character. English uses "1.5 A",
@@ -91,6 +93,19 @@ Keep terms consistent across all articles. Add new terms here when you introduce
 | latent heat | skupenské teplo | |
 | conservation of energy | zákon zachovania energie | |
 | particle | častica, čiastočka | "čiastočka" is friendlier for kids |
+| transformer | transformátor | |
+| frequency, hertz | frekvencia, hertz (Hz) | |
+| sine wave, amplitude, period | sínusoida, amplitúda, perióda | |
+| RMS value | efektívna hodnota | |
+| resistivity | merný elektrický odpor (rezistivita) | |
+| superconductor | supravodič | |
+| thermocouple | termočlánok | |
+| horsepower | konská sila | |
+| rated power (on a label) | príkon | the power a device draws; "výkon" is what it delivers |
+| power station, power line, pylon | elektráreň, elektrické vedenie, stožiar | |
+| extension lead | predlžovačka | feminine: "v jednej predlžovačke" |
+| heating element | ohrevné teleso | |
+| war of the currents | vojna prúdov | |
 | friction | trenie | |
 | conduction / convection / radiation (of heat) | vedenie / prúdenie / žiarenie tepla | |
 | thermal insulator | tepelný izolant | |

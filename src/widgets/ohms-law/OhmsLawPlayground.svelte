@@ -55,10 +55,10 @@
     use:visibleLoop={{ tick, paused }}
   >
     <text x="200" y="40" text-anchor="middle" class="formula">
-      <tspan class="sym-i">I</tspan> = <tspan class="sym-v">{s.voltageSymbol}</tspan> ÷ <tspan class="sym-r">R</tspan>
+      <tspan class="sym-i">I</tspan> = <tspan class="sym-v">{s.voltageSymbol}</tspan> {s.divide} <tspan class="sym-r">R</tspan>
     </text>
     <text x="200" y="76" text-anchor="middle" class="numbers">
-      <tspan class="sym-i">{ampsText}</tspan> = <tspan class="sym-v">{voltsText}</tspan> ÷ <tspan class="sym-r">{ohmsText}</tspan>
+      <tspan class="sym-i">{ampsText}</tspan> = <tspan class="sym-v">{voltsText}</tspan> {s.divide} <tspan class="sym-r">{ohmsText}</tspan>
     </text>
 
     <!-- the push (battery / pump) -->
