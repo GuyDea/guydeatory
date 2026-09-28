@@ -16,9 +16,10 @@
     "typecheck": "astro check",
     "lint:content": "tsx scripts/lint-content.ts",
     "new:article": "tsx scripts/new-article.ts",
-    "check": "astro check && vitest run && npm run build && node scripts/check-dist.mjs",
+    "check": "astro check && vitest run && npm run lint:content && npm run build && npm run check:dist",
     "deploy": "bash scripts/deploy.sh",
-    "infra:deploy": "bash scripts/infra-deploy.sh"
+    "infra:deploy": "bash scripts/infra-deploy.sh",
+    "check:dist": "tsx scripts/check-dist.ts"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.1",
