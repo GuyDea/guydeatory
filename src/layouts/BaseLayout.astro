@@ -9,6 +9,7 @@ import type { Alternate } from '@lib/urls';
 import { DEFAULT_LANG, getLanguage } from '@i18n/languages';
 import type { LangCode } from '@i18n/languages';
 import { t } from '@i18n/t';
+import { scriptJson } from '@lib/text';
 import { absolute } from '@lib/urls';
 
 interface Props {
@@ -66,7 +67,7 @@ const xDefault = available.find((alt) => alt.lang === DEFAULT_LANG) ?? available
         if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
       } catch (e) {}
     </script>
-    {jsonLd.map((data) => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}
+    {jsonLd.map((data) => <script type="application/ld+json" set:html={scriptJson(data)} />)}
     <slot name="head" />
   </head>
   <body>

@@ -4,6 +4,7 @@ import type { LangCode } from '@i18n/languages';
 import { DICTIONARIES, t } from '@i18n/t';
 import { getCatalog } from '@lib/content/catalog';
 import { localized } from '@lib/content/queries';
+import { scriptJson } from '@lib/text';
 
 interface Props {
   lang: LangCode;
@@ -19,4 +20,4 @@ const data = {
   searching: t(lang, 'search.searching'),
 };
 ---
-<script type="application/json" id="search-data" set:html={JSON.stringify(data)} />
+<script type="application/json" id="search-data" set:html={scriptJson(data)} />
