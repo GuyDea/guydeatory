@@ -90,6 +90,7 @@ Read `docs/vision.md` once per session if you are unsure what the product is for
 - `docs/widgets.md` — interactive widgets and diagrams.
 - `docs/architecture.md` — how the code fits together, and scaling notes.
 - `docs/deployment.md` — AWS setup and deploy.
+- `docs/known-issues.md` — known small defects and next steps. Check it before working in the same area.
 
 ## Gotchas
 
