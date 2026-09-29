@@ -17,6 +17,7 @@ aws cloudformation deploy \
   --stack-name "$STACK" \
   --template-file infra/.build/site.yml \
   --no-fail-on-empty-changeset \
+  --capabilities CAPABILITY_NAMED_IAM \
   --tags project=guydeatory
 
 aws cloudformation describe-stacks --region "$REGION" --stack-name "$STACK" \

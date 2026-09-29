@@ -1,7 +1,8 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: >-
   Guydeatory static site (theguydea.com): private S3 bucket behind CloudFront with a
-  DNS-validated certificate, a router function and Route53 aliases. Deploy in us-east-1.
+  DNS-validated certificate, a router function, Route53 aliases and a role that GitHub Actions
+  assumes to publish the site. Deploy in us-east-1.
   Rendered by infra/render.ts — edit infra/site.template.yml, not infra/.build/site.yml.
 
 Parameters:
@@ -11,6 +12,10 @@ Parameters:
   HostedZoneId:
     Type: AWS::Route53::HostedZone::Id
     Default: Z06939482PPSH3VUZ9L07
+  GitHubRepository:
+    Type: String
+    Default: GuyDea/guydeatory
+    Description: owner/name of the GitHub repository whose main branch publishes the site
 
 Resources:
   SiteBucket:
@@ -162,6 +167,69 @@ Resources:
             DNSName: !GetAtt Distribution.DomainName
             HostedZoneId: Z2FDTNDATAQYW2
 
+  # GitHub Actions logs in with a short-lived OIDC token instead of stored keys. The provider is
+  # account-wide (one per account): another stack that needs it must reference this one.
+  GitHubOidcProvider:
+    Type: AWS::IAM::OIDCProvider
+    Properties:
+      Url: https://token.actions.githubusercontent.com
+      ClientIdList:
+        - sts.amazonaws.com
+      # AWS verifies GitHub's certificate itself; the thumbprints only satisfy older API versions.
+      ThumbprintList:
+        - 6938fd4d98bab03faadb97b34396831e3780aea1
+        - 1c58a3a8518e8759bf075b76b750d4f2df264fcd
+      Tags:
+        - Key: project
+          Value: guydeatory
+
+  # Only pushes to main in the repository may publish, and only to this bucket and distribution.
+  DeployRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: guydeatory-github-deploy
+      Description: Assumed by GitHub Actions on pushes to main to publish theguydea.com
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: !Ref GitHubOidcProvider
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
+                token.actions.githubusercontent.com:sub: !Sub 'repo:${GitHubRepository}:ref:refs/heads/main'
+      Policies:
+        - PolicyName: publish-site
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: ReadStackOutputs
+                Effect: Allow
+                Action: cloudformation:DescribeStacks
+                Resource: !Sub 'arn:${AWS::Partition}:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${AWS::StackName}/*'
+              - Sid: ListSite
+                Effect: Allow
+                Action: s3:ListBucket
+                Resource: !GetAtt SiteBucket.Arn
+              - Sid: WriteSite
+                Effect: Allow
+                Action:
+                  - s3:PutObject
+                  - s3:DeleteObject
+                  - s3:AbortMultipartUpload
+                Resource: !Sub '${SiteBucket.Arn}/*'
+              - Sid: Invalidate
+                Effect: Allow
+                Action:
+                  - cloudfront:CreateInvalidation
+                  - cloudfront:GetInvalidation
+                Resource: !Sub 'arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${Distribution}'
+      Tags:
+        - Key: project
+          Value: guydeatory
+
 Outputs:
   BucketName:
     Value: !Ref SiteBucket
@@ -169,3 +237,5 @@ Outputs:
     Value: !Ref Distribution
   DistributionDomainName:
     Value: !GetAtt Distribution.DomainName
+  DeployRoleArn:
+    Value: !GetAtt DeployRole.Arn
