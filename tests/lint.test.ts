@@ -110,6 +110,75 @@ describe('lintContent', () => {
     expect(problems).toEqual([{ file: 'content/articles/atom/sk.mdx', message: expect.stringMatching(/invalid frontmatter/) }]);
   });
 
+  it('reports em dashes in Slovak articles, frontmatter and attributes included, but not in code or English', async () => {
+    const sk = [
+      '---',
+      'title: Atóm — čo to je?',
+      'slug: atom-sk',
+      'summary: Krátka odpoveď – dosť dlhá na to, aby prešla.',
+      '---',
+      '',
+      'Text – so správnou pomlčkou, 3–4 jednotky a `kód — v kóde`.',
+      '',
+      '<Figure caption="Popis — obrázka">',
+      '  obsah',
+      '</Figure>',
+      '',
+      '```',
+      'blok — kódu',
+      '```',
+      '',
+      'Zlá pomlčka — tu.',
+      '',
+    ].join('\n');
+    const dir = await project({
+      'content/articles/atom/meta.yaml': META,
+      'content/articles/atom/en.mdx': `${frontmatter('atom')}\nEnglish keeps its dash — like this.\n`,
+      'content/articles/atom/sk.mdx': sk,
+    });
+    const file = 'content/articles/atom/sk.mdx';
+    expect(await lintContent(dir)).toEqual([
+      { file, message: 'line 2: em dash (—) in "title: Atóm — čo to je?" — Slovak uses a spaced en dash (–)' },
+      { file, message: 'line 9: em dash (—) in "…caption="Popis — obrázka">" — Slovak uses a spaced en dash (–)' },
+      { file, message: 'line 17: em dash (—) in "Zlá pomlčka — tu." — Slovak uses a spaced en dash (–)' },
+    ]);
+  });
+
+  it('reports em dashes in the Slovak names and descriptions of topics and labels, not in English ones', async () => {
+    const dir = await project({
+      'content/topics.yaml': `- id: physics
+  slug: { en: physics, sk: fyzika }
+  name: { en: Physics, sk: Fyzika }
+  description: { en: Matter — and energy., sk: Látka — a energia. }
+`,
+      'content/labels.yaml': `- id: high-level
+  color: sky
+  name: { en: Big — picture, sk: Celkový — obraz }
+  description: { en: Intuition first., sk: Najprv intuícia. }
+`,
+      'content/articles/atom/meta.yaml': META,
+      'content/articles/atom/en.mdx': `${frontmatter('atom')}\nBody.\n`,
+      'content/articles/atom/sk.mdx': `${frontmatter('atom-sk')}\nTelo.\n`,
+    });
+    expect(await lintContent(dir)).toEqual([
+      { file: 'content/topics.yaml', message: 'topic "physics", description (sk): em dash (—) in "Látka — a energia." — Slovak uses a spaced en dash (–)' },
+      { file: 'content/labels.yaml', message: 'label "high-level", name (sk): em dash (—) in "Celkový — obraz" — Slovak uses a spaced en dash (–)' },
+    ]);
+  });
+
+  it('reports em dashes in Slovak pages such as About', async () => {
+    const dir = await project({
+      'content/articles/atom/meta.yaml': META,
+      'content/articles/atom/en.mdx': `${frontmatter('atom')}\nBody.\n`,
+      'content/articles/atom/sk.mdx': `${frontmatter('atom-sk')}\nTelo.\n`,
+      'content/pages/about/en.mdx': '---\ntitle: About\nsummary: What this site is — in short, for everyone.\n---\n\nText — fine in English.\n',
+      'content/pages/about/sk.mdx': '---\ntitle: O projekte\nsummary: Čo je táto stránka – stručne, pre všetkých.\n---\n\nText — nie po slovensky.\n',
+    });
+    expect(await lintContent(dir)).toEqual([
+      { file: 'content/pages/about/sk.mdx', message: 'line 6: em dash (—) in "Text — nie po slovensky." — Slovak uses a spaced en dash (–)' },
+    ]);
+  });
+
   it('includes catalog validation problems', async () => {
     const dir = await project({
       'content/articles/atom/meta.yaml': META,

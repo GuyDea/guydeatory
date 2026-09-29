@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { compile } from '@mdx-js/mdx';
 import type { Root } from 'mdast';
@@ -17,8 +17,9 @@ import { remarkInjectLang } from '../markdown/remark-inject-lang.ts';
 import { remarkWikiLinks } from '../markdown/remark-wiki-links.ts';
 import { buildCatalog } from './build-catalog.ts';
 import { GLOBAL_COMPONENTS } from './components.ts';
-import { loadRawContent } from './fs-loader.ts';
+import { loadRawContent, PAGES_DIR } from './fs-loader.ts';
 import type { Problem } from './types.ts';
+import { mdxDashProblems, yamlDashProblems } from './typography.ts';
 
 const at = (line: number | undefined, message: string) => (line ? `line ${line}: ${message}` : message);
 
@@ -57,8 +58,11 @@ function unknownComponents(file: string, source: string): Problem[] {
   return problems;
 }
 
-/** Compiles one MDX file exactly like the site does, reporting syntax errors and plugin warnings. */
-async function lintMdx(root: string, file: string): Promise<Problem[]> {
+/**
+ * Compiles one article file exactly like the site does, reporting syntax errors and plugin
+ * warnings, then checks its components and dashes.
+ */
+async function lintMdx(root: string, file: string, lang: string): Promise<Problem[]> {
   const source = await readFile(join(root, file), 'utf8');
   const vfile = new VFile({ path: join(root, file), value: source });
   try {
@@ -80,20 +84,44 @@ async function lintMdx(root: string, file: string): Promise<Problem[]> {
     return [{ file, message: at(line ?? place?.start?.line ?? place?.line ?? (embedded ? Number(embedded) : undefined), text) }];
   }
   const warnings = vfile.messages.map((m) => ({ file, message: at(m.line ?? undefined, m.reason) }));
+  let components: Problem[];
   try {
-    return [...warnings, ...unknownComponents(file, source)];
+    components = unknownComponents(file, source);
   } catch (error) {
-    return [...warnings, { file, message: `could not scan components: ${(error as Error).message}` }];
+    components = [{ file, message: `could not scan components: ${(error as Error).message}` }];
   }
+  return [...warnings, ...components, ...mdxDashProblems(file, lang, source)];
+}
+
+/** Dashes in the language files of pages outside the article graph (`content/pages/<id>/<lang>.mdx`). */
+async function lintPages(root: string): Promise<Problem[]> {
+  const problems: Problem[] = [];
+  let dirs: string[];
+  try {
+    dirs = (await readdir(join(root, PAGES_DIR), { withFileTypes: true })).filter((d) => d.isDirectory()).map((d) => d.name).sort();
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return problems;
+    throw error;
+  }
+  for (const id of dirs) {
+    const names = (await readdir(join(root, PAGES_DIR, id))).filter((name) => name.endsWith('.mdx')).sort();
+    for (const name of names) {
+      const file = `${PAGES_DIR}/${id}/${name}`;
+      problems.push(...mdxDashProblems(file, name.slice(0, -'.mdx'.length), await readFile(join(root, file), 'utf8')));
+    }
+  }
+  return problems;
 }
 
 /**
  * Everything the production build would reject, without building:
  * catalog validation (production rules) + MDX compilation of every language file.
+ * Plus the house style the build does not enforce: dashes in every language's text.
  */
 export async function lintContent(root: string): Promise<Problem[]> {
   const raw = await loadRawContent(root);
   const { problems } = buildCatalog(raw, { includeDrafts: false });
-  for (const text of raw.texts) problems.push(...(await lintMdx(root, text.file)));
+  for (const text of raw.texts) problems.push(...(await lintMdx(root, text.file, text.lang)));
+  problems.push(...yamlDashProblems(raw), ...(await lintPages(root)));
   return problems;
 }

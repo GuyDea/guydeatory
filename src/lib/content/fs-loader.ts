@@ -6,6 +6,7 @@ import type { Problem, RawContent } from './types.ts';
 
 export const CONTENT_DIR = 'content';
 export const ARTICLES_DIR = `${CONTENT_DIR}/articles`;
+export const PAGES_DIR = `${CONTENT_DIR}/pages`;
 
 async function readOptional(path: string): Promise<string | undefined> {
   try {

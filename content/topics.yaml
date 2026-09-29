@@ -8,7 +8,7 @@
   name: { en: Science, sk: Veda }
   description:
     en: How nature works — from tiny atoms to huge stars.
-    sk: Ako funguje príroda — od drobných atómov po obrovské hviezdy.
+    sk: Ako funguje príroda – od drobných atómov po obrovské hviezdy.
   children:
     - id: physics
       icon: 🧲
@@ -16,7 +16,7 @@
       name: { en: Physics, sk: Fyzika }
       description:
         en: Matter, energy, forces and motion — the rules everything follows.
-        sk: Látka, energia, sily a pohyb — pravidlá, ktorými sa riadi všetko.
+        sk: Látka, energia, sily a pohyb – pravidlá, ktorými sa riadi všetko.
       children:
         - id: electricity
           icon: ⚡
@@ -24,7 +24,7 @@
           name: { en: Electricity, sk: Elektrina }
           description:
             en: Charges, currents and circuits — why lamps shine and phones charge.
-            sk: Náboje, prúdy a obvody — prečo svietia lampy a nabíjajú sa telefóny.
+            sk: Náboje, prúdy a obvody – prečo svietia lampy a nabíjajú sa telefóny.
         - id: energy
           icon: 🔋
           slug: { en: energy, sk: energia }
@@ -45,7 +45,7 @@
           name: { en: Atoms & matter, sk: Atómy a látky }
           description:
             en: What everything is made of — atoms, solids, liquids and gases.
-            sk: Z čoho je všetko — atómy, pevné látky, kvapaliny a plyny.
+            sk: Z čoho je všetko – atómy, pevné látky, kvapaliny a plyny.
 
 - id: technology
   icon: 🛠️

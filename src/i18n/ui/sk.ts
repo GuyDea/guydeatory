@@ -3,7 +3,7 @@ import type { Dictionary } from '../t.ts';
 /** Slovak UI strings. Informal "ty" register — see docs/translation.md. */
 export const sk = {
   'site.name': 'Guydeatory',
-  'site.tagline': 'Ako veci fungujú — vysvetlené od úplného začiatku.',
+  'site.tagline': 'Ako veci fungujú – vysvetlené od úplného začiatku.',
   'nav.home': 'Domov',
   'nav.explore': 'Objavuj',
   'nav.search': 'Hľadaj',
@@ -26,7 +26,7 @@ export const sk = {
   'article.sources': 'Zdroje',
   'article.updated': 'Naposledy upravené {date}',
   'article.stub': 'Toto je krátka verzia. Podrobnejšie vysvetlenie pripravujeme.',
-  'article.draft': 'Koncept — viditeľný len počas písania, nie je zverejnený.',
+  'article.draft': 'Koncept – viditeľný len počas písania, nie je zverejnený.',
   'article.labelsLabel': 'Typ vysvetlenia',
   'trail.label': 'Tvoja cesta',
   'trail.earlier': 'Skoršie kroky',
@@ -52,7 +52,7 @@ export const sk = {
   'explore.clear': 'Zrušiť filtre',
   'topic.inside': 'V tejto téme',
   'home.title': 'Zaujíma ťa, ako niečo funguje?',
-  'home.intro': 'Každá otázka má vlastné vysvetlenie od úplného začiatku — dosť jednoduché pre deti, dosť hlboké pre dospelých.',
+  'home.intro': 'Každá otázka má vlastné vysvetlenie od úplného začiatku – dosť jednoduché pre deti, dosť hlboké pre dospelých.',
   'home.searchLabel': 'Hľadaj vo vysvetleniach',
   'home.searchPlaceholder': 'Napríklad: ako funguje tepelné čerpadlo?',
   'home.tryThese': 'Alebo začni jednou z týchto otázok:',

@@ -46,7 +46,8 @@ content/articles/*/*.mdx ─► Astro collection "articleTexts" ─► render(en
    only so `render(entry)` can compile MDX. Metadata always comes from the catalog.
 5. **`npm run lint:content`** (`src/lib/content/lint.ts`) runs steps 1–2 *and* compiles every MDX
    file with the same plugins. It reports syntax errors with line numbers, and components that are
-   neither global nor imported. It writes nothing, so it is safe to run in parallel.
+   neither global nor imported. It also checks house style the build does not enforce: em dashes
+   in Slovak text (`typography.ts`). It writes nothing, so it is safe to run in parallel.
 
 ### Markdown plugins (`src/lib/markdown/`)
 
@@ -140,6 +141,7 @@ The search dialog (on every page) loads Pagefind only when opened.
 | Zod schemas | Wrong or missing fields, typos (strict objects) | build, lint, tests |
 | `buildCatalog` rules | Missing translations, unknown ids, broken or draft links, malformed links, duplicate or reserved slugs, topic and label problems, TODOs in published content | build, lint, tests |
 | `lint.ts` MDX compile | MDX syntax errors (with line), unknown components, KaTeX warnings | `npm run lint:content` |
+| `typography.ts` dash rule | Em dashes in the text of languages that use the spaced en dash (Slovak): articles, pages, topic and label names and descriptions | `npm run lint:content` |
 | `astro check` | TypeScript errors in `.astro`, `.ts` and `.svelte` | `npm run check` |
 | `check-dist.ts` | Broken internal links or assets, missing trailing slash, missing title, description, canonical or h1, missing hreflang, leaked `[[`, empty widget first frames, missing search index, missing folded keywords | `npm run check:dist` |
 

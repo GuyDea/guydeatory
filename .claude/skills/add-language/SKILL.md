@@ -12,7 +12,8 @@ Follow `docs/translation.md` §6. The steps:
    ASCII and kebab-case.
 2. **`src/i18n/ui/<code>.ts`**: copy `en.ts` and translate every key, including the plural forms
    the language needs (`Intl.PluralRules`). Register it in `DICTIONARIES` in `src/i18n/t.ts`.
-   `npm test` checks completeness.
+   `npm test` checks completeness. Give the language its dash (em or spaced en dash) in `DASH`
+   in `src/lib/content/typography.ts`; the linter then enforces it.
 3. **Content data:** in `content/topics.yaml` and `content/labels.yaml`, add `<code>` to every
    `name`, `description` and `slug` (topics). In `content/pages/about/`, add `<code>.mdx`. Add the
    404 copy in `src/pages/404.astro`.

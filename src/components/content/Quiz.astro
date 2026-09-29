@@ -5,6 +5,7 @@
  */
 import type { LangCode } from '@i18n/languages';
 import { t } from '@i18n/t';
+import { DASH } from '@lib/content/typography';
 
 interface Props {
   lang: LangCode;
@@ -34,7 +35,7 @@ if (!Number.isInteger(answer) || answer < 0 || answer >= options.length) {
   <p class="quiz-feedback" aria-live="polite"></p>
   <details class="quiz-reveal">
     <summary>{t(lang, 'quiz.reveal')}</summary>
-    <p><strong>{options[answer]}</strong> — {explanation}</p>
+    <p><strong>{options[answer]}</strong> {DASH[lang]} {explanation}</p>
   </details>
   <p class="quiz-explanation" hidden>{explanation}</p>
 </section>

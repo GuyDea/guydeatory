@@ -31,7 +31,7 @@ exists in both, with the same structure. More languages can be added later (see 
 | What | Rule | Example |
 |---|---|---|
 | Quotes | low-high quotes | „takto“ |
-| Dash | spaced en dash | slovo – slovo |
+| Dash | spaced en dash, never the em dash (—) | slovo – slovo |
 | Decimal separator | comma | 1,5 A |
 | Thousands | non-breaking space | 1 000 W |
 | Units | non-breaking space between number and unit | 230 V, 50 Hz, 20 °C, 3 kWh |
@@ -45,6 +45,11 @@ exists in both, with the same structure. More languages can be added later (see 
 In MDX, type non-breaking spaces as `&nbsp;` or the real U+00A0 character. Inside JSX attribute
 strings (quiz options, captions) only the real character works. English uses "1.5 A", "1,000 W"
 and "20 °C", also with a non-breaking space between number and unit.
+
+The dash rule is checked. `npm run lint:content` reports every em dash in Slovak articles, pages,
+and topic and label names and descriptions (code excepted). `tests/typography.test.ts` does the
+same for `src/i18n/ui/sk.ts`, the widgets' Slovak strings and the article diagrams. English keeps
+its em dashes. Each language's dash is set in `DASH` (`src/lib/content/typography.ts`).
 
 **50 Hz, precisely:** the current swings back and forth ("kmitá tam a späť") 50 times a second. That
 means it changes direction 100 times a second. Don't write "changes direction 50 times".
@@ -163,7 +168,8 @@ Use the `add-language` skill. In short:
 
 1. Add the language to `src/i18n/languages.ts` with its native name, date locale, OG locale and
    localized section slugs. Set `required: false` at first.
-2. Add `src/i18n/ui/<code>.ts`. TypeScript forces every key.
+2. Add `src/i18n/ui/<code>.ts`. TypeScript forces every key. Also give the language its dash in
+   `DASH` (`src/lib/content/typography.ts`).
 3. Add the language to every entry in `content/topics.yaml` and `content/labels.yaml` (name,
    description, slug).
 4. Add strings to every widget's `strings.ts`, the About page (`content/pages/about/<code>.mdx`)

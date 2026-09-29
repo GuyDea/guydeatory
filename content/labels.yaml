@@ -6,21 +6,21 @@
   name: { en: Big picture, sk: Celkový obraz }
   description:
     en: What it is and why it matters — intuition first, little or no math.
-    sk: Čo to je a prečo je to dôležité — najprv intuícia, takmer bez matematiky.
+    sk: Čo to je a prečo je to dôležité – najprv intuícia, takmer bez matematiky.
 
 - id: low-level
   color: violet
   name: { en: Under the hood, sk: Pod kapotou }
   description:
     en: How it works in detail — the mechanism step by step, with precise words.
-    sk: Ako to funguje do detailu — mechanizmus krok za krokom, s presnými pojmami.
+    sk: Ako to funguje do detailu – mechanizmus krok za krokom, s presnými pojmami.
 
 - id: calculation
   color: green
   name: { en: Numbers & formulas, sk: Čísla a vzorce }
   description:
     en: How to calculate it, with formulas and worked examples.
-    sk: Ako sa to počíta — vzorce a vyriešené príklady.
+    sk: Ako sa to počíta – vzorce a vyriešené príklady.
 
 - id: trivia
   color: amber
