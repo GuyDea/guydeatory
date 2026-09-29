@@ -4,6 +4,7 @@ import { getLanguage } from '@i18n/languages';
 import type { LangCode } from '@i18n/languages';
 import { t } from '@i18n/t';
 import type { Article, Catalog } from '@lib/content/types';
+import { formatDate } from '@lib/dates';
 import { resolveArticleLink } from '@lib/urls';
 
 interface Props {
@@ -17,7 +18,7 @@ const usedIn = (catalog.backlinks.get(article.id) ?? []).flatMap((id) => {
   const link = resolveArticleLink(catalog, id, lang);
   return link && !link.isFallback ? [{ id, ...link }] : [];
 });
-const updated = new Intl.DateTimeFormat(getLanguage(lang).dateLocale, { dateStyle: 'long' }).format(article.updated);
+const updated = formatDate(article.updated, getLanguage(lang).dateLocale);
 ---
 <footer class="article-footer">
   {
