@@ -21,7 +21,11 @@ possible.
    - Functions are fine for dynamic text: `picture: (r) => \`…\``.
 4. **Component.** `src/widgets/<name>/<Name>.svelte` (Svelte 5 runes):
    - Wrap it in `WidgetFrame` (`name`, `title`, `hint`, `lang`, `onreset`).
-   - Controls come from the kit: `Slider`, `Toggle`, `Readout`. Numbers go through `formatQuantity`.
+   - Controls come from the kit: `Slider`, `Toggle`, `Button`, `Readout`. Clickable parts of the
+     drawing use `hotspot()`. Numbers go through `formatQuantity`.
+   - Controls stay inert until the widget hydrates: kit controls handle this, and anything else
+     checks `hydrated()`. `tests/widgets/server-render.test.ts` fails on a live button in the
+     server render.
    - Draw with `viewBox` SVG and the `--d-*` colours and diagram classes. Never use hex colours.
    - Animate only through `visibleLoop()`. Show a static state when motion is reduced.
    - The server-rendered first frame must make sense without JS.
