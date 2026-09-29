@@ -19,15 +19,17 @@ const { lang, id, name } = Astro.props;
   <ol></ol>
 </nav>
 <script is:inline define:vars={{ id }}>
-  // Before first paint: if this page will show a trail (arrived via a term, or went back along one),
-  // reserve its space now so the page doesn't jump when src/scripts/trail.ts fills it in.
+  // Before first paint: if this page will show a trail (arrived via a term, or moved back or forward
+  // along one), reserve its space now so the page doesn't jump when src/scripts/trail.ts fills it in.
   try {
     var intent = JSON.parse(sessionStorage.getItem('gd:intent') || 'null');
-    var items = (JSON.parse(sessionStorage.getItem('gd:trail') || 'null') || { items: [] }).items;
+    var trail = JSON.parse(sessionStorage.getItem('gd:trail') || 'null') || { items: [] };
+    var items = trail.items;
+    var pos = typeof trail.pos === 'number' ? trail.pos : items.length - 1;
     var sameLang = items.length > 0 && items[0].lang === document.documentElement.lang;
     var index = items.findIndex(function (item) { return item.id === id; });
-    var viaTerm = intent && intent.to === id && sameLang && items[items.length - 1].id === intent.from;
-    if (sameLang && (viaTerm || index >= 1)) document.documentElement.classList.add('trail-expected');
+    var viaTerm = intent && intent.to === id && sameLang && items[pos].id === intent.from;
+    if (sameLang && (index >= 1 || (index < 0 && viaTerm))) document.documentElement.classList.add('trail-expected');
   } catch (e) {}
 </script>
 

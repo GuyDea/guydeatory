@@ -3,15 +3,23 @@
  * - On load and on back/forward-cache restore: compute the trail for this page and render it.
  * - On a plain click of a [data-trail-link]: remember that the reader followed a term from here.
  */
-import { nextTrail, shouldRecordIntent } from '../lib/trail.ts';
+import { nextTrail, parseTrail, shouldRecordIntent, shownSteps } from '../lib/trail.ts';
 import type { TrailIntent, TrailItem, TrailState } from '../lib/trail.ts';
 
 const TRAIL_KEY = 'gd:trail';
 const INTENT_KEY = 'gd:intent';
 
+function readRaw(key: string): string | null {
+  try {
+    return sessionStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
 function read<T>(key: string): T | null {
   try {
-    const raw = sessionStorage.getItem(key);
+    const raw = readRaw(key);
     return raw ? (JSON.parse(raw) as T) : null;
   } catch {
     return null;
@@ -37,14 +45,15 @@ function currentItem(el: HTMLElement): TrailItem {
 
 function render(el: HTMLElement, state: TrailState) {
   const list = el.querySelector('ol')!;
-  if (state.items.length < 2) {
+  const steps = shownSteps(state);
+  if (steps.length < 2) {
     el.hidden = true;
     list.replaceChildren();
     return;
   }
-  const stops = state.items.map((item, index) => {
+  const stops = steps.map((item, index) => {
     const li = document.createElement('li');
-    if (index === state.items.length - 1) {
+    if (index === steps.length - 1) {
       const here = document.createElement('span');
       here.setAttribute('aria-current', 'location');
       here.textContent = item.title;
@@ -71,7 +80,7 @@ function render(el: HTMLElement, state: TrailState) {
 function update() {
   const el = host();
   if (!el) return;
-  const state = nextTrail(read<TrailState>(TRAIL_KEY), read<TrailIntent>(INTENT_KEY), currentItem(el), Date.now());
+  const state = nextTrail(parseTrail(readRaw(TRAIL_KEY)), read<TrailIntent>(INTENT_KEY), currentItem(el), Date.now());
   write(TRAIL_KEY, state);
   write(INTENT_KEY, null);
   render(el, state);

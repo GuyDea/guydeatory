@@ -116,9 +116,13 @@ The search dialog (on every page) loads Pagefind only when opened.
 - Kept in `sessionStorage` (`gd:trail`, `gd:intent`).
 - A plain left click on any `a[data-trail-link]` records an intent `{from, to, at}`. Term links,
   prerequisites, related articles and backlinks all carry that attribute.
+- The trail works like the browser's history. `pos` marks the current stop, and the stops after it
+  are forward stops. Only the stops up to the current one are shown.
 - On page load, and on a back/forward-cache restore, `nextTrail()`:
-  - truncates when revisiting an earlier stop
-  - appends when the intent is fresh (≤ 30 s) and matches
+  - moves to a stop already in the trail (Back, Forward, a trail link or a reload) and keeps the
+    stops after it
+  - appends when the intent is fresh (≤ 30 s) and comes from the current stop, dropping the forward
+    stops
   - otherwise starts a new trail
 - The trail keeps at most 8 stops, keeping the origin. It resets on a language change.
 
