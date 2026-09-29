@@ -80,15 +80,30 @@ function update() {
   document.documentElement.classList.remove('trail-expected');
 }
 
-document.addEventListener('click', (event) => {
-  const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[data-trail-link]');
-  const el = host();
-  if (!link || !el || !shouldRecordIntent(event)) return;
-  write(INTENT_KEY, { from: el.dataset.id, to: link.dataset.trailTo, at: Date.now() } satisfies Partial<TrailIntent>);
-});
+/**
+ * Starts the trail on a page that has one: draws it now and again after a back/forward-cache
+ * restore, and records term clicks. Returns a function that stops it (for tests).
+ */
+export function initTrail(): () => void {
+  if (!host()) return () => {};
 
-window.addEventListener('pageshow', (event) => {
-  if (event.persisted) update();
-});
+  const onClick = (event: MouseEvent) => {
+    const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[data-trail-link]');
+    const el = host();
+    if (!link || !el || !shouldRecordIntent(event)) return;
+    write(INTENT_KEY, { from: el.dataset.id, to: link.dataset.trailTo, at: Date.now() } satisfies Partial<TrailIntent>);
+  };
+  const onPageShow = (event: PageTransitionEvent) => {
+    if (event.persisted) update();
+  };
 
-update();
+  document.addEventListener('click', onClick);
+  window.addEventListener('pageshow', onPageShow);
+  update();
+  return () => {
+    document.removeEventListener('click', onClick);
+    window.removeEventListener('pageshow', onPageShow);
+  };
+}
+
+initTrail();
