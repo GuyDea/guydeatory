@@ -1,80 +1,42 @@
 # Known issues and next steps
 
-Small defects found in the final review of the platform build (2026-09-29) that were left for
-later, and the next steps that need the owner. Check this list before working in the same area,
-and delete an entry once it is fixed.
+What is still open, and the next steps that need the owner. Check this list before working in
+the same area, and delete an entry once it is fixed.
 
-## Known issues
+Every issue from the final review of the platform build (2026-09-29) is fixed. See
+`docs/superpowers/plans/2026-09-29-known-issues-and-ci.md` for what was done.
 
-### Reading trail
+## Known limitations
 
-- Back and then Forward drops the trail: rule 1 in `src/lib/trail.ts` discards the later steps.
-  Fix with a cursor into the trail, or a list of forward stops.
-- `src/scripts/trail.ts` parses the stored `gd:trail` without checking its shape. A value in an
-  unexpected format (for example, after the format changes) makes the script throw until the tab
-  closes. Treat anything without `Array.isArray(v?.items)` as empty.
-- The bfcache path (`pageshow` with `persisted: true`) has no automated test. Playwright's Chromium
-  runs with bfcache off.
-
-### Search
-
-- Page chrome inside the indexed `<article>` is searchable, so "short answer" and "min read" match
-  every article. It needs `data-pagefind-ignore`:
-  - the label chips and reading time (`ArticleHeader.astro`)
-  - the "The short answer" tab (`ShortAnswer.astro`)
-  - the prerequisites line (`GoodToKnow.astro`)
-- With JS off, the search page shows the normal hint. Add a `<noscript>` message.
-- If the input is cleared within the 180 ms debounce, old results still appear
-  (`search-dialog.ts`, `search-page.ts`). A failed Pagefind load is cached for the life of the page
-  (`search-client.ts`).
-
-### Widgets and accessibility
-
-- Presets, part and bulb buttons, and SVG hot-spots can be focused before hydration, but do
-  nothing without JS. Sliders and radios are already disabled until then.
-- Every `Readout` is `aria-live`, so screen readers queue an announcement on every slider step.
-- Explore's `<summary>` elements contain links (`TreeNode.astro`).
-- Under reduced motion, AcDc shows "stopped" with no arrow (`AcDc.svelte`: `time = 4` gives
-  sin = 0).
-- SeriesParallel always has 3 bulbs, so a 2-bulb series circuit cannot be built. Its English
-  screen-reader text can say "1 bulbs are lit".
-
-### Build and deploy
-
-- `src/lib/check-dist.ts` has gaps:
-  - any element inside a widget root passes
-  - absolute URLs to the site itself (canonical, hreflang, sitemap) are not checked
-  - only the diacritics-free title is asserted, not the term and keywords
-- JSON inside `<script>` tags is not escaped (`BaseLayout.astro`, `SearchData.astro`), so a
-  `</script>` in a title would break the page. Escape `<`.
-- Article dates use the build machine's timezone. `ArticleFooter.astro` needs `timeZone: 'UTC'`.
-- Builds are not reproducible. `Math.random()` ids in `Svg.astro` and `Toggle.svelte` change on
-  every build, and the radio `name` differs between the server render and hydration.
-- `scripts/deploy.sh` removes old `_astro` chunks right after the invalidation. A reader with a
-  page open during a deploy can get a 404 when a widget loads lazily.
-- The router and the site's language picker look up aliases in plain objects (`router.js`,
-  `language-pick.ts`), so `Accept-Language: constructor` sends that visitor to a broken URL on the
-  site.
-
-### Content and copy
-
-- The heat-pump article says 1 unit of electricity "moves" 3–4 units of heat. Strictly, it
-  delivers 3–4 units, and about 1 of them is the electricity itself.
-- The home page's demo search word is hard-coded per language (`HomeView.astro`).
-- The 404 page's header and footer are always in English (`404.astro`).
-- Slovak site chrome uses em dashes (—) where `docs/translation.md` asks for a spaced en dash (–):
-  - 3 strings in `src/i18n/ui/sk.ts`
-  - the About page
-  - the label descriptions in `content/labels.yaml`
+- **Pagefind reorders its filter files on every run.** Two builds of identical HTML differ only
+  in about 13 files under `dist/pagefind/` (filters, meta, entry), so each deploy re-uploads them.
+  The cause is upstream (Pagefind 1.5), and it is harmless. Everything else in `dist/` is
+  byte-identical from build to build.
+- **`npm test` needs the network on a fresh checkout.** Tests that render the layouts resolve the
+  self-hosted fonts, and the first run downloads them from Google Fonts into `.astro/`, as
+  `npm run build` does.
+- **Widget behaviour after hydration has no automated test.** Under happy-dom, `svelte` resolves to
+  its server build, so the tests cover the server render (`tests/widgets/server-render.test.ts`)
+  and the models. Check clicks and keys in a browser.
+- **Find-in-page does not unfold a folded Explore topic.** Each topic's `<details>` holds only its
+  summary, and CSS hides the lists after it while the topic is folded. This keeps the topic link
+  out of the `<summary>`. Topics start unfolded, and the Explore filter unfolds matches.
 
 ## Next steps (need the owner)
 
-- **Continuous deployment** from GitHub Actions through an IAM role assumed with GitHub OIDC. This
-  creates an IAM role, so it needs the owner's go-ahead (`docs/deployment.md`).
-- **Human review of the Slovak text.** Every translation is still `reviewed: false`.
+- **Deploy on merge.** The pieces are prepared (group E in the plan above), but switching them on
+  needs the owner's approval:
+  - a GitHub login (OIDC provider) and the deploy role `guydeatory-github-deploy` in the stack
+  - `.github/workflows/deploy.yml`, which assumes that role on pushes to `main`
+
+  Until then, deploys are manual (`npm run deploy`). The check workflow already runs on GitHub.
+- **Run `npm run infra:deploy`.** The router's fix for language aliases (`Accept-Language:
+  constructor`) is committed but goes live only with the next stack update.
+- **Human review of the Slovak text.** Every translation is still `reviewed: false`, including the
+  new heat-pump wording.
 - **Fact checks** that could not be confirmed offline:
   - the 1994 Slovak postage stamp for Jozef Murgaš
   - Aurel Stodola's heat pump in Geneva in 1928, which is widely cited but debated
 - **Security headers:** consider a custom response-headers policy with a Content Security Policy
-  that uses hashes for the inline theme and trail scripts, and decide on HSTS `includeSubDomains`
-  and preload.
+  that uses hashes for the inline scripts (theme, trail, 404 language), and decide on HSTS
+  `includeSubDomains` and preload.
