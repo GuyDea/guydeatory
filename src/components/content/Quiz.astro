@@ -50,16 +50,18 @@ if (!Number.isInteger(answer) || answer < 0 || answer >= options.length) {
       button.disabled = false;
       button.setAttribute('aria-pressed', 'false');
       button.addEventListener('click', () => {
+        if (button.getAttribute('aria-disabled') === 'true') return;
         const correct = Number(button.dataset.index) === answer;
         button.setAttribute('aria-pressed', 'true');
         button.dataset.result = correct ? 'correct' : 'wrong';
         feedback.textContent = correct ? (quiz.dataset.correct ?? '') : (quiz.dataset.wrong ?? '');
         feedback.dataset.result = correct ? 'correct' : 'wrong';
+        // aria-disabled (not disabled) keeps keyboard focus on the button that was pressed.
         if (correct) {
           explanation.hidden = false;
-          for (const other of buttons) if (other !== button) other.disabled = true;
+          for (const other of buttons) if (other !== button) other.setAttribute('aria-disabled', 'true');
         } else {
-          button.disabled = true;
+          button.setAttribute('aria-disabled', 'true');
         }
       });
     }
@@ -107,7 +109,8 @@ if (!Number.isInteger(answer) || answer < 0 || answer >= options.length) {
     border-color: var(--accent);
   }
 
-  .quiz-option:disabled {
+  .quiz-option:disabled,
+  .quiz-option[aria-disabled='true'] {
     cursor: default;
   }
 
