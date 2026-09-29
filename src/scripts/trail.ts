@@ -3,24 +3,15 @@
  * - On load and on back/forward-cache restore: compute the trail for this page and render it.
  * - On a plain click of a [data-trail-link]: remember that the reader followed a term from here.
  */
-import { nextTrail, parseTrail, shouldRecordIntent, shownSteps } from '../lib/trail.ts';
+import { nextTrail, parseIntent, parseTrail, shouldRecordIntent, shownSteps } from '../lib/trail.ts';
 import type { TrailIntent, TrailItem, TrailState } from '../lib/trail.ts';
 
 const TRAIL_KEY = 'gd:trail';
 const INTENT_KEY = 'gd:intent';
 
-function readRaw(key: string): string | null {
+function read(key: string): string | null {
   try {
     return sessionStorage.getItem(key);
-  } catch {
-    return null;
-  }
-}
-
-function read<T>(key: string): T | null {
-  try {
-    const raw = readRaw(key);
-    return raw ? (JSON.parse(raw) as T) : null;
   } catch {
     return null;
   }
@@ -80,7 +71,8 @@ function render(el: HTMLElement, state: TrailState) {
 function update() {
   const el = host();
   if (!el) return;
-  const state = nextTrail(parseTrail(readRaw(TRAIL_KEY)), read<TrailIntent>(INTENT_KEY), currentItem(el), Date.now());
+  // Stored values in an unexpected shape read as nothing, and the writes below replace them.
+  const state = nextTrail(parseTrail(read(TRAIL_KEY)), parseIntent(read(INTENT_KEY)), currentItem(el), Date.now());
   write(TRAIL_KEY, state);
   write(INTENT_KEY, null);
   render(el, state);

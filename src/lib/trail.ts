@@ -62,15 +62,40 @@ export function shownSteps(state: TrailState): TrailItem[] {
   return state.items.slice(0, state.pos + 1);
 }
 
-/** Reads a stored trail. A trail stored before `pos` existed stands on its last step. */
-export function parseTrail(raw: string | null): TrailState | null {
+function parseJson(raw: string | null): unknown {
   if (raw === null) return null;
   try {
-    const value = JSON.parse(raw) as Omit<TrailState, 'pos'> & { pos?: number };
-    return { items: value.items, pos: value.pos ?? value.items.length - 1, capped: value.capped };
+    return JSON.parse(raw);
   } catch {
     return null;
   }
+}
+
+const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null;
+
+const isTrailItem = (value: unknown): value is TrailItem =>
+  isRecord(value) && typeof value.id === 'string' && typeof value.lang === 'string' && typeof value.url === 'string' && typeof value.title === 'string';
+
+/**
+ * Reads a stored trail. Anything in an unexpected shape reads as no trail, and the next save
+ * overwrites it. A trail stored before `pos` existed stands on its last step.
+ */
+export function parseTrail(raw: string | null): TrailState | null {
+  const value = parseJson(raw);
+  if (!isRecord(value) || !Array.isArray(value.items) || value.items.length === 0) return null;
+  const items: unknown[] = value.items;
+  if (!items.every(isTrailItem) || typeof value.capped !== 'boolean') return null;
+  const pos = value.pos === undefined ? items.length - 1 : value.pos;
+  if (typeof pos !== 'number' || !Number.isInteger(pos) || pos < 0 || pos >= items.length) return null;
+  return { items, pos, capped: value.capped };
+}
+
+/** Reads a stored intent. Anything in an unexpected shape reads as no intent. */
+export function parseIntent(raw: string | null): TrailIntent | null {
+  const value = parseJson(raw);
+  if (!isRecord(value) || typeof value.from !== 'string' || typeof value.to !== 'string') return null;
+  if (typeof value.at !== 'number' || !Number.isFinite(value.at)) return null;
+  return { from: value.from, to: value.to, at: value.at };
 }
 
 /** Only plain left clicks navigate in the same tab; anything else must not record an intent. */

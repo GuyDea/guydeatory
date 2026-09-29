@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { INTENT_TTL_MS, nextTrail, parseTrail, shouldRecordIntent, shownSteps, TRAIL_MAX } from '../src/lib/trail.ts';
+import { INTENT_TTL_MS, nextTrail, parseIntent, parseTrail, shouldRecordIntent, shownSteps, TRAIL_MAX } from '../src/lib/trail.ts';
 import type { TrailIntent, TrailItem, TrailState } from '../src/lib/trail.ts';
 
 const item = (id: string, lang = 'en'): TrailItem => ({ id, lang, url: `/${lang}/${id}/`, title: id.toUpperCase() });
@@ -181,6 +181,51 @@ describe('parseTrail', () => {
 
   it('reads nothing as no trail', () => {
     expect(parseTrail(null)).toBeNull();
+  });
+
+  const good = item('a');
+  it.each([
+    ['null', 'null'],
+    ['a number', '42'],
+    ['a string', '"a"'],
+    ['invalid JSON', '{"items": ['],
+    ['an array', JSON.stringify([good])],
+    ['items that are not a list', JSON.stringify({ items: 'x', capped: false })],
+    ['no items', JSON.stringify({ items: [], capped: false })],
+    ['an item that is null', JSON.stringify({ items: [null], capped: false })],
+    ['an item without a title', JSON.stringify({ items: [{ id: 'a', lang: 'en', url: '/en/a/' }], capped: false })],
+    ['an item with a numeric id', JSON.stringify({ items: [{ ...good, id: 7 }], capped: false })],
+    ['an item with a url object', JSON.stringify({ items: [{ ...good, url: {} }], capped: false })],
+    ['a good item after a bad one', JSON.stringify({ items: [{ ...good, lang: null }, good], capped: false })],
+    ['a missing capped flag', JSON.stringify({ items: [good] })],
+    ['a capped flag that is a string', JSON.stringify({ items: [good], capped: 'no' })],
+    ['a position that is a string', JSON.stringify({ items: [good], pos: '0', capped: false })],
+    ['a position past the end', JSON.stringify({ items: [good], pos: 1, capped: false })],
+    ['a negative position', JSON.stringify({ items: [good], pos: -1, capped: false })],
+    ['a fractional position', JSON.stringify({ items: [good, good], pos: 0.5, capped: false })],
+  ])('reads %s as no trail', (_, raw) => {
+    expect(parseTrail(raw)).toBeNull();
+  });
+});
+
+describe('parseIntent', () => {
+  const intent: TrailIntent = { from: 'a', to: 'b', at: NOW };
+
+  it('reads a stored intent', () => {
+    expect(parseIntent(JSON.stringify(intent))).toEqual(intent);
+  });
+
+  it.each([
+    ['nothing', null],
+    ['null', 'null'],
+    ['a number', '42'],
+    ['invalid JSON', '{"from":'],
+    ['an intent without a target', JSON.stringify({ from: 'a', at: NOW })],
+    ['an intent with a numeric source', JSON.stringify({ ...intent, from: 1 })],
+    ['an intent with a time that is a string', JSON.stringify({ ...intent, at: String(NOW) })],
+    ['an intent with a time that is null', JSON.stringify({ ...intent, at: null })],
+  ])('reads %s as no intent', (_, raw) => {
+    expect(parseIntent(raw)).toBeNull();
   });
 });
 
