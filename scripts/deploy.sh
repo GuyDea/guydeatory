@@ -34,8 +34,8 @@ INVALIDATION="$(aws cloudfront create-invalidation --distribution-id "$DISTRIBUT
 echo "▶ Waiting for invalidation $INVALIDATION…"
 aws cloudfront wait invalidation-completed --distribution-id "$DISTRIBUTION" --id "$INVALIDATION"
 
-# 4. Only now remove assets that no current page uses any more.
-aws s3 sync dist/_astro "s3://$BUCKET/_astro" --delete \
-  --cache-control "public, max-age=31536000, immutable" --only-show-errors
+# 4. Only now remove assets that no current page uses, and only once they are more than 7 days old:
+#    a page opened before this deploy may still load its widgets' old chunks.
+npx tsx scripts/prune-assets.ts "$BUCKET"
 
 echo "✓ Deployed: https://theguydea.com/"

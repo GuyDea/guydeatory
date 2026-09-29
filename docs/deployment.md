@@ -63,7 +63,13 @@ Both use the `default` AWS CLI profile (`~/.aws/credentials`).
    `Cache-Control: public, max-age=0, s-maxage=31536000, must-revalidate`. Browsers always
    revalidate; CloudFront keeps a copy until the next invalidation.
 5. It runs `aws cloudfront create-invalidation --paths '/*'` and waits until the invalidation is done.
-6. Only then does it remove the `_astro/**` files that no current page uses (`sync --delete`).
+6. Only then does it remove old `_astro/**` files (`scripts/prune-assets.ts`): those the current
+   build no longer has and that were last uploaded more than 7 days ago. A reader who opened a page
+   before the deploy can still load its widgets for a week. Every deploy uploads the current assets
+   again (step 3), so an asset's upload date is the last deploy that used it. The script lists the
+   bucket with `s3api list-objects-v2`, page by page, and deletes with `s3api delete-objects`, up to
+   1,000 keys per request, so it needs only `s3:ListBucket` and `s3:DeleteObject`. Add `--dry-run`
+   to see what it would delete.
 
 ## Testing the router in the real CloudFront runtime
 
