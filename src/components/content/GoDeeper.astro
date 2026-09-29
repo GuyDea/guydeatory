@@ -13,8 +13,8 @@ const { lang, title } = Astro.props;
 <details class="go-deeper">
   <summary>
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M6 12h12M9 17h6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"></path></svg>
-    <span class="go-deeper-title">{title ? `${t(lang, 'content.goDeeper')}: ${title}` : t(lang, 'content.goDeeper')}</span>
-    <span class="go-deeper-hint">{t(lang, 'content.goDeeperHint')}</span>
+    <span class="go-deeper-title"><span data-pagefind-ignore>{t(lang, 'content.goDeeper')}{title && ': '}</span>{title}</span>
+    <span class="go-deeper-hint" data-pagefind-ignore>{t(lang, 'content.goDeeperHint')}</span>
   </summary>
   <div class="go-deeper-body">
     <slot />

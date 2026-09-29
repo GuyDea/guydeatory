@@ -10,4 +10,4 @@ interface Props {
 }
 const { lang, title } = Astro.props;
 ---
-<Callout kind="remember" heading={title ?? t(lang, 'content.remember')}><slot /></Callout>
+<Callout kind="remember" heading={title ?? t(lang, 'content.remember')} standardHeading={!title}><slot /></Callout>

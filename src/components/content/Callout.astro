@@ -3,11 +3,13 @@
 interface Props {
   kind: 'imagine' | 'fun-fact' | 'safety' | 'remember';
   heading: string;
+  /** The heading is the block's standard label ("Stay safe"). It repeats on many pages, so search skips it. */
+  standardHeading?: boolean;
 }
-const { kind, heading } = Astro.props;
+const { kind, heading, standardHeading = false } = Astro.props;
 ---
 <aside class:list={['callout', `callout-${kind}`]} role="note">
-  <p class="callout-heading">
+  <p class="callout-heading" data-pagefind-ignore={standardHeading ? '' : undefined}>
     <span class="callout-icon" aria-hidden="true">
       {kind === 'imagine' && <svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.9V16h5v-.2c0-.8.4-1.5 1-1.9A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" /></svg>}
       {kind === 'fun-fact' && <svg viewBox="0 0 24 24"><path d="m12 2 2.6 6.2 6.7.6-5.1 4.4 1.5 6.6L12 16.3l-5.7 3.5 1.5-6.6-5.1-4.4 6.7-.6z" fill="currentColor" /></svg>}

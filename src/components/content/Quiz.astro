@@ -21,7 +21,7 @@ if (!Number.isInteger(answer) || answer < 0 || answer >= options.length) {
 }
 ---
 <section class="quiz" data-quiz data-answer={answer} data-correct={t(lang, 'quiz.correct')} data-wrong={t(lang, 'quiz.wrong')}>
-  <p class="quiz-label">{t(lang, 'quiz.label')}</p>
+  <p class="quiz-label" data-pagefind-ignore>{t(lang, 'quiz.label')}</p>
   <p class="quiz-question">{question}</p>
   <div class="quiz-options" role="group" aria-label={question}>
     {
@@ -34,7 +34,7 @@ if (!Number.isInteger(answer) || answer < 0 || answer >= options.length) {
   </div>
   <p class="quiz-feedback" aria-live="polite"></p>
   <details class="quiz-reveal">
-    <summary>{t(lang, 'quiz.reveal')}</summary>
+    <summary data-pagefind-ignore>{t(lang, 'quiz.reveal')}</summary>
     <p><strong>{options[answer]}</strong> {DASH[lang]} {explanation}</p>
   </details>
   <p class="quiz-explanation" hidden>{explanation}</p>

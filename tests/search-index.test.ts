@@ -3,6 +3,9 @@ import { parse } from 'node-html-parser';
 import { beforeAll, describe, expect, it } from 'vitest';
 import ArticleHeader from '../src/components/article/ArticleHeader.astro';
 import GoodToKnow from '../src/components/article/GoodToKnow.astro';
+import GoDeeper from '../src/components/content/GoDeeper.astro';
+import Quiz from '../src/components/content/Quiz.astro';
+import Safety from '../src/components/content/Safety.astro';
 import ShortAnswer from '../src/components/article/ShortAnswer.astro';
 import { buildCatalog } from '../src/lib/content/build-catalog.ts';
 import type { Catalog } from '../src/lib/content/types.ts';
@@ -65,5 +68,40 @@ describe('page chrome stays out of the search index', () => {
     expect(html).toContain('Good to know first:');
     expect(html).toContain('voltage');
     expect(indexedText(html)).toBe('');
+  });
+});
+
+describe('fixed labels in content blocks stay out of the search index', () => {
+  const body = '<p>Only volts and amps.</p>';
+
+  it('indexes a Go-deeper title and body, but not "Go deeper" or its hint', async () => {
+    const titled = await container.renderToString(GoDeeper, { props: { lang: 'en', title: 'Where the analogy breaks' }, slots: { default: body } });
+    expect(titled).toContain('Go deeper');
+    expect(titled).toContain('grown-ups');
+    expect(indexedText(titled)).toBe('Where the analogy breaks Only volts and amps.');
+
+    const untitled = await container.renderToString(GoDeeper, { props: { lang: 'en' }, slots: { default: body } });
+    expect(indexedText(untitled)).toBe('Only volts and amps.');
+  });
+
+  it('indexes a quiz question and its answers, but not "Check yourself" or "Show the answer"', async () => {
+    const props = { lang: 'en', question: 'What pushes the current?', options: ['Voltage', 'Colour'], answer: 0, explanation: 'Voltage is the push.' };
+    const html = await container.renderToString(Quiz, { props });
+    expect(html).toContain('Check yourself');
+    expect(html).toContain('Show the answer');
+    const indexed = indexedText(html);
+    expect(indexed).toContain('What pushes the current?');
+    expect(indexed).toContain('Voltage is the push.');
+    expect(indexed).not.toContain('Check yourself');
+    expect(indexed).not.toContain('Show the answer');
+  });
+
+  it('indexes a callout body and a custom heading, but not the standard heading', async () => {
+    const standard = await container.renderToString(Safety, { props: { lang: 'en' }, slots: { default: body } });
+    expect(standard).toContain('Stay safe');
+    expect(indexedText(standard)).toBe('Only volts and amps.');
+
+    const custom = await container.renderToString(Safety, { props: { lang: 'en', title: 'Never touch a fallen power line' }, slots: { default: body } });
+    expect(indexedText(custom)).toBe('Never touch a fallen power line Only volts and amps.');
   });
 });
