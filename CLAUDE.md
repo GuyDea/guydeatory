@@ -36,7 +36,8 @@ Read `docs/vision.md` once per session if you are unsure what the product is for
    - Work on a feature branch, never commit to `main`.
    - Commit progressively.
    - Every push to a branch other than `main` runs `npm run check` on GitHub (`.github/workflows/check.yml`).
-   - Never push or deploy unless the owner asks.
+   - **Pushing or merging to `main` deploys the site** (`.github/workflows/deploy.yml`). Never push or
+     merge to `main`, or deploy, unless the owner asks.
 
 ## Commands
 
@@ -50,7 +51,7 @@ Read `docs/vision.md` once per session if you are unsure what the product is for
 | `npm run check` | Everything above plus `astro check` (types). Run this before deploying. |
 | `npm run preview` | Serves `dist/` locally. Search works here. |
 | `npm run new:article -- <id> --topic <topic-id> [--label <label-id>]` | Scaffolds a draft article. |
-| `npm run deploy` | Builds, checks, uploads to S3 and invalidates CloudFront. Only when asked. |
+| `npm run deploy` | Builds, checks, uploads to S3 and invalidates CloudFront. GitHub Actions runs it on every push to `main`. Run it by hand only when asked. |
 | `npm run infra:deploy` | Creates or updates the AWS CloudFormation stack. Only when asked. |
 
 ## Where things are

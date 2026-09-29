@@ -1,7 +1,8 @@
 # Deployment
 
 The site is served at **https://theguydea.com**. It is a static build in S3, delivered through
-CloudFront, all defined in one CloudFormation stack.
+CloudFront, all defined in one CloudFormation stack. **Every push to `main` deploys the site**
+through GitHub Actions (see "Continuous deployment" below).
 
 > Deploy only when the owner asks. Deploying publishes content to the world.
 
@@ -14,6 +15,8 @@ CloudFront, all defined in one CloudFormation stack.
 | CloudFront distribution | Aliases for the apex and `www`. HTTP/2 + HTTP/3, compression, price class 100. Managed CachingOptimized cache policy and SecurityHeaders response policy. 403/404 → `/404.html` with status 404. |
 | CloudFront Function `guydeatory-router` | Viewer request, runtime `cloudfront-js-2.0`. Source in `infra/cloudfront/router.js`, tested in `tests/router.test.ts`. |
 | Route53 records | A and AAAA aliases for the apex and `www` → the distribution |
+| GitHub OIDC provider | `token.actions.githubusercontent.com`. Lets GitHub Actions log in with a short-lived token instead of stored keys. Account-wide (one per account): another stack that needs it must reference this one. |
+| IAM role `guydeatory-github-deploy` | Only `repo:GuyDea/guydeatory:ref:refs/heads/main` can assume it. It can read this stack's outputs, write and delete objects in the site bucket, and create and read invalidations on the distribution. Nothing else. |
 
 The domain `theguydea.com` is registered in Route53 in the same AWS account. The hosted zone is
 `Z06939482PPSH3VUZ9L07`.
@@ -25,6 +28,7 @@ The domain `theguydea.com` is registered in Route53 in the same AWS account. The
 | BucketName | `guydeatory-site-sitebucket-luacmlkiatbc` |
 | DistributionId | `E1E9R6G6JD5REX` |
 | DistributionDomainName | `d3jfmpxjaq9phs.cloudfront.net` |
+| DeployRoleArn | `arn:aws:iam::902325674644:role/guydeatory-github-deploy` |
 
 The deploy script reads these from the stack itself, so this table is only for reference. The
 bucket has `DeletionPolicy: Retain`, so deleting the stack keeps the files.
@@ -51,7 +55,9 @@ npm run infra:deploy   # create/update the CloudFormation stack (renders infra/.
 npm run deploy         # check → build → upload to S3 → invalidate CloudFront
 ```
 
-Both use the `default` AWS CLI profile (`~/.aws/credentials`).
+Run locally, both use the `default` AWS CLI profile (`~/.aws/credentials`). GitHub Actions runs
+`npm run deploy` with the deploy role instead. `npm run infra:deploy` is always run by hand: the
+deploy role cannot change the stack.
 
 ### What `npm run deploy` does
 
@@ -98,11 +104,22 @@ aws cloudfront test-function --name guydeatory-router --if-match "$ETAG" --stage
 `.github/workflows/check.yml` runs `npm run check` on GitHub for every push to a branch other than
 `main`. It needs no secrets and no AWS access. Results: the repository's Actions tab.
 
-## Next step (not set up yet)
+## Continuous deployment
 
-Continuous deployment from GitHub Actions on merges to `main`, using an AWS IAM role assumed
-through GitHub OIDC (no stored keys). This needs the owner's go-ahead, because it creates an IAM
-role.
+`.github/workflows/deploy.yml` runs on every push to `main`, and by hand from the Actions tab
+("Run workflow"):
+
+1. It installs dependencies (`npm ci`) with the Node version from `.nvmrc`.
+2. It asks GitHub for an OIDC token and exchanges it for the `guydeatory-github-deploy` role
+   (`aws-actions/configure-aws-credentials`). No AWS keys are stored in GitHub.
+3. It runs `npm run deploy`, the same script as a local deploy. A failing check stops it before
+   anything is uploaded.
+
+Only one deploy runs at a time; a newer push waits for the running one. Merging to `main` is
+therefore publishing: never push or merge to `main` unless the owner asks.
+
+Changes to `infra/` (the router, the stack) are not deployed by the workflow. Run
+`npm run infra:deploy` by hand.
 
 ## Troubleshooting
 
@@ -112,3 +129,5 @@ role.
 | 403 for an existing page | The object key is missing. Check `dist/<path>/index.html` exists and the sync ran. |
 | The certificate is stuck in "pending" | Check that the validation CNAME exists in the hosted zone (CloudFormation creates it) |
 | Search does not work live | Check that `dist/pagefind/` was uploaded. `npm run build` must run Pagefind. |
+| The deploy workflow fails at "Configure AWS credentials" | The role only trusts pushes to `main` in `GuyDea/guydeatory`. A renamed repository or branch needs the `GitHubRepository` parameter or the trust condition in `infra/site.template.yml` updated, then `npm run infra:deploy`. |
+| The deploy workflow fails with AccessDenied | The deploy needs a permission the role lacks. Add it to the role's `publish-site` policy in `infra/site.template.yml`, keep it scoped to this bucket or distribution, then `npm run infra:deploy`. |

@@ -24,14 +24,6 @@ Every issue from the final review of the platform build (2026-09-29) is fixed. S
 
 ## Next steps (need the owner)
 
-- **Deploy on merge.** The pieces are prepared (group E in the plan above), but switching them on
-  needs the owner's approval:
-  - a GitHub login (OIDC provider) and the deploy role `guydeatory-github-deploy` in the stack
-  - `.github/workflows/deploy.yml`, which assumes that role on pushes to `main`
-
-  Until then, deploys are manual (`npm run deploy`). The check workflow already runs on GitHub.
-- **Run `npm run infra:deploy`.** The router's fix for language aliases (`Accept-Language:
-  constructor`) is committed but goes live only with the next stack update.
 - **Human review of the Slovak text.** Every translation is still `reviewed: false`, including the
   new heat-pump wording.
 - **Fact checks** that could not be confirmed offline:
