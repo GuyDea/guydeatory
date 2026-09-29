@@ -6,6 +6,7 @@ import { describe, expect, it } from 'vitest';
 import { LANG_CODES } from '../../src/i18n/languages.ts';
 import type { LangCode } from '../../src/i18n/languages.ts';
 import AcDc from '../../src/widgets/ac-dc/AcDc.svelte';
+import Toggle from '../../src/widgets/kit/Toggle.svelte';
 import { strings as acDcStrings } from '../../src/widgets/ac-dc/strings.ts';
 import SeriesParallel from '../../src/widgets/series-parallel/SeriesParallel.svelte';
 import { strings as seriesParallelStrings } from '../../src/widgets/series-parallel/strings.ts';
@@ -57,6 +58,26 @@ describe('widgets before hydration (the server render)', () => {
         });
       });
     }
+  }
+});
+
+describe('the same HTML on every build (and a radio name that hydration keeps)', () => {
+  const toggleProps = { label: 'Kind of current', options: [{ value: 'dc', label: 'DC' }, { value: 'ac', label: 'AC' }], value: 'ac' };
+
+  it('renders a Toggle the same way twice', () => {
+    expect(render(Toggle, { props: toggleProps }).body).toBe(render(Toggle, { props: toggleProps }).body);
+  });
+
+  it('gives each Toggle on a page its own radio group', () => {
+    const html = serverRender(SeriesParallel, 'en');
+    const names = new Set(html.querySelectorAll('input[type="radio"]').map((radio) => radio.getAttribute('name')));
+    expect(names.size).toBe(html.querySelectorAll('fieldset').length);
+  });
+
+  for (const { name, component } of widgets) {
+    it(`renders ${name} the same way twice`, () => {
+      expect(render(component, { props: { lang: 'en' } }).body).toBe(render(component, { props: { lang: 'en' } }).body);
+    });
   }
 });
 

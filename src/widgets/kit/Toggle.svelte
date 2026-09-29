@@ -14,7 +14,9 @@
   }
 
   let { label, options, value = $bindable() }: Props = $props();
-  const name = `toggle-${Math.random().toString(36).slice(2, 8)}`;
+  // The radio group's name: unique on the page, the same on every build, and kept by hydration.
+  const id = $props.id();
+  const name = `toggle-${id}`;
   const live = hydrated();
 </script>
 
