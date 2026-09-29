@@ -5,14 +5,27 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { extname, join, sep } from 'node:path';
 import { parse } from 'node-html-parser';
+import type { HTMLElement } from 'node-html-parser';
 import { LANG_CODES } from '../i18n/languages.ts';
 import type { Problem } from './content/types.ts';
 import { foldDiacritics } from './text.ts';
+import { SITE } from './urls.ts';
 
 /** The root language picker only redirects; 404 shows the same text in every language. */
 const REDIRECT_PAGES = new Set(['index.html']);
 const MULTI_H1_PAGES = new Set(['404.html']);
 const PAGEFIND_ENTRY = 'pagefind/pagefind-entry.json';
+const SITE_ORIGIN = new URL(SITE).origin;
+
+/** What a widget must show before hydration: a control, or a drawing made of these shapes. */
+const CONTROLS = 'button, input, select, textarea, [role="button"], [role="slider"], [role="radio"], [role="checkbox"], [role="switch"]';
+const SHAPES = new Set(['circle', 'ellipse', 'image', 'line', 'path', 'polygon', 'polyline', 'rect', 'use']);
+/** SVG containers whose shapes are never drawn directly. */
+const UNDRAWN = new Set(['clippath', 'defs', 'marker', 'mask', 'pattern', 'symbol']);
+/** The widget frame's chrome: its header holds the title (always there) and the Pause and Start-again buttons. */
+const CHROME = new Set(['header']);
+/** Search keywords are joined with this in ArticleView.astro. */
+const KEYWORD_SEPARATOR = ' · ';
 
 async function listFiles(root: string): Promise<string[]> {
   const entries = await readdir(root, { recursive: true, withFileTypes: true });
@@ -22,11 +35,54 @@ async function listFiles(root: string): Promise<string[]> {
     .sort();
 }
 
+const tagOf = (el: HTMLElement) => (el.rawTagName ?? '').toLowerCase();
+
+/** True when some element between `el` and `root` (both excluded) is one of `tags`. */
+function isInside(el: HTMLElement, root: HTMLElement, tags: Set<string>): boolean {
+  for (let node = el.parentNode; node && node !== root; node = node.parentNode) {
+    if (tags.has(tagOf(node))) return true;
+  }
+  return false;
+}
+
+/** Whether a widget shows something real before hydration, not counting the frame's chrome. */
+function hasContent(widget: HTMLElement): boolean {
+  if (widget.querySelectorAll(CONTROLS).some((el) => !isInside(el, widget, CHROME))) return true;
+  return widget
+    .querySelectorAll('svg')
+    .filter((svg) => !isInside(svg, widget, CHROME))
+    .some((svg) => svg.querySelectorAll('*').some((el) => SHAPES.has(tagOf(el)) && !isInside(el, svg, UNDRAWN)));
+}
+
 export async function checkDist(root: string): Promise<Problem[]> {
   const files = await listFiles(root);
   const present = new Set(files);
   const exists = (path: string) => present.has(path.replace(/^\//, ''));
   const problems: Problem[] = [];
+
+  /** Why a root-relative path reaches no built file, or null when it does. `/x/` → `x/index.html`. */
+  const unreachable = (path: string): 'broken' | 'no-slash' | null => {
+    if (path.endsWith('/')) return exists(`${path}index.html`) ? null : 'broken';
+    if (extname(path)) return exists(path) ? null : 'broken';
+    return exists(`${path}/index.html`) ? 'no-slash' : 'broken';
+  };
+
+  /** Absolute addresses (canonical, hreflang, og:url, sitemap) must be on the site and reach a built file. */
+  const checkAbsolute = (file: string, kind: string, url: string) => {
+    const report = (message: string) => void problems.push({ file, message });
+    if (!URL.canParse(url)) return report(`${kind} ${url} is not an absolute URL`);
+    const { origin, pathname } = new URL(url);
+    if (origin !== SITE_ORIGIN) return report(`${kind} ${url} is not on ${SITE_ORIGIN}`);
+    let path = pathname;
+    try {
+      path = decodeURIComponent(pathname);
+    } catch {
+      // Malformed escapes: keep the encoded path, which then reaches no file and is reported.
+    }
+    const reason = unreachable(path);
+    if (reason === 'broken') report(`broken ${kind} ${url}`);
+    if (reason === 'no-slash') report(`${kind} ${url} is missing its trailing slash`);
+  };
 
   for (const file of files.filter((f) => f.endsWith('.html'))) {
     const report = (message: string) => problems.push({ file, message });
@@ -36,23 +92,25 @@ export async function checkDist(root: string): Promise<Problem[]> {
       for (const attr of ['href', 'src']) {
         const value = el.getAttribute(attr);
         if (!value || !value.startsWith('/') || value.startsWith('//')) continue;
-        const path = value.split('#')[0]!.split('?')[0]!;
-        if (path.endsWith('/')) {
-          if (!exists(`${path}index.html`)) report(`broken link ${value}`);
-        } else if (extname(path)) {
-          if (!exists(path)) report(`broken link ${value}`);
-        } else if (exists(`${path}/index.html`)) {
-          report(`link ${value} is missing its trailing slash`);
-        } else {
-          report(`broken link ${value}`);
-        }
+        const reason = unreachable(value.split('#')[0]!.split('?')[0]!);
+        if (reason === 'broken') report(`broken link ${value}`);
+        if (reason === 'no-slash') report(`link ${value} is missing its trailing slash`);
       }
     }
+
+    const canonical = doc.querySelector('link[rel="canonical"]')?.getAttribute('href');
+    if (canonical) checkAbsolute(file, 'canonical', canonical);
+    for (const alternate of doc.querySelectorAll('link[rel="alternate"][hreflang]')) {
+      const href = alternate.getAttribute('href');
+      if (href) checkAbsolute(file, `hreflang ${alternate.getAttribute('hreflang')}`, href);
+    }
+    const ogUrl = doc.querySelector('meta[property="og:url"]')?.getAttribute('content');
+    if (ogUrl) checkAbsolute(file, 'og:url', ogUrl);
 
     if (!doc.querySelector('title')?.text.trim()) report('missing <title>');
     if (!REDIRECT_PAGES.has(file)) {
       if (!doc.querySelector('meta[name="description"]')?.getAttribute('content')) report('missing meta description');
-      if (!doc.querySelector('link[rel="canonical"]')) report('missing canonical link');
+      if (!canonical) report('missing canonical link');
       const h1s = doc.querySelectorAll('h1').length;
       if (!MULTI_H1_PAGES.has(file) && h1s !== 1) report(`expected 1 <h1>, found ${h1s}`);
     }
@@ -64,10 +122,19 @@ export async function checkDist(root: string): Promise<Problem[]> {
       for (const needed of [lang, 'x-default']) {
         if (needed && !alternates.has(needed)) report(`article is missing hreflang ${needed}`);
       }
-      const title = article.querySelector('h1')?.text.trim() ?? '';
-      const folded = foldDiacritics(title);
-      const keywords = article.querySelector('[data-pagefind-weight]')?.text ?? '';
-      if (folded !== title && !keywords.includes(folded)) report(`search keywords lack the diacritics-free title "${folded}"`);
+      // Searches typed without diacritics ("elektricky prud") only match through these copies:
+      // the title, the term and every keyword each need one.
+      const keywordText = article.querySelector('[data-pagefind-weight]')?.text ?? '';
+      const keywords = new Set(keywordText.split(KEYWORD_SEPARATOR).map((part) => part.trim()));
+      const reported = new Set<string>();
+      const requireFolded = (value: string, what: string) => {
+        const folded = foldDiacritics(value);
+        if (folded === value || keywords.has(folded) || reported.has(folded)) return;
+        reported.add(folded);
+        report(`search keywords lack the diacritics-free ${what}"${folded}"`);
+      };
+      requireFolded(article.querySelector('h1')?.text.trim() ?? '', 'title ');
+      for (const part of keywords) requireFolded(part, '');
     }
 
     const body = doc.querySelector('body');
@@ -76,9 +143,28 @@ export async function checkDist(root: string): Promise<Problem[]> {
       const leaked = /\[\[[^\]]{0,120}\]\]/.exec(body.text);
       if (leaked) report(`untransformed wiki-link in text: "${leaked[0]}"`);
       for (const widget of body.querySelectorAll('[data-widget]')) {
-        const hasElements = widget.childNodes.some((node) => node.nodeType === 1);
-        if (!widget.text.trim() && !hasElements) report(`widget "${widget.getAttribute('data-widget')}" renders no content before hydration`);
+        if (!hasContent(widget)) report(`widget "${widget.getAttribute('data-widget')}" renders no content before hydration`);
       }
+    }
+  }
+
+  if (present.has('robots.txt')) {
+    const robots = await readFile(join(root, 'robots.txt'), 'utf8');
+    for (const match of robots.matchAll(/^sitemap:\s*(\S+)/gim)) checkAbsolute('robots.txt', 'Sitemap', match[1]!);
+  }
+  if (present.has('sitemap.xml')) {
+    const xml = await readFile(join(root, 'sitemap.xml'), 'utf8');
+    const decode = (value: string) =>
+      value.replace(/&(amp|lt|gt|quot|apos);/g, (_, name: string) => ({ amp: '&', lt: '<', gt: '>', quot: '"', apos: "'" })[name]!);
+    for (const match of xml.matchAll(/<loc>([^<]*)<\/loc>|<xhtml:link\b([^>]*)>/g)) {
+      if (match[1] !== undefined) {
+        checkAbsolute('sitemap.xml', 'loc', decode(match[1].trim()));
+        continue;
+      }
+      const attrs = match[2]!;
+      const href = /\bhref="([^"]*)"/.exec(attrs)?.[1];
+      const hreflang = /\bhreflang="([^"]*)"/.exec(attrs)?.[1];
+      if (href) checkAbsolute('sitemap.xml', `hreflang ${hreflang}`, decode(href));
     }
   }
 
