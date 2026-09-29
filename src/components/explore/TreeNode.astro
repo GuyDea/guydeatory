@@ -1,5 +1,13 @@
 ---
-/** One topic in the Explore tree, with its subtopics (recursively) and its own articles. */
+/**
+ * One topic in the Explore tree, with its subtopics (recursively) and its own articles.
+ *
+ * The <details> holds only its <summary> and works as the fold switch; ExploreView's CSS hides the
+ * lists that follow it while it is closed. That lets the link to the topic page sit right after the
+ * summary, on the same row, and stay there when the topic is folded. A link inside <summary> would
+ * be a control inside a control. `src/scripts/explore.ts` relies on
+ * `.tree-topic > details > summary [data-count]` and on opening the topic's <details>.
+ */
 import type { LangCode } from '@i18n/languages';
 import { localized, articlesInTopic, topicArticleCount, topicHasContent } from '@lib/content/queries';
 import type { Catalog } from '@lib/content/types';
@@ -13,6 +21,7 @@ interface Props {
 }
 const { lang, catalog, topicId } = Astro.props;
 const topic = catalog.topics.get(topicId)!;
+const name = localized(topic.name, lang);
 const subtopics = topic.children.filter((id) => topicHasContent(catalog, id, lang));
 const articles = articlesInTopic(catalog, topicId, lang, false);
 const count = topicArticleCount(catalog, topicId, lang);
@@ -24,34 +33,39 @@ const searchText = (id: string) => {
 <li class="tree-topic" data-topic={topicId}>
   <details open>
     <summary>
+      <svg class="tree-marker" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg>
       {topic.icon && <span class="tree-icon" aria-hidden="true">{topic.icon}</span>}
-      <a href={topicUrl(topic, lang)}>{localized(topic.name, lang)}</a>
+      <span class="tree-name">{name}</span>
       <span class="tree-count" data-count>{count}</span>
     </summary>
-    {
-      subtopics.length > 0 && (
-        <ul class="tree-list">
-          {subtopics.map((id) => (
-            <Astro.self lang={lang} catalog={catalog} topicId={id} />
-          ))}
-        </ul>
-      )
-    }
-    {
-      articles.length > 0 && (
-        <ul class="tree-articles">
-          {articles.map((article) => (
-            <li class="tree-article" data-id={article.id} data-labels={article.labels.join(' ')} data-search={searchText(article.id)}>
-              <a href={articleUrl(article, lang)}>{article.texts[lang]!.title}</a>
-              <span class="tree-labels" aria-hidden="true">
-                {article.labels.map((id) => (
-                  <span class="tree-dot" style={`--dot: var(--label-${catalog.labels.get(id)?.color})`} />
-                ))}
-              </span>
-            </li>
-          ))}
-        </ul>
-      )
-    }
   </details>
+  <a class="tree-open" href={topicUrl(topic, lang)}>
+    <span class="visually-hidden">{name}</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13m-6-6 6 6-6 6"></path></svg>
+  </a>
+  {
+    subtopics.length > 0 && (
+      <ul class="tree-list">
+        {subtopics.map((id) => (
+          <Astro.self lang={lang} catalog={catalog} topicId={id} />
+        ))}
+      </ul>
+    )
+  }
+  {
+    articles.length > 0 && (
+      <ul class="tree-articles">
+        {articles.map((article) => (
+          <li class="tree-article" data-id={article.id} data-labels={article.labels.join(' ')} data-search={searchText(article.id)}>
+            <a href={articleUrl(article, lang)}>{article.texts[lang]!.title}</a>
+            <span class="tree-labels" aria-hidden="true">
+              {article.labels.map((id) => (
+                <span class="tree-dot" style={`--dot: var(--label-${catalog.labels.get(id)?.color})`} />
+              ))}
+            </span>
+          </li>
+        ))}
+      </ul>
+    )
+  }
 </li>

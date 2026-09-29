@@ -172,11 +172,31 @@ const labels = [...catalog.labels.values()];
     list-style: none;
   }
 
+  /* The guide line drops from the middle of the fold arrow. */
   .tree :global(.tree-list),
   .tree :global(.tree-articles) {
-    margin-left: 1.1rem;
+    margin-left: calc(0.55rem - 1px);
     padding-left: var(--space-4);
     border-left: 2px solid var(--line);
+  }
+
+  /* A topic row: the <details> (only its summary, the fold switch) and the topic-page link beside it,
+     then the topic's lists on full-width rows. A long name wraps inside the summary, so the link
+     always stays on the row. See TreeNode.astro. */
+  .tree :global(.tree-topic) {
+    display: grid;
+    grid-template-columns: minmax(0, max-content) auto 1fr;
+    align-items: center;
+    column-gap: var(--space-1);
+  }
+
+  .tree :global(.tree-topic > ul) {
+    grid-column: 1 / -1;
+  }
+
+  /* A folded topic hides its lists. */
+  .tree :global(.tree-topic > details:not([open]) ~ ul) {
+    display: none;
   }
 
   .tree :global(.tree-topic > details > summary) {
@@ -188,22 +208,59 @@ const labels = [...catalog.labels.values()];
     font-weight: 750;
     font-size: 1.25rem;
     cursor: pointer;
+    list-style: none;
+  }
+
+  .tree :global(.tree-topic > details > summary::-webkit-details-marker) {
+    display: none;
+  }
+
+  .tree :global(.tree-marker) {
+    flex: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: none;
+    stroke: var(--ink-soft);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.15s ease;
+  }
+
+  .tree :global(.tree-topic > details[open] > summary .tree-marker) {
+    transform: rotate(90deg);
+  }
+
+  .tree :global(.tree-topic > details > summary:hover .tree-marker) {
+    stroke: var(--accent);
   }
 
   .tree > :global(.tree-topic) + :global(.tree-topic) {
     margin-top: var(--space-5);
   }
 
-  .tree :global(.tree-topic summary a) {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--touch);
-    color: var(--ink);
-    text-decoration: none;
+  .tree :global(.tree-open) {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: var(--touch);
+    height: var(--touch);
+    border-radius: 50%;
+    color: var(--accent);
   }
 
-  .tree :global(.tree-topic summary a:hover) {
-    text-decoration: underline;
+  .tree :global(.tree-open:hover) {
+    background: var(--accent-soft);
+  }
+
+  .tree :global(.tree-open svg) {
+    width: 1.4rem;
+    height: 1.4rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   .tree :global(.tree-count) {
