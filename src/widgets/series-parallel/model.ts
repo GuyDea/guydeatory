@@ -4,6 +4,10 @@ export const BULB_OHMS = 6;
 
 export type Mode = 'series' | 'parallel';
 
+/** How many bulbs the reader can choose to connect. */
+export const BULB_COUNTS = [2, 3] as const;
+export type BulbCount = (typeof BULB_COUNTS)[number];
+
 export interface BulbState {
   present: boolean;
   amps: number;

@@ -7,6 +7,8 @@ import { LANG_CODES } from '../../src/i18n/languages.ts';
 import type { LangCode } from '../../src/i18n/languages.ts';
 import AcDc from '../../src/widgets/ac-dc/AcDc.svelte';
 import { strings as acDcStrings } from '../../src/widgets/ac-dc/strings.ts';
+import SeriesParallel from '../../src/widgets/series-parallel/SeriesParallel.svelte';
+import { strings as seriesParallelStrings } from '../../src/widgets/series-parallel/strings.ts';
 
 /** Every widget component, src/widgets/<name>/<Name>.svelte. The kit holds parts, not widgets. */
 const modules = import.meta.glob<{ default: Component<{ lang: LangCode }> }>(
@@ -67,6 +69,22 @@ describe('AcDc first frame (all that shows with reduced motion or without JS)', 
       expect(html.querySelector('path.d-arrow-accent')).not.toBeNull();
       expect(html.text).toContain(forward);
       expect(html.text).not.toContain(stopped);
+    });
+  }
+});
+
+describe('SeriesParallel first frame', () => {
+  for (const lang of LANG_CODES) {
+    it(`offers two or three bulbs and starts with three (${lang})`, () => {
+      const html = serverRender(SeriesParallel, lang);
+      const s = seriesParallelStrings[lang];
+      const choice = html.querySelectorAll('fieldset').find((set) => set.querySelector('legend')?.text === s.count);
+      expect(choice, 'a "how many bulbs" choice').toBeDefined();
+      const options = choice!.querySelectorAll('input').map((input) => `${input.getAttribute('value')}${input.hasAttribute('checked') ? ' (chosen)' : ''}`);
+      expect(options).toEqual(['2', '3 (chosen)']);
+      expect(choice!.text).toContain(s.bulbs(2));
+      expect(choice!.text).toContain(s.bulbs(3));
+      expect(html.querySelectorAll('g.bulb')).toHaveLength(3);
     });
   }
 });

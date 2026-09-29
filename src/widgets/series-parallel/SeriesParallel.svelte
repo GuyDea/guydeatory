@@ -7,8 +7,8 @@
   import Readout from '../kit/Readout.svelte';
   import Toggle from '../kit/Toggle.svelte';
   import WidgetFrame from '../kit/WidgetFrame.svelte';
-  import { circuit, VOLTS } from './model.ts';
-  import type { Mode } from './model.ts';
+  import { BULB_COUNTS, circuit, VOLTS } from './model.ts';
+  import type { BulbCount, Mode } from './model.ts';
   import { strings } from './strings.ts';
 
   let { lang }: { lang: LangCode } = $props();
@@ -16,24 +16,28 @@
   const live = hydrated();
 
   let mode = $state<Mode>('series');
-  let present = $state([true, true, true]);
+  let present = $state([true, true, true]); // one entry per bulb holder: is a bulb screwed in?
+  const count = $derived(present.length as BulbCount);
   const result = $derived(circuit(mode, present));
   const series = $derived(mode === 'series');
   const totalText = $derived(formatQuantity(result.totalAmps, 'A', lang, 2));
 
-  // Bulb positions: on the top wire (series) or on three rungs of a ladder (parallel).
-  const SERIES_X = [130, 220, 310];
-  const PARALLEL_X = [150, 240, 330];
-  const position = (i: number) => (series ? { x: SERIES_X[i]!, y: 55 } : { x: PARALLEL_X[i]!, y: 128 });
+  // Bulb centres, spread evenly 90 apart: along the top wire (series) or on the rungs of a ladder (parallel).
+  const xs = $derived(Array.from({ length: count }, (_, i) => (series ? 220 : 240) + (i - (count - 1) / 2) * 90));
+  const position = (i: number) => ({ x: xs[i]!, y: series ? 55 : 128 });
 
-  // Wire pieces, leaving gaps where a bulb has been removed.
+  // Wire pieces. In series they stop at each bulb holder (radius 21), so the loop runs through the bulbs.
   const wires = $derived.by(() => {
+    const last = xs[xs.length - 1]!;
     if (series) {
-      const pieces = ['M40 105V55H108', 'M152 55H198', 'M242 55H288', 'M332 55H370V205H40V150'];
-      return pieces;
+      return [
+        `M40 105V55H${xs[0]! - 22}`,
+        ...xs.slice(1).map((x, i) => `M${xs[i]! + 22} 55H${x - 22}`),
+        `M${last + 22} 55H370V205H40V150`,
+      ];
     }
-    const rails = ['M40 105V55H330', 'M40 150V205H330'];
-    const rungs = PARALLEL_X.flatMap((x) => [`M${x} 55V106`, `M${x} 150V205`]);
+    const rails = [`M40 105V55H${last}`, `M40 150V205H${last}`];
+    const rungs = xs.flatMap((x) => [`M${x} 55V106`, `M${x} 150V205`]);
     return [...rails, ...rungs];
   });
 
@@ -42,6 +46,11 @@
   function toggleBulb(i: number) {
     present = present.map((p, j) => (j === i ? !p : p));
   }
+
+  /** Keeps the bulbs already there as they are; a new holder gets a bulb screwed in. */
+  function setCount(next: BulbCount) {
+    present = Array.from({ length: next }, (_, i) => present[i] ?? true);
+  }
 </script>
 
 <WidgetFrame name="series-parallel" title={s.title} hint={s.hint} {lang} onreset={() => ((present = [true, true, true]), (mode = 'series'))}>
@@ -49,7 +58,7 @@
     viewBox="0 0 400 240"
     class="diagram"
     role="group"
-    aria-label={s.picture({ series, lit: result.bulbs.filter((b) => b.brightness > 0).length, total: totalText })}
+    aria-label={s.picture({ series, holders: count, lit: result.bulbs.filter((b) => b.brightness > 0).length, total: totalText })}
   >
     {#each wires as d (d)}
       <path {d} class="d-wire" />
@@ -73,7 +82,9 @@
         {:else}
           <circle cx={p.x} cy={p.y} r="21" fill="none" stroke="var(--d-muted)" stroke-width="2" stroke-dasharray="4 4" />
         {/if}
-        <text x={series ? p.x : p.x + 27} y={series ? p.y + 45 : p.y + 6} text-anchor={series ? 'middle' : 'start'} class="d-small">
+        <!-- the current through this bulb: under it in series; in parallel beside its rung, below
+             the glows, so the next bulb's glow never covers it -->
+        <text x={series ? p.x : p.x + 7} y={series ? p.y + 45 : 192} text-anchor={series ? 'middle' : 'start'} class="d-small">
           {formatQuantity(bulb.amps, 'A', lang, 2)}
         </text>
       </g>
@@ -88,6 +99,11 @@
         { value: 'parallel', label: s.parallel },
       ]}
       bind:value={mode}
+    />
+    <Toggle
+      label={s.count}
+      options={BULB_COUNTS.map((n) => ({ value: String(n), label: s.bulbs(n) }))}
+      bind:value={() => String(count), (next) => setCount(Number(next) as BulbCount)}
     />
     <Readout label={s.total} value={totalText} tone="accent" />
     <div class="bulb-buttons">

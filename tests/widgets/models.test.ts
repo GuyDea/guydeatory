@@ -13,7 +13,7 @@ import { flow } from '../../src/widgets/electron-flow/model.ts';
 import { cycleStates, OUTDOOR_RANGE } from '../../src/widgets/heat-pump-cycle/model.ts';
 import { logPosition, logValue } from '../../src/widgets/kit/scale.ts';
 import { ohmsDigits, PRESETS, solve } from '../../src/widgets/ohms-law/model.ts';
-import { circuit } from '../../src/widgets/series-parallel/model.ts';
+import { BULB_OHMS, circuit, VOLTS } from '../../src/widgets/series-parallel/model.ts';
 
 describe('log scale (sliders)', () => {
   it('maps the ends of the range to the ends of the track', () => {
@@ -91,6 +91,44 @@ describe('series and parallel bulbs (6 V battery, 6 Ω bulbs)', () => {
     const result = circuit('parallel', [true, false, true]);
     expect(result.bulbs.map((b) => b.brightness)).toEqual([1, 0, 1]);
     expect(result.totalAmps).toBeCloseTo(2);
+  });
+
+  // The push across a bulb is its current times its resistance (U = R · I).
+  const push = (amps: number) => amps * BULB_OHMS;
+
+  it('two bulbs in series: each gets half the push (3 V), a quarter of the brightness', () => {
+    const result = circuit('series', [true, true]);
+    expect(result.bulbs.map((b) => push(b.amps))).toEqual([VOLTS / 2, VOLTS / 2]);
+    expect(result.bulbs.map((b) => b.brightness)).toEqual([0.25, 0.25]);
+    expect(result.totalAmps).toBeCloseTo(0.5);
+  });
+
+  it('three bulbs in series: each gets a third of the push (2 V), a ninth of the brightness', () => {
+    const result = circuit('series', [true, true, true]);
+    for (const bulb of result.bulbs) {
+      expect(push(bulb.amps)).toBeCloseTo(VOLTS / 3);
+      expect(bulb.brightness).toBeCloseTo(1 / 9);
+    }
+    expect(result.totalAmps).toBeCloseTo(1 / 3);
+  });
+
+  it('two bulbs in series with one unscrewed: the loop is broken and both are dark', () => {
+    const result = circuit('series', [false, true]);
+    expect(result.totalAmps).toBe(0);
+    expect(result.bulbs.map((b) => b.brightness)).toEqual([0, 0]);
+  });
+
+  it('two bulbs in parallel: each gets the full push (6 V) and shines fully; the battery gives both currents', () => {
+    const result = circuit('parallel', [true, true]);
+    expect(result.bulbs.map((b) => push(b.amps))).toEqual([VOLTS, VOLTS]);
+    expect(result.bulbs.map((b) => b.brightness)).toEqual([1, 1]);
+    expect(result.totalAmps).toBeCloseTo(2);
+  });
+
+  it('two bulbs in parallel with one unscrewed: the other keeps shining', () => {
+    const result = circuit('parallel', [true, false]);
+    expect(result.bulbs.map((b) => b.brightness)).toEqual([1, 0]);
+    expect(result.totalAmps).toBeCloseTo(1);
   });
 });
 
