@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { LangCode } from '../../i18n/languages.ts';
+  import Button from '../kit/Button.svelte';
   import { formatNumber, formatQuantity } from '../kit/format.ts';
   import Readout from '../kit/Readout.svelte';
   import Slider from '../kit/Slider.svelte';
@@ -67,7 +68,7 @@
     <div class="places" role="group" aria-label={s.places}>
       <span class="places-label">{s.places}</span>
       {#each PLACES as place (place.id)}
-        <button type="button" class="place" onclick={() => (pressure = place.bar)}>{s.placeNames[place.id]}</button>
+        <Button onclick={() => (pressure = place.bar)}>{s.placeNames[place.id]}</Button>
       {/each}
     </div>
   {/snippet}
@@ -86,20 +87,5 @@
     font-weight: 700;
     font-size: var(--text-sm);
     margin-right: var(--space-1);
-  }
-
-  .place {
-    min-height: var(--touch);
-    padding: 0 var(--space-3);
-    border: 1.5px solid var(--line-strong);
-    border-radius: var(--radius-pill);
-    background: var(--surface);
-    color: var(--ink);
-    font-weight: 700;
-    font-size: 0.9rem;
-  }
-
-  .place:hover {
-    border-color: var(--accent);
   }
 </style>

@@ -1,6 +1,6 @@
 <script lang="ts">
   /** A segmented choice built from real radio buttons (arrow keys work natively). */
-  import { onMount } from 'svelte';
+  import { hydrated } from './hydration.svelte.ts';
 
   interface Option {
     value: string;
@@ -15,8 +15,7 @@
 
   let { label, options, value = $bindable() }: Props = $props();
   const name = `toggle-${Math.random().toString(36).slice(2, 8)}`;
-  let hydrated = $state(false);
-  onMount(() => (hydrated = true));
+  const live = hydrated();
 </script>
 
 <fieldset class="toggle">
@@ -24,7 +23,7 @@
   <div class="segments">
     {#each options as option (option.value)}
       <label class="segment" class:selected={option.value === value}>
-        <input type="radio" {name} value={option.value} bind:group={value} disabled={!hydrated} />
+        <input type="radio" {name} value={option.value} bind:group={value} disabled={!live.current} />
         <span>{option.label}</span>
       </label>
     {/each}

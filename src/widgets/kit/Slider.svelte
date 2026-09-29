@@ -1,8 +1,8 @@
 <script lang="ts">
   /** A labelled slider with the current value (and unit) shown and spoken. Supports a log scale. */
-  import { onMount } from 'svelte';
   import type { LangCode } from '../../i18n/languages.ts';
   import { formatQuantity } from './format.ts';
+  import { hydrated } from './hydration.svelte.ts';
   import { logPosition, logValue } from './scale.ts';
 
   interface Props {
@@ -21,8 +21,7 @@
   }
 
   let { label, value = $bindable(), min, max, step = 1, unit = '', digits = 0, lang, scale = 'linear', format }: Props = $props();
-  let hydrated = $state(false);
-  onMount(() => (hydrated = true));
+  const live = hydrated();
 
   const LOG_STEPS = 1000;
   const toPosition = (v: number) => (scale === 'log' ? logPosition(v, min, max, LOG_STEPS) : v);
@@ -44,7 +43,7 @@
     value={toPosition(value)}
     oninput={(event) => (value = fromPosition(Number(event.currentTarget.value)))}
     aria-valuetext={text}
-    disabled={!hydrated}
+    disabled={!live.current}
   />
 </label>
 

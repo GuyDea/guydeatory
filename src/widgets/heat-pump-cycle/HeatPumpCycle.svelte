@@ -1,6 +1,9 @@
 <script lang="ts">
   import type { LangCode } from '../../i18n/languages.ts';
+  import Button from '../kit/Button.svelte';
   import { formatQuantity } from '../kit/format.ts';
+  import { hotspot } from '../kit/hotspot.ts';
+  import { hydrated } from '../kit/hydration.svelte.ts';
   import { visibleLoop } from '../kit/motion.svelte.ts';
   import Readout from '../kit/Readout.svelte';
   import Slider from '../kit/Slider.svelte';
@@ -13,6 +16,7 @@
 
   let { lang }: { lang: LangCode } = $props();
   const s = $derived(strings[lang]);
+  const live = hydrated();
 
   const DEFAULTS: Record<Mode, { outdoor: number; indoor: number }> = {
     heating: { outdoor: 0, indoor: 21 },
@@ -65,12 +69,7 @@
     selected = selected === part ? null : part;
   }
 
-  const keyChoose = (part: Part) => (event: KeyboardEvent) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      choose(part);
-    }
-  };
+  const partSpot = (part: Part) => hotspot(live.current, s.partNames[part], () => choose(part));
 </script>
 
 <WidgetFrame
@@ -118,19 +117,19 @@
     <text x="300" y="256" text-anchor="middle" class="d-small heat-label">{s.heat}</text>
 
     <!-- parts (clickable) -->
-    <g class="part" class:active={selected === 'indoor'} role="button" tabindex="0" aria-label={s.partNames.indoor} onclick={() => choose('indoor')} onkeydown={keyChoose('indoor')}>
+    <g class="part" class:active={selected === 'indoor'} {...partSpot('indoor')}>
       <rect x="40" y="140" width="104" height="52" rx="8" class="d-box" />
       <path d="M52 150h80M52 160h80M52 170h80M52 180h80" class="d-line" style="stroke: var(--d-muted)" />
     </g>
-    <g class="part" class:active={selected === 'outdoor'} role="button" tabindex="0" aria-label={s.partNames.outdoor} onclick={() => choose('outdoor')} onkeydown={keyChoose('outdoor')}>
+    <g class="part" class:active={selected === 'outdoor'} {...partSpot('outdoor')}>
       <rect x="282" y="140" width="110" height="72" rx="8" class="d-box" />
       <circle cx="337" cy="176" r="24" fill="none" stroke="var(--d-ink)" stroke-width="2" />
       <path d="M337 176l0-20M337 176l17 10M337 176l-17 10" class="d-line" />
     </g>
-    <g class="part" class:active={selected === 'valve'} role="button" tabindex="0" aria-label={s.partNames.valve} onclick={() => choose('valve')} onkeydown={keyChoose('valve')}>
+    <g class="part" class:active={selected === 'valve'} {...partSpot('valve')}>
       <path d="M196 84V108L210 96ZM224 84V108L210 96Z" class="d-box" />
     </g>
-    <g class="part" class:active={selected === 'compressor'} role="button" tabindex="0" aria-label={s.partNames.compressor} onclick={() => choose('compressor')} onkeydown={keyChoose('compressor')}>
+    <g class="part" class:active={selected === 'compressor'} {...partSpot('compressor')}>
       <circle cx="210" cy="268" r="25" class="d-box" />
       <path d="M198 276 210 258 222 276" class="d-line" stroke-width="3" />
     </g>
@@ -157,7 +156,7 @@
     <div class="part-buttons" role="group" aria-label={s.parts}>
       <span class="part-buttons-label">{s.parts}</span>
       {#each ['compressor', 'indoor', 'valve', 'outdoor'] as const as part (part)}
-        <button type="button" class="part-button" aria-pressed={selected === part} onclick={() => choose(part)}>{s.partNames[part]}</button>
+        <Button pressed={selected === part} onclick={() => choose(part)}>{s.partNames[part]}</Button>
       {/each}
     </div>
   {/snippet}
@@ -195,7 +194,7 @@
     font-weight: 700;
   }
 
-  .part {
+  .part[role='button'] {
     cursor: pointer;
   }
 
@@ -228,22 +227,5 @@
     font-weight: 700;
     font-size: var(--text-sm);
     margin-right: var(--space-1);
-  }
-
-  .part-button {
-    min-height: var(--touch);
-    padding: 0 var(--space-3);
-    border: 1.5px solid var(--line-strong);
-    border-radius: var(--radius-pill);
-    background: var(--surface);
-    color: var(--ink);
-    font-weight: 700;
-    font-size: 0.9rem;
-  }
-
-  .part-button[aria-pressed='true'] {
-    background: var(--accent);
-    color: var(--accent-ink);
-    border-color: var(--accent);
   }
 </style>

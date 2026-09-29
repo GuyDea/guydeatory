@@ -3,9 +3,9 @@
    * The exhibit frame every widget uses: title, optional hint, optional Pause/Play and Start-again
    * buttons, a stage (the picture) and a controls area. The root carries data-widget for checks.
    */
-  import { onMount } from 'svelte';
   import type { Snippet } from 'svelte';
   import type { LangCode } from '../../i18n/languages.ts';
+  import { hydrated } from './hydration.svelte.ts';
   import { kitStrings } from './strings.ts';
 
   interface Props {
@@ -23,14 +23,14 @@
 
   let { name, title, hint, lang, onreset, animated = false, paused = $bindable(false), children, controls }: Props = $props();
   const s = $derived(kitStrings[lang]);
-  let hydrated = $state(false);
-  onMount(() => (hydrated = true));
+  // Pause and Start again need JS, so they appear only once the widget is live.
+  const live = hydrated();
 </script>
 
 <section class="widget" data-widget={name} role="group" aria-label={title}>
   <header class="head">
     <p class="title">{title}</p>
-    {#if hydrated && (animated || onreset)}
+    {#if live.current && (animated || onreset)}
       <div class="actions">
         {#if animated}
           <button type="button" class="btn" aria-pressed={paused} onclick={() => (paused = !paused)}>

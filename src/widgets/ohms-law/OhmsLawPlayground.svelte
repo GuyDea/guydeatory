@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { LangCode } from '../../i18n/languages.ts';
+  import Button from '../kit/Button.svelte';
   import { formatQuantity } from '../kit/format.ts';
   import { visibleLoop } from '../kit/motion.svelte.ts';
   import Readout from '../kit/Readout.svelte';
@@ -86,7 +87,7 @@
     <div class="presets" role="group" aria-label={s.presets}>
       <span class="presets-label">{s.presets}</span>
       {#each PRESETS as p (p.id)}
-        <button type="button" class="preset" onclick={() => preset(p.id)}>{s.presetNames[p.id]}</button>
+        <Button onclick={() => preset(p.id)}>{s.presetNames[p.id]}</Button>
       {/each}
     </div>
   {/snippet}
@@ -131,20 +132,5 @@
     font-weight: 700;
     font-size: var(--text-sm);
     margin-right: var(--space-1);
-  }
-
-  .preset {
-    min-height: var(--touch);
-    padding: 0 var(--space-3);
-    border: 1.5px solid var(--line-strong);
-    border-radius: var(--radius-pill);
-    background: var(--surface);
-    color: var(--ink);
-    font-weight: 700;
-    font-size: 0.9rem;
-  }
-
-  .preset:hover {
-    border-color: var(--accent);
   }
 </style>

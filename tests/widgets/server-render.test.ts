@@ -1,0 +1,57 @@
+import { readdirSync } from 'node:fs';
+import { parse } from 'node-html-parser';
+import type { Component } from 'svelte';
+import { render } from 'svelte/server';
+import { describe, expect, it } from 'vitest';
+import { LANG_CODES } from '../../src/i18n/languages.ts';
+import type { LangCode } from '../../src/i18n/languages.ts';
+
+/** Every widget component, src/widgets/<name>/<Name>.svelte. The kit holds parts, not widgets. */
+const modules = import.meta.glob<{ default: Component<{ lang: LangCode }> }>(
+  ['../../src/widgets/*/*.svelte', '!../../src/widgets/kit/*.svelte'],
+  { eager: true },
+);
+const widgets = Object.entries(modules).map(([path, module]) => ({ name: path.split('/').at(-2)!, component: module.default }));
+
+const widgetFolders = readdirSync(new URL('../../src/widgets/', import.meta.url), { withFileTypes: true })
+  .filter((entry) => entry.isDirectory() && entry.name !== 'kit')
+  .map((entry) => entry.name);
+
+const serverRender = (component: Component<{ lang: LangCode }>, lang: LangCode) =>
+  parse(render(component, { props: { lang } }).body);
+
+describe('widgets before hydration (the server render)', () => {
+  it('covers every widget folder', () => {
+    expect(widgets.map((w) => w.name).sort()).toEqual([...widgetFolders].sort());
+  });
+
+  for (const { name, component } of widgets) {
+    for (const lang of LANG_CODES) {
+      describe(`${name} (${lang})`, () => {
+        const html = serverRender(component, lang);
+
+        it('renders a real first frame', () => {
+          expect(html.querySelector(`[data-widget="${name}"]`)).not.toBeNull();
+          expect(html.querySelector('svg')).not.toBeNull();
+        });
+
+        it('has no enabled buttons or form controls, because they do nothing without JS', () => {
+          const live = html
+            .querySelectorAll('button, input, select, textarea')
+            .filter((control) => !control.hasAttribute('disabled'))
+            .map((control) => control.outerHTML);
+          expect(live).toEqual([]);
+        });
+
+        it('has no drawing that can be focused or poses as a button', () => {
+          const focusable = html
+            .querySelectorAll('[tabindex]')
+            .filter((el) => Number(el.getAttribute('tabindex')) >= 0)
+            .map((el) => el.outerHTML.slice(0, 120));
+          expect(focusable).toEqual([]);
+          expect(html.querySelectorAll('[role="button"]').map((el) => el.outerHTML.slice(0, 120))).toEqual([]);
+        });
+      });
+    }
+  }
+});

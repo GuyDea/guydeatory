@@ -1,6 +1,9 @@
 <script lang="ts">
   import type { LangCode } from '../../i18n/languages.ts';
+  import Button from '../kit/Button.svelte';
   import { formatQuantity } from '../kit/format.ts';
+  import { hotspot } from '../kit/hotspot.ts';
+  import { hydrated } from '../kit/hydration.svelte.ts';
   import Readout from '../kit/Readout.svelte';
   import Toggle from '../kit/Toggle.svelte';
   import WidgetFrame from '../kit/WidgetFrame.svelte';
@@ -10,6 +13,7 @@
 
   let { lang }: { lang: LangCode } = $props();
   const s = $derived(strings[lang]);
+  const live = hydrated();
 
   let mode = $state<Mode>('series');
   let present = $state([true, true, true]);
@@ -58,19 +62,7 @@
 
     {#each result.bulbs as bulb, i (i)}
       {@const p = position(i)}
-      <g
-        class="bulb"
-        role="button"
-        tabindex="0"
-        aria-label={bulb.present ? s.unscrew(i + 1) : s.screwIn(i + 1)}
-        onclick={() => toggleBulb(i)}
-        onkeydown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            toggleBulb(i);
-          }
-        }}
-      >
+      <g class="bulb" {...hotspot(live.current, bulb.present ? s.unscrew(i + 1) : s.screwIn(i + 1), () => toggleBulb(i))}>
         {#if bulb.present}
           {#if bulb.brightness > 0}
             <circle cx={p.x} cy={p.y} r={24 + 20 * bulb.brightness} class="d-glow" opacity={0.15 + 0.25 * bulb.brightness} />
@@ -100,14 +92,14 @@
     <Readout label={s.total} value={totalText} tone="accent" />
     <div class="bulb-buttons">
       {#each present as isIn, i (i)}
-        <button type="button" class="bulb-button" onclick={() => toggleBulb(i)}>{isIn ? s.unscrew(i + 1) : s.screwIn(i + 1)}</button>
+        <Button onclick={() => toggleBulb(i)}>{isIn ? s.unscrew(i + 1) : s.screwIn(i + 1)}</Button>
       {/each}
     </div>
   {/snippet}
 </WidgetFrame>
 
 <style>
-  .bulb {
+  .bulb[role='button'] {
     cursor: pointer;
   }
 
@@ -125,20 +117,5 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
-  }
-
-  .bulb-button {
-    min-height: var(--touch);
-    padding: 0 var(--space-3);
-    border: 1.5px solid var(--line-strong);
-    border-radius: var(--radius-pill);
-    background: var(--surface);
-    color: var(--ink);
-    font-weight: 700;
-    font-size: 0.9rem;
-  }
-
-  .bulb-button:hover {
-    border-color: var(--accent);
   }
 </style>

@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { LangCode } from '../../i18n/languages.ts';
   import { formatQuantity } from '../kit/format.ts';
+  import { hotspot } from '../kit/hotspot.ts';
+  import { hydrated } from '../kit/hydration.svelte.ts';
   import { visibleLoop } from '../kit/motion.svelte.ts';
   import Readout from '../kit/Readout.svelte';
   import Slider from '../kit/Slider.svelte';
@@ -11,6 +13,7 @@
 
   let { lang }: { lang: LangCode } = $props();
   const s = $derived(strings[lang]);
+  const live = hydrated();
 
   let volts = $state(4.5);
   let switchState = $state<'open' | 'closed'>('open');
@@ -106,20 +109,7 @@
       <path d="M320 70V110" class="d-line d-arrow-electron" />
     {/if}
     <!-- the switch: click it -->
-    <g
-      class="switch"
-      role="button"
-      tabindex="0"
-      aria-label={s.toggleSwitch}
-      aria-pressed={closed}
-      onclick={toggleSwitch}
-      onkeydown={(event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          toggleSwitch();
-        }
-      }}
-    >
+    <g class="switch" {...hotspot(live.current, s.toggleSwitch, toggleSwitch, closed)}>
       <rect x="20" y={GAP.top - 10} width="80" height={GAP.bottom - GAP.top + 20} fill="transparent" />
       <circle cx="60" cy={GAP.bottom} r="6" class="d-box" />
       <circle cx="60" cy={GAP.top} r="6" class="d-box" />
@@ -147,7 +137,7 @@
 </WidgetFrame>
 
 <style>
-  .switch {
+  .switch[role='button'] {
     cursor: pointer;
   }
 

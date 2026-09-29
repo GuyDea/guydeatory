@@ -28,7 +28,10 @@ tests/widgets/models.test.ts   one describe block per widget model
 | `WidgetFrame.svelte` | The exhibit frame. The root has `data-widget`, `role="group"` and `aria-label`, plus a title, an optional hint and a reset button. Use it for every widget. |
 | `Slider.svelte` | Labelled range input, value readout with unit, big thumb (≥ 44 px touch area), keyboard accessible |
 | `Toggle.svelte` | Segmented choice (radiogroup), e.g. DC / AC or cooling / heating |
+| `Button.svelte` | Pill button for a widget's actions: presets, places, parts, bulbs. `pressed` makes it an on/off button. |
 | `Readout.svelte` | Large live number with a label, announced politely to screen readers |
+| `hotspot.ts` | `hotspot(live, label, activate)`: spread onto an SVG shape to make it a keyboard-operable button once the widget is live |
+| `hydration.svelte.ts` | `hydrated()`: a reactive flag, false in the server render and true once the widget has hydrated |
 | `motion.svelte.ts` | `reducedMotion()` and `visibleLoop()`: runs `requestAnimationFrame` only while the widget is on screen and motion is allowed |
 | `format.ts` | `formatNumber()` / `formatQuantity()` with the right decimal comma and non-breaking spaces per language |
 | `strings.ts` | Shared kit strings (Reset, Play, Pause…) |
@@ -41,6 +44,11 @@ tests/widgets/models.test.ts   one describe block per widget model
    - Astro renders the widget to HTML at build time, and `client:visible` hydrates it later.
    - The first frame (initial values, drawn state, labels) must already make sense with no JS.
    - `npm run check:dist` fails on empty widget roots.
+   - **Controls stay inert until the widget hydrates**, because without JS they do nothing. Use the
+     kit's `Slider`, `Toggle` and `Button`: they are disabled until `hydrated()` turns true. Make a
+     shape in the drawing clickable only with `hotspot()`, so it is not focusable and not
+     announced as a button before then. `tests/widgets/server-render.test.ts` server-renders every
+     widget and fails on an enabled control or a focusable shape.
 3. **Language:**
    - Every widget takes a `lang: LangCode` prop. It is injected automatically in MDX.
    - All visible text comes from `strings.ts`: `{ en: {...}, sk: {...} }`, typed so every
@@ -111,6 +119,8 @@ skip it. Add every new widget there.
 
 - `tests/widgets/models.test.ts` covers every model, one `describe` block per widget, with values
   checked by hand: Ohm's law, the COP curve, boiling points, waveform means.
+- `tests/widgets/server-render.test.ts` renders every widget in every language the way the build
+  does (`render` from `svelte/server`). It finds new widgets by itself.
 - Check in a browser (`npm run build && npm run preview`):
   - touch and keyboard
   - 360 px and desktop widths
