@@ -14,8 +14,8 @@ export function pickLanguage({ cookie, accept }: { cookie: string; accept: reado
   for (const tag of accept) {
     const primary = tag.split('-')[0]!.trim().toLowerCase();
     if (isLang(primary)) return primary;
-    const alias = LANGUAGE_ALIASES[primary];
-    if (alias) return alias;
+    // Own properties only: "constructor" or "__proto__" must not find what every object inherits.
+    if (Object.prototype.hasOwnProperty.call(LANGUAGE_ALIASES, primary)) return LANGUAGE_ALIASES[primary]!;
   }
   return DEFAULT_LANG;
 }

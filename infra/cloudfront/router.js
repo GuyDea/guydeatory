@@ -33,7 +33,8 @@ function queryString(querystring) {
 function supported(tag) {
   var primary = tag.split('-')[0];
   if (LANGS.indexOf(primary) !== -1) return primary;
-  return ALIASES[primary] || null;
+  // Own properties only: "constructor" or "__proto__" must not find what every object inherits.
+  return Object.prototype.hasOwnProperty.call(ALIASES, primary) ? ALIASES[primary] : null;
 }
 
 // The reader's saved choice (lang cookie), else the best Accept-Language match, else the default.

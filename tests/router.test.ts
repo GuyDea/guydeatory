@@ -45,6 +45,15 @@ describe('CloudFront router', () => {
     expect(location(run(request('/')))).toBe('/en/');
   });
 
+  it('never takes a language from properties every object inherits', () => {
+    for (const accept of ['constructor', '__proto__', 'toString', 'hasOwnProperty', 'valueOf', 'constructor-US']) {
+      const res = run(request('/', { headers: { 'accept-language': { value: accept } } })) as CfResponse;
+      expect(res.statusCode, accept).toBe(302);
+      expect(location(res), accept).toBe('/en/');
+    }
+    expect(location(run(request('/', { headers: { 'accept-language': { value: 'constructor, sk;q=0.5' } } })))).toBe('/sk/');
+  });
+
   it('serves directory index files for paths ending in a slash', () => {
     expect((run(request('/en/voltage/')) as CfRequest).uri).toBe('/en/voltage/index.html');
     expect((run(request('/sk/')) as CfRequest).uri).toBe('/sk/index.html');
@@ -78,7 +87,7 @@ describe('CloudFront router', () => {
   });
 
   it('chooses the same language as the site’s own picker', () => {
-    const cases = ['sk', 'en-GB,en;q=0.9', 'cs', 'de,sk;q=0.5', 'fr', ''];
+    const cases = ['sk', 'en-GB,en;q=0.9', 'cs', 'de,sk;q=0.5', 'fr', '', 'constructor', '__proto__,cs'];
     for (const accept of cases) {
       const headers: Record<string, { value: string }> = accept ? { 'accept-language': { value: accept } } : {};
       const viaRouter = location(run(request('/', { headers })))!.slice(1, -1);

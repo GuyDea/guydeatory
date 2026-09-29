@@ -23,4 +23,11 @@ describe('pickLanguage', () => {
     expect(pickLanguage({ cookie: '', accept: ['fr-FR'] })).toBe('en');
     expect(pickLanguage({ cookie: '', accept: [] })).toBe('en');
   });
+
+  it('never takes a language from properties every object inherits', () => {
+    for (const tag of ['constructor', '__proto__', 'toString', 'hasOwnProperty', 'valueOf', 'constructor-US']) {
+      expect(pickLanguage({ cookie: '', accept: [tag] }), tag).toBe('en');
+    }
+    expect(pickLanguage({ cookie: '', accept: ['constructor', 'sk'] })).toBe('sk');
+  });
 });
