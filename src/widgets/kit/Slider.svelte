@@ -1,5 +1,5 @@
 <script lang="ts">
-  /** A labelled slider with the current value (and unit) shown and spoken. Supports a log scale. */
+  /** A labelled slider with the current value (and unit) shown, and spoken by the slider. Supports a log scale. */
   import type { LangCode } from '../../i18n/languages.ts';
   import { formatQuantity } from './format.ts';
   import { hydrated } from './hydration.svelte.ts';
@@ -30,10 +30,12 @@
   const text = $derived(format ? format(value) : unit ? formatQuantity(value, unit, lang, digits) : String(value));
 </script>
 
+<!-- The value is spoken by the slider itself (aria-valuetext). The copy on screen is hidden from
+     screen readers: an <output> is a live region, which would add an announcement at every step. -->
 <label class="slider">
   <span class="top">
     <span class="label">{label}</span>
-    <output class="value">{text}</output>
+    <span class="value" aria-hidden="true">{text}</span>
   </span>
   <input
     type="range"

@@ -26,10 +26,11 @@ tests/widgets/models.test.ts   one describe block per widget model
 | Kit file (`src/widgets/kit/`) | Purpose |
 |---|---|
 | `WidgetFrame.svelte` | The exhibit frame. The root has `data-widget`, `role="group"` and `aria-label`, plus a title, an optional hint and a reset button. Use it for every widget. |
-| `Slider.svelte` | Labelled range input, value readout with unit, big thumb (≥ 44 px touch area), keyboard accessible |
+| `Slider.svelte` | Labelled range input, value readout with unit, big thumb (≥ 44 px touch area), keyboard accessible. The slider speaks its own value (`aria-valuetext`); the copy on screen is not a live region. |
 | `Toggle.svelte` | Segmented choice (radiogroup), e.g. DC / AC or cooling / heating |
 | `Button.svelte` | Pill button for a widget's actions: presets, places, parts, bulbs. `pressed` makes it an on/off button. |
-| `Readout.svelte` | Large live number with a label, announced politely to screen readers |
+| `Readout.svelte` | Large number with a label. The number on screen changes at once. Screen readers hear "label: value" from a visually hidden polite live region once the value has settled, 0.7 s after the last change (`settle.ts`), so a dragged slider is announced once, not at every step. The on-screen copy is `aria-hidden`, so nothing is read twice. |
+| `settle.ts` | `settle(announce)`: passes a changing value on only once it has stopped changing for `SETTLE_MS` (700 ms) |
 | `hotspot.ts` | `hotspot(live, label, activate)`: spread onto an SVG shape to make it a keyboard-operable button once the widget is live |
 | `hydration.svelte.ts` | `hydrated()`: a reactive flag, false in the server render and true once the widget has hydrated |
 | `motion.svelte.ts` | `reducedMotion()` and `visibleLoop()`: runs `requestAnimationFrame` only while the widget is on screen and motion is allowed |
@@ -59,6 +60,8 @@ tests/widgets/models.test.ts   one describe block per widget model
 5. **Accessibility:**
    - Every control has a visible label.
    - Every result is shown as text (a `Readout`), not only as a picture.
+   - Don't add your own `aria-live` to anything that changes while a slider moves. A `Readout`
+     already announces its value once it has settled.
    - SVG drawings get `role="img"` and a short, updated `aria-label`.
    - Everything works with the keyboard, and with touch at 360 px.
 6. **Motion:**

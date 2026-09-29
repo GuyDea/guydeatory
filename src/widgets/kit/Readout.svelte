@@ -1,5 +1,13 @@
 <script lang="ts">
-  /** A big live number with its label, announced politely to screen readers. */
+  /**
+   * A big number with its label. The number on screen changes at once. Screen readers hear
+   * "label: value" from a polite live region once the value has stopped changing (settle.ts), so a
+   * dragged slider is announced once, not at every step. The on-screen copy is hidden from them,
+   * so nothing is read twice.
+   */
+  import { untrack } from 'svelte';
+  import { settle } from './settle.ts';
+
   interface Props {
     label: string;
     value: string;
@@ -8,11 +16,19 @@
     compact?: boolean;
   }
   let { label, value, tone = 'default', compact = false }: Props = $props();
+
+  let spoken = $state(untrack(() => value));
+  const settler = settle<string>((settled) => (spoken = settled));
+  $effect(() => {
+    settler.push(value);
+    return settler.cancel;
+  });
 </script>
 
 <div class="readout" class:compact data-tone={tone}>
-  <span class="label">{label}</span>
-  <span class="value" aria-live="polite" aria-atomic="true">{value}</span>
+  <span class="label" aria-hidden="true">{label}</span>
+  <span class="value" aria-hidden="true">{value}</span>
+  <span class="visually-hidden" aria-live="polite" aria-atomic="true">{label}: {spoken}</span>
 </div>
 
 <style>
