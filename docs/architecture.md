@@ -67,7 +67,7 @@ mirrored in `lint.ts`.
 | `src/pages/[lang]/index.astro` | `/en/`, `/sk/`: home |
 | `src/pages/[lang]/[page].astro` | Articles (`/sk/elektricky-prud/`) **and** the localized sections `explore`, `search` and `about` (`/sk/objavuj/`…). They share a route because their URLs have the same shape. The catalog rejects article slugs that equal a section name. |
 | `src/pages/[lang]/[section]/[topic].astro` | Topic pages (`/en/topics/electricity/`, `/sk/temy/elektrina/`), only for topics with content |
-| `src/pages/404.astro` | Bilingual 404 |
+| `src/pages/404.astro` | The one `/404.html` for every missing path. It holds the header, message and footer in every language; an inline `<head>` script picks the language from the path (`/sk/…` → Slovak, anything else → English) before the first paint. Without JS: English header and footer, the message in every language. |
 | `src/pages/sitemap.xml.ts`, `robots.txt.ts` | Sitemap with `hreflang` alternates, and robots |
 
 All URLs end with `/` (`trailingSlash: 'always'`, directory format). `src/lib/urls.ts` builds every
