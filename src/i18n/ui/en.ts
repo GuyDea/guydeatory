@@ -80,6 +80,8 @@ export const en = {
   'search.searching': 'Searching…',
   'search.seeAll': 'See all results',
   'search.hint': 'Type a word or a whole question, or pick a kind of explanation.',
+  'search.noScript': 'Search needs JavaScript, and it is turned off in this browser.',
+  'search.noScriptLink': 'Browse every explanation in “Explore” instead.',
   'article.readingTime': '{minutes} min read',
   'search.count': { one: '{n} result', other: '{n} results' },
   'count.articles': { one: '{n} article', other: '{n} articles' },

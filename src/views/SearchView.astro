@@ -28,6 +28,11 @@ const topics = [...catalog.topics.values()].filter((topic) => topicHasContent(ca
   <SearchData lang={lang} />
   <div class="page search-page" data-search-page>
     <h1>{t(lang, 'nav.search')}</h1>
+    <noscript>
+      <p class="no-script">
+        {t(lang, 'search.noScript')} <a href={sectionUrl(lang, 'explore')}>{t(lang, 'search.noScriptLink')}</a>
+      </p>
+    </noscript>
     <form class="search-form" action={sectionUrl(lang, 'search')} method="get" role="search" data-search-form>
       <label class="visually-hidden" for="search-q">{t(lang, 'search.label')}</label>
       <input id="search-q" name="q" type="search" placeholder={t(lang, 'search.placeholder')} autocomplete="off" enterkeyhint="search" />
@@ -71,6 +76,14 @@ const topics = [...catalog.topics.values()].filter((topic) => topicHasContent(ca
   h1 {
     font-size: var(--text-h1);
     font-weight: 800;
+  }
+
+  .no-script {
+    max-width: var(--measure);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--surface-sunk);
+    font-weight: 700;
   }
 
   .search-form {

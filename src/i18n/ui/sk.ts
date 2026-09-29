@@ -77,6 +77,8 @@ export const sk = {
   'search.searching': 'Hľadám…',
   'search.seeAll': 'Zobraziť všetky výsledky',
   'search.hint': 'Napíš slovo alebo celú otázku, alebo si vyber druh vysvetlenia.',
+  'search.noScript': 'Vyhľadávanie potrebuje JavaScript, ktorý je v tomto prehliadači vypnutý.',
+  'search.noScriptLink': 'Prezri si namiesto toho všetky vysvetlenia v časti „Objavuj“.',
   'article.readingTime': '{minutes} min čítania',
   'search.count': { one: '{n} výsledok', few: '{n} výsledky', other: '{n} výsledkov' },
   'count.articles': { one: '{n} článok', few: '{n} články', other: '{n} článkov' },
