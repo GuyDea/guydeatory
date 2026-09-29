@@ -101,6 +101,7 @@ export async function checkDist(root: string): Promise<Problem[]> {
     // aria-labelledby, label[for] and #fragments need ids that are unique on the page.
     const ids = new Map<string, number>();
     for (const el of doc.querySelectorAll('[id]')) {
+      if (el.closest('template')) continue; // inert until a script uses it
       const id = el.getAttribute('id')!;
       ids.set(id, (ids.get(id) ?? 0) + 1);
       if (ids.get(id) === 2) report(`duplicate id "${id}"`);

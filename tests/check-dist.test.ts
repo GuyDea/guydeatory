@@ -187,6 +187,13 @@ describe('checkDist', () => {
     expect(await checkDist(root)).toEqual([{ file: 'en/x/index.html', message: 'duplicate id "d-a-t"' }]);
   });
 
+  it('ignores ids inside <template>, which are not part of the page until used', async () => {
+    const root = await site({
+      'en/x/index.html': page({ body: '<p id="data">en</p><template><p id="data">sk</p></template><template><p id="data">de</p></template>' }),
+    });
+    expect(await checkDist(root)).toEqual([]);
+  });
+
   it('requires exactly one h1', async () => {
     const root = await site({ 'en/index.html': page({ body: '<h1>Second</h1>' }) });
     expect(await checkDist(root)).toEqual([{ file: 'en/index.html', message: 'expected 1 <h1>, found 2' }]);
