@@ -45,7 +45,7 @@
 
   /* Diagram palette (SVG diagrams and widgets use only these) */
   --d-ink: var(--ink);
-  --d-muted: #7a869c;
+  --d-muted: #5e6a83;
   --d-wire: #3b4a66;
   --d-fill: #ffffff;
   --d-fill-alt: #edf1f7;
