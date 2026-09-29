@@ -195,6 +195,9 @@ const labels = [...catalog.labels.values()];
   }
 
   .tree :global(.tree-topic summary a) {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
     color: var(--ink);
     text-decoration: none;
   }
@@ -217,10 +220,13 @@ const labels = [...catalog.labels.values()];
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    min-height: 40px;
+    min-height: var(--touch);
   }
 
   .tree :global(.tree-article a) {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch);
     color: var(--ink);
   }
 

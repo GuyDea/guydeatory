@@ -53,4 +53,15 @@ const style = `--chip: var(--label-${label.color}); --chip-bg: var(--label-${lab
   a.chip:hover {
     box-shadow: inset 0 0 0 2px var(--chip);
   }
+
+  /* The pill stays small; the tappable area is 44 px tall. */
+  a.chip {
+    position: relative;
+  }
+
+  a.chip::after {
+    content: '';
+    position: absolute;
+    inset: -6px -2px;
+  }
 </style>

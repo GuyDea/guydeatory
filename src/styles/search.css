@@ -52,7 +52,7 @@
 }
 
 .search-chip {
-  min-height: 40px;
+  min-height: var(--touch);
   padding: 0 var(--space-3);
   border-radius: var(--radius-pill);
   border: 2px solid var(--chip);

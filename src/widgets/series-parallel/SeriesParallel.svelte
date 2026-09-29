@@ -128,7 +128,7 @@
   }
 
   .bulb-button {
-    min-height: 40px;
+    min-height: var(--touch);
     padding: 0 var(--space-3);
     border: 1.5px solid var(--line-strong);
     border-radius: var(--radius-pill);

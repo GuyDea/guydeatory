@@ -61,7 +61,7 @@
     flex: 1;
     display: grid;
     place-items: center;
-    min-height: 40px;
+    min-height: var(--touch);
     padding: 0 var(--space-3);
     border-radius: var(--radius-pill);
     font-weight: 700;
