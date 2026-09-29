@@ -9,7 +9,7 @@ interface Props {
 const { lang, summary } = Astro.props;
 ---
 <section class="short-answer" aria-labelledby="short-answer-title">
-  <h2 id="short-answer-title" class="tab">{t(lang, 'article.shortAnswer')}</h2>
+  <h2 id="short-answer-title" class="tab" data-pagefind-ignore>{t(lang, 'article.shortAnswer')}</h2>
   <p data-pagefind-meta="summary">{summary}</p>
 </section>
 

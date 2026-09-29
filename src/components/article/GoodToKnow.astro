@@ -17,7 +17,7 @@ const links = ids.flatMap((id) => {
 ---
 {
   links.length > 0 && (
-    <p class="good-to-know">
+    <p class="good-to-know" data-pagefind-ignore>
       <span>{t(lang, 'article.goodToKnow')}</span>{' '}
       {links.map((link, i) => (
         <>

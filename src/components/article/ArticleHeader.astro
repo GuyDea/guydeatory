@@ -15,15 +15,15 @@ const { lang, article, text, catalog } = Astro.props;
 const labels = article.labels.map((id) => catalog.labels.get(id)).filter((l) => l !== undefined);
 ---
 <header class="article-header">
-  {article.status === 'draft' && <p class="banner banner-draft">{t(lang, 'article.draft')}</p>}
+  {article.status === 'draft' && <p class="banner banner-draft" data-pagefind-ignore>{t(lang, 'article.draft')}</p>}
   <h1>{text.title}</h1>
-  <div class="facts">
+  <div class="facts" data-pagefind-ignore>
     <ul class="labels" aria-label={t(lang, 'article.labelsLabel')}>
       {labels.map((label) => <li><LabelChip lang={lang} label={label} /></li>)}
     </ul>
     <span class="minutes">{t(lang, 'article.readingTime', { minutes: readingMinutes(text) })}</span>
   </div>
-  {article.status === 'stub' && <p class="banner banner-stub">{t(lang, 'article.stub')}</p>}
+  {article.status === 'stub' && <p class="banner banner-stub" data-pagefind-ignore>{t(lang, 'article.stub')}</p>}
 </header>
 
 <style>
