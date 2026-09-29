@@ -35,6 +35,7 @@ Read `docs/vision.md` once per session if you are unsure what the product is for
 7. **Git.**
    - Work on a feature branch, never commit to `main`.
    - Commit progressively.
+   - Every push to a branch other than `main` runs `npm run check` on GitHub (`.github/workflows/check.yml`).
    - Never push or deploy unless the owner asks.
 
 ## Commands

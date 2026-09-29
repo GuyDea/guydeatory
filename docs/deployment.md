@@ -93,6 +93,11 @@ aws cloudfront test-function --name guydeatory-router --if-match "$ETAG" --stage
    curl -sI https://theguydea.com/does-not-exist/ | head -1
    ```
 
+## Continuous integration
+
+`.github/workflows/check.yml` runs `npm run check` on GitHub for every push to a branch other than
+`main`. It needs no secrets and no AWS access. Results: the repository's Actions tab.
+
 ## Next step (not set up yet)
 
 Continuous deployment from GitHub Actions on merges to `main`, using an AWS IAM role assumed
