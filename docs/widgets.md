@@ -20,7 +20,7 @@ src/widgets/<name>/
   <Name>.svelte     the component (Svelte 5, runes)
   strings.ts        UI text for every language, typed
   model.ts          pure physics / maths, no DOM (unit-tested)
-tests/widgets/<name>.test.ts
+tests/widgets/models.test.ts   one describe block per widget model
 ```
 
 | Kit file (`src/widgets/kit/`) | Purpose |
@@ -29,7 +29,7 @@ tests/widgets/<name>.test.ts
 | `Slider.svelte` | Labelled range input, value readout with unit, big thumb (≥ 44 px touch area), keyboard accessible |
 | `Toggle.svelte` | Segmented choice (radiogroup), e.g. DC / AC or cooling / heating |
 | `Readout.svelte` | Large live number with a label, announced politely to screen readers |
-| `motion.svelte.ts` | `prefersReducedMotion()` and `visibleLoop()`: runs `requestAnimationFrame` only while the widget is on screen and motion is allowed |
+| `motion.svelte.ts` | `reducedMotion()` and `visibleLoop()`: runs `requestAnimationFrame` only while the widget is on screen and motion is allowed |
 | `format.ts` | `formatNumber()` / `formatQuantity()` with the right decimal comma and non-breaking spaces per language |
 | `strings.ts` | Shared kit strings (Reset, Play, Pause…) |
 
@@ -109,8 +109,8 @@ skip it. Add every new widget there.
 
 ## Testing
 
-- `tests/widgets/<name>.test.ts` covers the model, with values checked by hand: Ohm's law, the COP
-  curve, boiling points, waveform means.
+- `tests/widgets/models.test.ts` covers every model, one `describe` block per widget, with values
+  checked by hand: Ohm's law, the COP curve, boiling points, waveform means.
 - Check in a browser (`npm run build && npm run preview`):
   - touch and keyboard
   - 360 px and desktop widths

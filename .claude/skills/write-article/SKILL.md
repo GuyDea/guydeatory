@@ -41,7 +41,7 @@ English kebab-case, naming the concept, singular, permanent.
    link it.
 5. For every linked term, check that its article exists. If it doesn't:
    - write it first, depth-first, following this same skill
-   - keep term articles short (300–900 words), but real
+   - keep term articles focused (about 400–1,100 words of main text), but real
 
    A term that cannot be explained well yet gets `status: stub`: short, but correct.
 

@@ -12,8 +12,8 @@ possible.
    more current and a brighter bulb". That sentence becomes the caption.
 2. **Model first (TDD).**
    - Put the physics or maths in `src/widgets/<name>/model.ts` as pure functions.
-   - Write `tests/widgets/<name>.test.ts` with hand-checked numbers and edge cases (zero, maximum,
-     "switch open").
+   - Add a `describe` block for the widget to `tests/widgets/models.test.ts`, with hand-checked
+     numbers and edge cases (zero, maximum, "switch open").
    - Watch the tests fail, implement, watch them pass.
 3. **Strings.**
    - `src/widgets/<name>/strings.ts` exports `strings = { en: {...}, sk: {...} }`.

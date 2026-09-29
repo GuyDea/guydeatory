@@ -50,7 +50,7 @@ Body
   - Never use `#`, because the title is the page's only h1.
   - No links inside headings.
 - **Length:**
-  - Term articles: 300–900 words of main text.
+  - Term articles: about 400–1,100 words of main text.
   - Main articles: 900–2,000 words.
   - `<GoDeeper>` blocks come on top of that.
   - Long is fine when each step is small. Dense is never fine.
