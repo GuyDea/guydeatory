@@ -61,6 +61,8 @@ export const en = {
   'home.topics': 'Browse by topic',
   'home.labels': 'Pick your kind of explanation',
   'home.howTo': 'How to read Guydeatory',
+  /** The sample highlighted term shown above "Highlighted words are doors". */
+  'home.howTo.terms.demo': 'voltage',
   'home.howTo.terms.title': 'Highlighted words are doors',
   'home.howTo.terms.body': 'Tap a highlighted word to open its own explanation. “Your path” at the top keeps every step, so you can always go back.',
   'home.howTo.short.title': 'The short answer comes first',

@@ -59,6 +59,7 @@ export const sk = {
   'home.topics': 'Prehľadávaj podľa tém',
   'home.labels': 'Vyber si druh vysvetlenia',
   'home.howTo': 'Ako čítať Guydeatory',
+  'home.howTo.terms.demo': 'napätie',
   'home.howTo.terms.title': 'Zvýraznené slová sú dvere',
   'home.howTo.terms.body': 'Ťukni na zvýraznené slovo a otvorí sa jeho vlastné vysvetlenie. „Tvoja cesta“ hore si pamätá každý krok, takže sa vždy vieš vrátiť.',
   'home.howTo.short.title': 'Najprv stručná odpoveď',

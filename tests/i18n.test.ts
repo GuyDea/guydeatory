@@ -1,6 +1,7 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, expectTypeOf, it } from 'vitest';
 import { isLang, LANG_CODES } from '../src/i18n/languages.ts';
 import { DICTIONARIES, t, tp } from '../src/i18n/t.ts';
+import type { Dictionary } from '../src/i18n/t.ts';
 
 describe('isLang', () => {
   it('accepts configured codes only, case-sensitively', () => {
@@ -48,6 +49,13 @@ describe('tp', () => {
 });
 
 describe('dictionaries', () => {
+  it('every language supplies the home page’s demo word for highlighted terms', () => {
+    // A type error (astro check) if a dictionary may lack it; a runtime error if the key is missing.
+    expectTypeOf<Dictionary>().toHaveProperty('home.howTo.terms.demo');
+    expect(t('en', 'home.howTo.terms.demo')).toBe('voltage');
+    expect(t('sk', 'home.howTo.terms.demo')).toBe('napätie');
+  });
+
   it('every language defines exactly the keys of the English dictionary', () => {
     const expected = Object.keys(DICTIONARIES.en).sort();
     for (const code of LANG_CODES) {
