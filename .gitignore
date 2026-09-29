@@ -14,3 +14,6 @@ infra/.build/
 
 # browser automation output
 .playwright-mcp/
+
+# Worktrees created for helper agents
+.claude/worktrees/
