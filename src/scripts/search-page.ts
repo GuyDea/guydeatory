@@ -1,6 +1,7 @@
 /** The full search page: query + label + topic filters, with the state kept in the URL. */
 import { runSearch } from './search-client.ts';
-import { countText, renderHits, searchData, withSearchingNotice } from './search-render.ts';
+import { createSearchFlow } from './search-flow.ts';
+import { countText, renderHits, searchData } from './search-render.ts';
 
 const page = document.querySelector<HTMLElement>('[data-search-page]');
 
@@ -15,7 +16,28 @@ if (page) {
 
   const labels = () => chips.filter((c) => c.getAttribute('aria-pressed') === 'true').map((c) => c.dataset.searchLabel!);
 
-  async function update() {
+  const flow = createSearchFlow({
+    search: ({ query, chosen, topicId }: { query: string; chosen: string[]; topicId: string }) =>
+      runSearch(query, { labels: chosen, topic: topicId, limit: 50 }),
+    showIdle: () => {
+      status.textContent = data.hint;
+      results.replaceChildren();
+    },
+    showSlow: () => {
+      status.textContent = data.searching;
+    },
+    show: (outcome) => {
+      if (outcome === 'unavailable') {
+        status.textContent = data.unavailable;
+        results.replaceChildren();
+        return;
+      }
+      status.textContent = outcome.total === 0 ? data.none : countText(data, outcome.total);
+      renderHits(results, outcome.hits, data);
+    },
+  });
+
+  function update() {
     const query = input.value.trim();
     const chosen = labels();
     const params = new URLSearchParams();
@@ -23,21 +45,7 @@ if (page) {
     if (chosen.length) params.set('label', chosen.join(','));
     if (topic.value) params.set('topic', topic.value);
     history.replaceState(null, '', params.size ? `?${params}` : location.pathname);
-
-    if (!query && chosen.length === 0 && !topic.value) {
-      status.textContent = data.hint;
-      results.replaceChildren();
-      return;
-    }
-    const outcome = await withSearchingNotice(status, data, runSearch(query, { labels: chosen, topic: topic.value, limit: 50 }));
-    if (outcome === null) return;
-    if (outcome === 'unavailable') {
-      status.textContent = data.unavailable;
-      results.replaceChildren();
-      return;
-    }
-    status.textContent = outcome.total === 0 ? data.none : countText(data, outcome.total);
-    renderHits(results, outcome.hits, data);
+    flow.update(query || chosen.length || topic.value ? { query, chosen, topicId: topic.value } : null);
   }
 
   const params = new URLSearchParams(location.search);
@@ -48,15 +56,15 @@ if (page) {
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    void update();
+    update();
   });
-  input.addEventListener('input', () => void update());
-  topic.addEventListener('change', () => void update());
+  input.addEventListener('input', update);
+  topic.addEventListener('change', update);
   for (const chip of chips) {
     chip.addEventListener('click', () => {
       chip.setAttribute('aria-pressed', String(chip.getAttribute('aria-pressed') !== 'true'));
-      void update();
+      update();
     });
   }
-  void update();
+  update();
 }

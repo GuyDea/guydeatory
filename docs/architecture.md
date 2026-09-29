@@ -135,6 +135,10 @@ The search dialog (on every page) loads Pagefind only when opened.
 - `src/scripts/search-client.ts` imports `/pagefind/pagefind.js` lazily. It is used by:
   - the header dialog (`search-dialog.ts`: `/` or Ctrl/⌘ K)
   - the search page (`search-page.ts`: query, label and topic filters, state in the URL)
+- Both go through `search-flow.ts`. It searches once the input has been still for 180 ms, shows
+  only the answer to the latest input, and shows the hint at once when the input is cleared.
+- A failed Pagefind load is not kept. The next search tries again with a new URL
+  (`pagefind.js?retry=1`), because browsers remember a failed `import()` of a URL.
 - Slovak has no Pagefind stemmer. Prefix matching still works, and the folded-keywords copy
   handles typing without diacritics.
 

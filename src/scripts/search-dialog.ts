@@ -1,6 +1,7 @@
 /** Opens the quick-search dialog and runs searches as the reader types. */
 import { loadPagefind, runSearch } from './search-client.ts';
-import { countText, renderHits, searchData, withSearchingNotice } from './search-render.ts';
+import { createSearchFlow } from './search-flow.ts';
+import { countText, renderHits, searchData } from './search-render.ts';
 
 const dialog = document.querySelector<HTMLDialogElement>('[data-search-dialog]');
 
@@ -14,30 +15,37 @@ if (dialog && typeof dialog.showModal === 'function') {
 
   const selectedLabels = () => chips.filter((c) => c.getAttribute('aria-pressed') === 'true').map((c) => c.dataset.searchLabel!);
 
-  async function update() {
+  const flow = createSearchFlow({
+    search: ({ query, labels }: { query: string; labels: string[] }) => runSearch(query, { labels, limit: 8 }),
+    showIdle: () => {
+      status.textContent = data.hint;
+      results.replaceChildren();
+      all.hidden = true;
+    },
+    showSlow: () => {
+      status.textContent = data.searching;
+    },
+    show: (outcome) => {
+      if (outcome === 'unavailable') {
+        status.textContent = data.unavailable;
+        results.replaceChildren();
+        all.hidden = true;
+        return;
+      }
+      status.textContent = outcome.total === 0 ? data.none : countText(data, outcome.total);
+      renderHits(results, outcome.hits, data);
+      all.hidden = outcome.total <= outcome.hits.length;
+    },
+  });
+
+  function update() {
     const query = input.value;
     const labels = selectedLabels();
     const params = new URLSearchParams();
     if (query.trim()) params.set('q', query.trim());
     if (labels.length) params.set('label', labels.join(','));
     all.href = `${dialog!.dataset.searchPage}${params.size ? `?${params}` : ''}`;
-    if (!query.trim() && labels.length === 0) {
-      status.textContent = data.hint;
-      results.replaceChildren();
-      all.hidden = true;
-      return;
-    }
-    const outcome = await withSearchingNotice(status, data, runSearch(query, { labels, limit: 8 }));
-    if (outcome === null) return; // superseded by a newer keystroke
-    if (outcome === 'unavailable') {
-      status.textContent = data.unavailable;
-      results.replaceChildren();
-      all.hidden = true;
-      return;
-    }
-    status.textContent = outcome.total === 0 ? data.none : countText(data, outcome.total);
-    renderHits(results, outcome.hits, data);
-    all.hidden = outcome.total <= outcome.hits.length;
+    flow.update(query.trim() || labels.length ? { query, labels } : null);
   }
 
   function open() {
@@ -46,14 +54,14 @@ if (dialog && typeof dialog.showModal === 'function') {
     dialog!.showModal();
     input.focus();
     input.select();
-    void update();
+    update();
   }
 
-  input.addEventListener('input', () => void update());
+  input.addEventListener('input', update);
   for (const chip of chips) {
     chip.addEventListener('click', () => {
       chip.setAttribute('aria-pressed', String(chip.getAttribute('aria-pressed') !== 'true'));
-      void update();
+      update();
     });
   }
   dialog.querySelector('[data-search-close]')!.addEventListener('click', () => dialog.close());
