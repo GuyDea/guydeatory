@@ -3,6 +3,8 @@
  * Accessible, responsive wrapper for a static diagram. Draw with the classes in src/styles/diagram.css
  * so colours follow the light/dark theme. Always give a title and a description of what it shows.
  */
+import { pageId } from '@lib/ids';
+
 interface Props {
   viewBox: string;
   title: string;
@@ -11,7 +13,8 @@ interface Props {
   maxWidth?: string;
 }
 const { viewBox, title, desc, maxWidth } = Astro.props;
-const id = `d-${Math.random().toString(36).slice(2, 9)}`;
+// From the title, unique on the page: every build writes the same ids.
+const id = pageId(Astro.request, 'd', title);
 ---
 <svg class="diagram" viewBox={viewBox} role="img" aria-labelledby={`${id}-t ${id}-d`} style={maxWidth ? `max-width: ${maxWidth}` : undefined}>
   <title id={`${id}-t`}>{title}</title>

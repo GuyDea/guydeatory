@@ -1,0 +1,6 @@
+---
+/** Test page: two diagrams with the same title, as can happen when an article shows a picture twice. */
+import Svg from '../../src/components/diagram/Svg.astro';
+---
+<Svg viewBox="0 0 10 10" title="A circuit" desc="A battery and a lamp, switched on."><circle cx="5" cy="5" r="2"></circle></Svg>
+<Svg viewBox="0 0 10 10" title="A circuit" desc="The same circuit, switched off."><circle cx="5" cy="5" r="2"></circle></Svg>

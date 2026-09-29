@@ -180,6 +180,13 @@ describe('checkDist', () => {
     ]);
   });
 
+  it('reports ids used more than once on a page', async () => {
+    const root = await site({
+      'en/x/index.html': page({ body: '<svg><title id="d-a-t">A</title></svg><p id="d-a-t">again</p><p id="d-a-t">and again</p><p id="other">x</p>' }),
+    });
+    expect(await checkDist(root)).toEqual([{ file: 'en/x/index.html', message: 'duplicate id "d-a-t"' }]);
+  });
+
   it('requires exactly one h1', async () => {
     const root = await site({ 'en/index.html': page({ body: '<h1>Second</h1>' }) });
     expect(await checkDist(root)).toEqual([{ file: 'en/index.html', message: 'expected 1 <h1>, found 2' }]);
