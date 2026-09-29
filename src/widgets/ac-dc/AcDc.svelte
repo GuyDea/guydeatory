@@ -1,23 +1,24 @@
 <script lang="ts">
   import type { LangCode } from '../../i18n/languages.ts';
   import { formatNumber } from '../kit/format.ts';
-  import { visibleLoop } from '../kit/motion.svelte.ts';
+  import { reducedMotion, visibleLoop } from '../kit/motion.svelte.ts';
   import Slider from '../kit/Slider.svelte';
   import Toggle from '../kit/Toggle.svelte';
   import WidgetFrame from '../kit/WidgetFrame.svelte';
-  import { current } from './model.ts';
+  import { current, firstPeakAfter, GRAPH_WINDOW, START_FREQUENCY, START_TIME } from './model.ts';
   import type { Mode } from './model.ts';
   import { strings } from './strings.ts';
 
   let { lang }: { lang: LangCode } = $props();
   const s = $derived(strings[lang]);
+  const reduced = reducedMotion();
 
   let mode = $state<Mode>('ac');
-  let frequency = $state(0.5);
+  let frequency = $state(START_FREQUENCY);
   let paused = $state(false);
-  let time = $state(4); // start with a full graph window
-
-  const WINDOW = 4; // seconds of history on the graph
+  let clock = $state(START_TIME); // a full graph window in, at a forward peak
+  // With reduced motion nothing moves, so show a moment when the current flows forward at any speed.
+  const time = $derived(reduced.current ? firstPeakAfter(GRAPH_WINDOW, frequency) : clock);
   const now = $derived(current(time, mode, frequency));
 
   // Electrons: DC drifts steadily to the right; AC swings around each electron's home.
@@ -31,7 +32,7 @@
   const graph = $derived.by(() => {
     const points: string[] = [];
     for (let k = 0; k <= 160; k++) {
-      const tau = time - WINDOW + (k / 160) * WINDOW;
+      const tau = time - GRAPH_WINDOW + (k / 160) * GRAPH_WINDOW;
       const x = 40 + (k / 160) * 340;
       const y = 160 - 42 * current(tau, mode, frequency);
       points.push(`${x.toFixed(1)},${y.toFixed(1)}`);
@@ -43,11 +44,17 @@
   const direction = $derived(Math.abs(now) < 0.05 ? 1 : now > 0 ? 0 : 2);
 
   const tick = (dt: number) => {
-    time += dt;
+    clock += dt;
   };
+
+  function reset() {
+    mode = 'ac';
+    frequency = START_FREQUENCY;
+    clock = START_TIME;
+  }
 </script>
 
-<WidgetFrame name="ac-dc" title={s.title} hint={s.hint} {lang} onreset={() => ((mode = 'ac'), (frequency = 0.5), (time = 4))} animated bind:paused>
+<WidgetFrame name="ac-dc" title={s.title} hint={s.hint} {lang} onreset={reset} animated bind:paused>
   <svg viewBox="0 0 400 250" class="diagram" role="img" aria-label={s.picture({ ac: mode === 'ac' })} use:visibleLoop={{ tick, paused }}>
     <!-- the wire with its electrons -->
     <rect x="20" y="40" width="360" height="34" rx="17" class="d-box-alt" />

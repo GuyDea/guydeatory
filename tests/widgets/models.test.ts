@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { current as acdcCurrent, displacement } from '../../src/widgets/ac-dc/model.ts';
+import {
+  current as acdcCurrent,
+  displacement,
+  firstPeakAfter,
+  GRAPH_WINDOW,
+  START_FREQUENCY,
+  START_TIME,
+} from '../../src/widgets/ac-dc/model.ts';
 import { boilingPointPropane, boilingPointWater } from '../../src/widgets/boiling-point/model.ts';
 import { cop } from '../../src/widgets/cop-explorer/model.ts';
 import { flow } from '../../src/widgets/electron-flow/model.ts';
@@ -104,6 +111,23 @@ describe('AC and DC', () => {
     const f = 0.5;
     expect(displacement(1 / f, 'ac', f)).toBeCloseTo(displacement(0, 'ac', f), 6);
     expect(displacement(2, 'dc', f)).toBeGreaterThan(displacement(1, 'dc', f));
+  });
+
+  it('starts after a full graph window with AC current flowing forward at full strength', () => {
+    // The first frame is all that readers see with reduced motion or without JS.
+    expect(START_TIME).toBeGreaterThanOrEqual(GRAPH_WINDOW);
+    expect(Math.abs(acdcCurrent(START_TIME, 'ac', START_FREQUENCY))).toBeGreaterThan(0.05); // not "stopped"
+    expect(acdcCurrent(START_TIME, 'ac', START_FREQUENCY)).toBeCloseTo(1);
+  });
+
+  it('finds the first forward peak after the graph window at every speed on the slider', () => {
+    for (let tenths = 2; tenths <= 20; tenths++) {
+      const f = tenths / 10;
+      const t = firstPeakAfter(GRAPH_WINDOW, f);
+      expect(t, `${f} Hz`).toBeGreaterThanOrEqual(GRAPH_WINDOW);
+      expect(t - GRAPH_WINDOW, `${f} Hz`).toBeLessThan(1 / f); // within one swing of the window
+      expect(acdcCurrent(t, 'ac', f), `${f} Hz`).toBeCloseTo(1);
+    }
   });
 });
 

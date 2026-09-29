@@ -5,6 +5,8 @@ import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import { LANG_CODES } from '../../src/i18n/languages.ts';
 import type { LangCode } from '../../src/i18n/languages.ts';
+import AcDc from '../../src/widgets/ac-dc/AcDc.svelte';
+import { strings as acDcStrings } from '../../src/widgets/ac-dc/strings.ts';
 
 /** Every widget component, src/widgets/<name>/<Name>.svelte. The kit holds parts, not widgets. */
 const modules = import.meta.glob<{ default: Component<{ lang: LangCode }> }>(
@@ -53,5 +55,18 @@ describe('widgets before hydration (the server render)', () => {
         });
       });
     }
+  }
+});
+
+describe('AcDc first frame (all that shows with reduced motion or without JS)', () => {
+  for (const lang of LANG_CODES) {
+    it(`shows alternating current flowing, with an arrow (${lang})`, () => {
+      const html = serverRender(AcDc, lang);
+      const [forward, stopped] = acDcStrings[lang].direction;
+      expect(html.querySelector('input[value="ac"]')?.hasAttribute('checked')).toBe(true);
+      expect(html.querySelector('path.d-arrow-accent')).not.toBeNull();
+      expect(html.text).toContain(forward);
+      expect(html.text).not.toContain(stopped);
+    });
   }
 });
