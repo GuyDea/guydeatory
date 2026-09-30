@@ -203,6 +203,31 @@ horečnatý (MgCl₂), tetrachlórmetán (CCl₄), trichlórmetán (CHCl₃, chl
 superscripts (Na⁺, Cl⁻, Ca²⁺, O²⁻), in both languages. Add the plain forms ("H2O", "Na+") to
 `keywords`, so search finds them.
 
+### Atom structure, isotopes and radiation
+
+| English | Slovenčina | Note |
+|---|---|---|
+| metalloid | polokov | "in-between element" in the English main text |
+| transition metals | prechodné kovy | |
+| lanthanides / actinides | lantanoidy / aktinoidy | |
+| subshell; s-, p-, d-, f-block | podvrstva; s-, p-, d-, f-prvky | Go-deeper blocks only |
+| energy level | energetická hladina | "vrstva" in the main text |
+| photon | fotón | |
+| flame colour / flame test | farba plameňa / plameňová skúška | |
+| neutron number (N) | neutrónové číslo (N) | |
+| deuterium / tritium / heavy water | deutérium / trícium / ťažká voda | hydrogen-2 = vodík-2 |
+| stable / unstable nucleus | stabilné / nestabilné jadro | |
+| radiation | žiarenie | "radiácia" only in keywords |
+| radiocarbon dating | rádiouhlíková metóda | |
+| Geiger counter | Geigerov počítač | |
+| radiation (warning) sign, trefoil | výstražná značka žiarenia, trojlístok | |
+| sievert, becquerel | sievert (Sv), becquerel (Bq) | |
+| enrichment (of uranium) | obohacovanie | |
+| sodium ion, chloride ion | sodný ión, chloridový ión | school terms: sodný katión, chloridový anión; likewise vápenatý (Ca²⁺), oxidový (O²⁻) |
+| electrolyte, electrolysis | elektrolyt, elektrolýza | |
+| lithium-ion battery | lítium-iónová batéria | |
+| Marie Curie | Marie Curie-Sklodowska | "Marie Curie" once the full name has been given |
+
 ### Bonds, molecules and reactions
 
 | English | Slovenčina | Note |
