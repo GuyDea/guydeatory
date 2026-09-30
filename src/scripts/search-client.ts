@@ -27,6 +27,8 @@ export interface SearchHit {
   title: string;
   summary: string;
   labels: string[];
+  /** The article has an interactive lab. */
+  lab: boolean;
 }
 
 export interface SearchOutcome {
@@ -73,7 +75,7 @@ export const loadPagefind = createLoader(async (attempt): Promise<Pagefind> => {
  */
 export async function runSearch(
   query: string,
-  { labels = [], topic = '', limit = 10 }: { labels?: string[]; topic?: string; limit?: number } = {},
+  { labels = [], topic = '', lab = false, limit = 10 }: { labels?: string[]; topic?: string; lab?: boolean; limit?: number } = {},
   load: () => Promise<Pagefind | null> = loadPagefind,
 ): Promise<SearchOutcome | 'unavailable'> {
   const pagefind = await load();
@@ -81,6 +83,7 @@ export async function runSearch(
   const filters: Filters = {};
   if (labels.length) filters.label = { any: labels };
   if (topic) filters.topic = topic;
+  if (lab) filters.lab = 'yes';
   const term = query.trim() === '' ? null : query.trim();
   try {
     const search = await pagefind.search(term, { filters });
@@ -92,6 +95,7 @@ export async function runSearch(
         title: d.meta.title ?? d.url,
         summary: d.meta.summary ?? '',
         labels: d.filters.label ?? [],
+        lab: (d.filters.lab ?? []).includes('yes'),
       })),
     };
   } catch {

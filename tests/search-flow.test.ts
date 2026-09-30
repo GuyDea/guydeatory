@@ -173,8 +173,8 @@ describe('runSearch', () => {
     expect(outcome).toEqual({
       total: 3,
       hits: [
-        { url: '/en/a1/', title: 'A1', summary: 'About a1.', labels: ['high-level'] },
-        { url: '/en/a2/', title: 'A2', summary: 'About a2.', labels: ['high-level'] },
+        { url: '/en/a1/', title: 'A1', summary: 'About a1.', labels: ['high-level'], lab: false },
+        { url: '/en/a2/', title: 'A2', summary: 'About a2.', labels: ['high-level'], lab: false },
       ],
     });
   });
@@ -183,6 +183,14 @@ describe('runSearch', () => {
     const { pagefind, search } = fakePagefind();
     await runSearch(' ', { labels: ['trivia'] }, async () => pagefind);
     expect(search).toHaveBeenCalledExactlyOnceWith(null, { filters: { label: { any: ['trivia'] } } });
+  });
+
+  it('keeps to articles with a lab when asked, and says which hits have one', async () => {
+    const labHit = { data: async () => ({ url: '/en/atom/', excerpt: '', meta: { title: 'Atom', summary: 'Tiny.' }, filters: { label: ['high-level'], lab: ['yes'] } }) };
+    const { pagefind, search } = fakePagefind([labHit]);
+    const outcome = await runSearch('', { lab: true }, async () => pagefind);
+    expect(search).toHaveBeenCalledExactlyOnceWith(null, { filters: { lab: 'yes' } });
+    expect(outcome).toEqual({ total: 1, hits: [{ url: '/en/atom/', title: 'Atom', summary: 'Tiny.', labels: ['high-level'], lab: true }] });
   });
 
   it('reports "unavailable" when the search itself fails', async () => {

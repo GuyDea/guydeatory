@@ -2,6 +2,7 @@
 /** Marks an article with an interactive lab: a widget the reader can play with. */
 import type { LangCode } from '@i18n/languages';
 import { t } from '@i18n/t';
+import { LAB_ICON_PATH } from '@lib/lab-icon';
 
 interface Props {
   lang: LangCode;
@@ -12,11 +13,12 @@ const { lang, compact = false } = Astro.props;
 ---
 <span class:list={['lab-badge', { compact }]} title={t(lang, 'lab.has')} data-pagefind-ignore>
   <svg viewBox="0 0 24 24" aria-hidden="true"
-    ><path d="M9 3h6M10 3v6.5L5.2 18a2 2 0 0 0 1.8 3h10a2 2 0 0 0 1.8-3L14 9.5V3M7.6 14.5h8.8" /></svg
+    ><path d={LAB_ICON_PATH} /></svg
   >{compact ? <span class="visually-hidden">{t(lang, 'lab.has')}</span> : <span>{t(lang, 'lab.badge')}</span>}
 </span>
 
-<style>
+<!-- Global: the search scripts render the same badge on their results. -->
+<style is:global>
   .lab-badge {
     display: inline-flex;
     align-items: center;
@@ -36,7 +38,7 @@ const { lang, compact = false } = Astro.props;
     padding: 0.2em;
   }
 
-  svg {
+  .lab-badge svg {
     width: 1.15em;
     height: 1.15em;
     flex: none;

@@ -16,12 +16,13 @@ const DATA = {
   unavailable: 'Search is not available.',
   hint: 'Type a word.',
   searching: 'Searching…',
+  lab: 'Lab',
 };
 const SEARCH_DATA = `<script type="application/json" id="search-data">${JSON.stringify(DATA)}</script>`;
 
 const outcome = (query: string, total: number): SearchOutcome => ({
   total,
-  hits: Array.from({ length: Math.min(total, 8) }, (_, i) => ({ url: `/en/${query}-${i}/`, title: `${query} ${i}`, summary: '', labels: [] })),
+  hits: Array.from({ length: Math.min(total, 8) }, (_, i) => ({ url: `/en/${query}-${i}/`, title: `${query} ${i}`, summary: '', labels: [], lab: false })),
 });
 
 async function answer(query: string, value: Answer) {
@@ -57,6 +58,7 @@ describe('the search page', () => {
       <div data-search-page>
         <form data-search-form><input name="q" type="search" /></form>
         <button type="button" data-search-label="trivia" aria-pressed="false">Fun facts</button>
+        <button type="button" data-search-lab aria-pressed="false">Has a lab</button>
         <select data-search-topic><option value="">Any topic</option><option value="physics">Physics</option></select>
         <p data-search-status>Type a word.</p>
         <ul data-search-results></ul>
@@ -113,7 +115,25 @@ describe('the search page', () => {
     const input = await openSearchPage();
     expect(input.value).toBe('heat');
     await vi.advanceTimersByTimeAsync(180);
-    expect(client.runSearch).toHaveBeenCalledExactlyOnceWith('heat', { labels: ['trivia'], topic: '', limit: 50 });
+    expect(client.runSearch).toHaveBeenCalledExactlyOnceWith('heat', { labels: ['trivia'], topic: '', lab: false, limit: 50 });
+  });
+
+  it('filters to articles with a lab, even without a query, and keeps it in the address', async () => {
+    await openSearchPage();
+    const chip = document.querySelector<HTMLButtonElement>('[data-search-lab]')!;
+    chip.click();
+    await vi.advanceTimersByTimeAsync(180);
+    expect(chip.getAttribute('aria-pressed')).toBe('true');
+    expect(client.runSearch).toHaveBeenLastCalledWith('', { labels: [], topic: '', lab: true, limit: 50 });
+    expect(location.search).toBe('?lab=1');
+  });
+
+  it('restores the lab filter from the address', async () => {
+    history.replaceState(null, '', '/en/search/?lab=1');
+    await openSearchPage();
+    await vi.advanceTimersByTimeAsync(180);
+    expect(document.querySelector('[data-search-lab]')!.getAttribute('aria-pressed')).toBe('true');
+    expect(client.runSearch).toHaveBeenCalledExactlyOnceWith('', { labels: [], topic: '', lab: true, limit: 50 });
   });
 });
 

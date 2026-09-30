@@ -87,6 +87,7 @@ const jsonLd = [
           <div class="search-data" aria-hidden="true">
             {article.labels.map((label) => <span data-pagefind-filter={`label:${label}`} />)}
             {searchTopics.map((topic) => <span data-pagefind-filter={`topic:${topic}`} />)}
+            {text.hasLab && <span data-pagefind-filter="lab:yes" />}
             <span class="visually-hidden" data-pagefind-weight="5">{searchKeywords}</span>
           </div>
         </article>

@@ -1,4 +1,5 @@
 ---
+import { LAB_ICON_PATH } from '@lib/lab-icon';
 import SearchData from '@components/search/SearchData.astro';
 import type { LangCode } from '@i18n/languages';
 import { t } from '@i18n/t';
@@ -47,6 +48,10 @@ const topics = [...catalog.topics.values()].filter((topic) => topicHasContent(ca
             </button>
           ))
         }
+        <button type="button" class="search-chip search-chip-lab" data-search-lab aria-pressed="false" style="--chip: var(--accent); --chip-bg: var(--accent-soft)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d={LAB_ICON_PATH} /></svg>
+          {t(lang, 'lab.has')}
+        </button>
       </div>
       <label class="topic">
         <span>{t(lang, 'search.topic')}</span>

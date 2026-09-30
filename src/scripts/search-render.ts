@@ -1,4 +1,5 @@
 /** DOM rendering shared by the search dialog and the search page. */
+import { LAB_ICON_PATH } from '../lib/lab-icon.ts';
 import type { SearchHit } from './search-client.ts';
 
 export interface SearchData {
@@ -8,6 +9,8 @@ export interface SearchData {
   unavailable: string;
   hint: string;
   searching: string;
+  /** The lab badge's text. */
+  lab: string;
 }
 
 export function searchData(): SearchData {
@@ -18,6 +21,21 @@ export function countText(data: SearchData, n: number): string {
   const category = new Intl.PluralRules(document.documentElement.lang).select(n);
   const template = data.count[category] ?? data.count.other!;
   return template.replace('{n}', new Intl.NumberFormat(document.documentElement.lang).format(n));
+}
+
+function labBadge(text: string): HTMLElement {
+  const badge = document.createElement('span');
+  badge.className = 'lab-badge';
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('aria-hidden', 'true');
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', LAB_ICON_PATH);
+  svg.append(path);
+  const label = document.createElement('span');
+  label.textContent = text;
+  badge.append(svg, label);
+  return badge;
 }
 
 export function renderHits(list: HTMLElement, hits: SearchHit[], data: SearchData) {
@@ -45,6 +63,7 @@ export function renderHits(list: HTMLElement, hits: SearchHit[], data: SearchDat
         chip.textContent = label.name;
         labels.append(chip);
       }
+      if (hit.lab) labels.append(labBadge(data.lab));
       link.append(title, summary, labels);
       li.append(link);
       return li;
