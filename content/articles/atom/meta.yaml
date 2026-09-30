@@ -1,9 +1,9 @@
 topics: [matter]
 labels: [high-level]
-related: [electron, electric-charge, temperature, conductors-and-insulators]
+related: [chemical-element, electron-shell, molecule, electron, electric-charge, temperature]
 status: published
 created: 2026-09-28
-updated: 2026-09-29
+updated: 2026-09-30
 sources:
   - title: Atom — Wikipedia
     url: https://en.wikipedia.org/wiki/Atom
