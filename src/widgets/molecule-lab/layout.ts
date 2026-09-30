@@ -21,6 +21,20 @@ export const DARK_INK: ReadonlySet<El> = new Set<El>(['H', 'F', 'S', 'Cl']);
 
 /** How far free hands reach out from an atom's edge. */
 export const REACH = 17;
+
+/**
+ * How much a 360 px phone shrinks the board: the page, figure, widget frame and stage padding leave
+ * 264 px for its 360 units (measured in the chemical-bond article).
+ */
+export const PHONE_SCALE = 264 / 360;
+/** Tap radius around each atom: 62 units, about 45 px across on a 360 px phone (at least 44). */
+export const HIT = 31;
+/**
+ * The width of a bond's tap band, from atom centre to atom centre. The atoms are drawn on top, so
+ * the band never takes a tap from an atom, and just under 2 × HIT hides its ends under the atoms'
+ * tap circles. That leaves 24 units of bond (about 18 px) between two joined atoms.
+ */
+export const BOND_HIT = 2 * HIT - 2;
 /** Space kept between an atom and the edge of the board. */
 const EDGE = 6;
 /** Half-angle of the tripod that draws a trigonal pyramid (ammonia) seen from the side. */

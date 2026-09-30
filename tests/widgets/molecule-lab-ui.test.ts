@@ -3,7 +3,7 @@ import { parse } from 'node-html-parser';
 import { render } from 'svelte/server';
 import { describe, expect, it } from 'vitest';
 import { LANG_CODES } from '../../src/i18n/languages.ts';
-import { DARK_INK } from '../../src/widgets/molecule-lab/layout.ts';
+import { BOND_HIT, DARK_INK, HIT } from '../../src/widgets/molecule-lab/layout.ts';
 import MoleculeLab from '../../src/widgets/molecule-lab/MoleculeLab.svelte';
 import { buildBoard, ELEMENTS, moleculeShape } from '../../src/widgets/molecule-lab/model.ts';
 import { INITIAL, MOLECULES, QUESTS, report } from '../../src/widgets/molecule-lab/molecules.ts';
@@ -125,6 +125,28 @@ describe('MoleculeLab first frame (server render, and all there is without JS)',
       expect(html.text).toContain(s.discovered(1, MOLECULES.length));
     });
   }
+
+  it('lists the atoms before the bonds, and puts the bonds’ tap bands in a layer under the atoms', () => {
+    const html = parse(render(MoleculeLab, { props: { lang: 'en' } }).body);
+    const board = html.querySelector('.board')!;
+    expect(board.getAttribute('role')).toBe('group');
+    const [atoms, bonds] = board.querySelectorAll('svg');
+    // CSS paints the first layer on top (z-index), so a tap on an atom always reaches the atom.
+    expect(atoms!.classList.contains('atoms-layer')).toBe(true);
+    expect(atoms!.querySelectorAll('g.atom')).toHaveLength(8);
+    expect(atoms!.querySelectorAll('g.atom circle.hit').every((hit) => hit.getAttribute('r') === String(HIT))).toBe(true);
+    expect(atoms!.querySelector('.bond-hit')).toBeNull();
+    expect(bonds!.getAttribute('viewBox')).toBe(atoms!.getAttribute('viewBox'));
+    const hits = bonds!.querySelectorAll('line.bond-hit');
+    expect(hits).toHaveLength(2);
+    // Each band runs from the oxygen's centre to a hydrogen's, as wide as the atoms' tap circles.
+    const centre = (id: number) => /translate\(([-\d.]+) ([-\d.]+)\)/.exec(atoms!.querySelector(`g.atom[data-id="${id}"]`)!.getAttribute('transform')!)!.slice(1);
+    for (const [i, line] of hits.entries()) {
+      expect(line.getAttribute('stroke-width')).toBe(String(BOND_HIT));
+      expect([line.getAttribute('x1'), line.getAttribute('y1')]).toEqual(centre(0));
+      expect([line.getAttribute('x2'), line.getAttribute('y2')]).toEqual(centre(i + 1));
+    }
+  });
 });
 
 describe('MoleculeLab element colours (src/styles/tokens.css)', () => {

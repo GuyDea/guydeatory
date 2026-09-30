@@ -12,7 +12,7 @@
   import { reducedMotion, visibleLoop } from '../kit/motion.svelte.ts';
   import { settle } from '../kit/settle.ts';
   import WidgetFrame from '../kit/WidgetFrame.svelte';
-  import { DARK_INK, layout, RADIUS, viewBox } from './layout.ts';
+  import { BOND_HIT, DARK_INK, HIT, layout, RADIUS, viewBox } from './layout.ts';
   import type { Placed, Point } from './layout.ts';
   import {
     addAtom,
@@ -44,8 +44,6 @@
   const uid = $props.id();
   const shine = `molecule-lab-shine-${uid}`;
 
-  /** Tap radius around each atom: at least 44 px on a 360 px phone. */
-  const HIT = 27;
   const NONMETALS: El[] = ['H', 'C', 'N', 'O', 'F', 'S', 'Cl'];
   const METALS: El[] = ['Na', 'Mg'];
   const FIRST = layout(INITIAL.board, INITIAL.seeds);
@@ -76,11 +74,12 @@
   let freshQuest = $state<MoleculeId | null>(null);
   /** Counts how often each atom was joined, so its little "snap" animation restarts every time. */
   let pops = $state.raw<Record<number, number>>({});
-  let svg = $state<SVGSVGElement>();
+  let boardEl = $state<HTMLDivElement>();
   let serial = 0;
 
   const rep = $derived(report(board));
   const box = $derived(viewBox(targets));
+  const boxText = $derived(box.map(round).join(' '));
   const finished = $derived(rep.items.filter((item) => item.complete));
   const questsDone = $derived(QUESTS.filter((quest) => found.includes(quest)).length);
   const deltas = $derived.by(() => {
@@ -125,15 +124,6 @@
     const [nx, ny] = [-(q.y - p.y) / length, (q.x - p.x) / length];
     const offsets = link.ionic || link.order === 1 ? [0] : link.order === 2 ? [-4.5, 4.5] : [-8, 0, 8];
     return offsets.map((o) => ({ x1: round(p.x + nx * o), y1: round(p.y + ny * o), x2: round(q.x + nx * o), y2: round(q.y + ny * o) }));
-  }
-
-  /** The tappable middle of a bond, trimmed so it never covers an atom's own tap area. */
-  function bondHit(link: Link) {
-    const [p, q] = [at(link.a), at(link.b)];
-    const length = Math.hypot(q.x - p.x, q.y - p.y) || 1;
-    const trim = Math.min(HIT, length / 2 - 4);
-    const [ux, uy] = [(q.x - p.x) / length, (q.y - p.y) / length];
-    return { x1: round(p.x + ux * trim), y1: round(p.y + uy * trim), x2: round(q.x - ux * trim), y2: round(q.y - uy * trim) };
   }
 
   /** The name on the board: without the part in brackets ("Table salt", not "Table salt (sodium chloride)"). */
@@ -312,12 +302,12 @@
 
   async function focusAtom(id: number | undefined) {
     await tick();
-    const target = id === undefined ? null : svg?.querySelector<SVGGElement>(`.atom[data-id="${id}"]`);
-    (target ?? svg?.querySelector<SVGGElement>('.atom[tabindex]'))?.focus();
+    const target = id === undefined ? null : boardEl?.querySelector<SVGGElement>(`.atom[data-id="${id}"]`);
+    (target ?? boardEl?.querySelector<SVGGElement>('.atom[tabindex]'))?.focus();
   }
 
   function tapBond(link: Link) {
-    const focused = svg?.contains(document.activeElement) ?? false;
+    const focused = boardEl?.contains(document.activeElement) ?? false;
     place(loosen(board, link.a, link.b));
     status = s.loosened(el(link.a), el(link.b), link.order - 1, link.ionic);
     subject = { kind: 'atom', id: link.a };
@@ -325,7 +315,7 @@
   }
 
   function removeNow(id: number) {
-    const focused = svg?.contains(document.activeElement) ?? false;
+    const focused = boardEl?.contains(document.activeElement) ?? false;
     const neighbour = linksOf(board, id)[0]?.other;
     const element = el(id);
     if (selected === id) selected = null;
@@ -417,116 +407,129 @@
 </script>
 
 <WidgetFrame name="molecule-lab" title={s.title} hint={s.hint} {lang} onreset={reset}>
-  <svg
-    bind:this={svg}
-    viewBox={box.map(round).join(' ')}
-    class="diagram board"
+  <!--
+    The board is two layers of one drawing. The atoms come first, so Tab and screen readers meet
+    them before the bonds, and CSS paints them on top: a tap on an atom always reaches the atom,
+    and the bonds' wide tap bands underneath catch the taps between atoms.
+  -->
+  <div
+    bind:this={boardEl}
+    class="board"
     role="group"
     aria-label={s.board(board.atoms.length)}
     use:visibleLoop={{ tick: step, paused: !moving }}
   >
-    <defs>
-      <radialGradient id={shine} cx="0.36" cy="0.3" r="0.72">
-        <stop offset="0" class="shine-stop" />
-        <stop offset="1" class="shine-stop" stop-opacity="0" />
-      </radialGradient>
-    </defs>
+    <svg viewBox={boxText} class="diagram layer atoms-layer" role="presentation">
+      <defs>
+        <radialGradient id={shine} cx="0.36" cy="0.3" r="0.72">
+          <stop offset="0" class="shine-stop" />
+          <stop offset="1" class="shine-stop" stop-opacity="0" />
+        </radialGradient>
+      </defs>
 
-    <!-- a soft glow behind every finished molecule -->
-    {#each finished as item (item.ids.join('-'))}
-      <g class="halo">
-        {#each board.links.filter((link) => item.ids.includes(link.a)) as link (linkKey(link))}
-          {@const [p, q] = [at(link.a), at(link.b)]}
-          <line x1={round(p.x)} y1={round(p.y)} x2={round(q.x)} y2={round(q.y)} />
-        {/each}
-        {#each item.ids as id (id)}
-          <circle cx={round(at(id).x)} cy={round(at(id).y)} r={RADIUS[el(id)] + 11} />
-        {/each}
-      </g>
-    {/each}
-
-    {#each board.links as link (linkKey(link))}
-      <g class="bond" class:ionic={link.ionic}>
-        {#each lines(link) as line, i (i)}
-          <line {...line} />
-        {/each}
-      </g>
-    {/each}
-
-    {#each board.atoms as atom (atom.id)}
-      {@const p = at(atom.id)}
-      {@const r = RADIUS[atom.el]}
-      {@const metal = isMetal(atom.el)}
-      {@const q = charge(board, atom.id)}
-      {@const d = deltas[atom.id]}
-      {@const side = q || d ? freeSide(atom.id) : 0}
-      <g
-        class="atom"
-        class:picked={selected === atom.id}
-        class:partner={partners.has(atom.id)}
-        class:ink-dark={DARK_INK.has(atom.el)}
-        class:two={atom.el.length > 1}
-        data-id={atom.id}
-        data-el={atom.el}
-        transform="translate({round(p.x)} {round(p.y)})"
-        {...atomSpot(atom.id)}
-      >
-        <circle class="hit" r={HIT} />
-        <circle class="ring" r={r + 6} />
-        <circle class="focus-ring" r={r + 10} />
-        {#each targets[atom.id]?.hands ?? [] as hand, i (i)}
-          <g class="hand" transform="rotate({deg(hand)})">
-            {#if !metal}<line x1={r - 1} x2={r + 8} />{/if}
-            <circle cx={metal ? r + 7 : r + 12} r="4.5" />
+      {#each board.atoms as atom (atom.id)}
+        {@const p = at(atom.id)}
+        {@const r = RADIUS[atom.el]}
+        {@const metal = isMetal(atom.el)}
+        {@const q = charge(board, atom.id)}
+        {@const d = deltas[atom.id]}
+        {@const side = q || d ? freeSide(atom.id) : 0}
+        <g
+          class="atom"
+          class:picked={selected === atom.id}
+          class:partner={partners.has(atom.id)}
+          class:ink-dark={DARK_INK.has(atom.el)}
+          class:two={atom.el.length > 1}
+          data-id={atom.id}
+          data-el={atom.el}
+          transform="translate({round(p.x)} {round(p.y)})"
+          {...atomSpot(atom.id)}
+        >
+          <circle class="hit" r={HIT} />
+          <circle class="ring" r={r + 6} />
+          <circle class="focus-ring" r={r + 10} />
+          {#each targets[atom.id]?.hands ?? [] as hand, i (i)}
+            <g class="hand" transform="rotate({deg(hand)})">
+              {#if !metal}<line x1={r - 1} x2={r + 8} />{/if}
+              <circle cx={metal ? r + 7 : r + 12} r="4.5" />
+            </g>
+          {/each}
+          <g class="body" class:pop-a={(pops[atom.id] ?? 0) % 2 === 1} class:pop-b={(pops[atom.id] ?? 0) > 0 && (pops[atom.id] ?? 0) % 2 === 0}>
+            <circle class="disc" r={r} style:fill="var(--d-el-{atom.el.toLowerCase()})" />
+            <circle class="shine" r={r - 1} fill="url(#{shine})" />
+            <text class="symbol" text-anchor="middle" dy="0.35em">{atom.el}</text>
           </g>
-        {/each}
-        <g class="body" class:pop-a={(pops[atom.id] ?? 0) % 2 === 1} class:pop-b={(pops[atom.id] ?? 0) > 0 && (pops[atom.id] ?? 0) % 2 === 0}>
-          <circle class="disc" r={r} style:fill="var(--d-el-{atom.el.toLowerCase()})" />
-          <circle class="shine" r={r - 1} fill="url(#{shine})" />
-          <text class="symbol" text-anchor="middle" dy="0.35em">{atom.el}</text>
+          {#if q}
+            <g class="charge" class:minus={q < 0} transform="translate({round(Math.cos(side) * (r + 3))} {round(Math.sin(side) * (r + 3))})">
+              <circle r="9.5" />
+              <text text-anchor="middle" dy="0.35em">{chargeLabel(q)}</text>
+            </g>
+          {:else if d}
+            <text class="delta" class:minus={d < 0} x={round(Math.cos(side) * (r + 12))} y={round(Math.sin(side) * (r + 12))} text-anchor="middle" dy="0.35em">
+              {d > 0 ? 'δ+' : 'δ−'}
+            </text>
+          {/if}
         </g>
-        {#if q}
-          <g class="charge" class:minus={q < 0} transform="translate({round(Math.cos(side) * (r + 3))} {round(Math.sin(side) * (r + 3))})">
-            <circle r="9.5" />
-            <text text-anchor="middle" dy="0.35em">{chargeLabel(q)}</text>
+      {/each}
+
+      {#each tags as tag (tag.key)}
+        <text class="name" x={tag.x} y={tag.y} text-anchor={tag.anchor}>{tag.text}</text>
+      {/each}
+
+      {#each flights as flight (flight.key)}
+        {@const p = flightAt(flight)}
+        <circle class="flying" cx={p.x} cy={p.y} r="5" />
+      {/each}
+
+      {#if party}
+        {@const c = sparkles(party.ids)}
+        {#key party.key}
+          <g class="sparkles" transform="translate({c.x} {c.y})" style:--reach="{c.r}px">
+            {#each [0, 45, 90, 135, 180, 225, 270, 315] as angle (angle)}
+              <g transform="rotate({angle})"><path class="spark" d="M0 -5 1.4 -1.4 5 0 1.4 1.4 0 5 -1.4 1.4 -5 0 -1.4 -1.4Z" /></g>
+            {/each}
           </g>
-        {:else if d}
-          <text class="delta" class:minus={d < 0} x={round(Math.cos(side) * (r + 12))} y={round(Math.sin(side) * (r + 12))} text-anchor="middle" dy="0.35em">
-            {d > 0 ? 'δ+' : 'δ−'}
-          </text>
-        {/if}
-      </g>
-    {/each}
+        {/key}
+      {/if}
+    </svg>
 
-    <!-- bonds are tapped in their middle, above the atoms but never over an atom's own tap area -->
-    {#each board.links as link (linkKey(link))}
-      <line
-        class="bond-hit"
-        {...bondHit(link)}
-        {...hotspot(live.current, s.bond(el(link.a), el(link.b), link.order, link.ionic), () => tapBond(link))}
-      />
-    {/each}
-
-    {#each tags as tag (tag.key)}
-      <text class="name" x={tag.x} y={tag.y} text-anchor={tag.anchor}>{tag.text}</text>
-    {/each}
-
-    {#each flights as flight (flight.key)}
-      {@const p = flightAt(flight)}
-      <circle class="flying" cx={p.x} cy={p.y} r="5" />
-    {/each}
-
-    {#if party}
-      {@const c = sparkles(party.ids)}
-      {#key party.key}
-        <g class="sparkles" transform="translate({c.x} {c.y})" style:--reach="{c.r}px">
-          {#each [0, 45, 90, 135, 180, 225, 270, 315] as angle (angle)}
-            <g transform="rotate({angle})"><path class="spark" d="M0 -5 1.4 -1.4 5 0 1.4 1.4 0 5 -1.4 1.4 -5 0 -1.4 -1.4Z" /></g>
+    <svg viewBox={boxText} class="diagram layer" role="presentation">
+      <!-- a soft glow behind every finished molecule -->
+      {#each finished as item (item.ids.join('-'))}
+        <g class="halo">
+          {#each board.links.filter((link) => item.ids.includes(link.a)) as link (linkKey(link))}
+            {@const [p, q] = [at(link.a), at(link.b)]}
+            <line x1={round(p.x)} y1={round(p.y)} x2={round(q.x)} y2={round(q.y)} />
+          {/each}
+          {#each item.ids as id (id)}
+            <circle cx={round(at(id).x)} cy={round(at(id).y)} r={RADIUS[el(id)] + 11} />
           {/each}
         </g>
-      {/key}
-    {/if}
-  </svg>
+      {/each}
+
+      {#each board.links as link (linkKey(link))}
+        <g class="bond" class:ionic={link.ionic}>
+          {#each lines(link) as line, i (i)}
+            <line {...line} />
+          {/each}
+        </g>
+      {/each}
+
+      <!-- each bond's tap band, from atom centre to atom centre: its ends lie under the atoms' tap circles -->
+      {#each board.links as link (linkKey(link))}
+        {@const [p, q] = [at(link.a), at(link.b)]}
+        <line
+          class="bond-hit"
+          x1={round(p.x)}
+          y1={round(p.y)}
+          x2={round(q.x)}
+          y2={round(q.y)}
+          stroke-width={BOND_HIT}
+          {...hotspot(live.current, s.bond(el(link.a), el(link.b), link.order, link.ionic), () => tapBond(link))}
+        />
+      {/each}
+    </svg>
+  </div>
 
   <p class="status" aria-hidden="true">{status || s.welcome}</p>
   <div class="card">
@@ -600,9 +603,25 @@
   /* The board ------------------------------------------------------------ */
   /* Quick taps on a phone should pick atoms, not zoom the page or select the symbols as text. */
   .board {
+    display: grid;
     touch-action: manipulation;
     -webkit-user-select: none;
     user-select: none;
+  }
+
+  /* Both layers fill the same cell, with the same viewBox. The atoms' layer, first in the page, is
+     painted on top; only the atoms in it take taps, so the rest fall through to the bonds. */
+  .layer {
+    grid-area: 1 / 1;
+  }
+
+  .atoms-layer {
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .atoms-layer .atom {
+    pointer-events: auto;
   }
 
   .shine-stop {
@@ -754,10 +773,9 @@
     fill: var(--d-el-minus);
   }
 
+  /* Its width is the stroke-width attribute (BOND_HIT); butt ends stay under the atoms. */
   .bond-hit {
     stroke: transparent;
-    stroke-width: 28;
-    stroke-linecap: round;
   }
 
   .bond-hit[role='button'] {

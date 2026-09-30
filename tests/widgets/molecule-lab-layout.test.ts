@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BOARD, BOND, layout, RADIUS, viewBox } from '../../src/widgets/molecule-lab/layout.ts';
+import { BOARD, BOND, BOND_HIT, HIT, layout, PHONE_SCALE, RADIUS, viewBox } from '../../src/widgets/molecule-lab/layout.ts';
 import type { Placed } from '../../src/widgets/molecule-lab/layout.ts';
 import { addAtom, bond, buildBoard, clusters, elementOf, freeValence, loosen, removeAtom } from '../../src/widgets/molecule-lab/model.ts';
 import type { Board, El } from '../../src/widgets/molecule-lab/model.ts';
@@ -280,6 +280,19 @@ describe('MoleculeLab layout', () => {
         }
       }
     }
+  });
+
+  it('gives every atom a tap circle at least 44 px across on a 360 px phone', () => {
+    // There the 360-unit board is drawn 264 px wide: 360 px, minus the page, figure, frame and stage padding.
+    expect(PHONE_SCALE).toBeCloseTo(264 / 360, 5);
+    expect(2 * HIT * PHONE_SCALE).toBeGreaterThanOrEqual(44);
+  });
+
+  it('gives each bond a tap band 44 px wide whose ends hide under the atoms’ tap circles', () => {
+    expect(BOND_HIT * PHONE_SCALE).toBeGreaterThanOrEqual(44);
+    expect(BOND_HIT / 2).toBeLessThan(HIT);
+    // Between two joined atoms' tap circles there is still a stretch of bond to tap.
+    expect(BOND - 2 * HIT).toBeGreaterThanOrEqual(24);
   });
 
   it('zooms out only when a molecule is too big for the board', () => {
