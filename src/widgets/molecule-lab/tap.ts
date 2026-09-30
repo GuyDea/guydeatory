@@ -23,11 +23,7 @@ export function tap(board: Board, picked: number | null, id: number): TapOutcome
   if (picked === null || !board.atoms.some((atom) => atom.id === picked)) return { kind: 'picked', picked: id };
   if (picked === id) return { kind: 'unpicked', picked: null };
   const outcome = bond(board, picked, id);
-  if (!outcome.ok) {
-    return outcome.atom === undefined
-      ? { kind: 'refused', picked: id, reason: outcome.reason }
-      : { kind: 'refused', picked: id, reason: outcome.reason, atom: outcome.atom };
-  }
+  if (!outcome.ok) return { kind: 'refused', picked: id, reason: outcome.reason, atom: outcome.atom };
   const stays = freeValence(outcome.board, picked) > 0;
   const again = stays ? bond(outcome.board, picked, id) : null;
   return {
