@@ -29,6 +29,13 @@ export interface Strings {
   /** A bond on the board, for screen readers; `a` is the metal in an ionic bond. */
   bond: (a: El, b: El, order: number, ionic: boolean) => string;
   picked: (el: El) => string;
+  /**
+   * After a join, when the first atom `a` still has free bonds and stays picked. `raise` is the bond
+   * order that picking the second atom `b` again would give, or null if they cannot share more.
+   */
+  stillPicked: (a: El, b: El, raise: number | null) => string;
+  /** After a refusal: the atom just tapped is picked instead. */
+  pickedInstead: (el: El) => string;
   unpicked: string;
   joined: (a: El, b: El, order: number) => string;
   gave: (metal: El, nonmetal: El, electrons: number, metalIon: string, nonmetalIon: string) => string;
@@ -150,7 +157,7 @@ const EN_MOLECULES: Record<MoleculeId, MoleculeText> = {
 
 const en: Strings = {
   title: 'Build a molecule',
-  hint: 'Pick two atoms to join them, and pick the same two again for a double bond. Pick a bond to loosen it. Keys: Tab to move, Enter to pick, Delete to remove, Escape to let go.',
+  hint: 'Pick two atoms to join them. Pick the second one again for a double bond. Pick a bond to loosen it. Keys: Tab to move, Enter to pick, Delete to remove, Escape to let go.',
   welcome: 'Water is ready. Now pick the carbon, then each hydrogen, to make methane.',
   board: (n) => (n === 0 ? 'Empty building board' : `Building board with ${plural(n, 'atom')}`),
   element: EN_ELEMENT,
@@ -168,6 +175,13 @@ const en: Strings = {
       ? `Ionic bond between ${EN_ELEMENT[a]} and ${EN_ELEMENT[b]}. Pick it to give one electron back.`
       : `${cap(EN_ORDER[order]!)} bond between ${EN_ELEMENT[a]} and ${EN_ELEMENT[b]}. Pick it to ${order > 1 ? 'take one pair away' : 'break it'}.`,
   picked: (el) => `Picked: ${EN_ELEMENT[el]}. Now pick an atom to join it to.`,
+  stillPicked: (a, b, raise) => {
+    if (raise === null) return `${cap(EN_ELEMENT[a])} is still picked. Pick another atom to join to it.`;
+    return a === b
+      ? `The first ${EN_ELEMENT[a]} is still picked. Pick the second one again for a ${EN_ORDER[raise]} bond.`
+      : `${cap(EN_ELEMENT[a])} is still picked. Pick the ${EN_ELEMENT[b]} again for a ${EN_ORDER[raise]} bond.`;
+  },
+  pickedInstead: (el) => `Now ${EN_ELEMENT[el]} is picked.`,
   unpicked: 'Nothing is picked.',
   joined: (a, b, order) =>
     `${a === b ? `Two ${EN_ELEMENT[a]} atoms` : `${cap(EN_ELEMENT[a])} and ${EN_ELEMENT[b]}`} now share ${EN_SHARE[order]} bond.`,
@@ -290,8 +304,8 @@ const SK_FROM: Record<El, string> = {
   Na: 'zo sodíka',
   Mg: 'z horčíka',
 };
-/** Accusative after "na": "na chlór", "na síru". */
-const SK_ONTO: Record<El, string> = { ...SK_ELEMENT, S: 'síru' };
+/** Accusative: "na chlór", "vyber síru". */
+const SK_ACC: Record<El, string> = { ...SK_ELEMENT, S: 'síru' };
 const SK_SHAPES: Record<Shape, string> = {
   linear: 'rovná čiara',
   bent: 'lomená čiara, ako písmeno V',
@@ -356,7 +370,7 @@ const SK_MOLECULES: Record<MoleculeId, MoleculeText> = {
 
 const sk: Strings = {
   title: 'Postav molekulu',
-  hint: 'Vyber dva atómy a spoja sa. Keď vyberieš tie isté dva znova, vznikne dvojitá väzba. Vybraním väzby ju uvoľníš. Klávesy: Tab – presun, Enter – výber, Delete – odstránenie, Escape – zrušenie výberu.',
+  hint: 'Vyber dva atómy a spoja sa. Vyber druhý atóm znova a vznikne dvojitá väzba. Vyber väzbu a uvoľníš ju. Klávesy: Tab – presun, Enter – výber, Delete – odstránenie, Escape – zrušenie výberu.',
   welcome: 'Voda je hotová. Teraz vyber uhlík a potom každý vodík – vznikne metán.',
   board: (n) => (n === 0 ? 'Prázdna stavebná plocha' : `Stavebná plocha s ${n} ${n === 1 ? 'atómom' : 'atómami'}`),
   element: SK_ELEMENT,
@@ -380,13 +394,21 @@ const sk: Strings = {
       ? `Iónová väzba medzi ${SK_WITH[a]} a ${SK_WITH[b]}. Vyber ju a jeden elektrón sa vráti.`
       : `${cap(SK_ORDER[order]!)} väzba medzi ${SK_WITH[a]} a ${SK_WITH[b]}. Vyber ju a ${order > 1 ? 'uberieš jeden pár' : 'rozpojíš ju'}.`,
   picked: (el) => `Vybraný atóm: ${SK_ELEMENT[el]}. Teraz vyber atóm, s ktorým sa spojí.`,
+  // "Atóm …" keeps the words masculine for every element, síra too.
+  stillPicked: (a, b, raise) => {
+    if (raise === null) return `Atóm ${SK_OF[a]} zostáva vybraný. Vyber ďalší atóm, s ktorým sa spojí.`;
+    return a === b
+      ? `Prvý atóm ${SK_OF[a]} zostáva vybraný. Vyber znova druhý a vznikne ${SK_ORDER[raise]} väzba.`
+      : `Atóm ${SK_OF[a]} zostáva vybraný. Vyber znova ${SK_ACC[b]} a vznikne ${SK_ORDER[raise]} väzba.`;
+  },
+  pickedInstead: (el) => `Teraz je vybraný atóm ${SK_OF[el]}.`,
   unpicked: 'Nič nie je vybrané.',
   joined: (a, b, order) =>
     `${a === b ? `Dva atómy ${SK_OF[a]}` : `${cap(SK_ELEMENT[a])} a ${SK_ELEMENT[b]}`} teraz zdieľajú ${SK_SHARE[order]} väzba.`,
   gave: (metal, nonmetal, n, metalIon, nonmetalIon) =>
-    `${n === 1 ? 'Elektrón preskočil' : `${n} elektróny preskočili`} ${SK_FROM[metal]} na ${SK_ONTO[nonmetal]}. Teraz sú to ióny ${metalIon} a ${nonmetalIon} a navzájom sa priťahujú.`,
+    `${n === 1 ? 'Elektrón preskočil' : `${n} elektróny preskočili`} ${SK_FROM[metal]} na ${SK_ACC[nonmetal]}. Teraz sú to ióny ${metalIon} a ${nonmetalIon} a navzájom sa priťahujú.`,
   loosened: (a, b, order, ionic) => {
-    if (ionic) return `Jeden elektrón sa vrátil ${SK_FROM[b]} na ${SK_ONTO[a]}.`;
+    if (ionic) return `Jeden elektrón sa vrátil ${SK_FROM[b]} na ${SK_ACC[a]}.`;
     if (order === 0) return `Väzba medzi ${SK_WITH[a]} a ${SK_WITH[b]} zanikla.`;
     return `Teraz ${a === b ? `dva atómy ${SK_OF[a]}` : `${SK_ELEMENT[a]} a ${SK_ELEMENT[b]}`} zdieľajú ${SK_SHARE[order]} väzba.`;
   },

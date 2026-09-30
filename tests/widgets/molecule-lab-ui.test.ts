@@ -73,6 +73,30 @@ describe('MoleculeLab strings', () => {
     }
   });
 
+  it('explains in the hint how to pick, raise a bond and loosen it, and keeps the keys', () => {
+    expect(en.hint).toBe(
+      'Pick two atoms to join them. Pick the second one again for a double bond. Pick a bond to loosen it. Keys: Tab to move, Enter to pick, Delete to remove, Escape to let go.',
+    );
+    expect(sk.hint).toBe(
+      'Vyber dva atómy a spoja sa. Vyber druhý atóm znova a vznikne dvojitá väzba. Vyber väzbu a uvoľníš ju. Klávesy: Tab – presun, Enter – výber, Delete – odstránenie, Escape – zrušenie výberu.',
+    );
+  });
+
+  it('says after a join that the first atom is still picked, and what picking the second one again does', () => {
+    expect(en.stillPicked('C', 'O', 2)).toBe('Carbon is still picked. Pick the oxygen again for a double bond.');
+    expect(sk.stillPicked('C', 'O', 2)).toBe('Atóm uhlíka zostáva vybraný. Vyber znova kyslík a vznikne dvojitá väzba.');
+    expect(sk.stillPicked('C', 'S', 2)).toBe('Atóm uhlíka zostáva vybraný. Vyber znova síru a vznikne dvojitá väzba.');
+    expect(en.stillPicked('N', 'N', 3)).toBe('The first nitrogen is still picked. Pick the second one again for a triple bond.');
+    expect(sk.stillPicked('N', 'N', 3)).toBe('Prvý atóm dusíka zostáva vybraný. Vyber znova druhý a vznikne trojitá väzba.');
+    expect(en.stillPicked('C', 'H', null)).toBe('Carbon is still picked. Pick another atom to join to it.');
+    expect(sk.stillPicked('Mg', 'Cl', null)).toBe('Atóm horčíka zostáva vybraný. Vyber ďalší atóm, s ktorým sa spojí.');
+  });
+
+  it('says which atom is picked after a refusal', () => {
+    expect(en.pickedInstead('Na')).toBe('Now sodium is picked.');
+    expect(sk.pickedInstead('S')).toBe('Teraz je vybraný atóm síry.');
+  });
+
   it('explains every refusal', () => {
     for (const lang of LANG_CODES) {
       const s = strings[lang];

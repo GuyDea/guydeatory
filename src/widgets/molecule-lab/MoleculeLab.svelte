@@ -34,6 +34,8 @@
   import { INITIAL, MOLECULES, QUESTS, report } from './molecules.ts';
   import type { Molecule, MoleculeId, ReportItem } from './molecules.ts';
   import { cap, strings } from './strings.ts';
+  import { tap } from './tap.ts';
+  import type { TapOutcome } from './tap.ts';
 
   let { lang }: { lang: LangCode } = $props();
   const s = $derived(strings[lang]);
@@ -270,23 +272,22 @@
     if (id !== null) subject = { kind: 'atom', id };
   }
 
+  /** A tap (or Enter) on an atom: pick it, let go of it, join it to the picked atom, or say why not (tap.ts). */
   function tapAtom(id: number) {
-    const picked = selected;
-    if (picked === null || !board.atoms.some((atom) => atom.id === picked)) pick(id);
-    else if (picked === id) pick(null);
-    else join(picked, id);
+    const outcome = tap(board, selected, id);
+    if (outcome.kind === 'picked' || outcome.kind === 'unpicked') pick(outcome.picked);
+    else if (outcome.kind === 'joined') join(outcome);
+    else {
+      const blocker = outcome.atom === undefined ? undefined : el(outcome.atom);
+      status = `${s.refused({ reason: outcome.reason, el: blocker })} ${s.pickedInstead(el(id))}`;
+      selected = outcome.picked;
+      subject = { kind: 'atom', id };
+    }
   }
 
-  function join(a: number, b: number) {
-    const before = board;
-    const outcome = bond(before, a, b);
-    if (!outcome.ok) {
-      status = s.refused({ reason: outcome.reason, el: outcome.atom === undefined ? undefined : elementOf(before, outcome.atom) });
-      return;
-    }
-    const { link } = outcome;
-    const given = link.order - (linkBetween(before, link.a, link.b)?.order ?? 0);
-    place(outcome.board);
+  function join({ a, b, board: next, link, picked, raise }: Extract<TapOutcome, { kind: 'joined' }>) {
+    const given = link.order - (linkBetween(board, link.a, link.b)?.order ?? 0);
+    place(next);
     pops = { ...pops, [a]: (pops[a] ?? 0) + 1, [b]: (pops[b] ?? 0) + 1 };
     if (link.ionic && !reduced.current) flights = [...flights, { key: ++serial, from: link.a, to: link.b, t: 0 }];
     let message = link.ionic
@@ -301,11 +302,12 @@
       if (quest) freshQuest = id;
       message = [s.completed(s.molecules[id].name), fresh ? s.newFind : '', quest ? s.questDone : ''].filter(Boolean).join(' ');
       celebrate(item.ids);
+    } else if (picked !== null) {
+      message = `${message} ${s.stillPicked(el(a), el(b), raise)}`;
     }
     status = message;
     subject = { kind: 'atom', id: b };
-    // The first atom stays picked while it still has free bonds: pick C, then H, H, H, H.
-    if (freeValence(board, a) === 0) selected = null;
+    selected = picked;
   }
 
   async function focusAtom(id: number | undefined) {
