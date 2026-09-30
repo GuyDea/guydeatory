@@ -1,0 +1,73 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'The three isotopes of hydrogen',
+    desc: 'Three hydrogen atoms side by side, each with one electron circling a nucleus. Hydrogen-1, ordinary hydrogen, has a nucleus of just one proton and is stable. Hydrogen-2, deuterium, has one proton and one neutron and is stable. Hydrogen-3, tritium, has one proton and two neutrons and is radioactive.',
+    names: ['hydrogen-1', 'hydrogen-2', 'hydrogen-3'],
+    nicknames: ['ordinary', 'deuterium', 'tritium'],
+    kinds: ['stable', 'stable', 'radioactive'],
+    proton: 'proton',
+    neutron: 'neutron',
+    electron: 'electron',
+  },
+  sk: {
+    title: 'Tri izotopy vodíka',
+    desc: 'Tri atómy vodíka vedľa seba, v každom obieha okolo jadra jeden elektrón. Vodík-1, obyčajný vodík, má jadro z jediného protónu a je stabilný. Vodík-2, deutérium, má jeden protón a jeden neutrón a je stabilný. Vodík-3, trícium, má jeden protón a dva neutróny a je rádioaktívny.',
+    names: ['vodík-1', 'vodík-2', 'vodík-3'],
+    nicknames: ['obyčajný', 'deutérium', 'trícium'],
+    kinds: ['stabilný', 'stabilný', 'rádioaktívny'],
+    proton: 'protón',
+    neutron: 'neutrón',
+    electron: 'elektrón',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+
+const round = (n: number) => Math.round(n * 10) / 10;
+/** Balls of a nucleus on a sunflower spiral, protons spread evenly among the neutrons. */
+function nucleus(cx: number, cy: number, protons: number, neutrons: number) {
+  const total = protons + neutrons;
+  return Array.from({ length: total }, (_, i) => {
+    const r = total === 1 ? 0 : 7.5 * Math.sqrt(i + 0.5);
+    const angle = i * 2.39996;
+    const proton = Math.floor(((i + 1) * protons) / total) > Math.floor((i * protons) / total);
+    return { x: round(cx + r * Math.cos(angle)), y: round(cy + r * Math.sin(angle)), proton };
+  }).reverse();
+}
+const plus = (x: number, y: number, arm: number) => `M${x - arm} ${y}h${arm * 2}M${x} ${y - arm}v${arm * 2}`;
+const XS = [67, 200, 333];
+const CY = 72;
+const atoms = [0, 1, 2].map((neutrons, i) => nucleus(XS[i]!, CY, 1, neutrons));
+const electronAt = (cx: number) => ({ x: round(cx + 44 * Math.cos(-0.75)), y: round(CY + 44 * Math.sin(-0.75)) });
+const plusStyle = 'stroke: var(--d-fill); stroke-width: 2; stroke-linecap: round';
+---
+<Svg viewBox="0 0 400 246" title={s.title} desc={s.desc} maxWidth="30rem">
+  {XS.map((x) => <circle cx={x} cy={CY} r="44" class="d-line" style="stroke: var(--d-muted); stroke-width: 1.5" />)}
+  {
+    atoms.map((balls) =>
+      balls.map(({ x, y, proton }) => (
+        <>
+          <circle cx={x} cy={y} r="8" class={proton ? 'd-positive' : 'd-muted'} style="stroke: var(--d-fill); stroke-width: 1" />
+          {proton && <path d={plus(x, y, 3.6)} fill="none" style={plusStyle} />}
+        </>
+      )),
+    )
+  }
+  {XS.map((x) => <circle cx={electronAt(x).x} cy={electronAt(x).y} r="6" class="d-electron" />)}
+  {XS.map((x, i) => <text x={x} y="146" text-anchor="middle" class="d-label">{s.names[i]}</text>)}
+  {XS.map((x, i) => <text x={x} y="167" text-anchor="middle" class="d-small">{s.nicknames[i]}</text>)}
+  {XS.map((x, i) => <text x={x} y="188" text-anchor="middle" class="d-small d-muted">{s.kinds[i]}</text>)}
+  <circle cx="62" cy="226" r="8" class="d-positive" />
+  <path d={plus(62, 226, 3.6)} fill="none" style={plusStyle} />
+  <text x="76" y="231" class="d-small">{s.proton}</text>
+  <circle cx="176" cy="226" r="8" class="d-muted" />
+  <text x="190" y="231" class="d-small">{s.neutron}</text>
+  <circle cx="290" cy="226" r="6" class="d-electron" />
+  <text x="302" y="231" class="d-small">{s.electron}</text>
+</Svg>

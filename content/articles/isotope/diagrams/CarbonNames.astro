@@ -1,0 +1,65 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Carbon-12 and carbon-14',
+    desc: 'Two carbon nuclei side by side. Carbon-12 has 6 protons and 6 neutrons, 12 particles in all, and it is stable. Carbon-14 has 6 protons and 8 neutrons, 14 particles in all, and it is radioactive.',
+    names: ['carbon-12', 'carbon-14'],
+    sums: ['6 protons + 6 neutrons', '6 protons + 8 neutrons'],
+    kinds: ['stable', 'radioactive'],
+    proton: 'proton',
+    neutron: 'neutron',
+  },
+  sk: {
+    title: 'Uhlík-12 a uhlík-14',
+    desc: 'Dve jadrá uhlíka vedľa seba. Uhlík-12 má 6 protónov a 6 neutrónov, spolu 12 čiastočiek, a je stabilný. Uhlík-14 má 6 protónov a 8 neutrónov, spolu 14 čiastočiek, a je rádioaktívny.',
+    names: ['uhlík-12', 'uhlík-14'],
+    sums: ['6 protónov + 6 neutrónov', '6 protónov + 8 neutrónov'],
+    kinds: ['stabilný', 'rádioaktívny'],
+    proton: 'protón',
+    neutron: 'neutrón',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+
+const round = (n: number) => Math.round(n * 10) / 10;
+/** Balls of a nucleus on a sunflower spiral, protons spread evenly among the neutrons. */
+function nucleus(cx: number, cy: number, protons: number, neutrons: number) {
+  const total = protons + neutrons;
+  return Array.from({ length: total }, (_, i) => {
+    const r = 7.5 * Math.sqrt(i + 0.5);
+    const angle = i * 2.39996;
+    const proton = Math.floor(((i + 1) * protons) / total) > Math.floor((i * protons) / total);
+    return { x: round(cx + r * Math.cos(angle)), y: round(cy + r * Math.sin(angle)), proton };
+  }).reverse();
+}
+const plus = (x: number, y: number, arm: number) => `M${x - arm} ${y}h${arm * 2}M${x} ${y - arm}v${arm * 2}`;
+const XS = [100, 300];
+const nuclei = [nucleus(XS[0]!, 62, 6, 6), nucleus(XS[1]!, 62, 6, 8)];
+const plusStyle = 'stroke: var(--d-fill); stroke-width: 2; stroke-linecap: round';
+---
+<Svg viewBox="0 0 400 226" title={s.title} desc={s.desc} maxWidth="30rem">
+  {
+    nuclei.map((balls) =>
+      balls.map(({ x, y, proton }) => (
+        <>
+          <circle cx={x} cy={y} r="8" class={proton ? 'd-positive' : 'd-muted'} style="stroke: var(--d-fill); stroke-width: 1" />
+          {proton && <path d={plus(x, y, 3.6)} fill="none" style={plusStyle} />}
+        </>
+      )),
+    )
+  }
+  {XS.map((x, i) => <text x={x} y="128" text-anchor="middle" class="d-label">{s.names[i]}</text>)}
+  {XS.map((x, i) => <text x={x} y="150" text-anchor="middle" class="d-small">{s.sums[i]}</text>)}
+  {XS.map((x, i) => <text x={x} y="171" text-anchor="middle" class="d-small d-muted">{s.kinds[i]}</text>)}
+  <circle cx="122" cy="206" r="8" class="d-positive" />
+  <path d={plus(122, 206, 3.6)} fill="none" style={plusStyle} />
+  <text x="136" y="211" class="d-small">{s.proton}</text>
+  <circle cx="232" cy="206" r="8" class="d-muted" />
+  <text x="246" y="211" class="d-small">{s.neutron}</text>
+</Svg>

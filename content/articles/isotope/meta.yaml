@@ -1,10 +1,19 @@
 # Language-independent facts about this article. Guide: docs/writing-guide.md (Metadata).
 topics: [matter]
 labels: [high-level]
-prerequisites: [atom]
-related: []
-status: stub
+prerequisites: [atom, chemical-element]
+related: [radioactivity, chemical-element, ion, periodic-table]
+status: published
 created: 2026-09-30
 updated: 2026-09-30
 sources:
-  - { title: 'Isotope — Wikipedia', url: 'https://en.wikipedia.org/wiki/Isotope' }
+  - title: NuDat 3 decay data (C-14, H-3, U-235, U-238 half-lives) — National Nuclear Data Center, Brookhaven
+    url: https://www.nndc.bnl.gov/nudat3/
+  - title: Isotope — Wikipedia
+    url: https://en.wikipedia.org/wiki/Isotope
+  - title: Radiocarbon dating — Wikipedia
+    url: https://en.wikipedia.org/wiki/Radiocarbon_dating
+  - title: Deuterium (abundance, heavy water) — Wikipedia
+    url: https://en.wikipedia.org/wiki/Deuterium
+  - title: Enriched uranium — Wikipedia
+    url: https://en.wikipedia.org/wiki/Enriched_uranium

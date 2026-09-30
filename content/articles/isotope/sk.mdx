@@ -1,10 +1,181 @@
 ---
-title: 'Čo je izotop?'
-term: 'izotop'
+title: Čo je izotop?
+term: izotop
 slug: izotop
-summary: 'Atómy jedného prvku majú vždy rovnaký počet protónov, ale počet neutrónov sa môže líšiť. Takýmto verziám hovoríme izotopy.'
-keywords: ['izotop', 'izotopy', 'neutróny', 'uhlík-14', 'deutérium', 'nukleónové číslo']
+summary: Izotopy sú rôzne verzie toho istého prvku. Ich atómy majú rovnaký počet protónov, ale rôzny počet neutrónov, takže niektoré sú o trochu ťažšie ako iné.
+keywords: [izotop, izotopy, neutróny, nukleónové číslo, uhlík-14, C-14, 14C, uhlík-12, deutérium, trícium, ťažký vodík, ťažká voda, rádiouhlíková metóda, datovanie uhlíkom, urán-235, nuklid]
 ---
 
-Atómy toho istého prvku majú vždy rovnaký počet protónov, ale počet neutrónov sa môže líšiť. Takýmto
-verziám hovoríme izotopy. Uhlík-12 má 6 neutrónov a uhlík-14 ich má 8.
+import CarbonNames from './diagrams/CarbonNames.astro';
+import HydrogenIsotopes from './diagrams/HydrogenIsotopes.astro';
+
+Každý atóm uhlíka má 6 protónov a práve to z neho robí uhlík. Keby sa však atómy uhlíka dali vážiť
+jeden po druhom, ukázalo by sa, že nevážia všetky rovnako. Niekoľko z nich je o trochu ťažších ako
+ostatné.
+
+Ako môžu mať dva atómy toho istého prvku rôznu hmotnosť? Odpoveď sa skrýva v jadre.
+
+## Rovnaké protóny, rôzne neutróny
+
+Jadro [[atom|atómu]] obsahuje dva druhy čiastočiek: protóny a neutróny. Počet protónov rozhoduje
+o tom, o aký [[chemical-element|prvok]] ide. Počet neutrónov sa však môže líšiť, dokonca aj medzi
+atómami toho istého prvku.
+
+Verziám jedného prvku s rôznym počtom neutrónov hovoríme **izotopy**. Názov pochádza z gréckych slov
+s významom „rovnaké miesto“: všetky izotopy prvku majú v [[periodic-table|periodickej tabuľke]]
+spoločné políčko.
+
+Neutróny nemajú elektrický náboj, ale majú hmotnosť. Izotop s viacerými neutrónmi je preto o trochu
+ťažší. Inak sú atómy takmer úplne rovnaké.
+
+<Analogy title="Bicykel s košíkom">
+Keď na bicykel pripevníš košík, bude o trochu ťažší. Stále je to však bicykel, pretože má stále dve
+kolesá. Neutróny sú ako ten košík: menia hmotnosť atómu, ale nie to, o aký prvok ide. To závisí len
+od počtu protónov.
+</Analogy>
+
+## Ako izotopy dostávajú mená?
+
+Pri pomenovaní izotopu sa sčítajú jeho protóny a neutróny a súčet sa pridá za názov prvku:
+
+- **Uhlík-12** má 6 protónov a 6 neutrónov: 6 + 6 = 12.
+- **Uhlík-14** má 6 protónov a 8 neutrónov: 6 + 8 = 14.
+
+Tomuto súčtu hovoríme **nukleónové číslo**. Vedci ho píšu aj ako malé číslo pred značku prvku: ¹²C
+a ¹⁴C.
+
+<Figure caption="Uhlík-12 aj uhlík-14 majú 6 protónov, a preto sú oba uhlík. Keď sčítaš protóny a neutróny, dostaneš číslo v názve." wide>
+  <CarbonNames />
+</Figure>
+
+## Tri izotopy vodíka
+
+Vodík, najľahší prvok, má tri izotopy a dva z nich majú dokonca vlastné mená:
+
+- Obyčajný **vodík**, teda vodík-1, má 1 protón a žiadny neutrón. Takmer všetok vodík je takýto.
+- **Deutérium**, teda vodík-2, má 1 protón a 1 neutrón. Hovorí sa mu aj ťažký vodík. Približne
+  1 zo 6&nbsp;400 atómov vodíka vo vode je deutérium.
+- **Trícium**, teda vodík-3, má 1 protón a 2 neutróny. Je [[radioactivity|rádioaktívne]]: skôr či
+  neskôr sa jeho jadro samo zmení.
+
+<Figure caption="Tri atómy vodíka. Každý má jeden protón a jeden elektrón, a preto je to vodík. Líši sa len počet neutrónov." wide>
+  <HydrogenIsotopes />
+</Figure>
+
+<FunFact>
+Voda, v ktorej je namiesto obyčajného vodíka deutérium, sa volá ťažká voda. Vyzerá presne ako bežná
+voda, ale pohár ťažkej vody je asi o desatinu ťažší. Kocka ľadu z ťažkej vody v pohári bežnej vody
+klesne ku dnu!
+</FunFact>
+
+## Správajú sa izotopy inak?
+
+Izotopy jedného prvku majú rovnaký počet protónov, a preto majú ich atómy aj rovnaký počet
+[[electron|elektrónov]]. A v chémii ide práve o elektróny. Rozhodujú o tom, ako sa atómy spájajú
+[[chemical-bond|chemickými väzbami]].
+
+Preto sa izotopy jedného prvku správajú v chémii takmer úplne rovnako. Rastliny prijímajú zo vzduchu
+uhlík-12 aj uhlík-13 takmer rovnakým spôsobom a tvoje telo používa oba ako stavebný materiál.
+
+## Stabilné a rádioaktívne izotopy
+
+Mnohé izotopy sú **stabilné**: ich jadrá zostávajú navždy rovnaké. Uhlík-12 aj uhlík-13 sú stabilné.
+
+Iné izotopy sú **rádioaktívne**. Ich jadrá sú nestále a skôr či neskôr sa samy zmenia a vyšlú
+žiarenie.
+
+Uhlík-14 je rádioaktívny. Za približne 5&nbsp;700 rokov sa polovica akéhokoľvek množstva
+uhlíka-14 zmení na dusík. Tomuto času hovoríme **polčas rozpadu**.
+
+## Hodiny vo vnútri starých vecí
+
+Uhlík-14 vzniká neustále vysoko vo vzduchu, keď do atómov dusíka narazí žiarenie z vesmíru. Rastliny
+ho prijímajú zo vzduchu spolu s obyčajným uhlíkom a zvieratá rastliny zjedia. Každý živý tvor má
+preto v sebe drobné, stále rovnaké množstvo uhlíka-14.
+
+Keď sa život rastliny alebo zvieraťa skončí, prestane prijímať nový uhlík. Odvtedy jeho uhlík-14 pomaly mizne.
+Po približne 5&nbsp;700 rokoch z neho zostane len polovica a po približne 11&nbsp;400 rokoch len
+štvrtina.
+
+Vedci zmerajú, koľko uhlíka-14 zostalo v starej kosti, v kúsku dreva alebo v kúsku starej tkaniny.
+Z toho vypočítajú, aké staré tieto veci sú. Tomu sa hovorí **rádiouhlíková metóda** a funguje pri veciach starých
+najviac asi 50&nbsp;000 rokov.
+
+<FunFact>
+Rádiouhlíková metóda nevie určiť, aké staré sú kosti dinosaurov. Dinosaury vymreli asi pred
+66 miliónmi rokov, takže ich uhlík-14 zmizol už veľmi dávno. Vedci namiesto toho merajú iné
+rádioaktívne izotopy v horninách okolo kostí.
+</FunFact>
+
+## Izotopy, ktoré nám pomáhajú
+
+- **V nemocniciach** dajú lekári pacientom maličké množstvo rádioaktívneho izotopu. Ten putuje telom
+  a ukáže sa na špeciálnej kamere, takže lekári vidia, ako pracujú orgány. Najčastejšie sa používa
+  technécium-99m, ktoré každý rok pomáha pri desiatkach miliónov vyšetrení.
+- **V elektrárňach** je palivom urán-235. Jeho jadrá sa dokážu rozštiepiť a vydať veľa tepla.
+- **Vo vede** izotopy prezrádzajú, aké staré sú horniny, a dokonca aj to, aké teplo bolo na Zemi
+  kedysi dávno.
+
+<GoDeeper title="Čísla a zápis">
+- **Protónové číslo** $Z$ udáva počet protónov, **neutrónové číslo** $N$ počet neutrónov
+  a **nukleónové číslo** $A = Z + N$ počet oboch spolu. Uhlík-14 má $Z = 6$, $N = 8$ a $A = 14$ a
+  zapisuje sa $^{14}_{6}\mathrm{C}$.
+- Jeden druh jadra s určitým $Z$ a $N$ sa volá **nuklid**. Poznáme tisíce nuklidov, ale len pri 251
+  z nich sa nikdy nepozoroval rozpad. Aspoň jeden stabilný izotop má 80 prvkov a najviac ich má cín:
+  desať.
+- Väčšina prvkov je v prírode zmesou izotopov. Prírodný uhlík je asi z 98,9&nbsp;% uhlík-12
+  a z 1,1&nbsp;% uhlík-13 a na bilión atómov uhlíka pripadá asi jeden atóm uhlíka-14. Preto má
+  uhlík v periodickej tabuľke relatívnu atómovú hmotnosť 12,011, a nie presne 12: je to priemer.
+- Izotopy nie sú v chémii úplne rovnaké. Ťažšie izotopy reagujú o trochu pomalšie. Najväčší je
+  tento rozdiel pri vodíku, lebo deutérium je dvakrát ťažšie ako obyčajný vodík.
+</GoDeeper>
+
+<GoDeeper title="Prečo záleží na počte neutrónov">
+Protóny majú všetky kladný náboj, a preto sa navzájom odpudzujú. Jadro napriek tomu drží pokope
+silná jadrová sila a neutróny k tomuto lepidlu prispievajú bez toho, aby pridali odpudzovanie.
+Ľahké stabilné jadrá majú približne toľko neutrónov ako protónov: uhlík-12 má 6 a 6, kyslík-16
+8 a 8 a vápnik-40 20 a 20. Ťažké jadrá potrebujú neutróny navyše, aby udržali pokope veľa protónov.
+Olovo-208, najťažší stabilný nuklid, má 82 protónov a 126 neutrónov.
+
+Jadro, ktoré má na svoje protóny primálo alebo priveľa neutrónov, je nestabilné. Mení sa
+rádioaktívnym rozpadom: neutrón sa zmení na protón alebo naopak, kým pomer nie je lepší. Uhlík-14 má
+na svojich 6 protónov priveľa neutrónov. Jeden z nich sa zmení na protón a z jadra sa stane
+dusík-14 so 7 protónmi a 7 neutrónmi.
+</GoDeeper>
+
+<GoDeeper title="Urán-235 a urán-238">
+Prírodný urán je asi z 99,3&nbsp;% urán-238 a len z 0,7&nbsp;% urán-235. Na tom rozdiele
+záleží. Jadro uránu-235 sa ľahko rozštiepi, keď doň narazí pomalý neutrón, a pri štiepení sa
+uvoľnia ďalšie neutróny, ktoré môžu rozštiepiť ďalšie jadrá. Urán-238 sa takto takmer nikdy
+nerozštiepi. Väčšina jadrových reaktorov potrebuje palivo s asi 3 až 5&nbsp;% uránu-235, a preto sa
+urán najprv **obohacuje**.
+
+Oba izotopy sa v chémii správajú takmer úplne rovnako, takže ich nerozdelí žiadny chemický trik.
+Obohacovanie namiesto toho využíva ich nepatrný rozdiel v hmotnosti. Urán sa premení na plyn
+a roztočí vo veľmi rýchlych centrifúgach, kde sa ťažší urán-238 trochu viac drží pri stene.
+
+Oba izotopy sú rádioaktívne, ale veľmi pomalé. Urán-238 má polčas rozpadu asi 4,5 miliardy rokov, čo
+je približne vek Zeme. Urán-235 má polčas rozpadu asi 700 miliónov rokov.
+</GoDeeper>
+
+<Remember>
+- Izotopy sú verzie jedného prvku, ktorých atómy majú rôzny počet neutrónov.
+- Všetky majú rovnaký počet protónov, a preto sú tým istým prvkom.
+- Názov izotopu udáva počet protónov a neutrónov spolu, napríklad uhlík-14.
+- Izotopy jedného prvku sa v chémii správajú takmer rovnako, ale niektoré sú rádioaktívne.
+- Uhlík-14 pomáha vedcom zistiť, aké staré sú rôzne veci.
+</Remember>
+
+<Quiz
+  question="Uhlík-12 aj uhlík-14 sú uhlík. Čím sa líšia?"
+  options={["Počtom protónov", "Počtom neutrónov", "Počtom elektrónov"]}
+  answer={1}
+  explanation="Oba majú 6 protónov, a preto sú oba uhlík. Uhlík-12 má 6 neutrónov a uhlík-14 ich má 8."
+/>
+
+<Quiz
+  question="Jadro má 1 protón a 2 neutróny. Čo je to?"
+  options={["Hélium", "Trícium, druh vodíka", "Uhlík"]}
+  answer={1}
+  explanation="Jeden protón vždy znamená vodík. S 2 neutrónmi je to vodík-3, ktorému hovoríme trícium."
+/>
