@@ -1,0 +1,10 @@
+# Language-independent facts about this article. Guide: docs/writing-guide.md (Metadata).
+topics: [matter]
+labels: [high-level]
+prerequisites: [atom]
+related: []
+status: stub
+created: 2026-09-30
+updated: 2026-09-30
+sources:
+  - { title: 'Isotope — Wikipedia', url: 'https://en.wikipedia.org/wiki/Isotope' }

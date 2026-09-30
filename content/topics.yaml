@@ -46,6 +46,13 @@
           description:
             en: What everything is made of — atoms, solids, liquids and gases.
             sk: Z čoho je všetko – atómy, pevné látky, kvapaliny a plyny.
+    - id: chemistry
+      icon: 🧪
+      slug: { en: chemistry, sk: chemia }
+      name: { en: Chemistry, sk: Chémia }
+      description:
+        en: How atoms join, split and swap partners — molecules, bonds and reactions.
+        sk: Ako sa atómy spájajú, rozdeľujú a menia partnerov – molekuly, väzby a reakcie.
 
 - id: technology
   icon: 🛠️

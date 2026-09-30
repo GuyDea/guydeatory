@@ -153,6 +153,56 @@ Keep terms consistent across all articles. Add new terms here when you introduce
 | energy efficiency ratio (EER) | chladiaci faktor (EER) | |
 | refrigerator | chladnička | |
 
+### Atoms and chemistry
+
+| English | Slovenčina | Note |
+|---|---|---|
+| chemistry | chémia | |
+| chemical element | chemický prvok | "prvok" alone once the context is clear |
+| atomic number (Z) | protónové číslo (Z) | the term taught in Slovak schools |
+| mass number (A) | nukleónové číslo (A) | |
+| periodic table | periodická tabuľka (prvkov) | |
+| period / group | perióda / skupina | "riadok / stĺpec" in the main text |
+| metal / nonmetal | kov / nekov | |
+| alkali metals / halogens / noble gases | alkalické kovy / halogény / vzácne plyny | |
+| electron shell | elektrónová vrstva | all the shells together = elektrónový obal |
+| valence electrons | valenčné elektróny | "vonkajšie elektróny" in the main text |
+| orbital | orbitál | Go-deeper blocks only |
+| chemical bond | chemická väzba | |
+| covalent / ionic / metallic bond | kovalentná / iónová / kovová väzba | |
+| single / double / triple bond | jednoduchá / dvojitá / trojitá väzba | |
+| shared electron pair / lone pair | spoločný elektrónový pár / voľný elektrónový pár | |
+| electronegativity | elektronegativita | |
+| polar / nonpolar molecule | polárna / nepolárna molekula | |
+| hydrogen bond | vodíková väzba | |
+| molecule, compound | molekula, zlúčenina | |
+| chemical formula | chemický vzorec | H₂O = „há-dva-o“ |
+| chemical reaction | chemická reakcia | |
+| reactant / product | reaktant (východisková látka) / produkt | |
+| isotope | izotop | carbon-14 = uhlík-14 |
+| nuclide | nuklid | |
+| ion / cation / anion | ión / katión / anión | |
+| radioactivity | rádioaktivita | |
+| radioactive decay | rádioaktívny rozpad (rádioaktívna premena) | |
+| half-life | polčas rozpadu (polčas premeny) | |
+| alpha / beta / gamma radiation | žiarenie alfa / beta / gama | |
+| atomic nucleus | atómové jadro | |
+| strong (nuclear) force | silná jadrová sila | |
+
+**Elements 1–20:** vodík (H), hélium (He), lítium (Li), berýlium (Be), bór (B), uhlík (C), dusík (N),
+kyslík (O), fluór (F), neón (Ne), sodík (Na), horčík (Mg), hliník (Al), kremík (Si), fosfor (P),
+síra (S), chlór (Cl), argón (Ar), draslík (K), vápnik (Ca).
+
+**Common molecules:** voda (H₂O), oxid uhličitý (CO₂), metán (CH₄), amoniak (NH₃), chlorid sodný
+(NaCl, kuchynská soľ), hydroxid sodný (NaOH), peroxid vodíka (H₂O₂), chlorovodík (HCl), fluorovodík
+(HF), sulfán (H₂S, hovorovo sírovodík), kyanovodík (HCN), etán (C₂H₆), etén (C₂H₄, etylén), etín
+(C₂H₂, acetylén), metanol (CH₃OH), etanol (C₂H₅OH), formaldehyd (CH₂O), oxid horečnatý (MgO), chlorid
+horečnatý (MgCl₂), tetrachlórmetán (CCl₄), trichlórmetán (CHCl₃, chloroform).
+
+**Chemical notation:** write formulas with Unicode subscripts (H₂O, CO₂) and ion charges with
+superscripts (Na⁺, Cl⁻, Ca²⁺, O²⁻), in both languages. Add the plain forms ("H2O", "Na+") to
+`keywords`, so search finds them.
+
 ## 5. Slugs and links
 
 - **Slugs:** ASCII kebab-case from the Slovak term, without diacritics, for example
