@@ -15,6 +15,7 @@ import BoilingPoint from '@widgets/boiling-point/BoilingPoint.svelte';
 import CopExplorer from '@widgets/cop-explorer/CopExplorer.svelte';
 import ElectronFlow from '@widgets/electron-flow/ElectronFlow.svelte';
 import HeatPumpCycle from '@widgets/heat-pump-cycle/HeatPumpCycle.svelte';
+import MoleculeLab from '@widgets/molecule-lab/MoleculeLab.svelte';
 import OhmsLawPlayground from '@widgets/ohms-law/OhmsLawPlayground.svelte';
 import SeriesParallel from '@widgets/series-parallel/SeriesParallel.svelte';
 
@@ -40,6 +41,7 @@ const alternates = LANG_CODES.map((code) => ({ lang: code, href: `/lab/${code}/`
     <section id="atom-lab"><h2>AtomLab</h2><AtomLab client:visible lang={lang} /></section>
     <section id="atom-lab-isotopes"><h2>AtomLab (quests="isotopes")</h2><AtomLab client:visible lang={lang} quests="isotopes" /></section>
     <section id="atom-lab-ions"><h2>AtomLab (quests="ions")</h2><AtomLab client:visible lang={lang} quests="ions" /></section>
+    <section id="molecule-lab"><h2>MoleculeLab</h2><MoleculeLab client:visible lang={lang} /></section>
   </div>
 </BaseLayout>
 
