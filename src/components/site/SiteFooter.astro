@@ -2,6 +2,7 @@
 import { getLanguage } from '@i18n/languages';
 import type { LangCode } from '@i18n/languages';
 import { t } from '@i18n/t';
+import { currentBuildVersion } from '@lib/build-info';
 import { homeUrl, sectionUrl } from '@lib/urls';
 import type { Alternate } from '@lib/urls';
 import Logo from './Logo.astro';
@@ -12,6 +13,7 @@ interface Props {
 }
 const { lang, alternates } = Astro.props;
 const others = alternates.filter((alt) => alt.lang !== lang);
+const version = currentBuildVersion();
 ---
 <footer class="site-footer">
   <div class="page inner">
@@ -19,6 +21,16 @@ const others = alternates.filter((alt) => alt.lang !== lang);
       <a class="brand" href={homeUrl(lang)}><Logo size={28} /><span>{t(lang, 'site.name')}</span></a>
       <p>{t(lang, 'site.tagline')}</p>
       <p class="promise">{t(lang, 'footer.promise')}</p>
+      {
+        version && (
+          <p class="version">
+            {t(lang, 'footer.version')}{' '}
+            <a href={version.url} title={version.dirty ? t(lang, 'footer.versionDirty') : undefined}>
+              <code>{version.short}{version.dirty && '+'}</code>
+            </a>
+          </p>
+        )
+      }
     </div>
     <nav class="links" aria-label={t(lang, 'site.name')}>
       <a href={sectionUrl(lang, 'explore')}>{t(lang, 'nav.explore')}</a>
@@ -76,6 +88,15 @@ const others = alternates.filter((alt) => alt.lang !== lang);
     font-weight: 800;
     font-size: 1.15rem;
     min-height: var(--touch);
+  }
+
+  .version {
+    margin-top: var(--space-2);
+    font-size: 0.875rem;
+  }
+
+  .version a {
+    color: inherit;
   }
 
   .promise {
