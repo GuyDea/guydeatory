@@ -1,0 +1,73 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'How an electron makes a flash of light',
+    desc: 'Two pictures of an atom with three shells drawn as curved lines. In the first, heat pushes an electron from the inner shell out to the outer shell. In the second, the electron falls back to the inner shell, and a wavy arrow shows the light it gives out.',
+    up: '1. Heat kicks it up',
+    down: '2. Back down: light!',
+    heat: 'heat',
+    light: 'light',
+  },
+  sk: {
+    title: 'Ako elektrón vytvorí záblesk svetla',
+    desc: 'Dva obrázky atómu s tromi vrstvami nakreslenými ako oblúky. Na prvom teplo vytlačí elektrón z vnútornej vrstvy do vonkajšej. Na druhom elektrón spadne späť do vnútornej vrstvy a vlnitá šípka ukazuje svetlo, ktoré pritom vyšle.',
+    up: '1. Teplo ho vyhodí',
+    down: '2. Späť dole: svetlo!',
+    heat: 'teplo',
+    light: 'svetlo',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+
+const CY = 130;
+const RADII = [42, 76, 110];
+const round = (n: number) => Math.round(n * 10) / 10;
+const deg = (d: number) => (d * Math.PI) / 180;
+const at = (cx: number, r: number, angle: number): [number, number] => [round(cx + r * Math.cos(deg(angle))), round(CY + r * Math.sin(deg(angle)))];
+const arc = (cx: number, r: number) => {
+  const [x1, y1] = at(cx, r, -50);
+  const [x2, y2] = at(cx, r, 50);
+  return `M${x1} ${y1}A${r} ${r} 0 0 1 ${x2} ${y2}`;
+};
+const line = (from: [number, number], to: [number, number]) => `M${from[0]} ${from[1]}L${to[0]} ${to[1]}`;
+// A wavy ray of light from radius 50 to radius 160, heading down and to the right.
+function wave(cx: number) {
+  const [x0, y0] = at(cx, 50, 25);
+  const [x1, y1] = at(cx, 150, 25);
+  const length = Math.hypot(x1 - x0, y1 - y0);
+  const [ux, uy] = [(x1 - x0) / length, (y1 - y0) / length];
+  const points: string[] = [];
+  for (let d = 0; d <= length; d += 2) {
+    const side = 5 * Math.sin((d / 14) * 2 * Math.PI) * Math.min(1, (length - d) / 10);
+    points.push(`${round(x0 + ux * d - uy * side)} ${round(y0 + uy * d + ux * side)}`);
+  }
+  return `M${points.join('L')}`;
+}
+const panels = [
+  { cx: 34, title: s.up, from: 0, to: 2, arrow: 'd-arrow-hot' },
+  { cx: 234, title: s.down, from: 2, to: 0, arrow: 'd-arrow-electron' },
+];
+---
+<Svg viewBox="0 0 400 236" title={s.title} desc={s.desc} maxWidth="30rem">
+  {
+    panels.map(({ cx, title, from, to, arrow }) => (
+      <>
+        <text x={cx + 66} y="22" text-anchor="middle" class="d-label d-small">{title}</text>
+        {RADII.map((r) => <path d={arc(cx, r)} class="d-line" style="stroke: var(--d-muted); stroke-width: 1.5" />)}
+        <circle cx={cx} cy={CY} r="10" class="d-positive" />
+        <circle cx={at(cx, RADII[from]!, -12)[0]} cy={at(cx, RADII[from]!, -12)[1]} r="6" class="d-line" stroke-dasharray="3 3" style="stroke: var(--d-electron)" />
+        <path d={line(at(cx, from < to ? 51 : 101, -12), at(cx, from < to ? 99 : 53, -12))} class={`d-line ${arrow}`} style="stroke-width: 2.5" />
+        <circle cx={at(cx, RADII[to]!, -12)[0]} cy={at(cx, RADII[to]!, -12)[1]} r="7" class="d-electron" />
+      </>
+    ))
+  }
+  <text x="150" y="132" class="d-small">{s.heat}</text>
+  <path d={wave(234)} class="d-line d-arrow-hot" style="stroke-width: 2.5" />
+  <text x="396" y="228" text-anchor="end" class="d-small">{s.light}</text>
+</Svg>

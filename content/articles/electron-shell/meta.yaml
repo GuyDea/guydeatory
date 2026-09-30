@@ -1,10 +1,19 @@
 # Language-independent facts about this article. Guide: docs/writing-guide.md (Metadata).
 topics: [matter, chemistry]
 labels: [high-level]
-prerequisites: [atom]
-related: []
-status: stub
+prerequisites: [atom, electron]
+related: [periodic-table, ion, chemical-bond, chemical-element]
+status: published
 created: 2026-09-30
 updated: 2026-09-30
 sources:
-  - { title: 'Electron shell — Wikipedia', url: 'https://en.wikipedia.org/wiki/Electron_shell' }
+  - title: Flame tests (the wooden splint method) — Royal Society of Chemistry, Education
+    url: https://edu.rsc.org/experiments/flame-tests-the-wooden-splint-method/759.article
+  - title: Sodium (Na) strong lines — NIST Handbook of Basic Atomic Spectroscopic Data
+    url: https://physics.nist.gov/PhysRefData/Handbook/Tables/sodiumtable2.htm
+  - title: Electron shell — Wikipedia
+    url: https://en.wikipedia.org/wiki/Electron_shell
+  - title: Fireworks (colours and the metals that make them) — Wikipedia
+    url: https://en.wikipedia.org/wiki/Fireworks
+  - title: Helium (discovery in the Sun’s spectrum) — Wikipedia
+    url: https://en.wikipedia.org/wiki/Helium

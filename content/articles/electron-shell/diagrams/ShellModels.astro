@@ -1,0 +1,70 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'The electron shells of carbon, neon, sodium and chlorine',
+    desc: 'Four atoms, each a nucleus with rings for its electron shells and dots for its electrons. Carbon has 2 electrons in the first shell and 4 in the second, with 4 empty places. Neon has 2 and 8: its outer shell is full. Sodium has 2, 8 and a single electron in its third shell. Chlorine has 2, 8 and 7, one short of a full outer shell. In each atom, the outer shell is drawn in a stronger colour than the inner ones.',
+    atoms: [
+      ['carbon', '2, 4'],
+      ['neon', '2, 8: full'],
+      ['sodium', '2, 8, 1'],
+      ['chlorine', '2, 8, 7'],
+    ],
+  },
+  sk: {
+    title: 'Elektrónové vrstvy uhlíka, neónu, sodíka a chlóru',
+    desc: 'Štyri atómy, každý s jadrom, s krúžkami pre elektrónové vrstvy a s bodkami pre elektróny. Uhlík má 2 elektróny v prvej vrstve a 4 v druhej, v ktorej sú ešte 4 voľné miesta. Neón má 2 a 8: jeho vonkajšia vrstva je plná. Sodík má 2, 8 a jediný elektrón v tretej vrstve. Chlór má 2, 8 a 7, do plnej vonkajšej vrstvy mu chýba jeden elektrón. Vonkajšia vrstva má v každom atóme výraznejšiu farbu ako vnútorné vrstvy.',
+    atoms: [
+      ['uhlík', '2, 4'],
+      ['neón', '2, 8: plná'],
+      ['sodík', '2, 8, 1'],
+      ['chlór', '2, 8, 7'],
+    ],
+  },
+} as const;
+const s = strings[Astro.props.lang];
+
+const RADII = [19, 36, 53];
+const atoms = [
+  { shells: [2, 4], cx: 100, cy: 60 },
+  { shells: [2, 8], cx: 300, cy: 60 },
+  { shells: [2, 8, 1], cx: 100, cy: 232 },
+  { shells: [2, 8, 7], cx: 300, cy: 232 },
+];
+const round = (n: number) => Math.round(n * 10) / 10;
+// Places on a shell: 2 on the first, 8 on the others, starting at the top and going clockwise.
+// Four outer electrons sit on every other place, so they spread out like carbon's do.
+function places(shell: number, count: number, cx: number, cy: number) {
+  const r = RADII[shell]!;
+  const slots = shell === 0 ? 2 : 8;
+  const order = slots === 8 && count === 4 ? [0, 2, 4, 6] : Array.from({ length: count }, (_, i) => i);
+  return Array.from({ length: slots }, (_, i) => {
+    const angle = -Math.PI / 2 + (i * 2 * Math.PI) / slots + (shell === 0 ? Math.PI / 2 : 0);
+    return { x: round(cx + r * Math.cos(angle)), y: round(cy + r * Math.sin(angle)), filled: order.includes(i) };
+  });
+}
+---
+<Svg viewBox="0 12 400 336" title={s.title} desc={s.desc} maxWidth="30rem">
+  {
+    atoms.map(({ shells, cx, cy }, a) => (
+      <>
+        {shells.map((_, i) => (
+          <circle cx={cx} cy={cy} r={RADII[i]} class="d-line" style={i === shells.length - 1 ? 'stroke: var(--d-accent); stroke-width: 2.5' : 'stroke: var(--d-muted); stroke-width: 1.5'} />
+        ))}
+        <circle cx={cx} cy={cy} r="10" class="d-positive" />
+        {shells.map((count, i) =>
+          places(i, count, cx, cy).map(({ x, y, filled }) =>
+            filled ? <circle cx={x} cy={y} r="5" class="d-electron" /> : <circle cx={x} cy={y} r="4" class="d-line" style="stroke: var(--d-muted); stroke-width: 1.2" />,
+          ),
+        )}
+        <text x={cx} y={cy + RADII[shells.length - 1]! + 30} text-anchor="middle" class="d-label">{s.atoms[a]![0]}</text>
+        <text x={cx} y={cy + RADII[shells.length - 1]! + 50} text-anchor="middle" class="d-small">{s.atoms[a]![1]}</text>
+      </>
+    ))
+  }
+</Svg>

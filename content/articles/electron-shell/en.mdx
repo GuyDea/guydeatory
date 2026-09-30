@@ -1,11 +1,192 @@
 ---
-title: 'What are electron shells?'
-term: 'electron shell'
+title: What are electron shells?
+term: electron shell
 slug: electron-shell
-summary: 'The electrons of an atom sit in layers around its nucleus, called electron shells. The outer shell decides how the atom joins other atoms.'
-keywords: ['electron shell', 'shells', 'valence electrons', 'energy levels', 'orbitals']
+summary: The electrons of an atom sit in layers around its nucleus, called electron shells. Each shell has room for only so many electrons, and the outer shell decides how the atom behaves.
+keywords: [electron shell, electron shells, shells, energy levels, outer electrons, valence electrons, outer shell, full shell, orbitals, subshells, Bohr model, flame test, flame colours, fireworks colours, 2 8 8]
 ---
 
-The [[electron|electrons]] of an atom sit in layers around its nucleus, called electron shells. The first
-shell holds up to 2 electrons and the second up to 8. The outer shell decides how the atom joins other
-atoms.
+import ShellModels from './diagrams/ShellModels.astro';
+import ElectronJump from './diagrams/ElectronJump.astro';
+
+Every [[atom]] has a tiny nucleus in its middle, with [[electron|electrons]] moving in a fuzzy cloud
+around it. But the cloud is not a jumble. The electrons are arranged in layers, a bit like the layers
+of an onion.
+
+These layers are called **electron shells**. They explain a lot: why some atoms join up eagerly, why
+others never do, and even where the colours of fireworks come from.
+
+## Layers around the nucleus
+
+The electrons of an atom are not all the same distance from the nucleus. They sit in layers called
+shells. The first shell is closest to the nucleus, the second is further out, and the third is
+further still.
+
+Each shell has room for only so many electrons:
+
+- The first shell holds up to 2.
+- The second shell holds up to 8.
+- The third shell takes 8 more before the fourth shell starts. (In heavier atoms, it later makes
+  room for even more.)
+
+Electrons fill the shells from the inside out. The nucleus has a plus charge, and it pulls on the
+electrons, which have a minus charge. It pulls hardest on the closest ones, so the inner shells are
+the most settled places. An electron only goes further out when the inner shells are full.
+
+<Analogy title="Seats around a stage">
+Imagine a round stage with rings of seats around it. The front ring is tiny and has only 2 seats.
+The next ring has 8 seats, and so does the one after it.
+
+Everyone wants to sit as close to the stage as possible, so the front ring fills first, then the second, and so on. Electrons fill the shells
+around the nucleus in the same way.
+</Analogy>
+
+## Filling the shells, one element at a time
+
+In the [[periodic-table|periodic table]], each element has one more electron than the one before it.
+Watch how the shells fill:
+
+| Element | Electrons | Electrons in each shell |
+|---|---|---|
+| hydrogen | 1 | 1 |
+| helium | 2 | 2 |
+| lithium | 3 | 2, 1 |
+| carbon | 6 | 2, 4 |
+| neon | 10 | 2, 8 |
+| sodium | 11 | 2, 8, 1 |
+| chlorine | 17 | 2, 8, 7 |
+| argon | 18 | 2, 8, 8 |
+| calcium | 20 | 2, 8, 8, 2 |
+
+Read “2, 8, 1” like this: 2 electrons in the first shell, 8 in the second and 1 in the third.
+
+<Figure caption="Four atoms and their shells. The outer shell, drawn in blue, is the part other atoms meet. Neon’s is full. Sodium has one lonely outer electron, and chlorine is one electron short of a full shell." wide>
+  <ShellModels />
+</Figure>
+
+## The outer shell is what counts
+
+When two atoms meet, their outer shells touch first. So the electrons in the outer shell decide how
+an atom behaves. They are called **outer electrons**, or valence electrons.
+
+An atom with a full outer shell is settled and calm. Helium, neon and argon have full outer shells,
+and they almost never join with other atoms. They are the noble gases.
+
+Other atoms are not so settled. They can reach a full outer shell in different ways:
+
+- **By giving electrons away.** Sodium has only 1 outer electron, and it gives it away easily. Then
+  the full shell underneath becomes its outer shell.
+- **By taking electrons.** Chlorine has 7 outer electrons, one short of 8. It grabs an extra
+  electron whenever it can.
+- **By sharing electrons.** Carbon has 4 outer electrons. It shares them with other atoms, and each
+  partner counts the shared electrons as its own.
+
+An atom that has given away or taken electrons is called an [[ion]]. Shared electrons hold atoms
+together in [[chemical-bond|chemical bonds]], and that is how atoms join into
+[[molecule|molecules]].
+
+This is also the secret of the periodic table. Elements in the same column have the same number of
+outer electrons, so they behave alike.
+
+<GoDeeper title="Shells, subshells and orbitals">
+The simple rule “2, 8, 8” works for the first 20 elements. The full picture is richer.
+
+- Shell number $n$ can hold at most $2n^2$ electrons: 2, 8, 18 and 32 for the first four shells.
+- Each shell is split into **subshells** named s, p, d and f, which hold 2, 6, 10 and 14 electrons.
+  Shell 1 has only an s subshell. Shell 2 has s and p, so $2 + 6 = 8$. Shell 3 has s, p and d, so
+  $2 + 6 + 10 = 18$.
+- Subshells fill in order of energy, and that is not always shell by shell. In potassium and
+  calcium, the 4s subshell has less energy than 3d, so it fills first. That is why potassium is
+  2, 8, 8, 1 while its third shell still has room. From scandium to zinc, new electrons go into the
+  3d subshell, and zinc ends up as 2, 8, 18, 2.
+- Each subshell is made of **orbitals**, the cloud-like regions where an electron is likely to be
+  found. One orbital holds at most two electrons, and they must have opposite spins. This rule is
+  the Pauli exclusion principle.
+</GoDeeper>
+
+## Where do the colours of fireworks come from?
+
+Electrons can do something amazing. An atom can get a kick of [[energy]], for example from the heat
+of a flame. Then one of its electrons can jump out to a higher shell.
+
+It doesn’t stay there for long. A moment later it falls back down and gives the extra energy away as
+a tiny flash of light.
+
+<Figure caption="Heat from a flame pushes an electron out to a higher shell. When it falls back, it gives out the extra energy as a flash of light." wide>
+  <ElectronJump />
+</Figure>
+
+<Analogy title="A ball on the stairs">
+Kick a ball up a staircase, and it lands on a higher step. When it bounces back down, it gives off
+the energy of that drop. An electron is like that ball, but it can only land on the steps, never in
+between. So every drop has an exact size, and each size makes light of one exact colour.
+</Analogy>
+
+Every element has its own set of jumps, so every element glows in its own colours:
+
+| Element | Flame colour |
+|---|---|
+| sodium | yellow |
+| lithium | red |
+| strontium | red |
+| calcium | orange-red |
+| potassium | lilac |
+| barium | green |
+| copper | blue-green |
+
+Firework makers use exactly this trick. They mix in strontium for red, barium for green, sodium for
+yellow and copper for blue. Old yellow street lamps glowed because of sodium, and neon signs glow
+red-orange because of neon.
+
+<Safety>
+Never throw things into a fire or hold them in a flame to see what colour they make. Some chemicals
+give off poisonous smoke, and flames can burn you. Fireworks are only for grown-ups, who must follow
+the instructions on the pack.
+</Safety>
+
+<GoDeeper title="Colour is energy">
+The energy of one flash of light, called a **photon**, depends on its colour: $E = h f$. Here $E$ is
+the photon’s energy, $f$ is the frequency of the light and $h$ is Planck’s constant, about
+$6.63 \times 10^{-34}$ joule-seconds. Of the colours we can see, red light has the lowest frequency
+and violet the highest.
+
+Sodium’s famous yellow light has a wavelength of about 589 nanometres. Each of its photons carries
+about 2.1 electronvolts, which is exactly the drop between two of sodium’s energy levels.
+
+Every element has its own set of drops, so its light splits into a pattern of sharp coloured lines,
+like a barcode. Astronomers read these barcodes in starlight to find out what stars are made of.
+Helium was discovered this way. In 1868 it showed up as a yellow line in sunlight, 27 years before
+anyone found it on Earth. Its name comes from *helios*, the Greek word for the Sun.
+</GoDeeper>
+
+<GoDeeper title="Where the pictures go wrong">
+Shells are not solid rings, and electrons do not circle the nucleus like planets. That picture comes
+from Niels Bohr’s model of 1913, an important early step. Today, quantum physics describes each
+electron as spread out in an orbital around the nucleus. A shell is a group of orbitals with similar
+energies.
+
+The staircase is the part of the picture that is right. An electron in an atom can only have certain
+exact energies, never anything in between. That is why an atom’s light comes in exact colours.
+</GoDeeper>
+
+<Remember>
+- Electrons sit in layers around the nucleus, called electron shells.
+- The first shell holds 2 electrons. For the first 20 elements, the next shells hold 8 each.
+- Electrons fill the shells from the inside out.
+- The outer electrons decide how an atom behaves. Atoms with a full outer shell hardly react.
+- When electrons fall back to a lower shell, they give out light of exact colours.
+</Remember>
+
+<Quiz
+  question="Neon has 10 electrons. How are they arranged?"
+  options={["All 10 in the first shell", "2 in the first shell and 8 in the second", "5 in each of two shells"]}
+  answer={1}
+  explanation="The first shell holds only 2. The other 8 go into the second shell, which is then full. That is why neon hardly ever reacts."
+/>
+
+<Quiz
+  question="Why does a firework glow red?"
+  options={["The paper around it is red", "Electrons in strontium atoms fall back to lower shells and give out red light", "Fire is always red"]}
+  answer={1}
+  explanation="Heat pushes strontium’s electrons out to higher shells. When they fall back, they give out light of an exact colour: red."
+/>

@@ -1,11 +1,190 @@
 ---
-title: 'Čo sú elektrónové vrstvy?'
-term: 'elektrónová vrstva'
+title: Čo sú elektrónové vrstvy?
+term: elektrónová vrstva
 slug: elektronova-vrstva
-summary: 'Elektróny atómu sú okolo jadra usporiadané vo vrstvách, ktorým hovoríme elektrónové vrstvy. Vonkajšia vrstva rozhoduje o tom, ako sa atóm spája s inými atómami.'
-keywords: ['elektrónová vrstva', 'vrstvy', 'valenčné elektróny', 'energetické hladiny', 'orbitály']
+summary: Elektróny atómu sú okolo jadra usporiadané vo vrstvách, ktorým hovoríme elektrónové vrstvy. Do každej vrstvy sa zmestí len určitý počet elektrónov a vonkajšia vrstva rozhoduje o tom, ako sa atóm správa.
+keywords: [elektrónová vrstva, elektrónové vrstvy, vrstvy, elektrónový obal, energetické hladiny, vonkajšie elektróny, valenčné elektróny, vonkajšia vrstva, plná vrstva, orbitály, podvrstvy, Bohrov model, farbenie plameňa, farby plameňa, farby ohňostroja, 2 8 8]
 ---
 
-[[electron|Elektróny]] atómu sú okolo jadra usporiadané vo vrstvách, ktorým hovoríme elektrónové vrstvy.
-Prvá vrstva pojme najviac 2 elektróny, druhá najviac 8. Vonkajšia vrstva rozhoduje o tom, ako sa atóm
-spája s inými atómami.
+import ShellModels from './diagrams/ShellModels.astro';
+import ElectronJump from './diagrams/ElectronJump.astro';
+
+Každý [[atom|atóm]] má v strede maličké jadro a okolo neho sa v rozmazanom oblaku pohybujú
+[[electron|elektróny]]. Ten oblak však nie je neporiadna kopa. Elektróny sú v ňom usporiadané vo
+vrstvách, trochu ako cibuľa.
+
+Tieto vrstvy sa volajú **elektrónové vrstvy**. Vysvetľujú veľa vecí: prečo sa niektoré atómy
+ochotne spájajú, prečo sa iné nespájajú nikdy, a dokonca aj to, odkiaľ sa berú farby ohňostrojov.
+
+## Vrstvy okolo jadra
+
+Elektróny atómu nie sú všetky rovnako ďaleko od jadra. Sú usporiadané vo vrstvách. Prvá vrstva je
+najbližšie pri jadre, druhá je ďalej a tretia ešte ďalej.
+
+Do každej vrstvy sa zmestí len určitý počet elektrónov:
+
+- Do prvej vrstvy sa zmestia najviac 2.
+- Do druhej vrstvy sa zmestí najviac 8.
+- Do tretej vrstvy pribudne 8 elektrónov a potom sa začne štvrtá vrstva. (V ťažších atómoch sa do
+  nej neskôr zmestia aj ďalšie.)
+
+Elektróny zapĺňajú vrstvy zvnútra von. Jadro má kladný náboj a priťahuje elektróny, ktoré majú
+záporný náboj. Najsilnejšie priťahuje tie najbližšie, a preto sú vnútorné vrstvy najpokojnejšie
+miesta. Elektrón ide ďalej od jadra, až keď sú vnútorné vrstvy plné.
+
+<Analogy title="Sedadlá okolo pódia">
+Predstav si okrúhle pódium a okolo neho kruhy sedadiel. Prvý kruh je maličký a má len 2 sedadlá.
+Ďalší kruh má 8 sedadiel a ten za ním tiež.
+
+Každý chce sedieť čo najbližšie k pódiu, a tak sa
+najprv zaplní prvý kruh, potom druhý a tak ďalej. Elektróny zapĺňajú vrstvy okolo jadra rovnako.
+</Analogy>
+
+## Zapĺňanie vrstiev, prvok po prvku
+
+V [[periodic-table|periodickej tabuľke]] má každý prvok o jeden elektrón viac ako ten pred ním.
+Pozri sa, ako sa vrstvy zapĺňajú:
+
+| Prvok | Elektróny | Elektróny v jednotlivých vrstvách |
+|---|---|---|
+| vodík | 1 | 1 |
+| hélium | 2 | 2 |
+| lítium | 3 | 2, 1 |
+| uhlík | 6 | 2, 4 |
+| neón | 10 | 2, 8 |
+| sodík | 11 | 2, 8, 1 |
+| chlór | 17 | 2, 8, 7 |
+| argón | 18 | 2, 8, 8 |
+| vápnik | 20 | 2, 8, 8, 2 |
+
+Zápis „2, 8, 1“ čítaj takto: 2 elektróny v prvej vrstve, 8 v druhej a 1 v tretej.
+
+<Figure caption="Štyri atómy a ich vrstvy. Vonkajšia vrstva, nakreslená modrou, je tá časť, s ktorou sa stretnú iné atómy. Neón ju má plnú. Sodík má jeden osamelý vonkajší elektrón a chlóru do plnej vrstvy jeden elektrón chýba." wide>
+  <ShellModels />
+</Figure>
+
+## Rozhoduje vonkajšia vrstva
+
+Keď sa stretnú dva atómy, ako prvé sa dotknú ich vonkajšie vrstvy. Preto o správaní atómu rozhodujú
+elektróny vo vonkajšej vrstve. Hovoríme im **vonkajšie elektróny** alebo valenčné elektróny.
+
+Atóm s plnou vonkajšou vrstvou je spokojný a pokojný. Hélium, neón a argón majú plné vonkajšie
+vrstvy a s inými atómami sa takmer nikdy nespájajú. Sú to vzácne plyny.
+
+Ostatné atómy také spokojné nie sú. K plnej vonkajšej vrstve sa môžu dostať rôznymi spôsobmi:
+
+- **Odovzdajú elektróny.** Sodík má len 1 vonkajší elektrón a ľahko ho odovzdá. Plná vrstva pod
+  ním sa potom stane jeho vonkajšou vrstvou.
+- **Zoberú elektróny.** Chlór má 7 vonkajších elektrónov, do ôsmich mu jeden chýba. Keď môže,
+  schmatne elektrón navyše.
+- **Podelia sa o elektróny.** Uhlík má 4 vonkajšie elektróny. Delí sa o ne s inými atómami a každý
+  partner počíta spoločné elektróny aj medzi svoje.
+
+Atóm, ktorý elektróny odovzdal alebo zobral, sa volá [[ion|ión]]. Spoločné elektróny držia atómy
+pokope v [[chemical-bond|chemických väzbách]] a takto sa atómy spájajú do
+[[molecule|molekúl]].
+
+V tom je aj tajomstvo periodickej tabuľky. Prvky v tom istom stĺpci majú rovnaký počet vonkajších
+elektrónov, a preto sa správajú podobne.
+
+<GoDeeper title="Vrstvy, podvrstvy a orbitály">
+Jednoduché pravidlo „2, 8, 8“ platí pre prvých 20 prvkov. Celý obraz je bohatší.
+
+- Do vrstvy s číslom $n$ sa zmestí najviac $2n^2$ elektrónov: 2, 8, 18 a 32 pre prvé štyri vrstvy.
+- Každá vrstva sa delí na **podvrstvy** s, p, d a f, do ktorých sa zmestí 2, 6, 10 a 14 elektrónov.
+  Prvá vrstva má len podvrstvu s. Druhá má s a p, teda $2 + 6 = 8$. Tretia má s, p aj d, teda
+  $2 + 6 + 10 = 18$.
+- Podvrstvy sa zapĺňajú podľa energie, a to nie vždy vrstvu po vrstve. V draslíku a vápniku má
+  podvrstva 4s menšiu energiu ako 3d, a preto sa zapĺňa skôr. Draslík má preto 2, 8, 8, 1, hoci
+  v tretej vrstve ešte je miesto. Od skandia po zinok pribúdajú nové elektróny do podvrstvy 3d
+  a zinok nakoniec má 2, 8, 18, 2.
+- Každá podvrstva sa skladá z **orbitálov**, oblakov, v ktorých sa elektrón s veľkou
+  pravdepodobnosťou nachádza. V jednom orbitáli môžu byť najviac dva elektróny a musia mať opačný
+  spin. Toto pravidlo sa volá Pauliho vylučovací princíp.
+</GoDeeper>
+
+## Odkiaľ sa berú farby ohňostrojov?
+
+Elektróny dokážu niečo úžasné. Atóm môže dostať [[energy|energiu]] navyše, napríklad z tepla
+plameňa. Jeden z jeho elektrónov potom môže vyskočiť do vyššej vrstvy.
+
+Dlho tam však nezostane. O chvíľu spadne späť a energiu navyše odovzdá ako drobný záblesk svetla.
+
+<Figure caption="Teplo z plameňa vytlačí elektrón do vyššej vrstvy. Keď spadne späť, odovzdá energiu navyše ako záblesk svetla." wide>
+  <ElectronJump />
+</Figure>
+
+<Analogy title="Loptička na schodoch">
+Kopni loptičku hore schodmi a pristane na vyššom schode. Keď sa odrazí späť dole, odovzdá energiu
+toho pádu. Elektrón je ako tá loptička, lenže môže pristať iba na schodoch, nikdy nie medzi nimi.
+Každý pád má preto presnú veľkosť a každá veľkosť vytvorí svetlo jednej presnej farby.
+</Analogy>
+
+Každý prvok má vlastnú sadu skokov, a preto každý prvok svieti vlastnými farbami:
+
+| Prvok | Farba plameňa |
+|---|---|
+| sodík | žltá |
+| lítium | červená |
+| stroncium | červená |
+| vápnik | oranžovočervená |
+| draslík | svetlofialová |
+| bárium | zelená |
+| meď | modrozelená |
+
+Výrobcovia ohňostrojov používajú presne tento trik. Primiešajú stroncium na červenú, bárium na
+zelenú, sodík na žltú a meď na modrú. Staré žlté pouličné lampy svietili vďaka sodíku a neónové
+reklamy svietia červenooranžovo vďaka neónu.
+
+<Safety>
+Nikdy nič nehádž do ohňa ani nedrž v plameni, len aby sa ukázalo, akú farbu to dá. Niektoré látky
+vytvárajú jedovatý dym a plameň ťa môže popáliť. Ohňostroje sú len pre dospelých, ktorí musia
+dodržiavať návod na obale.
+</Safety>
+
+<GoDeeper title="Farba je energia">
+Energia jedného záblesku svetla, ktorému hovoríme **fotón**, závisí od jeho farby: $E = h \cdot f$.
+Tu $E$ je energia fotónu, $f$ je frekvencia svetla a $h$ je Planckova konštanta, približne
+$6{,}63 \cdot 10^{-34}$ joulesekundy. Z farieb, ktoré vidíme, má najnižšiu frekvenciu červené
+svetlo a najvyššiu fialové.
+
+Slávne žlté svetlo sodíka má vlnovú dĺžku asi 589&nbsp;nanometrov. Každý jeho fotón nesie asi
+2,1&nbsp;elektrónvoltu, čo je presne rozdiel medzi dvoma energetickými hladinami sodíka.
+
+Každý prvok má vlastnú sadu rozdielov, a tak sa jeho svetlo rozkladá na vzor ostrých farebných
+čiar, podobný čiarovému kódu. Astronómovia čítajú tieto čiarové kódy vo svetle hviezd a zisťujú
+z nich, z čoho sú hviezdy zložené. Takto objavili aj hélium. V roku 1868 sa ukázalo ako žltá čiara
+v slnečnom svetle, 27 rokov predtým, ako ho niekto našiel na Zemi. Jeho meno pochádza z gréckeho
+slova *helios*, čo znamená Slnko.
+</GoDeeper>
+
+<GoDeeper title="Kde obrázky klamú">
+Vrstvy nie sú pevné krúžky a elektróny neobiehajú okolo jadra ako planéty. Tento obraz pochádza
+z Bohrovho modelu z roku 1913, ktorý bol dôležitým prvým krokom. Dnes kvantová fyzika opisuje každý
+elektrón ako rozprestretý v orbitáli okolo jadra. Vrstva je skupina orbitálov s podobnou energiou.
+
+Schody sú tá časť obrazu, ktorá sedí. Elektrón v atóme môže mať len určité presné energie, nikdy nič
+medzi nimi. Preto má svetlo atómu presné farby.
+</GoDeeper>
+
+<Remember>
+- Elektróny sú okolo jadra usporiadané vo vrstvách, ktorým hovoríme elektrónové vrstvy.
+- Do prvej vrstvy sa zmestia 2 elektróny. Pri prvých 20 prvkoch sa do ďalších vrstiev zmestí po 8.
+- Elektróny zapĺňajú vrstvy zvnútra von.
+- O správaní atómu rozhodujú vonkajšie elektróny. Atómy s plnou vonkajšou vrstvou takmer nereagujú.
+- Keď elektróny spadnú späť do nižšej vrstvy, vyšlú svetlo presných farieb.
+</Remember>
+
+<Quiz
+  question="Neón má 10 elektrónov. Ako sú usporiadané?"
+  options={["Všetkých 10 v prvej vrstve", "2 v prvej vrstve a 8 v druhej", "Po 5 v dvoch vrstvách"]}
+  answer={1}
+  explanation="Do prvej vrstvy sa zmestia len 2. Zvyšných 8 ide do druhej vrstvy, ktorá je potom plná. Preto neón takmer nikdy nereaguje."
+/>
+
+<Quiz
+  question="Prečo svieti ohňostroj načerveno?"
+  options={["Papier okolo neho je červený", "Elektróny v atómoch stroncia padajú späť do nižších vrstiev a vysielajú červené svetlo", "Oheň je vždy červený"]}
+  answer={1}
+  explanation="Teplo vytlačí elektróny stroncia do vyšších vrstiev. Keď spadnú späť, vyšlú svetlo presnej farby: červené."
+/>
