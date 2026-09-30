@@ -12,8 +12,10 @@ export interface BuildOptions {
 }
 
 /** Words a reader actually reads: no code, math, JSX tags or ESM lines. */
+/** Words of the main text, which drive the reading time. Go-deeper blocks are optional and start collapsed. */
 function countWords(body: string): number {
   const readable = stripCode(body)
+    .replace(/<GoDeeper\b[^>]*>[\s\S]*?<\/GoDeeper>/g, '')
     .replace(/^(import|export)\s.*$/gm, '')
     .replace(/\$\$[\s\S]*?\$\$/g, '')
     .replace(/\$[^$\n]+\$/g, '')

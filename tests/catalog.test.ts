@@ -60,7 +60,7 @@ describe('buildCatalog — valid content', () => {
     expect(catalog.backlinks.get('electric-current') ?? []).toEqual([]);
   });
 
-  it('counts words without code, math, JSX tags or imports', () => {
+  it('counts main-text words only: no code, math, JSX tags, imports or collapsed Go-deeper blocks', () => {
     const body = [
       "import X from './x.svelte';",
       '',
@@ -78,8 +78,8 @@ describe('buildCatalog — valid content', () => {
       'See [[voltage|the push]].',
     ].join('\n');
     const { catalog } = build(raw({ articles: [article('atom', { bodyEn: body }), article('voltage')] }));
-    // Hello brave world (3) + Deep text here with math and (6) + See the push (3)
-    expect(catalog.articles.get('atom')!.texts.en!.wordCount).toBe(12);
+    // Hello brave world (3) + See the push (3). Go-deeper text is optional and starts collapsed.
+    expect(catalog.articles.get('atom')!.texts.en!.wordCount).toBe(6);
   });
 
   it('excludes drafts unless asked to include them', () => {
