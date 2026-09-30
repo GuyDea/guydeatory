@@ -178,18 +178,22 @@ const en: Strings = {
     const pair = a === b ? `the two ${EN_ELEMENT[a]} atoms` : `${EN_ELEMENT[a]} and ${EN_ELEMENT[b]}`;
     return order === 0 ? `${cap(pair)} are apart again.` : `Now ${pair} share ${EN_SHARE[order]} bond.`;
   },
-  refused: ({ reason, el = 'H' }) =>
-    reason === 'metals'
-      ? 'Metal atoms don’t join into molecules. In a lump of metal, they share a “sea” of loose electrons instead.'
-      : reason === 'metal-carbon'
-        ? 'In this lab, carbon only shares electrons: it doesn’t take them from metals.'
-        : reason === 'full'
-          ? `This ${EN_ELEMENT[el]} atom has ${isMetal(el) ? 'no electrons left to give' : 'no free bonds left'}.`
-          : MAX_ORDER[el] === 1
-            ? `${cap(EN_ELEMENT[el])} makes only single bonds.`
-            : MAX_ORDER[el] === 2
-              ? `${cap(EN_ELEMENT[el])} usually shares at most two pairs with one partner.`
-              : 'Three pairs, a triple bond, is the most these atoms can share.',
+  refused: ({ reason, el = 'H' }) => {
+    switch (reason) {
+      case 'same':
+        return 'An atom cannot join itself: pick a different one.';
+      case 'metals':
+        return 'Metal atoms don’t join into molecules. In a lump of metal, they share a “sea” of loose electrons instead.';
+      case 'metal-carbon':
+        return 'In this lab, carbon only shares electrons: it doesn’t take them from metals.';
+      case 'full':
+        return `This ${EN_ELEMENT[el]} atom has ${isMetal(el) ? 'no electrons left to give' : 'no free bonds left'}.`;
+      case 'max-order':
+        if (MAX_ORDER[el] === 1) return `${cap(EN_ELEMENT[el])} makes only single bonds.`;
+        if (MAX_ORDER[el] === 2) return `${cap(EN_ELEMENT[el])} usually shares at most two pairs with one partner.`;
+        return 'Three pairs, a triple bond, is the most these atoms can share.';
+    }
+  },
   added: (el) => `Added one ${EN_ELEMENT[el]} atom.`,
   removed: (el) => `Removed one ${EN_ELEMENT[el]} atom.`,
   cleared: 'The board is empty now. Add atoms with the buttons below.',
@@ -386,18 +390,22 @@ const sk: Strings = {
     if (order === 0) return `Väzba medzi ${SK_WITH[a]} a ${SK_WITH[b]} zanikla.`;
     return `Teraz ${a === b ? `dva atómy ${SK_OF[a]}` : `${SK_ELEMENT[a]} a ${SK_ELEMENT[b]}`} zdieľajú ${SK_SHARE[order]} väzba.`;
   },
-  refused: ({ reason, el = 'H' }) =>
-    reason === 'metals'
-      ? 'Atómy kovov netvoria molekuly. V kúsku kovu namiesto toho spoločne zdieľajú „more“ voľných elektrónov.'
-      : reason === 'metal-carbon'
-        ? 'V tomto laboratóriu uhlík elektróny iba zdieľa – od kovov si ich neberie.'
-        : reason === 'full'
-          ? `Atóm ${SK_OF[el]} už ${isMetal(el) ? 'nemá čo darovať' : 'nemá voľnú väzbu'}.`
-          : MAX_ORDER[el] === 1
-            ? `${cap(SK_ELEMENT[el])} tvorí iba jednoduché väzby.`
-            : MAX_ORDER[el] === 2
-              ? `${cap(SK_ELEMENT[el])} zvyčajne zdieľa s jedným partnerom najviac dva páry.`
-              : 'Trojitá väzba, teda tri páry, je najviac, čo tieto atómy dokážu zdieľať.',
+  refused: ({ reason, el = 'H' }) => {
+    switch (reason) {
+      case 'same':
+        return 'Atóm sa nemôže spojiť sám so sebou: vyber iný.';
+      case 'metals':
+        return 'Atómy kovov netvoria molekuly. V kúsku kovu namiesto toho spoločne zdieľajú „more“ voľných elektrónov.';
+      case 'metal-carbon':
+        return 'V tomto laboratóriu uhlík elektróny iba zdieľa – od kovov si ich neberie.';
+      case 'full':
+        return `Atóm ${SK_OF[el]} už ${isMetal(el) ? 'nemá čo darovať' : 'nemá voľnú väzbu'}.`;
+      case 'max-order':
+        if (MAX_ORDER[el] === 1) return `${cap(SK_ELEMENT[el])} tvorí iba jednoduché väzby.`;
+        if (MAX_ORDER[el] === 2) return `${cap(SK_ELEMENT[el])} zvyčajne zdieľa s jedným partnerom najviac dva páry.`;
+        return 'Trojitá väzba, teda tri páry, je najviac, čo tieto atómy dokážu zdieľať.';
+    }
+  },
   added: (el) => `Pribudol jeden atóm ${SK_OF[el]}.`,
   removed: (el) => `Jeden atóm ${SK_OF[el]} je preč.`,
   cleared: 'Plocha je teraz prázdna. Atómy pridáš tlačidlami nižšie.',

@@ -76,6 +76,7 @@ describe('MoleculeLab strings', () => {
   it('explains every refusal', () => {
     for (const lang of LANG_CODES) {
       const s = strings[lang];
+      expect(s.refused({ reason: 'same' })).toMatch(/.{20}/);
       expect(s.refused({ reason: 'metals' })).toMatch(/.{30}/);
       expect(s.refused({ reason: 'metal-carbon' })).toMatch(/.{30}/);
       expect(s.refused({ reason: 'full', el: 'O' })).toMatch(/.{15}/);

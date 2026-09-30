@@ -52,7 +52,7 @@ export interface Board {
   next: number;
 }
 
-export type Refusal = 'metals' | 'metal-carbon' | 'full' | 'max-order';
+export type Refusal = 'same' | 'metals' | 'metal-carbon' | 'full' | 'max-order';
 
 export type BondOutcome = { ok: true; board: Board; link: Link } | { ok: false; reason: Refusal; atom?: number };
 
@@ -119,6 +119,7 @@ function withLink(board: Board, existing: Link | undefined, link: Link): Board {
 
 /** Join atoms `a` and `b`, or share one more pair if they are joined already. */
 export function bond(board: Board, a: number, b: number): BondOutcome {
+  if (a === b) return { ok: false, reason: 'same' };
   const [ea, eb] = [elementOf(board, a), elementOf(board, b)];
   const [ma, mb] = [isMetal(ea), isMetal(eb)];
   if (ma && mb) return { ok: false, reason: 'metals' };

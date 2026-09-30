@@ -200,7 +200,8 @@ describe('MoleculeLab layout', () => {
         if (roll < 0.3 || ids.length < 2) {
           board = addAtom(board, pick(elements)) ?? board;
         } else if (roll < 0.85) {
-          const outcome = bond(board, pick(ids), pick(ids.filter((id, _, all) => all.length > 1)));
+          const a = pick(ids);
+          const outcome = bond(board, a, pick(ids.filter((id) => id !== a)));
           if (outcome.ok) board = outcome.board;
         } else if (roll < 0.93 && board.links.length) {
           const link = pick(board.links);

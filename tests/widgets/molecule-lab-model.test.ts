@@ -82,6 +82,11 @@ describe('MoleculeLab model: covalent bonds', () => {
     expect(freeValence(board, 1)).toBe(2);
   });
 
+  it('refuses to join an atom to itself', () => {
+    expect(bond(buildBoard('C', ''), 0, 0)).toEqual({ ok: false, reason: 'same' });
+    expect(bond(buildBoard('Na', ''), 0, 0)).toEqual({ ok: false, reason: 'same' });
+  });
+
   it('keeps at most 12 atoms on the board', () => {
     let board = emptyBoard();
     for (let i = 0; i < MAX_ATOMS; i++) board = addAtom(board, 'H')!;

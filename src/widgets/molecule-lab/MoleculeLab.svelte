@@ -596,8 +596,11 @@
 
 <style>
   /* The board ------------------------------------------------------------ */
+  /* Quick taps on a phone should pick atoms, not zoom the page or select the symbols as text. */
   .board {
     touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .shine-stop {
