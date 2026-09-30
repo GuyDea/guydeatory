@@ -216,8 +216,20 @@ describe('MoleculeLab layout', () => {
         widest = Math.max(widest, viewBox(placed)[2]);
         const groups = clusters(board);
         for (const g of groups) {
-          const ring = board.links.filter((l) => g.includes(l.a)).length >= g.length;
-          if (!ring) for (const l of board.links.filter((l) => g.includes(l.a))) expect(distance(placed[l.a]!, placed[l.b]!), where).toBeCloseTo(BOND, 3);
+          const links = board.links.filter((l) => g.includes(l.a));
+          const ring = links.length >= g.length;
+          if (ring) continue;
+          for (const l of links) expect(distance(placed[l.a]!, placed[l.b]!), where).toBeCloseTo(BOND, 3);
+          // A molecule never folds over itself: no bond runs across one of its other atoms.
+          for (const l of links) {
+            for (const id of g) {
+              if (id === l.a || id === l.b) continue;
+              const [p, q, c] = [placed[l.a]!, placed[l.b]!, placed[id]!];
+              const t = Math.max(0, Math.min(1, ((c.x - p.x) * (q.x - p.x) + (c.y - p.y) * (q.y - p.y)) / BOND ** 2));
+              const gap = Math.hypot(c.x - p.x - t * (q.x - p.x), c.y - p.y - t * (q.y - p.y));
+              expect(gap, `${where}: bond ${l.a}–${l.b} runs over atom ${id}`).toBeGreaterThan(RADIUS[elementOf(board, id)] + 8);
+            }
+          }
         }
         for (const [i, g] of groups.entries()) {
           for (const h of groups.slice(i + 1)) {
@@ -241,6 +253,32 @@ describe('MoleculeLab layout', () => {
       board = addAtom(board, el)!;
       placed = layout(board, placed);
       expectTidy(board, placed);
+    }
+  });
+
+  it('does not curl a long chain over itself when its atoms come from all over the board', () => {
+    // Twelve atoms scattered by the palette, then joined end to end: H–O–O–…–O–H.
+    let board = INITIAL.board;
+    let placed = layout(board, INITIAL.seeds);
+    board = { atoms: [], links: [], next: board.next };
+    placed = layout(board, placed);
+    for (const el of ['H', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'H'] as const) {
+      board = addAtom(board, el)!;
+      placed = layout(board, placed);
+    }
+    const ids = board.atoms.map((atom) => atom.id);
+    for (let i = 0; i + 1 < ids.length; i++) {
+      const outcome = bond(board, ids[i]!, ids[i + 1]!);
+      if (!outcome.ok) throw new Error(outcome.reason);
+      board = outcome.board;
+      placed = layout(board, placed);
+    }
+    for (const a of ids) {
+      for (const b of ids) {
+        if (a < b && !board.links.some((l) => (l.a === a && l.b === b) || (l.a === b && l.b === a))) {
+          expect(distance(placed[a]!, placed[b]!), `atoms ${a} and ${b}`).toBeGreaterThan(RADIUS[elementOf(board, a)] + RADIUS[elementOf(board, b)] + 8);
+        }
+      }
     }
   });
 

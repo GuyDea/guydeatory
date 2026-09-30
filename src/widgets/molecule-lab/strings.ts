@@ -212,7 +212,7 @@ const en: Strings = {
     ionic: 'Ionic: made of ions that attract each other.',
   },
   unfinished: 'Not finished yet',
-  unnamed: 'Complete! This one isn’t in the lab’s list, though.',
+  unnamed: 'Every bond is filled. It isn’t in the lab’s list, and not every pattern like this is a real, stable substance.',
   start: 'Pick an atom on the board to start building.',
   hintText: enHint,
   summary: ({ items, free }) => {
@@ -424,7 +424,7 @@ const sk: Strings = {
     ionic: 'Iónová: skladá sa z iónov, ktoré sa navzájom priťahujú.',
   },
   unfinished: 'Ešte to nie je hotové',
-  unnamed: 'Hotovo! V zozname laboratória však nie je.',
+  unnamed: 'Všetky väzby sú obsadené. V zozname laboratória nie je a nie každý takýto útvar je skutočná, stála látka.',
   start: 'Vyber atóm na ploche a začni stavať.',
   hintText: skHint,
   summary: ({ items, free }) => {

@@ -141,8 +141,40 @@ function arrange(pattern: number[], kids: number[], here: Point | undefined, bef
   return { error: best.error, kids: kidAngles, hands: free.map((i) => angles[i]!) };
 }
 
-/** A molecule drawn around its centre at (0, 0), before it is turned and moved into place. */
+/** Whether a drawing folds over itself: two atoms too close, or a bond running across another atom. */
+function foldsOver(board: Board, ids: number[], placed: Map<number, Placed>): boolean {
+  const links = board.links.filter((link) => placed.has(link.a) && placed.has(link.b));
+  const bonded = (a: number, b: number) => links.some((l) => (l.a === a && l.b === b) || (l.a === b && l.b === a));
+  for (const a of ids) {
+    for (const b of ids) {
+      const [p, q] = [placed.get(a)!, placed.get(b)!];
+      if (a < b && !bonded(a, b) && Math.hypot(p.x - q.x, p.y - q.y) < p.r + q.r + 8) return true;
+    }
+  }
+  for (const link of links) {
+    const [p, q] = [placed.get(link.a)!, placed.get(link.b)!];
+    const length2 = (q.x - p.x) ** 2 + (q.y - p.y) ** 2 || 1;
+    for (const id of ids) {
+      if (id === link.a || id === link.b) continue;
+      const c = placed.get(id)!;
+      const t = Math.max(0, Math.min(1, ((c.x - p.x) * (q.x - p.x) + (c.y - p.y) * (q.y - p.y)) / length2));
+      if (Math.hypot(c.x - p.x - t * (q.x - p.x), c.y - p.y - t * (q.y - p.y)) < c.r + 8) return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * A molecule drawn around its centre at (0, 0), before it is turned and moved into place. Following
+ * where the atoms were can curl a long chain over itself; then it is drawn afresh as a zigzag.
+ */
 function drawMolecule(board: Board, ids: number[], before: Record<number, Before>): Map<number, Placed> {
+  const drawing = drawFrom(board, ids, before);
+  const ring = board.links.filter((link) => drawing.has(link.a)).length >= ids.length;
+  return !ring && foldsOver(board, ids, drawing) ? drawFrom(board, ids, {}) : drawing;
+}
+
+function drawFrom(board: Board, ids: number[], before: Record<number, Before>): Map<number, Placed> {
   const centre = centreOf(board, ids);
   const parent = new Map<number, number>([[centre, -1]]);
   const order = [centre];
