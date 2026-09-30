@@ -1,0 +1,80 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Ions carry a current through salty water',
+    desc: 'A glass of salty water with two metal plates dipped into it. Wires join the plates to a battery and a lit bulb. The plate on the left is joined to the minus end of the battery, the one on the right to the plus end. Small arrows show the plus sodium ions drifting to the left, towards the minus plate, and the minus chloride ions drifting to the right, towards the plus plate.',
+    sodium: 'sodium ion Na⁺',
+    chloride: 'chloride ion Cl⁻',
+  },
+  sk: {
+    title: 'Ióny prenášajú prúd slanou vodou',
+    desc: 'Pohár slanej vody, do ktorého sú ponorené dve kovové platničky. Drôty ich spájajú s batériou a so svietiacou žiarovkou. Ľavá platnička je spojená so záporným koncom batérie, pravá s kladným. Malé šípky ukazujú, ako sa kladné sodné ióny posúvajú doľava k zápornej platničke a záporné chloridové ióny doprava ku kladnej platničke.',
+    sodium: 'sodný ión Na⁺',
+    chloride: 'chloridový ión Cl⁻',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+
+// A 3 × 3 checkerboard of ions, nudged a little so it doesn't look like a crystal.
+const ions = [
+  { x: 140, y: 170, plus: false },
+  { x: 205, y: 164, plus: true },
+  { x: 262, y: 172, plus: false },
+  { x: 136, y: 214, plus: true },
+  { x: 198, y: 218, plus: false },
+  { x: 256, y: 210, plus: true },
+  { x: 144, y: 258, plus: false },
+  { x: 212, y: 250, plus: true },
+  { x: 262, y: 260, plus: false },
+];
+const plus = (x: number, y: number, arm: number) => `M${x - arm} ${y}h${arm * 2}M${x} ${y - arm}v${arm * 2}`;
+const minus = (x: number, y: number, arm: number) => `M${x - arm} ${y}h${arm * 2}`;
+const signStyle = 'stroke: var(--d-fill); stroke-width: 2.2; stroke-linecap: round';
+const wire = 'stroke-width: 4';
+---
+<Svg viewBox="0 0 400 326" title={s.title} desc={s.desc} maxWidth="30rem">
+  <rect x="62" y="140" width="276" height="140" rx="18" class="d-cool" opacity="0.3" />
+  <path d="M62 140H338" class="d-line" style="stroke: var(--d-muted); stroke-width: 1.5" />
+  <path d="M60 104V262Q60 282 80 282H320Q340 282 340 262V104" class="d-line" style="stroke-width: 2.5" />
+  <path d="M170 36H106V98" class="d-wire" style={wire} />
+  <path d="M236 36H294V56M294 84V100" class="d-wire" style={wire} />
+  <rect x="170" y="22" width="60" height="28" rx="5" class="d-box" />
+  <rect x="230" y="30" width="7" height="12" rx="2" class="d-box" />
+  <text x="184" y="43" text-anchor="middle" class="d-label">−</text>
+  <text x="216" y="43" text-anchor="middle" class="d-label">+</text>
+  <circle cx="294" cy="70" r="14" class="d-glow" style="stroke: var(--d-ink); stroke-width: 2" />
+  <path d="M318 70h10M312 52l7-7M312 88l7 7M276 52l-7-7" class="d-line" style="stroke: var(--d-warm); stroke-width: 2.5" />
+  <rect x="100" y="98" width="12" height="150" rx="3" class="d-box-alt" />
+  <rect x="288" y="100" width="12" height="148" rx="3" class="d-box-alt" />
+  <text x="84" y="132" text-anchor="middle" class="d-label">−</text>
+  <text x="316" y="132" text-anchor="middle" class="d-label">+</text>
+  {
+    ions.map(({ x, y, plus: positive }) =>
+      positive ? (
+        <>
+          <circle cx={x} cy={y} r="9" class="d-positive" />
+          <path d={plus(x, y, 4)} fill="none" style={signStyle} />
+          <path d={`M${x - 12} ${y}H${x - 26}`} class="d-line d-arrow" />
+        </>
+      ) : (
+        <>
+          <circle cx={x} cy={y} r="12" class="d-electron" />
+          <path d={minus(x, y, 5)} fill="none" style={signStyle} />
+          <path d={`M${x + 15} ${y}H${x + 29}`} class="d-line d-arrow" />
+        </>
+      ),
+    )
+  }
+  <circle cx="72" cy="306" r="9" class="d-positive" />
+  <path d={plus(72, 306, 4)} fill="none" style={signStyle} />
+  <text x="88" y="311" class="d-small">{s.sodium}</text>
+  <circle cx="228" cy="306" r="12" class="d-electron" />
+  <path d={minus(228, 306, 5)} fill="none" style={signStyle} />
+  <text x="246" y="311" class="d-small">{s.chloride}</text>
+</Svg>

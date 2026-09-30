@@ -1,11 +1,182 @@
 ---
-title: 'Čo je ión?'
-term: 'ión'
+title: Čo je ión?
+term: ión
 slug: ion
-summary: 'Ión je atóm, ktorý má viac alebo menej elektrónov ako protónov, a preto má elektrický náboj.'
-keywords: ['ión', 'ióny', 'katión', 'anión', 'elektrolyty', 'Na+', 'Cl-']
+summary: Ión je atóm, ktorý stratil alebo získal jeden či viac elektrónov. Jeho kladné a záporné náboje sa už navzájom nevyrovnajú, a preto má elektrický náboj.
+keywords: [ión, ióny, katión, anión, kladný ión, záporný ión, nabitý atóm, elektrolyt, elektrolyty, soľ, slaná voda, sodný ión, chloridový ión, Na+, Cl-, Ca2+, O2-, lítium-iónová batéria, nervy, elektrolýza]
 ---
 
-Ión je [[atom|atóm]], ktorý má viac alebo menej [[electron|elektrónov]] ako protónov, a preto má
-[[electric-charge|elektrický náboj]]. Atóm sodíka, ktorý stratí jeden elektrón, sa zmení na kladný
-ión sodíka Na⁺.
+import SodiumChlorine from './diagrams/SodiumChlorine.astro';
+import SaltyWater from './diagrams/SaltyWater.astro';
+
+Vmiešaj lyžičku soli do pohára vody a soľ akoby zmizla. Stále tam však je, len v podobe, ktorá je
+priveľmi malá na to, aby sa dala uvidieť: ako drobné nabité čiastočky, ktorým hovoríme **ióny**.
+
+Vďaka iónom vedie slaná voda elektrinu. Ióny prenášajú správy po tvojich nervoch a putujú tam
+a späť vo vnútri batérie telefónu. Poďme zistiť, čo sú zač.
+
+## Keď atóm elektróny stratí alebo získa
+
+Bežný [[atom|atóm]] má presne toľko [[electron|elektrónov]] ako protónov. Protóny majú kladný
+[[electric-charge|elektrický náboj]] a elektróny záporný. Navzájom sa vyrovnajú, takže atóm ako
+celok nemá žiadny náboj.
+
+Elektróny sú však na okraji atómu a môžu prechádzať z jedného atómu na druhý. Atóm, ktorý elektróny
+stratil alebo získal, sa volá **ión**:
+
+- Atóm, ktorý elektróny **stratí**, má viac plusov ako mínusov. Stane sa z neho **kladný ión**.
+- Atóm, ktorý elektróny **získa**, má viac mínusov ako plusov. Stane sa z neho **záporný ión**.
+
+Kladným iónom vedci hovoria **katióny** a záporným **anióny**.
+
+Pohybujú sa len elektróny. Protóny zostávajú zamknuté v jadre, a tak atóm zostane tým istým
+[[chemical-element|prvkom]]. Atóm sodíka, ktorý stratí elektrón, je stále sodík, ale teraz je to
+sodný ión.
+
+## Ako sa ióny zapisujú?
+
+Chemici zapisujú ión ako značku prvku s malým znamienkom vpravo hore. Znamienko ukazuje náboj: koľko
+elektrónov chýba alebo je navyše.
+
+| Ión | Čo sa stalo | Názov |
+|---|---|---|
+| Na⁺ | atóm sodíka stratil 1 elektrón | sodný ión |
+| Ca²⁺ | atóm vápnika stratil 2 elektróny | vápenatý ión |
+| Cl⁻ | atóm chlóru získal 1 elektrón | chloridový ión |
+| O²⁻ | atóm kyslíka získal 2 elektróny | oxidový ión |
+
+Kovy, ako sodík a vápnik, zvyčajne elektróny strácajú a stávajú sa z nich kladné ióny. Nekovy, ako
+chlór a kyslík, zvyčajne elektróny získavajú a stávajú sa z nich záporné ióny. Názvy záporných iónov
+sa často končia na *-idový*: chloridový, oxidový, fluoridový.
+
+## Prečo atómy elektróny odovzdávajú alebo berú?
+
+Všetko závisí od vonkajšej [[electron-shell|elektrónovej vrstvy]]. Atómy sú najspokojnejšie, keď
+majú vonkajšiu vrstvu plnú.
+
+Atóm sodíka má 11 elektrónov, usporiadaných 2, 8, 1. Jeho jediný vonkajší elektrón sa dá ľahko
+stratiť. Keď je preč, plná vrstva pod ním sa stane vonkajšou vrstvou: 2, 8.
+
+Atóm chlóru má 17 elektrónov, usporiadaných 2, 8, 7. Do plnej vonkajšej vrstvy mu chýba len jeden,
+a tak ho schmatne, kedykoľvek môže: 2, 8, 8.
+
+<Analogy title="Férová výmena">
+Dve deti zbierajú nálepky. Jedno má plnú stranu albumu a jednu voľnú nálepku navyše. Druhému chýba
+presne jedna nálepka do plnej strany. Prvé dieťa podá voľnú nálepku druhému a teraz sú plné obe
+strany!
+</Analogy>
+
+Keď sa sodík stretne s chlórom, elektrón takto preskočí zo sodíka na chlór. Vznikne ión Na⁺ a ión
+Cl⁻ a plus a mínus sa navzájom priťahujú. Nespočetné takéto dvojice natesno pri sebe tvoria biele
+kryštáliky kuchynskej soli. Toto držanie medzi iónmi je jeden druh
+[[chemical-bond|chemickej väzby]], ktorý sa volá iónová väzba.
+
+<Figure caption="Sodík odovzdá svoj jediný vonkajší elektrón chlóru. Oba skončia s plnou vonkajšou vrstvou: sodík ako kladný ión, chlór ako záporný ión. Opačné náboje ich k sebe priťahujú." wide>
+  <SodiumChlorine />
+</Figure>
+
+## Čo sa stane, keď sa soľ rozpustí?
+
+Kryštál soli je úhľadne poskladaný z iónov Na⁺ a Cl⁻, ktoré sa striedajú ako políčka na šachovnici,
+len v troch rozmeroch. Pozri sa na soľ lupou: mnohé zrnká sú drobné kocky!
+
+Keď soľ nasypeš do vody, voda obklopí ióny a jeden po druhom ich vytiahne z kryštálu. Ióny sa
+rozptýlia po celej vode. Preto sa zdá, že soľ zmizla: rozpadla sa na ióny, ktoré sú primalé na to,
+aby sa dali uvidieť.
+
+Tieto ióny sa môžu pohybovať. Keď sa do slanej vody ponoria dva drôty od batérie, kladné sodné ióny
+sa posúvajú k zápornému drôtu. Záporné chloridové ióny sa posúvajú ku kladnému drôtu.
+
+Pohybujúce sa náboje sú elektrický prúd! Preto slaná voda vedie elektrinu, kým veľmi čistá voda
+takmer vôbec. Viac sa dozvieš v článku [[conductors-and-insulators|vodiče a izolanty]].
+
+<Figure caption="V slanej vode sa kladné sodné ióny posúvajú k zápornému drôtu a záporné chloridové ióny ku kladnému drôtu. Pohybujúce sa ióny prenášajú prúd, a preto sa žiarovka môže rozsvietiť." wide>
+  <SaltyWater />
+</Figure>
+
+<Safety>
+Elektrina zo zásuvky a voda sú smrteľná kombinácia. Nikdy nerob pokusy so zásuvkou a elektrické
+prístroje drž ďaleko od vody. Slanú vodu s batériou skúšaj len vtedy, keď je pri tebe dospelý. Pri
+drôtoch sa tvoria bublinky plynov a jedným z nich môže byť chlór, ktorý je jedovatý.
+</Safety>
+
+## Ióny v tvojom tele
+
+Tvoje telo je plné iónov. V krvi a vo vnútri buniek plávajú sodné, draselné, vápenaté a chloridové
+ióny. Lekári im hovoria **elektrolyty** a majú dôležité úlohy.
+
+Keď sa rozhodneš pohnúť prstom, po nervoch sa rúti správa. Šíri sa tak, že sodné ióny vtrhnú do
+nervovej bunky a draselné ióny z nej zase vybehnú, zakaždým o kúsok ďalej.
+
+Trochu sa to podobá na mexickú vlnu na štadióne. Každý fanúšik sa len postaví a zase si sadne, ale
+vlna obehne celý štadión.
+
+Vápenaté ióny pomáhajú svalom sťahovať sa, a to aj srdcu. Keď sa veľmi spotíš, stratíš vodu a aj
+časť týchto iónov. Preto sa na športových nápojoch píše o elektrolytoch.
+
+## Ióny v batériách
+
+Ióny tvrdo pracujú aj v batériách. Telefón alebo tablet má lítium-iónovú batériu.
+
+Keď batéria napája telefón, lítiové ióny v nej putujú z jednej strany na druhú. Zároveň cez telefón
+tečú elektróny ako [[electric-current|elektrický prúd]]. Nabíjanie potlačí lítiové ióny späť, aby
+boli pripravené na ďalšie použitie.
+
+<GoDeeper title="Náboje, názvy a ióny z viacerých atómov">
+- Náboj iónu je počet jeho protónov mínus počet jeho elektrónov, vyjadrený v násobkoch
+  elementárneho náboja, približne $1{,}602 \cdot 10^{-19}$ coulombu. Na⁺ má 11 protónov
+  a 10 elektrónov.
+- Ióny pomenoval Michael Faraday v roku 1834 podľa gréckeho slova, ktoré znamená „idúci“, pretože
+  putujú k elektródam. Katióny idú ku katóde, zápornej elektróde, a anióny k anóde, kladnej
+  elektróde.
+- Ióny môžu byť aj z viacerých atómov spojených dokopy: hydroxidový OH⁻, uhličitanový CO₃²⁻,
+  síranový SO₄²⁻ a amónny NH₄⁺.
+- H⁺ je atóm vodíka bez svojho jediného elektrónu – holý protón. Vo vode nikdy nezostane sám.
+  Naviaže sa na molekulu vody a vznikne H₃O⁺. Kyseliny sú látky, ktoré vo vode uvoľňujú H⁺.
+- Asi 99&nbsp;% vápnika v tvojom tele je uložených v kostiach a zuboch. Malý zvyšok, rozpustený
+  ako ióny Ca²⁺, riadi svaly a nervy.
+</GoDeeper>
+
+<GoDeeper title="Prečo sodík neodovzdá elektrón zadarmo?">
+Výmena nálepiek je pekný obraz, ale energia rozpráva prekvapivejší príbeh. Odtrhnúť vonkajší
+elektrón z atómu sodíka stojí asi 496 kilojoulov na mól, čo je 5,14 elektrónvoltu na jeden atóm.
+Atóm chlóru, ktorý elektrón zachytí, uvoľní len asi 349&nbsp;kJ/mol. Premeniť atóm sodíka a atóm
+chlóru na dva samostatné ióny teda celkovo energiu stojí!
+
+Odmena príde až potom. Keď sa ióny poukladajú do kryštálu soli, každý z nich sa ocitne medzi šiestimi
+susedmi s opačným nábojom. Ich priťahovanie uvoľní asi 787&nbsp;kJ/mol. Práve toto veľké uvoľnenie
+energie spôsobí, že soľ vznikne, a preto sú kryštály soli také stále.
+</GoDeeper>
+
+<GoDeeper title="O koľko lepšie vedie slaná voda?">
+Veľmi čistá voda vedie elektrinu mimoriadne zle: asi $5{,}5 \cdot 10^{-6}$ siemensu na meter. Na
+ióny H₃O⁺ a OH⁻ sa rozdelia len asi dve z každej miliardy molekúl vody. Morská voda obsahuje asi
+35 gramov soli v každom litri a vedie takmer miliónkrát lepšie: asi 5 siemensov na meter.
+
+Pri drôtoch sa ióny len tak nezastavia. Odovzdávajú alebo prijímajú tam elektróny a vznikajú nové
+látky. V slanej vode sa na zápornom drôte objavujú bublinky vodíka a na kladnom sa môže tvoriť chlór.
+Tomu sa hovorí **elektrolýza**.
+</GoDeeper>
+
+<Remember>
+- Ión je atóm, ktorý stratil alebo získal elektróny, a preto má elektrický náboj.
+- Atómy, ktoré elektróny stratia, sa stanú kladnými iónmi. Atómy, ktoré elektróny získajú, sa stanú
+  zápornými iónmi.
+- Ióny sa zapisujú s malým znamienkom náboja: Na⁺, Cl⁻, Ca²⁺, O²⁻.
+- Kuchynská soľ sa skladá z iónov Na⁺ a Cl⁻. Vo vode sa rozptýlia a môžu viesť elektrinu.
+- Ióny prenášajú správy po nervoch a pohybujú sa vo vnútri batérií.
+</Remember>
+
+<Quiz
+  question="Atóm vápnika stratí 2 elektróny. Čo sa z neho stane?"
+  options={["Ca²⁺, kladný ión", "Ca²⁻, záporný ión", "Iný prvok"]}
+  answer={0}
+  explanation="Keď stratí 2 elektróny, má o 2 protóny viac ako elektrónov, takže jeho náboj je plus 2. Stále je to vápnik."
+/>
+
+<Quiz
+  question="Prečo slaná voda vedie elektrinu?"
+  options={["Soľ obsahuje drobné drôtiky", "Soľ sa rozpadne na ióny, ktoré sa môžu pohybovať vodou", "Soľ vodu zohreje"]}
+  answer={1}
+  explanation="Vo vode sa soľ rozdelí na ióny Na⁺ a Cl⁻. Tieto nabité čiastočky sa môžu pohybovať a pohybujúce sa náboje sú elektrický prúd."
+/>

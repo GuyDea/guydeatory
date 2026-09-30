@@ -1,0 +1,100 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Sodium gives an electron to chlorine',
+    desc: 'Top: a sodium atom with electrons arranged 2, 8, 1 and a chlorine atom with 2, 8, 7. An arrow shows sodium’s single outer electron moving to the empty place in chlorine’s outer shell. Bottom: the result. The sodium ion Na⁺ has 2, 8 electrons and a plus charge. The chloride ion Cl⁻ has 2, 8, 8 electrons and a minus charge. Arrows show that the two ions pull towards each other.',
+    moves: '1 electron moves',
+    atoms: [
+      ['sodium atom', '2, 8, 1'],
+      ['chlorine atom', '2, 8, 7'],
+    ],
+    ions: [
+      ['sodium ion Na⁺', '2, 8'],
+      ['chloride ion Cl⁻', '2, 8, 8'],
+    ],
+    pull: 'pull together',
+  },
+  sk: {
+    title: 'Sodík odovzdá elektrón chlóru',
+    desc: 'Hore: atóm sodíka s elektrónmi usporiadanými 2, 8, 1 a atóm chlóru s 2, 8, 7. Šípka ukazuje, ako jediný vonkajší elektrón sodíka prejde na voľné miesto vo vonkajšej vrstve chlóru. Dole: výsledok. Sodný ión Na⁺ má elektróny 2, 8 a kladný náboj. Chloridový ión Cl⁻ má elektróny 2, 8, 8 a záporný náboj. Šípky ukazujú, že sa tieto dva ióny navzájom priťahujú.',
+    moves: 'prejde 1 elektrón',
+    atoms: [
+      ['atóm sodíka', '2, 8, 1'],
+      ['atóm chlóru', '2, 8, 7'],
+    ],
+    ions: [
+      ['sodný ión Na⁺', '2, 8'],
+      ['chloridový ión Cl⁻', '2, 8, 8'],
+    ],
+    pull: 'priťahujú sa',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+
+const RADII = [15, 29, 43];
+const round = (n: number) => Math.round(n * 10) / 10;
+/** Electron places on each shell (2 on the first, 8 on the others), clockwise from the top. */
+function shells(counts: number[], cx: number, cy: number, outerSlots = true) {
+  return counts.flatMap((count, shell) => {
+    const slots = shell === 0 ? 2 : 8;
+    const r = RADII[shell]!;
+    const last = shell === counts.length - 1;
+    return Array.from({ length: slots }, (_, i) => {
+      const angle = -Math.PI / 2 + (i * 2 * Math.PI) / slots + (shell === 0 ? Math.PI / 2 : 0);
+      return { x: round(cx + r * Math.cos(angle)), y: round(cy + r * Math.sin(angle)), filled: i < count, show: i < count || (last && outerSlots) };
+    });
+  });
+}
+const TOP = 108;
+const BOTTOM = 300;
+const atoms = [
+  { counts: [2, 8, 1], cx: 90, cy: TOP },
+  { counts: [2, 8, 7], cx: 310, cy: TOP },
+];
+const ions = [
+  { counts: [2, 8], cx: 90, cy: BOTTOM, sign: '+' },
+  { counts: [2, 8, 8], cx: 310, cy: BOTTOM, sign: '−' },
+];
+const ringStyle = (outer: boolean) => (outer ? 'stroke: var(--d-accent); stroke-width: 2.5' : 'stroke: var(--d-muted); stroke-width: 1.5');
+const emptyStyle = 'stroke: var(--d-muted); stroke-width: 1.2';
+// The electron that moves: from sodium's outer shell (top) to chlorine's empty place (upper left).
+const from = { x: 90, y: TOP - 43 };
+const to = { x: round(310 + 43 * Math.cos((225 * Math.PI) / 180)), y: round(TOP + 43 * Math.sin((225 * Math.PI) / 180)) };
+---
+<Svg viewBox="0 0 400 400" title={s.title} desc={s.desc} maxWidth="30rem">
+  {
+    [...atoms, ...ions].map(({ counts, cx, cy }) => (
+      <>
+        {counts.map((_, i) => <circle cx={cx} cy={cy} r={RADII[i]} class="d-line" style={ringStyle(i === counts.length - 1)} />)}
+        <circle cx={cx} cy={cy} r="9" class="d-positive" />
+        {shells(counts, cx, cy, cy === TOP).map(({ x, y, filled, show }) =>
+          filled ? <circle cx={x} cy={y} r="5" class="d-electron" /> : show && <circle cx={x} cy={y} r="4" class="d-line" style={emptyStyle} />,
+        )}
+      </>
+    ))
+  }
+  <path d={`M${from.x + 8} ${from.y - 8}Q200 -8 ${to.x - 4} ${to.y - 9}`} class="d-line d-arrow-electron" stroke-dasharray="6 5" style="stroke-width: 2.5" />
+  <text x="200" y="16" text-anchor="middle" class="d-small">{s.moves}</text>
+  {atoms.map(({ cx }, i) => <text x={cx} y={TOP + 72} text-anchor="middle" class="d-label">{s.atoms[i]![0]}</text>)}
+  {atoms.map(({ cx }, i) => <text x={cx} y={TOP + 92} text-anchor="middle" class="d-small">{s.atoms[i]![1]}</text>)}
+  <path d="M40 222H360" class="d-line" stroke-dasharray="2 6" style="stroke: var(--d-muted)" />
+  {
+    ions.map(({ cx, cy, sign, counts }) => (
+      <>
+        <circle cx={cx + RADII[counts.length - 1]! * 0.78 + 12} cy={cy - RADII[counts.length - 1]! * 0.78 - 10} r="12" class={sign === '+' ? 'd-positive' : 'd-electron'} />
+        <text x={cx + RADII[counts.length - 1]! * 0.78 + 12} y={cy - RADII[counts.length - 1]! * 0.78 - 4} text-anchor="middle" class="d-label" style="fill: var(--d-fill)">{sign}</text>
+      </>
+    ))
+  }
+  <path d="M124 300H162" class="d-line d-arrow" />
+  <path d="M262 300H238" class="d-line d-arrow" />
+  <text x="200" y="330" text-anchor="middle" class="d-small">{s.pull}</text>
+  {ions.map(({ cx }, i) => <text x={cx} y={BOTTOM + 70} text-anchor="middle" class="d-label">{s.ions[i]![0]}</text>)}
+  {ions.map(({ cx }, i) => <text x={cx} y={BOTTOM + 89} text-anchor="middle" class="d-small">{s.ions[i]![1]}</text>)}
+</Svg>
