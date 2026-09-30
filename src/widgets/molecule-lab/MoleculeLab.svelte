@@ -29,6 +29,7 @@
     moleculeShape,
     partialCharges,
     removeAtom,
+    transfer,
   } from './model.ts';
   import type { Board, El, Link, MoleculeShape } from './model.ts';
   import { INITIAL, MOLECULES, QUESTS, report } from './molecules.ts';
@@ -280,9 +281,7 @@
     place(next);
     pops = { ...pops, [a]: (pops[a] ?? 0) + 1, [b]: (pops[b] ?? 0) + 1 };
     if (link.ionic && !reduced.current) flights = [...flights, { key: ++serial, from: link.a, to: link.b, t: 0 }];
-    let message = link.ionic
-      ? s.gave(el(link.a), el(link.b), given, ionNotation(el(link.a), charge(board, link.a)), ionNotation(el(link.b), charge(board, link.b)))
-      : s.joined(el(a), el(b), link.order);
+    let message = link.ionic ? s.gave(transfer(board, link, given)) : s.joined(el(a), el(b), link.order);
     const item = rep.items.find((i) => i.ids.includes(b));
     if (item?.complete && item.molecule) {
       const id = item.molecule.id;

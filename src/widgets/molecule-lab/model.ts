@@ -140,6 +140,37 @@ export function bond(board: Board, a: number, b: number): BondOutcome {
   return { ok: true, board: withLink(board, existing, link), link };
 }
 
+/**
+ * Electrons that jumped along an ionic bond, and how far each atom has got. A metal that still has
+ * electrons to give (Mg after one Cl) or a nonmetal with room for more (O after one Na) is only
+ * halfway to being an ion, so the lab does not call it one yet.
+ */
+export interface Transfer {
+  metal: El;
+  nonmetal: El;
+  /** Electrons that jumped just now. */
+  electrons: number;
+  /** Electrons the metal has given in all, and those it still has to give. */
+  given: number;
+  left: number;
+  /** Electrons the nonmetal has taken in all, and the room it still has. */
+  taken: number;
+  room: number;
+}
+
+/** The transfer along ionic bond `link` (metal `a`, nonmetal `b`) on the board after `electrons` jumped. */
+export function transfer(board: Board, link: Link, electrons: number): Transfer {
+  return {
+    metal: elementOf(board, link.a),
+    nonmetal: elementOf(board, link.b),
+    electrons,
+    given: charge(board, link.a),
+    left: freeValence(board, link.a),
+    taken: -charge(board, link.b),
+    room: freeValence(board, link.b),
+  };
+}
+
 /** Take one pair back from a bond (or one electron back from an ionic bond); at zero the bond is gone. */
 export function loosen(board: Board, a: number, b: number): Board {
   const existing = linkBetween(board, a, b);

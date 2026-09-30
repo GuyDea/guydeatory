@@ -1,6 +1,6 @@
 import type { LangCode } from '../../i18n/languages.ts';
-import { isMetal, MAX_ORDER } from './model.ts';
-import type { El, Hint, Refusal, Shape } from './model.ts';
+import { ionNotation, isMetal, MAX_ORDER } from './model.ts';
+import type { El, Hint, Refusal, Shape, Transfer } from './model.ts';
 import type { MoleculeId, Polarity, QuestId, Report } from './molecules.ts';
 
 export interface MoleculeText {
@@ -38,7 +38,11 @@ export interface Strings {
   pickedInstead: (el: El) => string;
   unpicked: string;
   joined: (a: El, b: El, order: number) => string;
-  gave: (metal: El, nonmetal: El, electrons: number, metalIon: string, nonmetalIon: string) => string;
+  /**
+   * Electrons jumped from a metal to a nonmetal. Only an atom that has given (or taken) all it will
+   * is called an ion: a magnesium with an electron left is halfway, not Mg⁺.
+   */
+  gave: (transfer: Transfer) => string;
   /** A bond after it was loosened to `order` (0: gone); `a` is the metal in an ionic bond. */
   loosened: (a: El, b: El, order: number, ionic: boolean) => string;
   refused: (refusal: { reason: Refusal; el?: El }) => string;
@@ -186,8 +190,17 @@ const en: Strings = {
   unpicked: 'Nothing is picked.',
   joined: (a, b, order) =>
     `${a === b ? `Two ${EN_ELEMENT[a]} atoms` : `${cap(EN_ELEMENT[a])} and ${EN_ELEMENT[b]}`} now share ${EN_SHARE[order]} bond.`,
-  gave: (metal, nonmetal, n, metalIon, nonmetalIon) =>
-    `${n === 1 ? 'An electron jumped' : `${n} electrons jumped`} from ${EN_ELEMENT[metal]} to ${EN_ELEMENT[nonmetal]}. Now they are ions, ${metalIon} and ${nonmetalIon}, and they attract each other.`,
+  gave: ({ metal, nonmetal, electrons, given, left, taken, room }) => {
+    const jumped = `${electrons === 1 ? 'An electron jumped' : `${electrons} electrons jumped`} from ${EN_ELEMENT[metal]} to ${EN_ELEMENT[nonmetal]}.`;
+    const [metalIon, nonmetalIon] = [ionNotation(metal, given), ionNotation(nonmetal, -taken)];
+    if (left > 0) {
+      return `${jumped} ${cap(EN_ELEMENT[nonmetal])} is now an ion, ${nonmetalIon}. ${cap(EN_ELEMENT[metal])} has given ${given} of its ${given + left} outer electrons and can give ${left} more.`;
+    }
+    if (room > 0) {
+      return `${jumped} ${cap(EN_ELEMENT[metal])} is now an ion, ${metalIon}. ${cap(EN_ELEMENT[nonmetal])} has taken ${plural(taken, 'electron')} and has room for ${room} more.`;
+    }
+    return `${jumped} Now they are ions, ${metalIon} and ${nonmetalIon}, and they attract each other.`;
+  },
   loosened: (a, b, order, ionic) => {
     if (ionic) return `One electron went back from ${EN_ELEMENT[b]} to ${EN_ELEMENT[a]}.`;
     const pair = a === b ? `the two ${EN_ELEMENT[a]} atoms` : `${EN_ELEMENT[a]} and ${EN_ELEMENT[b]}`;
@@ -409,8 +422,18 @@ const sk: Strings = {
   unpicked: 'Nič nie je vybrané.',
   joined: (a, b, order) =>
     `${a === b ? `Dva atómy ${SK_OF[a]}` : `${cap(SK_ELEMENT[a])} a ${SK_ELEMENT[b]}`} teraz zdieľajú ${SK_SHARE[order]} väzba.`,
-  gave: (metal, nonmetal, n, metalIon, nonmetalIon) =>
-    `${n === 1 ? 'Elektrón preskočil' : `${n} elektróny preskočili`} ${SK_FROM[metal]} na ${SK_ACC[nonmetal]}. Teraz sú to ióny ${metalIon} a ${nonmetalIon} a navzájom sa priťahujú.`,
+  gave: ({ metal, nonmetal, electrons, given, left, taken, room }) => {
+    const jumped = `${electrons === 1 ? 'Elektrón preskočil' : `${electrons} elektróny preskočili`} ${SK_FROM[metal]} na ${SK_ACC[nonmetal]}.`;
+    const [metalIon, nonmetalIon] = [ionNotation(metal, given), ionNotation(nonmetal, -taken)];
+    if (left > 0) {
+      return `${jumped} ${cap(SK_ELEMENT[nonmetal])} je teraz ión ${nonmetalIon}. Atóm ${SK_OF[metal]} odovzdal ${given} z ${given + left} vonkajších elektrónov a môže dať ešte ${left}.`;
+    }
+    if (room > 0) {
+      const fits = room === 1 ? 'zmestí sa doň ešte 1' : `zmestia sa doň ešte ${room}`;
+      return `${jumped} ${cap(SK_ELEMENT[metal])} je teraz ión ${metalIon}. Atóm ${SK_OF[nonmetal]} prijal ${taken} ${taken === 1 ? 'elektrón' : 'elektróny'} a ${fits}.`;
+    }
+    return `${jumped} Teraz sú to ióny ${metalIon} a ${nonmetalIon} a navzájom sa priťahujú.`;
+  },
   loosened: (a, b, order, ionic) => {
     if (ionic) return `Jeden elektrón sa vrátil ${SK_FROM[b]} na ${SK_ACC[a]}.`;
     if (order === 0) return `Väzba medzi ${SK_WITH[a]} a ${SK_WITH[b]} zanikla.`;

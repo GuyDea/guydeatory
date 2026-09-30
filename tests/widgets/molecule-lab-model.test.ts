@@ -18,6 +18,7 @@ import {
   moleculeShape,
   partialCharges,
   removeAtom,
+  transfer,
 } from '../../src/widgets/molecule-lab/model.ts';
 import type { Board, BondOutcome, El } from '../../src/widgets/molecule-lab/model.ts';
 
@@ -169,6 +170,15 @@ describe('MoleculeLab model: ionic bonds', () => {
       'O²⁻',
       '',
     ]);
+  });
+
+  it('describes an electron transfer: what jumped, and how far the metal and the nonmetal have got', () => {
+    const half = buildBoard('Mg Cl Cl', '0>1');
+    expect(transfer(half, half.links[0]!, 1)).toEqual({ metal: 'Mg', nonmetal: 'Cl', electrons: 1, given: 1, left: 1, taken: 1, room: 0 });
+    const oxide = buildBoard('Na Na O', '0>2');
+    expect(transfer(oxide, oxide.links[0]!, 1)).toEqual({ metal: 'Na', nonmetal: 'O', electrons: 1, given: 1, left: 0, taken: 1, room: 1 });
+    const mgo = buildBoard('Mg O', '0>1');
+    expect(transfer(mgo, mgo.links[0]!, 2)).toEqual({ metal: 'Mg', nonmetal: 'O', electrons: 2, given: 2, left: 0, taken: 2, room: 0 });
   });
 
   it('loosening an ionic bond gives one electron back', () => {

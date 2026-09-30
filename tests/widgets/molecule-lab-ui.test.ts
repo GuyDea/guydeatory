@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { LANG_CODES } from '../../src/i18n/languages.ts';
 import { BOND_HIT, DARK_INK, HIT } from '../../src/widgets/molecule-lab/layout.ts';
 import MoleculeLab from '../../src/widgets/molecule-lab/MoleculeLab.svelte';
-import { buildBoard, ELEMENTS, moleculeShape } from '../../src/widgets/molecule-lab/model.ts';
+import { buildBoard, ELEMENTS, moleculeShape, transfer } from '../../src/widgets/molecule-lab/model.ts';
 import { INITIAL, MOLECULES, QUESTS, report } from '../../src/widgets/molecule-lab/molecules.ts';
 import { strings } from '../../src/widgets/molecule-lab/strings.ts';
 
@@ -143,6 +143,40 @@ describe('MoleculeLab strings', () => {
     expect(en.refused({ reason: 'full', el: 'S' })).toBe('In this lab, sulfur makes only two bonds, and this sulfur atom has no free bonds left.');
     expect(sk.refused({ reason: 'full', el: 'S' })).toBe('V tomto laboratóriu tvorí síra iba dve väzby a tento atóm síry už nemá voľnú väzbu.');
     expect(en.refused({ reason: 'full', el: 'O' })).toBe('This oxygen atom has no free bonds left.');
+  });
+
+  it('calls atoms ions only once they have given or taken all they will: no Mg⁺ or O⁻ halfway', () => {
+    const said = (atoms: string, bonds: string, link: number, electrons = 1) => {
+      const board = buildBoard(atoms, bonds);
+      const t = transfer(board, board.links[link]!, electrons);
+      return [en.gave(t), sk.gave(t)];
+    };
+    expect(said('Na Cl', '0>1', 0)).toEqual([
+      'An electron jumped from sodium to chlorine. Now they are ions, Na⁺ and Cl⁻, and they attract each other.',
+      'Elektrón preskočil zo sodíka na chlór. Teraz sú to ióny Na⁺ a Cl⁻ a navzájom sa priťahujú.',
+    ]);
+    // Magnesium chloride, halfway: magnesium has one more electron to give.
+    expect(said('Mg Cl Cl', '0>1', 0)).toEqual([
+      'An electron jumped from magnesium to chlorine. Chlorine is now an ion, Cl⁻. Magnesium has given 1 of its 2 outer electrons and can give 1 more.',
+      'Elektrón preskočil z horčíka na chlór. Chlór je teraz ión Cl⁻. Atóm horčíka odovzdal 1 z 2 vonkajších elektrónov a môže dať ešte 1.',
+    ]);
+    expect(said('Mg Cl Cl', '0>1 0>2', 1)).toEqual([
+      'An electron jumped from magnesium to chlorine. Now they are ions, Mg²⁺ and Cl⁻, and they attract each other.',
+      'Elektrón preskočil z horčíka na chlór. Teraz sú to ióny Mg²⁺ a Cl⁻ a navzájom sa priťahujú.',
+    ]);
+    // Sodium oxide, halfway: oxygen has room for one more electron.
+    expect(said('Na Na O', '0>2', 0)).toEqual([
+      'An electron jumped from sodium to oxygen. Sodium is now an ion, Na⁺. Oxygen has taken 1 electron and has room for 1 more.',
+      'Elektrón preskočil zo sodíka na kyslík. Sodík je teraz ión Na⁺. Atóm kyslíka prijal 1 elektrón a zmestí sa doň ešte 1.',
+    ]);
+    // Nitrogen takes two from magnesium and has room for one more.
+    expect(said('Mg N', '0>1', 0, 2)).toEqual([
+      '2 electrons jumped from magnesium to nitrogen. Magnesium is now an ion, Mg²⁺. Nitrogen has taken 2 electrons and has room for 1 more.',
+      '2 elektróny preskočili z horčíka na dusík. Horčík je teraz ión Mg²⁺. Atóm dusíka prijal 2 elektróny a zmestí sa doň ešte 1.',
+    ]);
+    expect(sk.gave(transfer(buildBoard('Na N', '0>1'), { a: 0, b: 1, order: 1, ionic: true }, 1))).toBe(
+      'Elektrón preskočil zo sodíka na dusík. Sodík je teraz ión Na⁺. Atóm dusíka prijal 1 elektrón a zmestia sa doň ešte 2.',
+    );
   });
 
   it('explains every refusal', () => {
