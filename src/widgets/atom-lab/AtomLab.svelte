@@ -344,8 +344,11 @@
     gap: var(--space-3);
   }
 
+  /* The frame pads its controls (space-4) more than its stage (space-3). The panels here reach out
+     to line up with the ones above, which gives the element table 8 px more on a phone. */
   .deck-wrap {
     grid-column: 1 / -1;
+    margin-inline: calc(var(--space-3) - var(--space-4));
   }
 
   @container (min-width: 38rem) {
@@ -652,11 +655,20 @@
     font-size: var(--text-sm);
   }
 
+  /* The real table's eight columns. On a 360 px phone they cannot be 44 px wide (8 × 44 px is more
+     than the whole widget), so the gaps and the panel's padding shrink to make them as wide as
+     they can be, about 30 px; each is still 44 px tall. */
   .table {
     display: grid;
     grid-template-columns: repeat(8, minmax(0, 1fr));
-    gap: 2px;
+    gap: 1px;
     max-width: 26rem;
+  }
+
+  @container (max-width: 22rem) {
+    .panel {
+      padding-inline: var(--space-2);
+    }
   }
 
   .cell {
