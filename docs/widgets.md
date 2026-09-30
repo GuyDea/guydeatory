@@ -56,7 +56,7 @@ tests/widgets/models.test.ts   one describe block per widget model
      language has every key.
    - Numbers use `formatNumber` / `formatQuantity`.
 4. **Colours:** use only the `--d-*` tokens and diagram classes (`src/styles/diagram.css`), so light
-   and dark mode both work.
+   and dark mode both work. Atoms have their own tokens (below).
 5. **Accessibility:**
    - Every control has a visible label.
    - Every result is shown as text (a `Readout`), not only as a picture.
@@ -71,6 +71,19 @@ tests/widgets/models.test.ts   one describe block per widget model
 7. **Size:** at most 30 KB gzipped per widget. Only the kit and Svelte are shared.
 8. **Layout:** a widget sits in the article flow and may use `<Figure wide>`. It must fit a 360 px
    screen without horizontal scrolling. Use `viewBox` SVGs that scale.
+
+## Atom colours (`--d-el-*`)
+
+Atoms are drawn in the CPK colours chemists use, from `src/styles/tokens.css`. Each token is set in
+the light block and in both dark blocks. `tests/widgets/molecule-lab-ui.test.ts` checks every
+symbol and charge mark for WCAG AA contrast (4.5:1) in all three.
+
+| Token | Use |
+|---|---|
+| `--d-el-h`, `--d-el-c`, `--d-el-n`, `--d-el-o`, `--d-el-f`, `--d-el-s`, `--d-el-cl`, `--d-el-na`, `--d-el-mg` | Atom discs: H white, C dark grey, N blue, O red, F yellow-green, S yellow, Cl green, Na violet. Mg is teal rather than CPK green, so it is not mistaken for chlorine. |
+| `--d-el-ink-dark`, `--d-el-ink-light` | The symbol on a disc: dark ink on the light atoms (H, F, S, Cl; `DARK_INK` in `src/widgets/molecule-lab/layout.ts`), light ink on the others. |
+| `--d-el-plus`, `--d-el-minus` | δ+ and δ− written beside an atom, and the fill of ion badges. The sign on a badge is drawn in `--d-fill`. |
+| `--d-el-shine` | The soft highlight that makes an atom look like a ball. |
 
 ## Embedding
 

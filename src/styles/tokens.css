@@ -58,6 +58,24 @@
   --d-cold: #1f7fd1;
   --d-accent: #2548d8;
 
+  /* Atoms in the molecule lab, after the CPK colours chemists use (docs/widgets.md). Light atoms
+     (H, F, S, Cl) take the dark ink for their symbol, the others the light ink. */
+  --d-el-h: #f4f6fa;
+  --d-el-c: #3d4452;
+  --d-el-n: #2f5fd0;
+  --d-el-o: #d0342c;
+  --d-el-f: #b5dc6a;
+  --d-el-s: #f2c230;
+  --d-el-cl: #3fae57;
+  --d-el-na: #7c43c9;
+  --d-el-mg: #127c86;
+  --d-el-ink-dark: #1a2640;
+  --d-el-ink-light: #ffffff;
+  /* Charges: text colour for δ+ / δ−, and the fill of ion badges (their sign is --d-fill) */
+  --d-el-plus: #b8391a;
+  --d-el-minus: #1a67b0;
+  --d-el-shine: #ffffff;
+
   /* Type */
   --font-body-stack: var(--font-body, system-ui, sans-serif);
   --font-display-stack: var(--font-display, system-ui, sans-serif);
@@ -132,6 +150,20 @@
     --d-cool: #a9d6ff;
     --d-cold: #4c95ff;
     --d-accent: #8fa8ff;
+    --d-el-h: #dfe6f0;
+    --d-el-c: #646e82;
+    --d-el-n: #3f6ee0;
+    --d-el-o: #d93a31;
+    --d-el-f: #b5dc6a;
+    --d-el-s: #f2c230;
+    --d-el-cl: #3fae57;
+    --d-el-na: #8650d4;
+    --d-el-mg: #127c86;
+    --d-el-ink-dark: #1a2640;
+    --d-el-ink-light: #ffffff;
+    --d-el-plus: #ff8a65;
+    --d-el-minus: #6cb8ff;
+    --d-el-shine: #ffffff;
     --shadow-raised: 0 1px 0 var(--line), 0 16px 32px -18px rgb(0 0 0 / 0.7);
   }
 }
@@ -177,5 +209,19 @@
   --d-cool: #a9d6ff;
   --d-cold: #4c95ff;
   --d-accent: #8fa8ff;
+  --d-el-h: #dfe6f0;
+  --d-el-c: #646e82;
+  --d-el-n: #3f6ee0;
+  --d-el-o: #d93a31;
+  --d-el-f: #b5dc6a;
+  --d-el-s: #f2c230;
+  --d-el-cl: #3fae57;
+  --d-el-na: #8650d4;
+  --d-el-mg: #127c86;
+  --d-el-ink-dark: #1a2640;
+  --d-el-ink-light: #ffffff;
+  --d-el-plus: #ff8a65;
+  --d-el-minus: #6cb8ff;
+  --d-el-shine: #ffffff;
   --shadow-raised: 0 1px 0 var(--line), 0 16px 32px -18px rgb(0 0 0 / 0.7);
 }
