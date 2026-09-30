@@ -170,3 +170,14 @@ describe('the search dialog', () => {
     expect([status(), hits(), all.hidden]).toEqual(['Type a word.', 0, true]);
   });
 });
+
+describe('search results', () => {
+  it('mark a hit with a lab with the flask badge, drawn with the shared lab-icon class (search.css)', async () => {
+    const { renderHits } = await import('../src/scripts/search-render.ts');
+    const list = document.createElement('ul');
+    renderHits(list, [{ url: '/en/atom/', title: 'Atom', summary: 'Tiny.', labels: [], lab: true }], DATA);
+    const badge = list.querySelector('.hit-labels .lab-badge')!;
+    expect(badge.textContent).toBe('Lab');
+    expect(badge.querySelector('svg')!.getAttribute('class')).toBe('lab-icon');
+  });
+});

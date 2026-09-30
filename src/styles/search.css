@@ -1,4 +1,9 @@
-/* Search results (rendered by scripts in the dialog and on the search page). */
+/*
+ * Search results (rendered by scripts in the dialog and on the search page), and the lab badge and
+ * its flask icon. Every page loads this file with the search dialog, so the badge in a result looks
+ * right even on a page that renders no <LabBadge> itself (Astro ships a component's own styles
+ * only where it renders).
+ */
 .hits {
   display: grid;
   gap: var(--space-2);
@@ -69,16 +74,6 @@
   gap: var(--space-2);
 }
 
-.search-chip-lab svg {
-  width: 1.15em;
-  height: 1.15em;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
 .search-chip[aria-pressed='true'] {
   background: var(--chip);
   color: var(--surface);
@@ -88,4 +83,36 @@
   min-height: 1.6em;
   color: var(--ink-soft);
   font-size: var(--text-sm);
+}
+
+/* The flask that marks an interactive lab: in the badge and in the "Has a lab" filter chips. */
+.lab-icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Article cards, Explore rows (LabBadge.astro) and search results (search-render.ts). */
+.lab-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.1em 0.6em 0.1em 0.45em;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-display-stack);
+  font-weight: 700;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.lab-badge.compact {
+  padding: 0.2em;
 }

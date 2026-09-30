@@ -40,7 +40,7 @@ const labels = [...catalog.labels.values()];
           ))
         }
         <button type="button" class="chip chip-lab" data-lab-chip aria-pressed="false" style="--chip: var(--accent); --chip-bg: var(--accent-soft)">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d={LAB_ICON_PATH} /></svg>
+          <svg class="lab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d={LAB_ICON_PATH} /></svg>
           {t(lang, 'lab.has')}
         </button>
       </div>
@@ -115,20 +115,11 @@ const labels = [...catalog.labels.values()];
     font-weight: 700;
   }
 
+  /* Its flask is styled by .lab-icon (src/styles/search.css). */
   .chip-lab {
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
-  }
-
-  .chip-lab svg {
-    width: 1.15em;
-    height: 1.15em;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
   }
 
   .chip[aria-pressed='true'] {

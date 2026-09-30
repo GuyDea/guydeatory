@@ -27,6 +27,7 @@ function labBadge(text: string): HTMLElement {
   const badge = document.createElement('span');
   badge.className = 'lab-badge';
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'lab-icon');
   svg.setAttribute('viewBox', '0 0 24 24');
   svg.setAttribute('aria-hidden', 'true');
   const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
