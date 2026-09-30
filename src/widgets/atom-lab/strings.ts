@@ -62,14 +62,14 @@ const EN_ELEMENTS = [
   'Sodium', 'Magnesium', 'Aluminium', 'Silicon', 'Phosphorus', 'Sulfur', 'Chlorine', 'Argon', 'Potassium', 'Calcium',
 ];
 
-const en1 = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+const enCount = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 const enName = (z: number) => EN_ELEMENTS[z - 1]!.toLowerCase();
 const enNuclide = (v: View) => (v.z === 1 && v.a === 2 ? 'Hydrogen-2 (deuterium)' : v.z === 1 && v.a === 3 ? 'Hydrogen-3 (tritium)' : `${EN_ELEMENTS[v.z - 1]}-${v.a}`);
 const EN_NUCLEUS = { stable: 'stable nucleus', radioactive: 'radioactive nucleus', unbound: 'nucleus falls apart quickly' };
 
 function enTendency(tendency: Tendency): string {
   if (tendency.kind === 'full') return 'Full: hardly ever reacts';
-  const electrons = en1(tendency.count, 'electron', 'electrons');
+  const electrons = enCount(tendency.count, 'electron', 'electrons');
   if (tendency.kind === 'give') return `Gives away ${electrons}`;
   if (tendency.kind === 'share') return `Shares ${electrons}`;
   return `Needs ${tendency.count} more ${tendency.count === 1 ? 'electron' : 'electrons'}`;
@@ -83,7 +83,7 @@ function enStatus(v: View): string {
   ];
 }
 
-function enName0(v: View): string {
+function enHeading(v: View): string {
   if (v.z > 0) return v.charge === 0 ? (v.a === 2 && v.z === 1 ? 'Deuterium' : v.a === 3 && v.z === 1 ? 'Tritium' : enNuclide(v)) : `${v.notation} ion`;
   if (v.e === 0) return { none: 'Nothing yet', neutron: 'A lone neutron', neutrons: 'Only neutrons' }[v.nucleus.kind as 'none' | 'neutron' | 'neutrons'];
   return v.n === 0 ? 'Only electrons' : 'No atom yet';
@@ -93,7 +93,7 @@ function enReadouts(v: View): Readouts {
   const name = v.z > 0 ? enName(v.z) : '';
   const element: Line =
     v.z > 0
-      ? { value: `${EN_ELEMENTS[v.z - 1]} (${v.element!.symbol})`, detail: `Atomic number ${v.z}: every ${name} atom has ${en1(v.z, 'proton', 'protons')}.` }
+      ? { value: `${EN_ELEMENTS[v.z - 1]} (${v.element!.symbol})`, detail: `Atomic number ${v.z}: every ${name} atom has ${enCount(v.z, 'proton', 'protons')}.` }
       : { value: 'Nothing yet', detail: 'The number of protons decides the element.' };
 
   let isotope: Line;
@@ -104,7 +104,7 @@ function enReadouts(v: View): Readouts {
       neutrons: { value: 'Only neutrons', detail: 'Neutrons on their own don’t stick together.' },
     }[v.nucleus.kind as 'none' | 'neutron' | 'neutrons'];
   } else {
-    const counts = `${en1(v.z, 'proton', 'protons')} + ${en1(v.n, 'neutron', 'neutrons')} = ${en1(v.a, 'particle', 'particles')} in the nucleus.`;
+    const counts = `${enCount(v.z, 'proton', 'protons')} + ${enCount(v.n, 'neutron', 'neutrons')} = ${enCount(v.a, 'particle', 'particles')} in the nucleus.`;
     const nucleus = v.nucleus;
     const why =
       nucleus.kind === 'stable'
@@ -133,7 +133,7 @@ function enReadouts(v: View): Readouts {
       charge = { value: `Charge ${signed(q)}`, detail: 'Loose electrons: with no protons, nothing holds them.' };
       break;
     case 'neutral':
-      charge = { value: 'Neutral atom', detail: `${en1(v.z, 'proton', 'protons')} (+) and ${en1(v.e, 'electron', 'electrons')} (−) cancel out.` };
+      charge = { value: 'Neutral atom', detail: `${enCount(v.z, 'proton', 'protons')} (+) and ${enCount(v.e, 'electron', 'electrons')} (−) cancel out.` };
       break;
     default: {
       const why = {
@@ -149,7 +149,7 @@ function enReadouts(v: View): Readouts {
         bare: 'All its electrons are gone. That happens in extremely hot places, like deep inside stars.',
         overloaded: 'That is too many extra electrons: they push each other away, and no atom can hold them.',
       }[v.chargeKind];
-      const difference = `${en1(Math.abs(q), 'electron', 'electrons')} ${q > 0 ? 'fewer' : 'more'} than protons.`;
+      const difference = `${enCount(Math.abs(q), 'electron', 'electrons')} ${q > 0 ? 'fewer' : 'more'} than protons.`;
       charge = { value: `${v.notation} ion, charge ${signed(q)}`, detail: `${difference} ${why}` };
     }
   }
@@ -168,15 +168,15 @@ function enReadouts(v: View): Readouts {
 
 function enPicture(v: View): string {
   if (v.z === 0) {
-    const loose = [v.n > 1 || (v.n === 1 && v.e > 0) ? en1(v.n, 'neutron', 'neutrons') : '', v.e > 0 ? en1(v.e, 'electron', 'electrons') : '']
+    const loose = [v.n > 1 || (v.n === 1 && v.e > 0) ? enCount(v.n, 'neutron', 'neutrons') : '', v.e > 0 ? enCount(v.e, 'electron', 'electrons') : '']
       .filter(Boolean)
       .join(' and ');
-    return `${enName0(v)}${loose ? `: ${loose}` : ''}. ${enStatus(v)}.`;
+    return `${enHeading(v)}${loose ? `: ${loose}` : ''}. ${enStatus(v)}.`;
   }
   const state = { stable: 'stable', radioactive: 'radioactive', unbound: 'falls apart quickly' }[v.nucleus.kind as 'stable' | 'radioactive' | 'unbound'];
   const electrons =
-    v.e === 0 ? 'No electrons' : `${en1(v.e, 'electron', 'electrons')} in ${en1(v.shells.length, 'shell', 'shells')}: ${v.shells.join(', ')}`;
-  return `${enName0(v)}. Nucleus: ${en1(v.z, 'proton', 'protons')} and ${en1(v.n, 'neutron', 'neutrons')}, ${state}. ${electrons}.`;
+    v.e === 0 ? 'No electrons' : `${enCount(v.e, 'electron', 'electrons')} in ${enCount(v.shells.length, 'shell', 'shells')}: ${v.shells.join(', ')}`;
+  return `${enHeading(v)}. Nucleus: ${enCount(v.z, 'proton', 'protons')} and ${enCount(v.n, 'neutron', 'neutrons')}, ${state}. ${electrons}.`;
 }
 
 const en: Strings = {
@@ -234,7 +234,7 @@ const en: Strings = {
     }[scale];
     return `about ${formatNumber(amount, 'en', Number.isInteger(amount) ? 0 : 1)} ${words}`;
   },
-  name: enName0,
+  name: enHeading,
   status: enStatus,
   readouts: enReadouts,
   picture: enPicture,
@@ -248,13 +248,13 @@ const SK_ELEMENTS = [
 ];
 
 /** Slovak number agreement: 1 protón, 2–4 protóny, 5 protónov; a decimal takes the genitive singular (2,6 roka). */
-function sk1(n: number, one: string, few: string, many: string, fraction = many): string {
+function skForm(n: number, one: string, few: string, many: string, fraction = many): string {
   if (!Number.isInteger(n)) return fraction;
   return n === 1 ? one : n >= 2 && n <= 4 ? few : many;
 }
-const protons = (n: number) => `${n} ${sk1(n, 'protón', 'protóny', 'protónov')}`;
-const neutrons = (n: number) => `${n} ${sk1(n, 'neutrón', 'neutróny', 'neutrónov')}`;
-const electrons = (n: number) => `${n} ${sk1(n, 'elektrón', 'elektróny', 'elektrónov')}`;
+const protons = (n: number) => `${n} ${skForm(n, 'protón', 'protóny', 'protónov')}`;
+const neutrons = (n: number) => `${n} ${skForm(n, 'neutrón', 'neutróny', 'neutrónov')}`;
+const electrons = (n: number) => `${n} ${skForm(n, 'elektrón', 'elektróny', 'elektrónov')}`;
 /** "z" or "zo" before a number, as it is read aloud: zo 7 (sedem), z 8 (ôsmich). */
 const zo = (n: number) => (/^(4|6|7|1[467]|[467]\d|1\d\d)$/.test(String(n)) ? 'zo' : 'z');
 const skName = (z: number) => SK_ELEMENTS[z - 1]!.toLocaleLowerCase('sk');
@@ -276,7 +276,7 @@ function skStatus(v: View): string {
   ];
 }
 
-function skName0(v: View): string {
+function skHeading(v: View): string {
   if (v.z > 0) return v.charge === 0 ? (v.a === 2 && v.z === 1 ? 'Deutérium' : v.a === 3 && v.z === 1 ? 'Trícium' : skNuclide(v)) : `Ión ${v.notation}`;
   if (v.e === 0) return { none: 'Zatiaľ nič', neutron: 'Samotný neutrón', neutrons: 'Samé neutróny' }[v.nucleus.kind as 'none' | 'neutron' | 'neutrons'];
   return v.n === 0 ? 'Samé elektróny' : 'Zatiaľ žiadny atóm';
@@ -297,7 +297,7 @@ function skReadouts(v: View): Readouts {
       neutrons: { value: 'Samé neutróny', detail: 'Samotné neutróny nedržia pokope.' },
     }[v.nucleus.kind as 'none' | 'neutron' | 'neutrons'];
   } else {
-    const counts = `${protons(v.z)} + ${neutrons(v.n)} = ${v.a} ${sk1(v.a, 'častica', 'častice', 'častíc')} v jadre.`;
+    const counts = `${protons(v.z)} + ${neutrons(v.n)} = ${v.a} ${skForm(v.a, 'častica', 'častice', 'častíc')} v jadre.`;
     const nucleus = v.nucleus;
     const why =
       nucleus.kind === 'stable'
@@ -365,12 +365,12 @@ function skReadouts(v: View): Readouts {
 function skPicture(v: View): string {
   if (v.z === 0) {
     const loose = [v.n > 1 || (v.n === 1 && v.e > 0) ? neutrons(v.n) : '', v.e > 0 ? electrons(v.e) : ''].filter(Boolean).join(' a ');
-    return `${skName0(v)}${loose ? `: ${loose}` : ''}. ${skStatus(v)}.`;
+    return `${skHeading(v)}${loose ? `: ${loose}` : ''}. ${skStatus(v)}.`;
   }
   const state = { stable: 'stabilné', radioactive: 'rádioaktívne', unbound: 'rýchlo sa rozpadne' }[v.nucleus.kind as 'stable' | 'radioactive' | 'unbound'];
   const shells = `${v.shells.length} ${v.shells.length === 1 ? 'vrstve' : 'vrstvách'}`;
   const inShells = v.e === 0 ? 'Žiadne elektróny' : `${electrons(v.e)} v ${shells}: ${v.shells.join(', ')}`;
-  return `${skName0(v)}. Jadro: ${protons(v.z)} a ${neutrons(v.n)}, ${state}. ${inShells}.`;
+  return `${skHeading(v)}. Jadro: ${protons(v.z)} a ${neutrons(v.n)}, ${state}. ${inShells}.`;
 }
 
 const sk: Strings = {
@@ -419,17 +419,17 @@ const sk: Strings = {
   allDone: 'Všetky výzvy sú splnené. Skvelá práca!',
   halfLife: (halfLife) => {
     const { amount, scale } = halfLifeParts(halfLife);
-    const billions = sk1(amount, 'miliarda', 'miliardy', 'miliárd', 'miliardy');
+    const billions = skForm(amount, 'miliarda', 'miliardy', 'miliárd', 'miliardy');
     const words = {
-      day: sk1(amount, 'deň', 'dni', 'dní', 'dňa'),
-      year: sk1(amount, 'rok', 'roky', 'rokov', 'roka'),
-      million: `${sk1(amount, 'milión', 'milióny', 'miliónov', 'milióna')} rokov`,
+      day: skForm(amount, 'deň', 'dni', 'dní', 'dňa'),
+      year: skForm(amount, 'rok', 'roky', 'rokov', 'roka'),
+      million: `${skForm(amount, 'milión', 'milióny', 'miliónov', 'milióna')} rokov`,
       billion: `${billions} rokov`,
       'billion-billion': `${billions} miliárd rokov`,
     }[scale];
     return `približne ${formatNumber(amount, 'sk', Number.isInteger(amount) ? 0 : 1)} ${words}`;
   },
-  name: skName0,
+  name: skHeading,
   status: skStatus,
   readouts: skReadouts,
   picture: skPicture,

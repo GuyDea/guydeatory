@@ -152,7 +152,8 @@
         fresh = [];
       }, 3200);
     }
-    if (!built.includes(next.protons)) built = collect(built, next);
+    const collected = collect(built, next);
+    if (collected.length > built.length) built = collected;
     announcer.push(next);
   }
 
@@ -174,7 +175,7 @@
   }
 </script>
 
-<WidgetFrame name="atom-lab" title={s.title} hint={s.hints[quests]} {lang} onreset={reset} animated bind:paused>
+<WidgetFrame name="atom-lab" title={s.title} hint={s.hints[set]} {lang} onreset={reset} animated bind:paused>
   <div class="lab">
     <div class="bench">
       <div class="figure">
