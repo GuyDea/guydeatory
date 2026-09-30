@@ -40,8 +40,9 @@
  * - Salt's crystal, a 3D chessboard of ions: https://en.wikipedia.org/wiki/Sodium_chloride
  * - Sodium fluoride in toothpaste: https://en.wikipedia.org/wiki/Sodium_fluoride
  * - Sodium hydroxide (soap, drain cleaner, burns): https://en.wikipedia.org/wiki/Sodium_hydroxide
- * - Burning magnesium (and not looking at it):
- *   https://edu.rsc.org/balanced-chemical-equations/the-change-in-mass-when-magnesium-burns/718.article
+ * - Burning magnesium (a dazzling light, safety screens, and water that cannot put it out):
+ *   https://edu.rsc.org/balanced-chemical-equations/the-change-in-mass-when-magnesium-burns/718.article ,
+ *   https://en.wikipedia.org/wiki/Magnesium ("Source of light": it keeps burning in water, giving off hydrogen)
  * - Magnesium chloride (de-icing, tofu): https://en.wikipedia.org/wiki/Magnesium_chloride ,
  *   https://en.wikipedia.org/wiki/Nigari
  * - Magnesium fluoride anti-reflection coatings: https://en.wikipedia.org/wiki/Magnesium_fluoride

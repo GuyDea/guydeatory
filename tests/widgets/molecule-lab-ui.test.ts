@@ -111,6 +111,40 @@ describe('MoleculeLab strings', () => {
     expect(sk.pickedInstead('S')).toBe('Teraz je vybraný atóm síry.');
   });
 
+  it('keeps numbers with their units and percent signs on one line (non-breaking spaces)', () => {
+    const NBSP = ' ';
+    for (const lang of LANG_CODES) {
+      const texts = Object.values(strings[lang].molecules).flatMap((m) => [m.name, m.fact]);
+      expect(texts.filter((text) => /\d (%|°C)|\d \d{3}\b/.test(text)), lang).toEqual([]);
+    }
+    expect(en.molecules.hcn.fact).toContain(`26${NBSP}°C`);
+    expect(en.molecules.ethyne.fact).toContain(`3,000${NBSP}°C`);
+    expect(sk.molecules.n2.fact).toContain(`78${NBSP}%`);
+    expect(sk.molecules.hcn.fact).toContain(`26${NBSP}°C`);
+    expect(sk.molecules.ethyne.fact).toContain(`3${NBSP}000${NBSP}°C`);
+  });
+
+  it('uses the glossary’s Slovak words: sodné ióny, sóda bikarbóna', () => {
+    expect(sk.molecules.nacl.fact).toContain('sodné a chloridové ióny');
+    expect(sk.molecules.bakingSoda.name).toBe('Sóda bikarbóna (hydrogenuhličitan sodný)');
+    expect(JSON.stringify(sk.molecules)).not.toMatch(/sodíkov|Jedlá sóda/);
+  });
+
+  it('tells how chemists keep safe with burning magnesium, instead of telling a child not to look', () => {
+    expect(en.molecules.mgo.fact).toBe(
+      'Burning magnesium gives a dazzling white light and leaves this white powder behind. Chemists burn it only behind a safety screen, and water cannot put it out.',
+    );
+    expect(sk.molecules.mgo.fact).toBe(
+      'Horčík horí oslnivo bielym svetlom a zostane po ňom tento biely prášok. Chemici ho zapaľujú iba za ochranným štítom a voda ho neuhasí.',
+    );
+  });
+
+  it('says that sulfur’s two bonds are this lab’s rule (real sulfur makes more, as in SF₆)', () => {
+    expect(en.refused({ reason: 'full', el: 'S' })).toBe('In this lab, sulfur makes only two bonds, and this sulfur atom has no free bonds left.');
+    expect(sk.refused({ reason: 'full', el: 'S' })).toBe('V tomto laboratóriu tvorí síra iba dve väzby a tento atóm síry už nemá voľnú väzbu.');
+    expect(en.refused({ reason: 'full', el: 'O' })).toBe('This oxygen atom has no free bonds left.');
+  });
+
   it('explains every refusal', () => {
     for (const lang of LANG_CODES) {
       const s = strings[lang];

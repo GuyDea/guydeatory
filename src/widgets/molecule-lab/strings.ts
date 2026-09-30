@@ -132,10 +132,10 @@ const EN_MOLECULES: Record<MoleculeId, MoleculeText> = {
   ammonia: { name: 'Ammonia', fact: 'A gas with a sharp smell. Most of it is made into fertiliser that helps crops grow.' },
   methane: { name: 'Methane', fact: 'The main part of natural gas, which many homes use for cooking and heating.' },
   co2: { name: 'Carbon dioxide', fact: 'You breathe it out. Plants take it in and, with sunlight and water, turn it into sugar.' },
-  hcn: { name: 'Hydrogen cyanide', fact: 'A deadly poison that boils into a gas at just 26 °C. It smells faintly of bitter almonds, but some people cannot smell it.' },
+  hcn: { name: 'Hydrogen cyanide', fact: 'A deadly poison that boils into a gas at just 26 °C. It smells faintly of bitter almonds, but some people cannot smell it.' },
   ethane: { name: 'Ethane', fact: 'Natural gas contains a little of it. Factories turn it into ethene, which is used to make plastic.' },
   ethene: { name: 'Ethene (ethylene)', fact: 'Some fruits, like bananas and apples, give it off as they ripen, and it makes the fruit nearby ripen faster.' },
-  ethyne: { name: 'Ethyne (acetylene)', fact: 'Burned with oxygen, it makes a flame over 3,000 °C hot. Welders use it to cut and join steel.' },
+  ethyne: { name: 'Ethyne (acetylene)', fact: 'Burned with oxygen, it makes a flame over 3,000 °C hot. Welders use it to cut and join steel.' },
   methanol: { name: 'Methanol', fact: 'The simplest alcohol. It is very poisonous: even a little can make a person blind.' },
   ethanol: { name: 'Ethanol', fact: 'The alcohol in wine and beer. It has the same atoms as dimethyl ether, joined differently.' },
   dme: { name: 'Dimethyl ether', fact: 'A gas that pushes the spray out of some spray cans. It has the same atoms as ethanol, joined differently.' },
@@ -150,7 +150,7 @@ const EN_MOLECULES: Record<MoleculeId, MoleculeText> = {
   bakingSoda: { name: 'Baking soda (sodium hydrogen carbonate)', fact: 'With vinegar it fizzes, giving off bubbles of carbon dioxide.' },
   na2o: { name: 'Sodium oxide', fact: 'Ordinary window glass contains it. It helps the sand melt at a lower temperature.' },
   na2s: { name: 'Sodium sulfide', fact: 'Leather makers use it to remove hair from animal hides.' },
-  mgo: { name: 'Magnesium oxide', fact: 'Burning magnesium gives a dazzling white light (never look straight at it!) and leaves this white powder behind.' },
+  mgo: { name: 'Magnesium oxide', fact: 'Burning magnesium gives a dazzling white light and leaves this white powder behind. Chemists burn it only behind a safety screen, and water cannot put it out.' },
   mgs: { name: 'Magnesium sulfide', fact: 'Steelworks add magnesium to molten iron to pull out sulfur, and this is what forms.' },
   mgcl2: { name: 'Magnesium chloride', fact: 'It is spread on icy roads, like salt. In Japan it is used to make tofu.' },
   mgf2: { name: 'Magnesium fluoride', fact: 'A very thin layer of it on camera lenses cuts down reflections.' },
@@ -202,6 +202,8 @@ const en: Strings = {
       case 'metal-carbon':
         return 'In this lab, carbon only shares electrons: it doesn’t take them from metals.';
       case 'full':
+        // Real sulfur can make six bonds (SF₆); the lab keeps it to two (model.ts).
+        if (el === 'S') return 'In this lab, sulfur makes only two bonds, and this sulfur atom has no free bonds left.';
         return `This ${EN_ELEMENT[el]} atom has ${isMetal(el) ? 'no electrons left to give' : 'no free bonds left'}.`;
       case 'max-order':
         if (MAX_ORDER[el] === 1) return `${cap(EN_ELEMENT[el])} makes only single bonds.`;
@@ -332,7 +334,7 @@ const skHint = (hint: Hint): string => {
 const SK_MOLECULES: Record<MoleculeId, MoleculeText> = {
   h2: { name: 'Plynný vodík', fact: 'Najľahší zo všetkých plynov. Keď horí, spája sa s kyslíkom a mení sa na vodu.' },
   o2: { name: 'Plynný kyslík', fact: 'Kyslík tvorí asi pätinu vzduchu. Vdychuješ ho s každým nádychom.' },
-  n2: { name: 'Plynný dusík', fact: 'Tvorí väčšinu vzduchu, asi 78 %. Jeho trojitá väzba je taká pevná, že dusík takmer nereaguje.' },
+  n2: { name: 'Plynný dusík', fact: 'Tvorí väčšinu vzduchu, asi 78 %. Jeho trojitá väzba je taká pevná, že dusík takmer nereaguje.' },
   f2: { name: 'Plynný fluór', fact: 'Bledožltý plyn, ktorý reaguje takmer so všetkým, čoho sa dotkne. Veľmi nebezpečný!' },
   cl2: { name: 'Plynný chlór', fact: 'Jedovatý žltozelený plyn. Chlór a jeho zlúčeniny ničia choroboplodné zárodky vo vode v bazénoch aj vo vodovode.' },
   hf: { name: 'Fluorovodík', fact: 'S vodou vytvára veľmi nebezpečnú kyselinu, ktorá dokáže leptať aj sklo.' },
@@ -346,10 +348,10 @@ const SK_MOLECULES: Record<MoleculeId, MoleculeText> = {
   ammonia: { name: 'Amoniak', fact: 'Plyn s ostrým zápachom. Najviac sa ho spotrebuje na výrobu hnojív, vďaka ktorým lepšie rastú plodiny.' },
   methane: { name: 'Metán', fact: 'Hlavná zložka zemného plynu, ktorým sa v mnohých domácnostiach varí a kúri.' },
   co2: { name: 'Oxid uhličitý', fact: 'Vydychuješ ho. Rastliny ho prijímajú a pomocou slnečného svetla a vody z neho vyrábajú cukor.' },
-  hcn: { name: 'Kyanovodík', fact: 'Smrteľne jedovatý: vrie a mení sa na plyn už pri 26 °C. Slabo vonia po horkých mandliach, no niektorí ľudia ho necítia.' },
+  hcn: { name: 'Kyanovodík', fact: 'Smrteľne jedovatý: vrie a mení sa na plyn už pri 26 °C. Slabo vonia po horkých mandliach, no niektorí ľudia ho necítia.' },
   ethane: { name: 'Etán', fact: 'Trochu ho obsahuje zemný plyn. Továrne z neho vyrábajú etén, z ktorého sa robia plasty.' },
   ethene: { name: 'Etén (etylén)', fact: 'Niektoré ovocie, napríklad banány a jablká, ho pri dozrievaní uvoľňuje a ovocie v blízkosti potom dozrieva rýchlejšie.' },
-  ethyne: { name: 'Etín (acetylén)', fact: 'S kyslíkom horí plameňom horúcim vyše 3 000 °C. Zvárači ním režú a spájajú oceľ.' },
+  ethyne: { name: 'Etín (acetylén)', fact: 'S kyslíkom horí plameňom horúcim vyše 3 000 °C. Zvárači ním režú a spájajú oceľ.' },
   methanol: { name: 'Metanol', fact: 'Najjednoduchší alkohol. Je veľmi jedovatý: aj malé množstvo môže človeka oslepiť.' },
   ethanol: { name: 'Etanol', fact: 'Alkohol vo víne a pive. Má rovnaké atómy ako dimetyléter, len inak pospájané.' },
   dme: { name: 'Dimetyléter', fact: 'Plyn, ktorý v niektorých sprejoch vytláča obsah von. Má rovnaké atómy ako etanol, len inak pospájané.' },
@@ -358,13 +360,13 @@ const SK_MOLECULES: Record<MoleculeId, MoleculeText> = {
   ccl4: { name: 'Tetrachlórmetán', fact: 'Kedysi sa plnil do hasiacich prístrojov. Zakázali ho, lebo je jedovatý a teplom ohňa sa môže zmeniť na ďalší jedovatý plyn.' },
   chloroform: { name: 'Trichlórmetán (chloroform)', fact: 'Pred vyše 150 rokmi ním lekári uspávali pacientov pred operáciou.' },
   chloromethane: { name: 'Chlórmetán', fact: 'Uvoľňujú ho tropické rastliny, huby rozkladajúce drevo aj lesné požiare, preto je ho vo vzduchu vždy trochu.' },
-  nacl: { name: 'Kuchynská soľ (chlorid sodný)', fact: 'V kryštáliku soli sa sodíkové a chloridové ióny striedajú ako políčka na trojrozmernej šachovnici.' },
+  nacl: { name: 'Kuchynská soľ (chlorid sodný)', fact: 'V kryštáliku soli sa sodné a chloridové ióny striedajú ako políčka na trojrozmernej šachovnici.' },
   naf: { name: 'Fluorid sodný', fact: 'Býva v niektorých zubných pastách. Fluorid pomáha chrániť zuby pred kazom.' },
   naoh: { name: 'Hydroxid sodný', fact: 'Používa sa na výrobu mydla a na čistenie odpadov. Vážne poleptá pokožku aj oči: čističa odpadov sa nikdy nedotýkaj!' },
-  bakingSoda: { name: 'Jedlá sóda (hydrogenuhličitan sodný)', fact: 'S octom šumí a uvoľňuje bublinky oxidu uhličitého.' },
+  bakingSoda: { name: 'Sóda bikarbóna (hydrogenuhličitan sodný)', fact: 'S octom šumí a uvoľňuje bublinky oxidu uhličitého.' },
   na2o: { name: 'Oxid sodný', fact: 'Obsahuje ho bežné okenné sklo. Pomáha, aby sa piesok roztavil pri nižšej teplote.' },
   na2s: { name: 'Sulfid sodný', fact: 'Pri výrobe kože sa ním odstraňuje srsť zo zvieracích koží.' },
-  mgo: { name: 'Oxid horečnatý', fact: 'Horčík horí oslnivo bielym svetlom (nikdy sa doň nepozeraj priamo!) a zostane po ňom tento biely prášok.' },
+  mgo: { name: 'Oxid horečnatý', fact: 'Horčík horí oslnivo bielym svetlom a zostane po ňom tento biely prášok. Chemici ho zapaľujú iba za ochranným štítom a voda ho neuhasí.' },
   mgs: { name: 'Sulfid horečnatý', fact: 'Oceliarne pridávajú do roztaveného železa horčík, ktorý z neho vytiahne síru – a vznikne práve táto zlúčenina.' },
   mgcl2: { name: 'Chlorid horečnatý', fact: 'Sype sa na zľadovatené cesty podobne ako soľ. V Japonsku sa s ním vyrába tofu.' },
   mgf2: { name: 'Fluorid horečnatý', fact: 'Tenučká vrstva z neho na objektívoch fotoaparátov zmenšuje odlesky.' },
@@ -423,6 +425,7 @@ const sk: Strings = {
       case 'metal-carbon':
         return 'V tomto laboratóriu uhlík elektróny iba zdieľa – od kovov si ich neberie.';
       case 'full':
+        if (el === 'S') return 'V tomto laboratóriu tvorí síra iba dve väzby a tento atóm síry už nemá voľnú väzbu.';
         return `Atóm ${SK_OF[el]} už ${isMetal(el) ? 'nemá čo darovať' : 'nemá voľnú väzbu'}.`;
       case 'max-order':
         if (MAX_ORDER[el] === 1) return `${cap(SK_ELEMENT[el])} tvorí iba jednoduché väzby.`;
