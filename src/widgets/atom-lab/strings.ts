@@ -94,7 +94,7 @@ function enReadouts(v: View): Readouts {
   const element: Line =
     v.z > 0
       ? { value: `${EN_ELEMENTS[v.z - 1]} (${v.element!.symbol})`, detail: `Atomic number ${v.z}: every ${name} atom has ${en1(v.z, 'proton', 'protons')}.` }
-      : { value: 'None yet', detail: 'The number of protons decides the element.' };
+      : { value: 'Nothing yet', detail: 'The number of protons decides the element.' };
 
   let isotope: Line;
   if (v.z === 0) {
@@ -113,7 +113,7 @@ function enReadouts(v: View): Readouts {
           ? `Half of such nuclei turn into another element in ${en.halfLife(nucleus.halfLife)} (its half-life).${
               outlivesUniverse(nucleus.halfLife) ? ' That is far longer than the universe has existed.' : ''
             }`
-          : `It falls apart within a day, usually in a fraction of a second. ${
+          : `Half of such nuclei fall apart in less than a day, usually in a fraction of a second. ${
               {
                 'few-neutrons': 'Neutrons help hold a nucleus together, and this one has too few.',
                 'many-neutrons': 'It has too many neutrons for so few protons.',
@@ -146,7 +146,7 @@ function enReadouts(v: View): Readouts {
               : `${name} usually shares electrons instead`
         }.`,
         alpha: 'This is an alpha particle: alpha radiation is made of these.',
-        bare: 'All its electrons are gone. That happens only where it is extremely hot, like inside the Sun.',
+        bare: 'All its electrons are gone. That happens in extremely hot places, like deep inside stars.',
         overloaded: 'That is too many extra electrons: they push each other away, and no atom can hold them.',
       }[v.chargeKind];
       const difference = `${en1(Math.abs(q), 'electron', 'electrons')} ${q > 0 ? 'fewer' : 'more'} than protons.`;
@@ -306,7 +306,7 @@ function skReadouts(v: View): Readouts {
           ? `Polovica takých jadier sa za ${sk.halfLife(nucleus.halfLife)} premení na iný prvok (polčas rozpadu).${
               outlivesUniverse(nucleus.halfLife) ? ' To je oveľa dlhšie, ako existuje vesmír.' : ''
             }`
-          : `Rozpadne sa do jedného dňa, zvyčajne za zlomok sekundy. ${
+          : `Polovica takých jadier sa rozpadne za menej ako deň, zvyčajne za zlomok sekundy. ${
               {
                 'few-neutrons': 'Neutróny pomáhajú držať jadro pokope a tu ich je primálo.',
                 'many-neutrons': 'Na taký malý počet protónov má priveľa neutrónov.',
@@ -339,7 +339,7 @@ function skReadouts(v: View): Readouts {
               : `${name} sa o elektróny radšej delí`
         }.`,
         alpha: 'Je to častica alfa: z takých častíc sa skladá žiarenie alfa.',
-        bare: 'Nezostal mu ani jeden elektrón. To sa stáva len tam, kde je nesmierne horúco, napríklad vo vnútri Slnka.',
+        bare: 'Nezostal mu ani jeden elektrón. To sa stáva na nesmierne horúcich miestach, napríklad hlboko vo vnútri hviezd.',
         overloaded: 'To je priveľa elektrónov navyše: navzájom sa odpudzujú a žiadny atóm ich neudrží.',
       }[v.chargeKind];
       const difference = `Elektrónov je o ${Math.abs(q)} ${q > 0 ? 'menej' : 'viac'} ako protónov.`;

@@ -175,12 +175,12 @@ describe('atom lab: hand-checked atoms', () => {
     expect(en.readouts(v).isotope).toEqual({
       value: 'Helium-2: nucleus falls apart quickly',
       detail:
-        '2 protons + 0 neutrons = 2 particles in the nucleus. It falls apart within a day, usually in a fraction of a second. Neutrons help hold a nucleus together, and this one has too few.',
+        '2 protons + 0 neutrons = 2 particles in the nucleus. Half of such nuclei fall apart in less than a day, usually in a fraction of a second. Neutrons help hold a nucleus together, and this one has too few.',
     });
     expect(sk.readouts(v).isotope).toEqual({
       value: 'Hélium-2: jadro sa rýchlo rozpadne',
       detail:
-        '2 protóny + 0 neutrónov = 2 častice v jadre. Rozpadne sa do jedného dňa, zvyčajne za zlomok sekundy. Neutróny pomáhajú držať jadro pokope a tu ich je primálo.',
+        '2 protóny + 0 neutrónov = 2 častice v jadre. Polovica takých jadier sa rozpadne za menej ako deň, zvyčajne za zlomok sekundy. Neutróny pomáhajú držať jadro pokope a tu ich je primálo.',
     });
     expect(en.status(v)).toBe('Nucleus falls apart quickly');
     expect(sk.status(v)).toBe('Jadro sa rýchlo rozpadne');
@@ -198,7 +198,8 @@ describe('atom lab: hand-checked atoms', () => {
     expect(en.name(lone)).toBe('A lone neutron');
     expect(en.readouts(lone).isotope).toEqual({ value: 'A lone neutron', detail: 'A lone neutron decays in about 10 minutes (its half-life).' });
     expect(sk.readouts(lone).isotope).toEqual({ value: 'Samotný neutrón', detail: 'Samotný neutrón sa rozpadne približne za 10 minút (polčas rozpadu).' });
-    expect(en.readouts(lone).element).toEqual({ value: 'None yet', detail: 'The number of protons decides the element.' });
+    expect(en.readouts(lone).element).toEqual({ value: 'Nothing yet', detail: 'The number of protons decides the element.' });
+    expect(sk.readouts(lone).element).toEqual({ value: 'Zatiaľ žiadny', detail: 'Prvok určuje počet protónov.' });
     const several = view(atom(0, 3, 0));
     expect(several.nucleus).toEqual({ kind: 'neutrons' });
     expect(en.readouts(several).isotope).toEqual({ value: 'Only neutrons', detail: 'Neutrons on their own don’t stick together.' });
@@ -343,6 +344,13 @@ describe('atom lab: ions', () => {
     expect(sk.readouts(view(atom(11, 12, 9))).charge.detail).toBe('Elektrónov je o 2 menej ako protónov. Nie je to bežný ión: sodík zvyčajne tvorí Na⁺.');
     expect(en.readouts(view(atom(1, 0, 0))).charge.detail).toBe('1 electron fewer than protons. A common ion: a bare proton.');
     expect(en.readouts(view(atom(2, 2, 0))).charge.detail).toContain('alpha particle');
+    // Bare nuclei are made in accelerators and fly through space too, so hot stars are an example, not the only place.
+    expect(en.readouts(view(atom(6, 6, 0))).charge.detail).toBe(
+      '6 electrons fewer than protons. All its electrons are gone. That happens in extremely hot places, like deep inside stars.',
+    );
+    expect(sk.readouts(view(atom(6, 6, 0))).charge.detail).toBe(
+      'Elektrónov je o 6 menej ako protónov. Nezostal mu ani jeden elektrón. To sa stáva na nesmierne horúcich miestach, napríklad hlboko vo vnútri hviezd.',
+    );
   });
 });
 
