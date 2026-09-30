@@ -1,0 +1,51 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'The radiation warning sign',
+    desc: 'The radiation sign drawn twice: on a yellow warning triangle with a dark border, and on a round yellow label. Both show a dark dot in the middle with three dark blades around it, like a fan: one blade points down, and two point up to the left and right.',
+  },
+  sk: {
+    title: 'Výstražná značka žiarenia',
+    desc: 'Značka žiarenia nakreslená dvakrát: na žltom výstražnom trojuholníku s tmavým okrajom a na okrúhlom žltom štítku. Na oboch je v strede tmavá bodka a okolo nej tri tmavé lopatky ako na ventilátore: jedna smeruje nadol a dve nahor, doľava a doprava.',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+
+// The sign must stay dark-on-yellow in both themes: the dark ink turns into the (dark) diagram
+// background colour in dark mode. Browsers without light-dark() keep the first declaration.
+const darkFill = 'fill: var(--d-ink); fill: light-dark(var(--d-ink), var(--d-fill))';
+const darkStroke = 'stroke: var(--d-ink); stroke: light-dark(var(--d-ink), var(--d-fill))';
+
+const round = (n: number) => Math.round(n * 100) / 100;
+const point = (cx: number, cy: number, r: number, degrees: number) => {
+  const a = (degrees * Math.PI) / 180;
+  return `${round(cx + r * Math.cos(a))} ${round(cy + r * Math.sin(a))}`;
+};
+/** The trefoil (ISO 361 proportions): a dot of radius R and three 60° blades from 1.5R to 5R. */
+function trefoil(cx: number, cy: number, R: number) {
+  const [inner, outer] = [1.5 * R, 5 * R];
+  const blades = [90, 210, 330].map(
+    (mid) =>
+      `M${point(cx, cy, inner, mid - 30)}L${point(cx, cy, outer, mid - 30)}` +
+      `A${outer} ${outer} 0 0 1 ${point(cx, cy, outer, mid + 30)}` +
+      `L${point(cx, cy, inner, mid + 30)}A${inner} ${inner} 0 0 0 ${point(cx, cy, inner, mid - 30)}Z`,
+  );
+  return { blades, dot: { cx, cy, r: R } };
+}
+const triangle = trefoil(108, 120, 7);
+const disc = trefoil(292, 100, 11);
+---
+<Svg viewBox="0 0 400 190" title={s.title} desc={s.desc} maxWidth="26rem">
+  <path d="M108 22L193 169L23 169Z" class="d-glow" style={`${darkStroke}; stroke-width: 9; stroke-linejoin: round`} />
+  {triangle.blades.map((d) => <path d={d} style={darkFill} />)}
+  <circle cx={triangle.dot.cx} cy={triangle.dot.cy} r={triangle.dot.r} style={darkFill} />
+  <circle cx="292" cy="100" r="72" class="d-glow" style={`${darkStroke}; stroke-width: 5`} />
+  {disc.blades.map((d) => <path d={d} style={darkFill} />)}
+  <circle cx={disc.dot.cx} cy={disc.dot.cy} r={disc.dot.r} style={darkFill} />
+</Svg>

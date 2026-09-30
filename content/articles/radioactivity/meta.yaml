@@ -1,10 +1,21 @@
 # Language-independent facts about this article. Guide: docs/writing-guide.md (Metadata).
 topics: [matter]
 labels: [high-level]
-prerequisites: [atom]
-related: []
-status: stub
+prerequisites: [atom, isotope]
+related: [isotope, chemical-element, ion, energy]
+status: published
 created: 2026-09-30
 updated: 2026-09-30
 sources:
-  - { title: 'Radioactive decay — Wikipedia', url: 'https://en.wikipedia.org/wiki/Radioactive_decay' }
+  - title: Radiation basics (alpha, beta and gamma radiation) — US Environmental Protection Agency
+    url: https://www.epa.gov/radiation/radiation-basics
+  - title: NuDat 3 decay data (Tc-99m, Rn-222, H-3, C-14, Ra-226, U-238 half-lives) — National Nuclear Data Center, Brookhaven
+    url: https://www.nndc.bnl.gov/nudat3/
+  - title: Background radiation (UNSCEAR world average dose, radon, the body’s own radioactivity) — Wikipedia
+    url: https://en.wikipedia.org/wiki/Background_radiation
+  - title: Banana equivalent dose — Wikipedia
+    url: https://en.wikipedia.org/wiki/Banana_equivalent_dose
+  - title: Marie Curie — Wikipedia
+    url: https://en.wikipedia.org/wiki/Marie_Curie
+  - title: ISO 21482, the supplementary radiation warning symbol — Wikipedia
+    url: https://en.wikipedia.org/wiki/ISO_21482

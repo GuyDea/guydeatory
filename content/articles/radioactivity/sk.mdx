@@ -1,10 +1,253 @@
 ---
-title: 'Čo je rádioaktivita?'
-term: 'rádioaktivita'
+title: Čo je rádioaktivita?
+term: rádioaktivita
 slug: radioaktivita
-summary: 'Niektoré atómy majú jadro, ktoré nemôže zostať navždy rovnaké. Skôr či neskôr sa samo zmení a vyšle drobné častice alebo energiu.'
-keywords: ['rádioaktivita', 'žiarenie', 'polčas rozpadu', 'rádioaktívny rozpad', 'jadrový']
+summary: Rádioaktivita je to, čo sa deje, keď sa jadro nestabilného atómu samo od seba zmení a vystrelí drobnú čiastočku alebo záblesk energie. Tomu, čo vystrelí, hovoríme žiarenie.
+keywords: [rádioaktivita, rádioaktívny, žiarenie, rádioaktívne žiarenie, radiácia, rádioaktívny rozpad, rádioaktívna premena, polčas rozpadu, polčas premeny, alfa, beta, gama, Geigerov počítač, značka žiarenia, trojlístok, Marie Curie, urán, radón, rádium, banán, draslík-40, jadrová energia, sievert, becquerel]
 ---
 
-Niektoré atómy majú jadro, ktoré nemôže zostať navždy rovnaké. Skôr či neskôr sa samo zmení a vyšle
-drobné častice alebo energiu. Tomu hovoríme rádioaktivita.
+import RadiationStops from './diagrams/RadiationStops.astro';
+import HalfLife from './diagrams/HalfLife.astro';
+import RadiationSign from './diagrams/RadiationSign.astro';
+
+Práve teraz sa v horninách pod tvojimi nohami, vo vzduchu, ktorý dýchaš, a dokonca aj v tvojom
+vlastnom tele menia niektoré atómy. V tele dospelého človeka sa každú sekundu zmenia tisíce atómov
+na atómy iných prvkov. Nevidíš to ani to necítiš a je to úplne prirodzené. Tomu hovoríme
+**rádioaktivita**.
+
+## Jadrá, ktoré nemôžu zostať rovnaké
+
+Každý [[atom|atóm]] má jadro z protónov a neutrónov. Vo väčšine atómov zostáva jadro navždy
+rovnaké. Hovoríme, že je **stabilné**.
+
+Niektoré jadrá však majú nevyváženú zmes protónov a neutrónov a sú **nestabilné**. Skôr či neskôr
+sa také jadro samo od seba zmení. Pri tom vystrelí drobnú čiastočku alebo záblesk energie. To, čo
+z neho vyletí, sa volá **žiarenie**, a atóm, ktorý to robí, je **rádioaktívny**.
+
+Často sa atóm zmení na iný prvok! Keď sa napríklad zmení jadro atómu uhlíka-14, z atómu sa stane
+dusík. Uhlík-14 je jeden z rádioaktívnych [[isotope|izotopov]]: verzia uhlíka s neutrónmi navyše.
+
+<Analogy title="Vratká veža">
+Veža z kociek môže byť pevná alebo vratká. Pevná veža stojí navždy. Vratká sa skôr či neskôr zrúti
+a pri tom z nej niekoľko kociek odletí.
+
+Nestabilné jadro je ako tá vratká veža. Jedného dňa sa usadí do pevnejšieho tvaru a čiastočky
+a energia, ktoré pri tom odletia, sú žiarenie.
+</Analogy>
+
+## Tri druhy žiarenia
+
+Žiarenie má tri hlavné druhy, pomenované podľa prvých troch písmen gréckej abecedy:
+
+- **Žiarenie alfa** je zhluk 2 protónov a 2 neutrónov, ktorý vyletí z jadra. Zastaví ho list
+  papiera a aj vrchná vrstva tvojej kože.
+- **Žiarenie beta** je rýchly [[electron|elektrón]], ktorý vyletí z jadra. Doletí ďalej, ale
+  zastaví ho tenký hliníkový plech.
+- **Žiarenie gama** je záblesk energie, ako veľmi silné svetlo, ktoré nevidíme. Prejde väčšinou
+  vecí a väčšinu z neho zastaví až hrubé olovo alebo betón.
+
+Žiadne z nich nevidíš, nepočuješ, nezacítiš čuchom ani na koži. Na hľadanie žiarenia používajú vedci
+špeciálne prístroje. Napríklad Geigerov počítač cvakne zakaždým, keď ním prejde žiarenie.
+
+<Figure caption="Žiarenie alfa zastaví papier, žiarenie beta tenký plech a žiarenie gama až hrubé olovo alebo betón." wide>
+  <RadiationStops />
+</Figure>
+
+## Polčas rozpadu: čakanie na polovicu
+
+Nikto nevie povedať, kedy sa zmení jedno konkrétne jadro. Môže sa to stať v nasledujúcej sekunde
+alebo o milión rokov.
+
+Keď je však jadier veľa, stane sa niečo úžasné. Dá sa veľmi presne predpovedať, ako dlho trvá, kým
+sa zmení polovica z nich. Tomuto času hovoríme **polčas rozpadu**.
+
+Po jednom polčase rozpadu zostane polovica rádioaktívnych atómov. Po dvoch polčasoch zostane
+štvrtina a po troch osmina. Množstvo sa stále delí na polovicu, znova a znova.
+
+<Figure caption="Tých istých 16 rádioaktívnych atómov znova a znova. Po každom polčase rozpadu sa polovica z tých, čo zostali, zmení na iný prvok. Nikto nevie povedať, ktoré sa zmenia ako ďalšie." wide>
+  <HalfLife />
+</Figure>
+
+Každý rádioaktívny izotop má svoj vlastný polčas rozpadu:
+
+| Izotop | Polčas rozpadu |
+|---|---|
+| technécium-99m (používa sa v nemocniciach) | asi 6&nbsp;hodín |
+| radón-222 (plyn z hornín) | asi 4&nbsp;dni |
+| trícium (druh vodíka) | asi 12&nbsp;rokov |
+| uhlík-14 | asi 5&nbsp;700&nbsp;rokov |
+| urán-238 | asi 4,5&nbsp;miliardy rokov |
+
+Polčas rozpadu uránu-238 je asi taký dlhý, ako dlho existuje Zem. Približne polovica uránu-238,
+ktorý mala mladá Zem, je tu preto stále.
+
+## Vyskúšaj to: hra s mincami
+
+Rádioaktivitu si môžeš zahrať s mincami. Nazbieraj asi 30 mincí. Každá minca je jeden rádioaktívny
+atóm.
+
+1. Hoď všetky mince na stôl.
+2. Odlož každú mincu, ktorá padla číslom nahor. Tieto atómy sa zmenili.
+3. Spočítaj mince, ktoré zostali, a znova ich hoď.
+
+Každý hod je jeden polčas rozpadu. Po každom hode zostane asi polovica mincí. Nevieš povedať, ktorá
+minca vypadne ako ďalšia, ale vieš približne povedať, koľko ich zostane.
+
+## Rádioaktivita je všade okolo nás
+
+Rádioaktivita nie je len v laboratóriách. Je prirodzenou súčasťou sveta:
+
+- **Horniny a pôda** obsahujú malé množstvá rádioaktívneho uránu, tória a draslíka.
+- **Radón** je rádioaktívny plyn, ktorý uniká zo zeme. Môže sa hromadiť v pivniciach a v zatvorených
+  miestnostiach, a preto je dobré ich často vetrať.
+- **Žiarenie z vesmíru**, ktorému hovoríme kozmické žiarenie, k nám dopadá neustále. Vysoko v horách
+  a v lietadlách ho je viac.
+- **Jedlo** obsahuje tiež trochu rádioaktivity. Známe sú tým banány: majú veľa draslíka a nepatrná
+  časť všetkého draslíka je rádioaktívny draslík-40.
+- **Tvoje telo** obsahuje draslík-40 aj uhlík-14.
+
+Život na Zemi s týmto prirodzeným žiarením žije odjakživa. Jeho množstvá sú malé a tvoje telo si
+s nimi poradí.
+
+<FunFact>
+Keď zješ banán, dostaneš takú maličkú dávku žiarenia, že ju vedci zo žartu používajú ako jednotku:
+„banánovú dávku“. Prirodzené žiarenie všade okolo teba ti každý deň dá toľko ako desiatky banánov
+a je to úplne normálne.
+</FunFact>
+
+## Ako nám rádioaktivita pomáha?
+
+- **Medicína.** Lekári používajú rádioaktívne izotopy, aby videli do tela a našli choroby. Silné,
+  presne namierené žiarenie dokáže aj zničiť rakovinové bunky.
+- **Detektory dymu.** Mnohé detektory dymu obsahujú zrniečko rádioaktívneho amerícia. Jeho žiarenie
+  zmení časť vzduchu vo vnútri na [[ion|ióny]], takže môže tiecť maličký elektrický prúd. Dym tento
+  prúd naruší a detektor spustí poplach.
+- **Určovanie veku.** Rádioaktívne izotopy prezradia, aké staré sú kosti, drevo a horniny.
+- **Elektrina.** Jadrové elektrárne štiepia jadrá uránu, rádioaktívneho prvku, a pri tom sa
+  uvoľňuje veľa tepla. Teplo premení vodu na paru a para poháňa generátory. Napríklad Slovensko
+  takto vyrába viac ako polovicu svojej elektriny.
+- **Vesmír.** Niektoré vesmírne sondy a vozidlá na Marse si vyrábajú elektrinu z tepla rádioaktívneho
+  plutónia, ďaleko od Slnka.
+
+## Marie Curie a záhadné lúče
+
+V roku 1896 zistil francúzsky vedec Henri Becquerel, že urán vysiela neviditeľné lúče. Dokázali
+sčerniť fotografické dosky, dokonca cez čierny papier a v úplnej tme.
+
+Mladá vedkyňa v Paríži, Marie Curie-Sklodowska, chcela vedieť viac. Tieto lúče veľmi starostlivo
+merala. Spolu so svojím manželom Pierrom nazvala tento jav rádioaktivitou.
+
+V roku 1898 objavili dva nové rádioaktívne prvky. Prvý pomenovala polónium podľa Poľska, krajiny,
+v ktorej sa narodila. Druhý bol rádium, ktoré v tme slabo svieti.
+
+Marie Curie bola úplne prvou ženou, ktorá dostala Nobelovu cenu, a neskôr dostala ešte druhú. Dodnes
+je jediným človekom s Nobelovými cenami z dvoch rôznych vied: z fyziky a z chémie.
+
+V tých časoch ešte nikto nevedel, aké nebezpečné môže byť silné žiarenie. Marie Curie nosila
+skúmavky s rádioaktívnymi látkami vo vreckách a mala ich v zásuvke stola. Zomrela v roku 1934 na
+chorobu, ktorú najpravdepodobnejšie spôsobilo žiarenie. Jej zápisníky sú dodnes také rádioaktívne,
+že sú uložené v krabiciach vyložených olovom.
+
+## Ako zostať v bezpečí
+
+Malé množstvá prirodzeného žiarenia všade okolo nás patria k bežnému životu. Silné žiarenie však
+dokáže poškodiť drobné bunky, z ktorých je postavené tvoje telo. Preto sú miesta a nádoby so silným
+rádioaktívnym materiálom označené výstražnou značkou.
+
+<Figure caption="Výstražná značka žiarenia: tri tmavé lopatky okolo bodky na žltom podklade. Môže byť na trojuholníku, na štvorci aj na okrúhlom štítku.">
+  <RadiationSign />
+</Figure>
+
+<Safety>
+- Keď uvidíš značku žiarenia, drž sa ďalej a ničoho sa tam nedotýkaj.
+- Nikdy nezdvíhaj, neotváraj ani nerozoberaj zvláštny kovový predmet, kapsulu ani nádobu, ktorú
+  nájdeš, najmä ak je ťažká. Môže v nej byť silný rádioaktívny materiál a žiarenie sa nedá vidieť,
+  počuť ani cítiť.
+- Nechaj to tam, kde to je, nepúšťaj k tomu iných ľudí a hneď to povedz dospelému.
+</Safety>
+
+<GoDeeper title="Matematika polčasu rozpadu">
+Ak má vzorka na začiatku $N_0$ rádioaktívnych jadier, po čase $t$ ich zostane
+
+$$
+N = N_0 \cdot \left(\tfrac{1}{2}\right)^{t/T}
+$$
+
+- $N$ je počet jadier, ktoré ešte zostali, a $N_0$ je ich počet na začiatku.
+- $t$ je čas, ktorý uplynul, a $T$ je polčas rozpadu v rovnakej jednotke času.
+
+Príklad: rádium na zápisníkoch Marie Curie má polčas rozpadu asi 1&nbsp;600 rokov. Po 100 rokoch je
+$\left(\tfrac{1}{2}\right)^{100/1600} \doteq 0{,}96$, takže tam stále zostáva asi 96&nbsp;%.
+
+Počet rozpadov za sekundu sa volá **aktivita** a meria sa v **becquereloch** (Bq): jeden becquerel
+je jeden rozpad za sekundu. Aktivita je úmerná počtu jadier: $A = \lambda \cdot N$, kde premenová
+konštanta je $\lambda = \frac{\ln 2}{T}$. Žiadne jadro „nestarne“: nestabilné jadro, ktoré už čakalo
+milión rokov, sa v nasledujúcej sekunde nerozpadne s väčšou pravdepodobnosťou ako úplne nové. Tu sa
+končí aj podobnosť s vratkou vežou a s mincami: jadro nepotrebuje žiadne postrčenie ani hod.
+</GoDeeper>
+
+<GoDeeper title="Druhy rozpadu presnejšie">
+- **Rozpad alfa:** jadro vyhodí jadro hélia-4. Jeho protónové číslo klesne o 2 a nukleónové o 4.
+  Takto sa urán-238 mení na tórium-234.
+- **Rozpad beta mínus:** neutrón sa zmení na protón a jadro vyhodí novovzniknutý elektrón
+  a antineutríno. Protónové číslo stúpne o 1: uhlík-14 sa zmení na dusík-14.
+- **Rozpad beta plus a záchyt elektrónu:** protón sa zmení na neutrón. Jadro buď vyhodí pozitrón,
+  antičasticu elektrónu, alebo pohltí jeden z vlastných elektrónov atómu. Protónové číslo klesne
+  o 1. Vyšetrenia PET v nemocniciach využívajú žiarič beta plus, fluór-18.
+- **Rozpad gama:** jadro s energiou navyše sa upokojí tak, že vyšle žiarenie gama, fotón s veľmi
+  vysokou energiou. Zostane tým istým prvkom.
+
+Pri jadrových premenách ide o obrovské energie: často milióny elektrónvoltov na jedno jadro, kým pri
+chemickej reakcii ide len o niekoľko elektrónvoltov na atóm. Rozštiepenie jedného jadra uránu-235
+v reaktore uvoľní asi 200 miliónov elektrónvoltov. Preto trochu jadrového paliva dá toľko tepla.
+</GoDeeper>
+
+<GoDeeper title="Dávky: koľko je priveľa?">
+Účinok žiarenia na telo sa meria v **sievertoch** (Sv). Jeden sievert je veľa, a preto sa bežné
+dávky udávajú v milisievertoch (mSv, tisícinách) alebo v mikrosievertoch (µSv, milióntinách).
+
+- Prirodzené žiarenie dá ľuďom v priemere asi 2,4&nbsp;mSv za rok, zvyčajne 1 až 10&nbsp;mSv podľa
+  toho, kde bývajú. U väčšiny ľudí pochádza viac ako polovica z radónu.
+- Zjedený banán dá zhruba 0,1&nbsp;µSv. Aj to je nadsadené: telo si udržiava stály obsah draslíka,
+  a tak draslík navyše z jedla čoskoro opäť odíde.
+- CT vyšetrenie hrudníka dá niekoľko milisievertov. Lekári ho predpisujú vtedy, keď prínos stojí za
+  to.
+- Chorobu z ožiarenia spôsobia len veľmi veľké dávky, ktoré človek dostane v priebehu minút: nad
+  zhruba 700&nbsp;mSv.
+</GoDeeper>
+
+<GoDeeper title="Prečo pribudla druhá výstražná značka">
+Značku s tromi lopatkami prvýkrát načrtli v roku 1946 v radiačnom laboratóriu Kalifornskej
+univerzity v Berkeley. Stala sa medzinárodnou normou ISO 361, čiernou alebo purpurovou na žltom
+podklade. Prieskumy však ukázali, že ľudia bez odborného vzdelania jej význam väčšinou nepoznajú.
+
+Preto v roku 2007 pridali IAEA a ISO druhú značku pre najnebezpečnejšie zdroje: červený trojuholník
+s vlnami žiarenia, lebkou a utekajúcim človekom. Umiestňuje sa na tú časť stroja, v ktorej je zdroj,
+aby ju uvidel každý, kto by stroj rozoberal. Jedným z dôvodov boli nehody ako tá v brazílskom meste
+Goiânia v roku 1987. Zberači šrotu odniesli kovovú kapsulu z opusteného nemocničného prístroja
+a neskôr ju niekto otvoril. Svietiaci prášok vo vnútri obsahoval rádioaktívne cézium-137. Štyria
+ľudia zomreli a 249 bolo kontaminovaných.
+</GoDeeper>
+
+<Remember>
+- Rádioaktívne atómy majú nestabilné jadrá, ktoré sa samy menia a vysielajú žiarenie.
+- Tri hlavné druhy žiarenia sú alfa, beta a gama.
+- Polčas rozpadu je čas, za ktorý sa zmení polovica rádioaktívnych atómov.
+- Časť rádioaktivity je prirodzená a je všade okolo nás. Rádioaktivita má aj veľa užitočných
+  použití.
+- Drž sa ďalej od značky žiarenia a nikdy sa nedotýkaj zvláštnych kovových predmetov ani nádob.
+</Remember>
+
+<Quiz
+  question="Vzorka rádioaktívnych atómov má polčas rozpadu 1 deň. Aká časť z nej zostane po 2 dňoch?"
+  options={["Nič", "Polovica", "Štvrtina"]}
+  answer={2}
+  explanation="Po 1 dni zostane polovica. Po ďalšom dni zostane polovica z tej polovice: štvrtina."
+/>
+
+<Quiz
+  question="Čo máš urobiť, keď nájdeš zvláštnu kovovú kapsulu so značkou žiarenia?"
+  options={["Otvoriť ju a pozrieť sa dnu", "Vziať ju domov a ukázať kamarátom", "Nechať ju tak, držať sa ďalej a povedať to dospelému"]}
+  answer={2}
+  explanation="Žiarenie sa nedá vidieť ani cítiť, a preto sa kapsuly nikdy nedotýkaj. Drž sa ďalej a hneď to povedz dospelému."
+/>

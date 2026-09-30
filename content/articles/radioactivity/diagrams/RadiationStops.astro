@@ -1,0 +1,37 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'What stops alpha, beta and gamma radiation',
+    desc: 'Three arrows fly from left to right towards three walls: a sheet of paper, a thin sheet of aluminium and a thick block of lead. The alpha arrow stops at the paper. The beta arrow passes the paper and stops at the aluminium. The gamma arrow passes both and stops only inside the lead.',
+    rays: ['alpha', 'beta', 'gamma'],
+    walls: ['paper', 'aluminium', 'lead'],
+  },
+  sk: {
+    title: 'Čo zastaví žiarenie alfa, beta a gama',
+    desc: 'Tri šípky letia zľava doprava k trom prekážkam: k listu papiera, k tenkému plechu z hliníka a k hrubému bloku olova. Šípka alfa sa zastaví na papieri. Šípka beta prejde papierom a zastaví sa na hliníku. Šípka gama prejde oboma a zastaví sa až v olove.',
+    rays: ['alfa', 'beta', 'gama'],
+    walls: ['papier', 'hliník', 'olovo'],
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const YS = [70, 118, 166];
+// Where each arrow ends: at the paper, at the aluminium and inside the lead.
+const ENDS = [140, 228, 334];
+const ARROWS = ['d-arrow-hot', 'd-arrow-electron', 'd-arrow-accent'];
+---
+<Svg viewBox="0 0 400 196" title={s.title} desc={s.desc} maxWidth="30rem">
+  <rect x="144" y="38" width="5" height="150" class="d-box" style="stroke-width: 1.5" />
+  <rect x="232" y="38" width="12" height="150" class="d-box-alt" />
+  <rect x="316" y="38" width="48" height="150" rx="3" class="d-muted" />
+  <text x="146" y="26" text-anchor="middle" class="d-small">{s.walls[0]}</text>
+  <text x="238" y="26" text-anchor="middle" class="d-small">{s.walls[1]}</text>
+  <text x="340" y="26" text-anchor="middle" class="d-small">{s.walls[2]}</text>
+  {YS.map((y, i) => <text x="66" y={y + 6} text-anchor="end" class="d-label">{s.rays[i]}</text>)}
+  {YS.map((y, i) => <path d={`M76 ${y}H${ENDS[i]}`} class={`d-line ${ARROWS[i]}`} style="stroke-width: 3" />)}
+</Svg>
