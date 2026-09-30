@@ -8,6 +8,7 @@ keywords: [isotope, isotopes, neutrons, mass number, carbon-14, C-14, 14C, carbo
 
 import CarbonNames from './diagrams/CarbonNames.astro';
 import HydrogenIsotopes from './diagrams/HydrogenIsotopes.astro';
+import AtomLab from '@widgets/atom-lab/AtomLab.svelte';
 
 Every carbon atom has 6 protons, and that is what makes it carbon. Yet if you could weigh carbon
 atoms one by one, you would find that they don’t all weigh the same. A few are a little heavier
@@ -87,6 +88,13 @@ themselves and give off radiation.
 
 Carbon-14 is radioactive. In about 5,700 years, half of any amount of carbon-14 turns into nitrogen.
 This time is called its **half-life**.
+
+The lab below starts with carbon-12. Add two neutrons: the element stays the same, but the nucleus
+becomes radioactive.
+
+<Figure caption="Change the number of neutrons and watch the isotope change. Some nuclei are stable, some are radioactive, and some fall apart at once." wide>
+  <AtomLab client:visible quests="isotopes" />
+</Figure>
 
 ## A clock inside old things
 

@@ -8,6 +8,7 @@ keywords: [atoms, nucleus, proton, neutron, electron cloud, element, chemical el
 
 import HalvingGold from './diagrams/HalvingGold.astro';
 import AtomParts from './diagrams/AtomParts.astro';
+import AtomLab from '@widgets/atom-lab/AtomLab.svelte';
 
 Look around you: a wooden table, a glass of water, the air you breathe, your own hand. They could
 hardly be more different. Yet they are all built in the same way — from tiny building blocks called
@@ -123,6 +124,13 @@ versions of an element are called [[isotope|isotopes]].
 
 More than 90 elements are found in nature. The others were made by scientists in laboratories. All
 of them are listed in a famous chart called the [[periodic-table|periodic table]].
+
+Try it yourself: add protons and watch which element you get. Then change the neutrons and the
+electrons, and see what stays the same.
+
+<Figure caption="Build your own atom. The protons decide the element, the neutrons decide the isotope, and the electrons decide whether the atom has a charge." wide>
+  <AtomLab client:visible quests="atoms" />
+</Figure>
 
 ## What do atoms do?
 

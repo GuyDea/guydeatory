@@ -8,6 +8,7 @@ keywords: [ion, ions, cation, anion, positive ion, negative ion, charged atom, e
 
 import SodiumChlorine from './diagrams/SodiumChlorine.astro';
 import SaltyWater from './diagrams/SaltyWater.astro';
+import AtomLab from '@widgets/atom-lab/AtomLab.svelte';
 
 Stir a spoonful of salt into a glass of water, and the salt seems to vanish. But it is still there,
 in a form far too small to see: as tiny charged particles called **ions**.
@@ -73,6 +74,13 @@ packed together, make the white crystals of table salt. This hold between ions i
 
 <Figure caption="Sodium passes its one outer electron to chlorine. Both end up with a full outer shell: sodium as a plus ion, chlorine as a minus ion. Opposite charges pull them together." wide>
   <SodiumChlorine />
+</Figure>
+
+The lab below starts with a sodium atom. Take away one electron to make Na⁺, then try the other
+quests.
+
+<Figure caption="Add or remove electrons and watch the atom become an ion. The protons stay the same, so the element stays the same too." wide>
+  <AtomLab client:visible quests="ions" />
 </Figure>
 
 ## What happens when salt dissolves?

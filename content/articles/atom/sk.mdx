@@ -8,6 +8,7 @@ keywords: [atómy, jadro, atómové jadro, protón, neutrón, elektrónový obal
 
 import HalvingGold from './diagrams/HalvingGold.astro';
 import AtomParts from './diagrams/AtomParts.astro';
+import AtomLab from '@widgets/atom-lab/AtomLab.svelte';
 
 Poobzeraj sa okolo seba: drevený stôl, pohár vody, vzduch, ktorý dýchaš, tvoja vlastná ruka. Každá
 z týchto vecí je úplne iná. A predsa sú všetky postavené rovnako – z drobných stavebných kociek,
@@ -124,6 +125,13 @@ verziám prvku hovoríme [[isotope|izotopy]].
 
 Viac ako 90 prvkov sa nachádza v prírode. Ostatné vyrobili vedci v laboratóriách. Všetky prvky sú
 zapísané v slávnej tabuľke, ktorá sa volá [[periodic-table|periodická tabuľka]] prvkov.
+
+Vyskúšaj si to: pridávaj protóny a sleduj, aký prvok vznikne. Potom zmeň počet neutrónov
+a elektrónov a pozri sa, čo zostane rovnaké.
+
+<Figure caption="Postav si vlastný atóm. Protóny určujú prvok, neutróny izotop a elektróny to, či má atóm náboj." wide>
+  <AtomLab client:visible quests="atoms" />
+</Figure>
 
 ## Čo atómy robia?
 

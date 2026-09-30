@@ -8,6 +8,7 @@ keywords: [izotop, izotopy, neutróny, nukleónové číslo, uhlík-14, C-14, 14
 
 import CarbonNames from './diagrams/CarbonNames.astro';
 import HydrogenIsotopes from './diagrams/HydrogenIsotopes.astro';
+import AtomLab from '@widgets/atom-lab/AtomLab.svelte';
 
 Každý atóm uhlíka má 6 protónov a práve to z neho robí uhlík. Keby sa však atómy uhlíka dali vážiť
 jeden po druhom, ukázalo by sa, že nevážia všetky rovnako. Niekoľko z nich je o trochu ťažších ako
@@ -86,6 +87,13 @@ Iné izotopy sú **rádioaktívne**. Ich jadrá sú nestále a skôr či neskôr
 
 Uhlík-14 je rádioaktívny. Za približne 5&nbsp;700 rokov sa polovica akéhokoľvek množstva
 uhlíka-14 zmení na dusík. Tomuto času hovoríme **polčas rozpadu**.
+
+Laboratórium nižšie začína uhlíkom-12. Pridaj dva neutróny: prvok zostane rovnaký, ale jadro sa
+stane rádioaktívnym.
+
+<Figure caption="Meň počet neutrónov a sleduj, ako sa mení izotop. Niektoré jadrá sú stabilné, iné rádioaktívne a niektoré sa rozpadnú hneď." wide>
+  <AtomLab client:visible quests="isotopes" />
+</Figure>
 
 ## Hodiny vo vnútri starých vecí
 

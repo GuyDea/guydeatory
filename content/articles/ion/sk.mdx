@@ -8,6 +8,7 @@ keywords: [ión, ióny, katión, anión, kladný ión, záporný ión, nabitý a
 
 import SodiumChlorine from './diagrams/SodiumChlorine.astro';
 import SaltyWater from './diagrams/SaltyWater.astro';
+import AtomLab from '@widgets/atom-lab/AtomLab.svelte';
 
 Vmiešaj lyžičku soli do pohára vody a soľ akoby zmizla. Stále tam však je, len v podobe, ktorá je
 priveľmi malá na to, aby sa dala uvidieť: ako drobné nabité čiastočky, ktorým hovoríme **ióny**.
@@ -73,6 +74,13 @@ kryštáliky kuchynskej soli. Toto držanie medzi iónmi je jeden druh
 
 <Figure caption="Sodík odovzdá svoj jediný vonkajší elektrón chlóru. Oba skončia s plnou vonkajšou vrstvou: sodík ako kladný ión, chlór ako záporný ión. Opačné náboje ich k sebe priťahujú." wide>
   <SodiumChlorine />
+</Figure>
+
+Laboratórium nižšie začína atómom sodíka. Uber jeden elektrón a vznikne Na⁺. Potom skús ďalšie
+výzvy.
+
+<Figure caption="Pridávaj alebo uberaj elektróny a sleduj, ako sa z atómu stane ión. Protóny zostávajú rovnaké, a preto zostáva rovnaký aj prvok." wide>
+  <AtomLab client:visible quests="ions" />
 </Figure>
 
 ## Čo sa stane, keď sa soľ rozpustí?
