@@ -33,6 +33,7 @@ export interface Strings {
   questsTitle: string;
   progress: (done: number, total: number) => string;
   quests: Record<QuestId, string>;
+  /** Read out on each quest's tick: done or not yet. */
   questState: { done: string; open: string };
   /** The short celebration. */
   questDone: (quest: string) => string;
@@ -218,7 +219,7 @@ const en: Strings = {
     'calcium-ion': 'Ca²⁺, as in your bones',
     'noble-shell': 'Any ion with a full outer shell',
   },
-  questState: { done: 'done', open: 'not done yet' },
+  questState: { done: 'Done', open: 'Not done yet' },
   questDone: (quest) => `Quest done: ${quest}!`,
   announceQuest: (quest, done, total) => `Quest done: ${quest}. ${done} of ${total} done.`,
   allDone: 'All quests done. Great work!',
@@ -412,7 +413,7 @@ const sk: Strings = {
     'calcium-ion': 'Ca²⁺ ako v tvojich kostiach',
     'noble-shell': 'Akýkoľvek ión s plnou vonkajšou vrstvou',
   },
-  questState: { done: 'splnené', open: 'ešte nesplnené' },
+  questState: { done: 'Splnená', open: 'Ešte nesplnená' },
   questDone: (quest) => `Výzva splnená: ${quest}!`,
   announceQuest: (quest, done, total) => `Výzva splnená: ${quest}. Splnené: ${done} ${zo(total)} ${total}.`,
   allDone: 'Všetky výzvy sú splnené. Skvelá práca!',

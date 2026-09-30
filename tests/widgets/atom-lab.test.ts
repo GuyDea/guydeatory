@@ -7,10 +7,12 @@ import { ELEMENTS, NEUTRON_HALF_LIFE_S, RADIOACTIVE, STABLE } from '../../src/wi
 import type { HalfLife } from '../../src/widgets/atom-lab/data.ts';
 import {
   chargeKind,
+  collect,
   halfLifeParts,
   ionNotation,
   LIMITS,
   mostCommon,
+  newlyDone,
   nucleus,
   nucleusLayout,
   outerShell,
@@ -396,6 +398,21 @@ describe('atom lab: quests', () => {
     expect(questsMet('ions', atom(10, 10, 10))).toEqual([]); // neon itself is not an ion
   });
 
+  it('reports only the quests a new atom completes, once each, in list order', () => {
+    expect(newlyDone('ions', [], atom(11, 12, 10))).toEqual(['sodium-ion', 'noble-shell']);
+    expect(newlyDone('ions', ['noble-shell'], atom(11, 12, 10))).toEqual(['sodium-ion']);
+    expect(newlyDone('ions', ['sodium-ion', 'noble-shell'], atom(11, 12, 10))).toEqual([]);
+    expect(newlyDone('atoms', [], atom(4, 4, 4))).toEqual([]);
+  });
+
+  it('collects an element once its nucleus lasts, as an atom or an ion', () => {
+    expect(collect([], atom(6, 6, 6))).toEqual([6]);
+    expect(collect([6], atom(6, 8, 7))).toEqual([6]);
+    expect(collect([6], atom(11, 12, 10))).toEqual([6, 11]);
+    expect(collect([6], atom(2, 0, 2))).toEqual([6]); // helium-2 falls apart: not built
+    expect(collect([6], atom(0, 1, 0))).toEqual([6]);
+  });
+
   it('has a label for every quest in both languages', () => {
     for (const set of ['atoms', 'isotopes', 'ions'] as const) {
       for (const id of ids(set)) {
@@ -452,6 +469,28 @@ describe('atom lab: the first frame, before JS', () => {
     const html = frame('sk', 'isotopes');
     expect(html.querySelector('svg')?.getAttribute('aria-label')).toMatch(/^Uhlík-12\. /);
     expect(html.querySelector('.readouts')?.text).toContain('Uhlík (C)');
+  });
+
+  it('shows the element table with the start element marked, and no quest done yet', () => {
+    const html = frame('en');
+    const cells = html.querySelectorAll('.cell');
+    expect(cells.map((cell) => cell.getAttribute('aria-label'))).toHaveLength(20);
+    expect(cells[5]?.getAttribute('aria-label')).toBe('C, Carbon');
+    expect(html.querySelectorAll('.cell[aria-current="true"]').map((cell) => cell.text)).toEqual(['6C']);
+    expect(html.querySelectorAll('.quest').map((quest) => quest.text.trim())).toEqual(QUESTS.atoms.map((quest) => en.quests[quest.id]));
+    expect(html.querySelectorAll('.quest .tick').map((tick) => tick.getAttribute('aria-label'))).toEqual(Array(7).fill('Not done yet'));
+    expect(html.querySelector('.progress')?.text).toBe('0 of 7 done');
+    expect(html.querySelector('.collection')?.text).toBe('Elements built: 0 of 20');
+    // Nothing celebrates before the reader has built anything.
+    expect(html.querySelector('.toast')).toBeNull();
+    expect(html.querySelector('.burst-ring')).toBeNull();
+  });
+
+  it('lists the ion quests, with sodium marked in the table', () => {
+    const html = frame('sk', 'ions');
+    expect(html.querySelector('.cell[aria-current="true"]')?.getAttribute('aria-label')).toBe('Na, Sodík');
+    expect(html.querySelector('.quest')?.text.trim()).toBe('Na⁺ ako v kuchynskej soli');
+    expect(html.querySelector('.progress')?.text).toBe('Splnené: 0 zo 7');
   });
 
   it('shows the counts, with every button inert until the widget is live', () => {

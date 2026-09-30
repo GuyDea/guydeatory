@@ -262,6 +262,19 @@ export function questsMet(set: QuestSet, atom: Atom): QuestId[] {
   return QUESTS[set].filter((quest) => quest.met(atom)).map((quest) => quest.id);
 }
 
+/**
+ * The quests that building `atom` completes now, in list order. The widget asks this after each of
+ * the reader's own moves, never for the atom it starts with: a quest is something you build.
+ */
+export function newlyDone(set: QuestSet, done: readonly QuestId[], atom: Atom): QuestId[] {
+  return questsMet(set, atom).filter((id) => !done.includes(id));
+}
+
+/** The collection of elements built so far: an element counts once its nucleus lasts. */
+export function collect(built: readonly number[], atom: Atom): number[] {
+  return atom.protons > 0 && lasts(atom) && !built.includes(atom.protons) ? [...built, atom.protons] : [...built];
+}
+
 // ── Drawing ──────────────────────────────────────────────────────────────────────────────────────
 
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
