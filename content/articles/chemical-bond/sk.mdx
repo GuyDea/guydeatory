@@ -1,10 +1,409 @@
 ---
-title: 'Ako sa atómy spájajú do molekúl?'
-term: 'chemická väzba'
+title: Ako sa atómy spájajú do molekúl?
+term: chemická väzba
 slug: chemicka-vazba
-summary: 'Atómy sa navzájom držia tak, že si delia alebo vymieňajú niektoré svoje elektróny. Tomuto spojeniu hovoríme chemická väzba.'
-keywords: ['chemická väzba', 'väzby', 'molekula', 'spájanie atómov', 'kovalentná väzba', 'iónová väzba']
+summary: Atómy sa spájajú tak, že si delia alebo odovzdávajú niektoré zo svojich vonkajších elektrónov. Príťažlivosť medzi týmito elektrónmi a atómami drží atómy pokope. Tomuto spojeniu hovoríme chemická väzba.
+keywords: [chemická väzba, chemické väzby, väzba, ako držia atómy pokope, kovalentná väzba, iónová väzba, kovová väzba, spoločný elektrónový pár, voľný elektrónový pár, jednoduchá väzba, dvojitá väzba, trojitá väzba, pravidlo oktetu, oktet, plná vonkajšia vrstva, vzácny plyn, elektrónový plyn, polárna molekula, elektronegativita, vodíková väzba, vodíkový mostík, van der Waalsove sily, prečo ľad pláva, tvar molekuly, VSEPR, väzbová energia, H2, H2O, O2, N2, CO2, CH4, NaCl]
 ---
 
-Atómy sa navzájom držia tak, že si delia alebo vymieňajú niektoré svoje [[electron|elektróny]]. Tomuto
-spojeniu hovoríme chemická väzba. Takto sa atómy spájajú do molekúl, napríklad do vody, ktorú piješ.
+import SharedPair from './diagrams/SharedPair.astro';
+import BondOrders from './diagrams/BondOrders.astro';
+import SaltHandover from './diagrams/SaltHandover.astro';
+import ElectronSea from './diagrams/ElectronSea.astro';
+import MoleculeShapes from './diagrams/MoleculeShapes.astro';
+import WaterPolarity from './diagrams/WaterPolarity.astro';
+import IceLattice from './diagrams/IceLattice.astro';
+
+Daj si dúšok vody. V každej kvapke je viac ako miliarda miliárd drobných [[molecule|molekúl]] vody.
+Každá z nich sa skladá z troch [[atom|atómov]]: z dvoch atómov vodíka a jedného atómu kyslíka,
+ktoré sa navzájom pevne držia.
+
+Atómy však nemajú ruky ani lepidlo. Ako sa teda držia? A prečo sa vôbec spájajú? Poďme na to krok
+za krokom.
+
+## Ako vyzerá atóm zvonku?
+
+Každý atóm má v strede maličké jadro s kladným nábojom – plus. Okolo neho sa pohybujú oveľa ľahšie
+[[electron|elektróny]], každý so záporným nábojom – mínus. Plus priťahuje mínus a táto príťažlivosť
+drží elektróny pri jadre.
+
+Elektróny sú okolo jadra uložené vo vrstvách, trochu ako šupky cibule. Týmto vrstvám hovoríme
+[[electron-shell|elektrónové vrstvy]]. Do prvej vrstvy sa zmestia len 2 elektróny. Vo vrstvách
+ďalej od jadra je miesta viac.
+
+Posledná vrstva, v ktorej sú elektróny, je **vonkajšia vrstva**. Práve jej elektróny sa starajú
+o všetko spájanie. Pri vodíku je vonkajšia vrstva plná, keď má 2 elektróny. Pri ostatných atómoch
+v tomto článku je plná s 8 elektrónmi.
+
+## Prečo sa atómy vôbec spájajú?
+
+Niekoľko druhov atómov má vonkajšiu vrstvu plnú už od začiatku. Také sú hélium, neón a argón.
+Hovoríme im **vzácne plyny** a takmer nikdy sa s ničím nespájajú. Atóm s plnou vonkajšou vrstvou je
+stály a pokojný.
+
+Väčšina atómov má vo vonkajšej vrstve medzery. Kyslík v nej má napríklad 6 elektrónov: do 8 mu
+chýbajú 2. Vodík má 1: do 2 mu chýba 1.
+
+Takéto atómy si môžu vrstvy zaplniť tak, že sa spoja. Buď sa o elektróny podelia so susedom, alebo
+mu ich odovzdajú.
+
+Keď sa atómy takto spoja, sú potom stálejšie, ako boli osamote. Vedci hovoria, že spojené atómy majú
+menej [[energy|energie]]. Nadbytočná energia unikne, často ako [[heat|teplo]]. Preto rozdeliť
+spojené atómy vždy stojí energiu.
+
+Spojeniu dvoch atómov hovoríme **chemická väzba**.
+
+<GoDeeper title="Pravidlo plnej vrstvy a kde prestáva platiť">
+Atómy nič *nechcú*. Rozhoduje energia: atómy sa spoja vždy, keď má spojené usporiadanie menej
+energie ako samostatné atómy. Pri uhlíku, dusíku, kyslíku, halogénoch a ich susedoch majú najmenej
+energie takmer vždy tie usporiadania, v ktorých má každý atóm 8 vonkajších elektrónov ako vzácny
+plyn. Vodík skončí s 2 ako hélium. Chemici tomu hovoria **pravidlo oktetu**. Je to pomôcka na
+počítanie, nie prírodný zákon, a má výnimky:
+
+- Vo fluoride boritom (BF₃) má bór okolo seba len 6 elektrónov.
+- Vo fluoride sírovom (SF₆) má síra okolo seba 12 elektrónov, v chloride fosforečnom (PCl₅) má
+  fosfor 10.
+- Oxid dusnatý (NO) má nepárny počet elektrónov, takže 8 nemôže mať každý atóm.
+- Kovy v strede [[periodic-table|periodickej tabuľky]], napríklad železo a meď, sa riadia inými
+  pravidlami.
+- Molekula kyslíka O₂ je magnetická: tekutý kyslík sa prichytí na silný magnet. Jednoduchý obrázok
+  so spoločnými pármi to vysvetliť nevie. Úplnejšia teória (molekulové orbitály) ukazuje, že dva jej
+  elektróny sú nespárené.
+- Ani vzácne plyny nie sú úplne nereaktívne. V roku 1962 pripravil Neil Bartlett prvú zlúčeninu
+  xenónu a v tom istom roku pribudol aj fluorid xenónatý (XeF₂). Hélium a neón za bežných podmienok
+  netvoria žiadne stále zlúčeniny.
+</GoDeeper>
+
+## Ako si atómy môžu deliť elektróny?
+
+Začnime najmenším atómom: vodíkom. Má 1 elektrón, no v jeho vrstve je miesto pre 2.
+
+Keď sa dva atómy vodíka priblížia k sebe, stane sa niečo zaujímavé. Ich elektrónové oblaky sa
+prekryjú a oba elektróny vytvoria pár, ktorý patrí obom atómom. Teraz si každý atóm môže napočítať
+2 elektróny: plnú vrstvu!
+
+Spoločný pár je medzi oboma jadrami a obe jadrá ho priťahujú. Oba atómy sú teda ťahané k tomu istému
+páru v strede, a to ich drží pokope. Väzbe, ktorá vzniká delením sa o elektróny, hovoríme
+**kovalentná väzba**. Dva spojené atómy tvoria molekulu vodíka, ktorú zapisujeme H₂.
+
+<Figure caption="Každý atóm vodíka prinesie jeden elektrón. Pár, o ktorý sa oba atómy delia, dá obom plnú vrstvu s 2 elektrónmi a drží ich pokope." wide>
+  <SharedPair />
+</Figure>
+
+<Analogy title="Spoločný dáždnik">
+Dve deti zastihne dážď a majú len jeden malý dáždnik. Keď idú pod ním tesne vedľa seba, obe zostanú
+suché. Spoločné elektróny sú trochu ako ten dáždnik: dávajú obom atómom plnú vrstvu, kým atómy
+zostanú spolu.
+</Analogy>
+
+<GoDeeper title="Čo naozaj drží spoločný pár">
+Kovalentná väzba je kvantový jav. Keď sa dva atómy vodíka priblížia, ich elektrónové oblaky
+(orbitály) splynú do jedného oblaku okolo oboch jadier. Dva elektróny v ňom trávia veľa času medzi
+jadrami, kde ich priťahujú obe jadrá. Tým klesne energia, až kým nie sú jadrá od seba vzdialené
+asi 0,074 nanometra. Keby boli ešte bližšie, obe jadrá by sa odpudzovali príliš silno.
+
+Rozdeliť väzbu znova stojí asi 436 kilojoulov na mól (kJ/mol). Toľko energie treba na rozdelenie
+2 gramov plynného vodíka na samostatné atómy. Mól je pevne daný počet čiastočiek: 6,022 · 10²³.
+
+Krúžky na obrázkoch sú len šikovný spôsob, ako nakresliť vrstvy. Skutočné elektróny tvoria
+rozmazané oblaky, ako vysvetľuje článok o [[atom|atóme]].
+</GoDeeper>
+
+## Koľko väzieb môže atóm vytvoriť?
+
+Kyslík má vo vonkajšej vrstve 6 elektrónov. Do 8 mu chýbajú 2, a tak sa delí s dvoma atómami
+vodíka, s každým o jeden pár. Tak vzniká voda: H₂O.
+
+Uhlík má 4 vonkajšie elektróny a chýbajú mu ďalšie 4. Delí sa so štyrmi atómami vodíka a vzniká
+metán: CH₄. Metán je hlavnou zložkou zemného plynu, ktorý horí v mnohých kuchynských sporákoch.
+
+Takto sa dá zistiť, koľko väzieb atóm zvyčajne vytvorí. Spočítaj, koľko elektrónov mu chýba vo
+vonkajšej vrstve:
+
+| Atóm | Vonkajšie elektróny | Chýba | Zvyčajný počet väzieb |
+|---|---|---|---|
+| vodík (H) | 1 | 1 | 1 |
+| kyslík (O) | 6 | 2 | 2 |
+| dusík (N) | 5 | 3 | 3 |
+| uhlík (C) | 4 | 4 | 4 |
+
+<FunFact>
+Vďaka štyrom väzbám dokáže uhlík stavať dlhé reťaze a kruhy z atómov. Preto je uhlík kostrou
+všetkého živého, aj cukru, tuku a DNA v tvojom tele.
+</FunFact>
+
+## Čo sú dvojité a trojité väzby?
+
+Atómy sa môžu deliť aj o viac ako jeden pár elektrónov. Dvom atómom kyslíka chýbajú po 2 elektróny,
+a tak sa delia o dva páry. To je **dvojitá väzba**. Drží pokope kyslík vo vzduchu, ktorý dýchaš: O₂.
+
+Dvom atómom dusíka chýbajú po 3. Delia sa o tri páry, a tak vzniká **trojitá väzba**. To je plynný
+dusík: N₂.
+
+Chemici kreslia každý spoločný pár ako krátku čiarku: H–H, O=O a N≡N.
+
+<Figure caption="Každá čiarka znamená jeden spoločný pár elektrónov. Spočítaj elektróny okolo každého atómu: vodík ich má nakoniec 2, kyslík a dusík 8." wide>
+  <BondOrders />
+</Figure>
+
+Trojitú väzbu je veľmi ťažké rozbiť. Preto dusík takmer nikdy s ničím nereaguje, hoci asi 78 %
+vzduchu tvorí práve dusík. Celý deň ho vdychuješ a vydychuješ a vychádza z teba nezmenený. Rozdeliť
+ho dokáže len niečo výnimočné, napríklad blesk, niektoré baktérie v pôde alebo veľká továreň na
+hnojivá.
+
+<GoDeeper title="Aké silné sú väzby?">
+Chemici merajú silu väzby energiou, ktorú treba na rozbitie jedného mólu väzieb (6,022 · 10²³
+väzieb). Typické hodnoty pri izbovej teplote:
+
+| Väzba | Energia na jej rozbitie |
+|---|---|
+| H–H vo vodíku H₂ | 436 kJ/mol |
+| O=O v kyslíku O₂ | 498 kJ/mol |
+| N≡N v dusíku N₂ | 945 kJ/mol |
+| C–H, priemer | asi 415 kJ/mol |
+| O–H, priemer | asi 464 kJ/mol |
+| C–C, C=C, C≡C, priemery | asi 345, 611 a 837 kJ/mol |
+
+Pri uhlíku je dvojitá väzba silnejšia ako jednoduchá, no nie dvakrát. Druhý a tretí spoločný pár sú
+bokom od spojnice atómov (chemici im hovoria väzby π), kde držia slabšie.
+
+Trojitá väzba dusíka patrí k najsilnejším väzbám medzi dvoma atómami. Továrne, ktoré menia dusík zo
+vzduchu na hnojivá (Haberov-Boschov proces), potrebujú železný katalyzátor, teplotu niekoľko sto
+stupňov Celzia a veľmi vysoký tlak. Baktérie v pôde zvládnu to isté pri bežnej teplote pomocou
+enzýmu.
+</GoDeeper>
+
+## Čo sa stane, keď jeden atóm elektrón odovzdá?
+
+Delenie sa o elektróny nie je jediný spôsob, ako zaplniť vrstvu. Niekedy jeden atóm elektrón odovzdá inému.
+
+Sodík je mäkký, lesklý kov. Vo vonkajšej vrstve má len 1 elektrón. Chlór je jedovatý žltozelený
+plyn. Vo vonkajšej vrstve má 7 elektrónov, do 8 mu chýba 1.
+
+Chlór priťahuje elektróny oveľa silnejšie ako sodík. Keď sa stretnú, osamelý vonkajší elektrón
+sodíka preskočí k chlóru. Chlór má teraz vo vonkajšej vrstve 8 elektrónov. Sodík o svoj vonkajší
+elektrón prišiel, a tak sa jeho vonkajšou vrstvou stane plná vrstva s 8 elektrónmi pod ňou.
+
+Náboje však už nie sú vyrovnané. Sodík má o jeden protón viac ako elektrónov, a tak má kladný
+[[electric-charge|náboj]]. Chlór má jeden elektrón navyše, a tak má záporný náboj.
+
+Atómom s nábojom hovoríme [[ion|ióny]]. Plus a mínus sa silno priťahujú a táto príťažlivosť je
+**iónová väzba**.
+
+Z nebezpečného kovu a jedovatého plynu sa stalo niečo, čím si soliš jedlo: kuchynská soľ. Jej
+chemický názov je chlorid sodný a zapisujeme ho NaCl. Ión chlóru sa volá chloridový ión.
+
+Soľ sa však neskladá z malých dvojíc. Každý ión priťahuje všetky ióny okolo seba, a tak sa ukladajú
+do úhľadného vzoru na všetky strany. Každý sodný ión má okolo seba šesť chloridových iónov a každý
+chloridový ión šesť sodných.
+
+Takému obrovskému, usporiadanému stohu hovoríme **kryštál**. Pozri sa na soľ lupou: mnohé zrniečka
+sú maličké kocky!
+
+<Figure caption="Jediný vonkajší elektrón sodíka preskočí k chlóru. Oba potom majú plné vonkajšie vrstvy a opačné náboje, ktoré ich priťahujú k sebe. V soli sa ióny ukladajú do kryštálu." wide>
+  <SaltHandover />
+</Figure>
+
+<GoDeeper title="Prečo sa odovzdanie oplatí">
+Samotné odovzdanie elektrónu prekvapivo energiu stojí. Odtrhnúť vonkajší elektrón od atómu sodíka
+stojí asi 496 kJ/mol. Chlór pri prijatí elektrónu vráti len asi 349 kJ/mol. Rozdiel vyrovná až
+príťažlivosť medzi iónmi. Keď sa ióny Na⁺ a Cl⁻ poskladajú do kryštálu, uvoľnia viac ako päťkrát
+toľko energie, koľko odovzdanie stálo.
+
+Táto silná príťažlivosť medzi iónmi je aj dôvodom, prečo sa soľ tak ťažko topí: topí sa až pri
+801 °C. Pevná soľ elektrický prúd nevedie, lebo jej ióny sú zamknuté na mieste. Po rozpustení vo
+vode sa ióny môžu pohybovať a slaná voda prúd vedie.
+</GoDeeper>
+
+## Ako držia pokope kovy?
+
+Kovy držia pokope ešte iným spôsobom. Atóm kovu má vo vonkajšej vrstve len niekoľko elektrónov a
+drží ich slabo.
+
+V kúsku kovu každý atóm svoje vonkajšie elektróny pustí. Uvoľnené elektróny sa túlajú medzi všetkými
+atómami ako more okolo ostrovov.
+
+Atómy, ktoré zostanú, majú kladný náboj. Sedia v úhľadných radoch a more záporných elektrónov
+(v škole sa mu hovorí elektrónový plyn) ich všetky drží pokope. Takejto väzbe hovoríme
+**kovová väzba**.
+
+<Figure caption="V kove atómy pustia svoje vonkajšie elektróny. Kladné ióny kovu sedia v radoch v mori voľných elektrónov, ktoré ich drží pokope." wide>
+  <ElectronSea />
+</Figure>
+
+More elektrónov vysvetľuje o kovoch veľa:
+
+- Voľné elektróny môžu kovom tiecť ako [[electric-current|elektrický prúd]]. Preto sú kovy dobré
+  [[conductors-and-insulators|vodiče]].
+- Väčšinu kovov môžeš ohnúť alebo tvarovať kladivom a nerozbijú sa. Rady atómov sa posunú po sebe a
+  more ich drží ďalej.
+- More elektrónov odráža svetlo, a preto sú kovy lesklé.
+
+## Aký tvar má molekula?
+
+Molekuly nie sú ploché ako obrázky na papieri. Majú tvary a tie určujú elektróny.
+
+Páry elektrónov okolo atómu sa navzájom odtláčajú, lebo mínus odtláča mínus. Preto sa od seba
+rozostúpia čo najďalej.
+
+<Analogy title="Balóny zviazané dokopy">
+Zviaž dva balóny uzlíkmi k sebe a budú mieriť na opačné strany. Zviaž štyri a budú mieriť do štyroch
+rohov ihlana s trojuholníkom v podstave. Páry elektrónov sa okolo atómu usporiadajú presne tak isto.
+</Analogy>
+
+- **Oxid uhličitý** (CO₂) je rovný: O=C=O. Uhlík má okolo seba dve skupiny elektrónov, svoje dve
+  dvojité väzby, a tie mieria na opačné strany.
+- **Metán** (CH₄) má tvar trojbokého ihlana. Štyri atómy vodíka sú v jeho rohoch a atóm uhlíka
+  v strede.
+- **Voda** (H₂O) je lomená, teda zalomená ako široké písmeno V. Kyslík sa delí o dva páry elektrónov,
+  no ďalšie dva páry si necháva pre seba. Tieto štyri páry mieria zhruba do rohov ihlana. Preto oba
+  atómy vodíka zvierajú uhol asi 104,5°.
+
+<Figure caption="Oxid uhličitý je rovný, voda lomená a metán má tvar trojbokého ihlana. Dva voľné páry elektrónov na kyslíku tlačia atómy vodíka nadol." wide>
+  <MoleculeShapes />
+</Figure>
+
+<GoDeeper title="Tvary z odtláčania párov (VSEPR)">
+Tento spôsob predpovedania tvarov sa volá **VSEPR**, z anglického valence-shell electron-pair
+repulsion: odpudzovanie elektrónových párov vo valenčnej vrstve. Spočítaj skupiny elektrónov okolo
+stredného atómu. Každá väzba je jedna skupina, aj keď je dvojitá alebo trojitá. Rovnako aj každý
+**voľný elektrónový pár**, teda pár, ktorý patrí len jednému atómu.
+
+- Dve skupiny mieria na opačné strany, 180° od seba: oxid uhličitý.
+- Štyri skupiny mieria do rohov pravidelného trojbokého ihlana (štvorstena), 109,5° od seba: metán.
+- Voľné páry tlačia silnejšie ako spoločné a zužujú uhly medzi väzbami. Amoniak (NH₃) s jedným
+  voľným párom je nízky ihlan s uhlami asi 107°. Voda s dvoma voľnými pármi sa zúži na 104,5°.
+
+VSEPR je pomôcka. Dobre funguje pri malých molekulách nekovov a horšie pri kovoch v strede
+periodickej tabuľky.
+</GoDeeper>
+
+## Čo sa stane, keď sa atómy nedelia spravodlivo?
+
+Keď sa o elektróny delia dva rôzne atómy, nie vždy sa delia spravodlivo. Kyslík priťahuje spoločné
+elektróny oveľa silnejšie ako vodík. Preto spoločné elektróny vo vode trávia viac času pri atóme
+kyslíka.
+
+<Analogy title="Preťahovanie lanom">
+Predstav si dve deti, ktoré ťahajú lano z oboch koncov. Ak jedno ťahá silnejšie, stred lana sa
+posunie k nemu. Vo vode ťahá silnejšie kyslík a spoločné elektróny sú stred lana.
+</Analogy>
+
+Kyslíková strana molekuly tak dostane malý záporný náboj a vodíková strana malý kladný náboj.
+Chemici ich označujú δ− a δ+ (δ je grécke písmeno delta). Keďže je voda zalomená, jedna strana
+molekuly je trochu záporná a druhá trochu kladná. Takej molekule hovoríme **polárna**.
+
+<Figure caption="Kyslík si priťahuje spoločné elektróny k sebe. Kyslíková strana molekuly je preto trochu záporná (δ−) a vodíková strana trochu kladná (δ+)." wide>
+  <WaterPolarity />
+</Figure>
+
+Aj väzby v oxide uhličitom sú nerovnomerné. Molekula je však rovná, takže oba ťahy mieria na opačné
+strany a navzájom sa zrušia. Oxid uhličitý polárny nie je.
+
+Vďaka tomu, že je voda polárna, veľmi dobre rozpúšťa rôzne látky. Keď do vody nasypeš soľ, trochu
+záporné kyslíkové strany molekúl vody ťahajú kladné sodné ióny. Trochu kladné vodíkové strany ťahajú
+záporné chloridové ióny. Ióny sa tak jeden po druhom vytrhnú z kryštálu a soľ zmizne.
+
+Olej polárny nie je, a tak voda nemá za čo ťahať. Molekuly vody sa radšej držia navzájom a olej
+odtlačia nabok. Preto sa olej s vodou nezmieša.
+
+<GoDeeper title="Ako zmerať ťah: elektronegativita">
+To, ako silno atóm priťahuje spoločné elektróny, sa volá **elektronegativita**. Tento pojem zaviedol
+Linus Pauling v roku 1932. Na jeho stupnici má sodík 0,93, vodík 2,20, uhlík 2,55, chlór 3,16 a
+kyslík 3,44. Najvyššiu hodnotu zo všetkých má fluór: 3,98.
+
+Čím väčší je rozdiel medzi dvoma atómami, tým nerovnomernejšie sa delia. Učebnice často používajú
+hrubé pravidlo. Rozdiel pod 0,4 znamená nepolárnu kovalentnú väzbu, 0,4 až 1,7 polárnu kovalentnú
+väzbu a viac ako 1,7 prevažne iónovú väzbu. Príroda tu však ostré hranice nemá. Väzby tvoria plynulú
+stupnicu od spravodlivého delenia (H–H) po takmer úplné odovzdanie (chlorid sodný).
+
+Nerovnomernosť vody sa dá zmerať ako jej dipólový moment, asi 1,85 debye. Oxid uhličitý má dipólový
+moment nulový, lebo jeho dve polárne väzby mieria na opačné strany.
+</GoDeeper>
+
+## Prečo ľad pláva?
+
+Polárne molekuly vody sa držia aj navzájom. Trochu kladný vodík jednej molekuly a trochu záporný
+kyslík susednej molekuly sa priťahujú. Tejto jemnej príťažlivosti medzi molekulami hovoríme
+**vodíková väzba**. Je asi dvadsaťkrát slabšia ako väzby vo vnútri molekuly vody.
+
+V tekutej vode sa molekuly prevaľujú a vodíkové väzby sa neustále trhajú a znova vytvárajú. Keď však
+voda zamrzne, každá molekula sa pripúta vodíkovými väzbami k štyrom susedom. Spolu postavia vzor zo
+šesťuholníkov s medzerami v strede.
+
+<Figure caption="V tekutej vode sú molekuly natlačené blízko seba. V ľade ich vodíkové väzby držia v otvorených šesťuholníkoch, ktoré zaberajú viac miesta." wide>
+  <IceLattice />
+</Figure>
+
+Pre tieto medzery zaberá ľad asi o desatinu viac miesta ako tá istá voda v tekutom stave. Hrnček
+ľadu je teda ľahší ako hrnček vody, a preto ľad pláva. Preto jazerá zamŕzajú zhora nadol a ryby
+môžu celú zimu žiť pod ľadom.
+
+<GoDeeper title="Sily medzi molekulami">
+Na rozbitie vodíkovej väzby vo vode treba asi 20 kJ/mol. Väzba O–H vo vnútri molekuly potrebuje asi
+460 kJ/mol. V ľade je každá molekula spojená vodíkovými väzbami so štyrmi susedmi, a tak vznikajú
+otvorené šesťuholníkové kanáliky. Ľad má hustotu asi 0,917 g/cm³, kým tekutá voda pri 0 °C má takmer
+1,000 g/cm³, teda asi o 9 % viac. Tekutá voda je najhustejšia približne pri 4 °C.
+
+Vodíkové väzby vysvetľujú aj to, prečo voda vrie tak neskoro. Sulfán (H₂S), hovorovo sírovodík, je
+lomený ako voda a jeho molekuly sú ťažšie, a predsa vrie už približne pri −60 °C. Voda vrie až pri
+100 °C (viac o [[boiling-point|bode varu]]).
+
+Všetky molekuly, aj nepolárne, sa navzájom trochu priťahujú **van der Waalsovými silami**.
+Elektrónové oblaky susedných molekúl sa chvejú v súlade a navzájom sa priťahujú. Každý taký ťah je
+maličký, no je ich veľa. Držia pokope tekutý dusík a vďaka nim sa gekóny udržia na stene pomocou
+miliónov mikroskopických chĺpkov na prstoch.
+</GoDeeper>
+
+## Uvoľňuje sa pri vzniku väzby energia?
+
+Áno! Pri vzniku väzby sa energia uvoľní a na rozbitie väzby treba energiu dodať.
+
+<Analogy title="Magnety, ktoré cvaknú k sebe">
+Podrž dva magnety blízko seba a cvaknú k sebe. Keď ich chceš znova oddeliť, musíš poriadne
+potiahnuť. Atómy spojené väzbou sú na tom podobne.
+</Analogy>
+
+Ako potom môže oheň vydávať teplo? Oheň rozbíja väzby v palive aj v kyslíku, a to stojí energiu.
+
+Potom sa však atómy znova spoja inak a vznikne oxid uhličitý a voda. Nové väzby sú silnejšie ako tie
+staré, a tak sa energie viac uvoľní, ako sa spotrebovalo. Tento prebytok je teplo a svetlo plameňa.
+
+Rozbíjanie starých väzieb a vznik nových sa deje pri každej [[chemical-reaction|chemickej reakcii]].
+Energia sa pritom nikdy nestratí ani nevznikne z ničoho: iba mení podobu. Tak to hovorí
+[[conservation-of-energy|zákon zachovania energie]].
+
+<GoDeeper title="Častý omyl o energii vo väzbách">
+Niekde si môžeš prečítať, že energia je „uložená vo väzbách“ a „uvoľní sa, keď sa rozbijú“. Je to
+naopak: rozbitie väzby vždy energiu stojí. Energia paliva patrí celému usporiadaniu. Metán a kyslík
+majú spolu viac energie ako oxid uhličitý a voda, na ktoré sa zmenia.
+
+Spálením 16 gramov metánu (jedného mólu) sa uvoľní asi 890 kJ, ak voda, ktorá pritom vznikne,
+skončí ako kvapalina. To by stačilo na to, aby asi 2,5 litra studenej vody začalo vrieť. Článok
+o [[chemical-reaction|chemických reakciách]] ukazuje, ako sa to dá odhadnúť z energií väzieb.
+</GoDeeper>
+
+<Remember>
+- Atómy sa spájajú tak, že si delia alebo odovzdávajú vonkajšie elektróny. Toto spojenie je
+  chemická väzba.
+- Spojené atómy mávajú plné vonkajšie vrstvy: vodík s 2 elektrónmi, uhlík, dusík, kyslík a mnohé
+  ďalšie s 8.
+- Delením elektrónov vznikajú kovalentné väzby, napríklad vo vode. Odovzdaním vznikajú ióny, ktoré
+  sa priťahujú, napríklad v soli. Kovy majú spoločné more voľných elektrónov.
+- Molekuly majú tvary: voda je lomená, oxid uhličitý rovný a metán má tvar trojbokého ihlana.
+- Pri vzniku väzby sa energia uvoľní a na jej rozbitie treba energiu dodať.
+</Remember>
+
+<Quiz
+  question="Prečo dusík vo vzduchu takmer nikdy s ničím nereaguje?"
+  options={["Atómy dusíka nemajú elektróny", "Jeho dva atómy drží pokope veľmi silná trojitá väzba", "Vo vzduchu takmer nie je dusík"]}
+  answer={1}
+  explanation="Dva atómy dusíka majú tri spoločné páry elektrónov. Túto trojitú väzbu je veľmi ťažké rozbiť, a tak dusík takmer nereaguje, hoci tvorí asi 78 % vzduchu."
+/>
+
+<Quiz
+  question="Prečo ľad pláva na vode?"
+  options={["Ľad je plný vzduchových bublín", "Vodíkové väzby držia jeho molekuly v otvorenom vzore s medzerami", "Molekuly ľadu sú menšie ako molekuly vody"]}
+  answer={1}
+  explanation="V ľade vodíkové väzby pripútajú molekuly vody do otvorených šesťuholníkov. Pre medzery zaberá ľad viac miesta, a tak je hrnček ľadu ľahší ako hrnček vody. Pláva aj priezračný ľad bez bublín."
+/>

@@ -1,0 +1,60 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Two hydrogen atoms share their electrons',
+    desc: 'On the left, two separate hydrogen atoms. Each has a nucleus with a shell around it and one electron in the shell. An arrow points to the right, where the two atoms have joined into a hydrogen molecule, H₂. Their shells overlap, and both electrons sit together in the overlap as a shared pair.',
+    atoms: '2 hydrogen atoms',
+    molecule: 'H₂ molecule',
+    pair: 'shared pair',
+    nucleus: 'nucleus',
+    electron: 'electron',
+  },
+  sk: {
+    title: 'Dva atómy vodíka si delia svoje elektróny',
+    desc: 'Vľavo sú dva samostatné atómy vodíka. Každý má jadro, okolo neho vrstvu a v nej jeden elektrón. Šípka ukazuje doprava, kde sa oba atómy spojili do molekuly vodíka H₂. Ich vrstvy sa prekrývajú a oba elektróny sú spolu v prekryve ako spoločný pár.',
+    atoms: '2 atómy vodíka',
+    molecule: 'molekula H₂',
+    pair: 'spoločný pár',
+    nucleus: 'jadro',
+    electron: 'elektrón',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const shell = 'stroke: var(--d-muted); stroke-width: 2';
+// Separate atoms: [nucleus x, electron x, electron y]. Each electron sits on its shell (radius 30).
+const separate = [
+  [48, 69.2, 58.8],
+  [140, 118.8, 58.8],
+];
+// The molecule: two shells centred 40 apart overlap in a lens between x = 300 and x = 320.
+const joined = [290, 330];
+---
+<Svg viewBox="0 0 400 214" title={s.title} desc={s.desc} maxWidth="30rem">
+  {separate.map(([x]) => <circle cx={x} cy="80" r="30" class="d-line" style={shell} />)}
+  {separate.map(([x]) => <circle cx={x} cy="80" r="7" class="d-positive" />)}
+  {separate.map(([, ex, ey]) => <circle cx={ex} cy={ey} r="6" class="d-electron" />)}
+  <text x="94" y="86" text-anchor="middle" class="d-label">+</text>
+  <text x="94" y="140" text-anchor="middle" class="d-label">{s.atoms}</text>
+
+  <path d="M190 80H232" class="d-line d-arrow" />
+
+  <path d="M310 57.6A30 30 0 0 1 310 102.4A30 30 0 0 1 310 57.6Z" class="d-glow" opacity="0.55" />
+  {joined.map((x) => <circle cx={x} cy="80" r="30" class="d-line" style={shell} />)}
+  {joined.map((x) => <circle cx={x} cy="80" r="7" class="d-positive" />)}
+  <circle cx="310" cy="70" r="6" class="d-electron" />
+  <circle cx="310" cy="90" r="6" class="d-electron" />
+  <path d="M310 28V50" class="d-line" />
+  <text x="310" y="20" text-anchor="middle" class="d-small">{s.pair}</text>
+  <text x="310" y="140" text-anchor="middle" class="d-label">{s.molecule}</text>
+
+  <circle cx="30" cy="190" r="7" class="d-positive" />
+  <text x="44" y="196" class="d-small">{s.nucleus}</text>
+  <circle cx="160" cy="190" r="6" class="d-electron" />
+  <text x="174" y="196" class="d-small">{s.electron}</text>
+</Svg>

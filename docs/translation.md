@@ -203,6 +203,24 @@ horečnatý (MgCl₂), tetrachlórmetán (CCl₄), trichlórmetán (CHCl₃, chl
 superscripts (Na⁺, Cl⁻, Ca²⁺, O²⁻), in both languages. Add the plain forms ("H2O", "Na+") to
 `keywords`, so search finds them.
 
+### Bonds, molecules and reactions
+
+| English | Slovenčina | Note |
+|---|---|---|
+| outer shell, full outer shell | vonkajšia vrstva, plná vonkajšia vrstva | |
+| octet rule | pravidlo oktetu | Go-deeper blocks only |
+| electron sea (metals) | more elektrónov | give the school term "elektrónový plyn" once |
+| crystal | kryštál | |
+| sodium ion / chloride ion | sodný ión / chloridový ión | "katión / anión" in Go-deeper blocks |
+| partial charge (δ+, δ−) | čiastkový náboj | "trochu kladný / trochu záporný" in the main text |
+| dipole moment | dipólový moment | |
+| van der Waals forces | van der Waalsove sily | |
+| linear / bent / tetrahedral (shape) | lineárny / lomený / tetraédrický | main text: rovná / lomená (zalomená) / tvar trojbokého ihlana (štvorstena) |
+| bond energy | väzbová energia | main text: "energia na rozbitie väzby" |
+| natural gas | zemný plyn | |
+| catalyst | katalyzátor | also the part of a car exhaust |
+| enzyme | enzým | |
+
 ## 5. Slugs and links
 
 - **Slugs:** ASCII kebab-case from the Slovak term, without diacritics, for example

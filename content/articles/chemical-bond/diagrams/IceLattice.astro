@@ -1,0 +1,98 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Water molecules in liquid water and in ice',
+    desc: 'Two boxes of the same size. Left, liquid water: the molecules are jumbled and crowded close together, with a few hydrogen bonds between them. Right, ice: hydrogen bonds hold the molecules in a regular pattern of six-sided rings, with an empty gap in the middle of each ring, so fewer molecules fit in the same box.',
+    liquid: 'liquid water',
+    ice: 'ice',
+    crowded: 'jumbled and crowded',
+    rings: 'rings with gaps',
+    molecule: 'water molecule',
+    bond: 'hydrogen bond',
+  },
+  sk: {
+    title: 'Molekuly vody v tekutej vode a v ľade',
+    desc: 'Dve rovnako veľké škatule. Vľavo tekutá voda: molekuly sú neusporiadané a natlačené blízko seba, medzi niektorými sú vodíkové väzby. Vpravo ľad: vodíkové väzby držia molekuly v pravidelnom vzore zo šesťuholníkov, v strede každého je prázdna medzera, takže sa do rovnakej škatule zmestí menej molekúl.',
+    liquid: 'tekutá voda',
+    ice: 'ľad',
+    crowded: 'neusporiadané a natlačené',
+    rings: 'šesťuholníky s medzerami',
+    molecule: 'molekula vody',
+    bond: 'vodíková väzba',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const f = (n: number) => n.toFixed(1);
+const bondStyle = 'stroke: var(--d-cold); stroke-width: 3; stroke-dasharray: 3 3';
+const r = 8;
+
+// Boxes: [left, top, right, bottom].
+const box = { top: 44, bottom: 204 };
+const liquidBox = { left: 10, right: 190 };
+const iceBox = { left: 210, right: 390 };
+const inside = (x: number, y: number, left: number, right: number) => x > left + 10 && x < right - 10 && y > box.top + 10 && y < box.bottom - 10;
+
+// Liquid: jumbled, with about the same distance between neighbours as in ice, but no gaps
+// (a grid with a fixed wobble, so every build is the same).
+const liquid: number[][] = [];
+for (let row = 0; row < 6; row++) {
+  for (let col = 0; col < 6; col++) {
+    const x = liquidBox.left + 24 + col * 29 + (row % 2) * 14 + (((col * 7 + row * 3) % 5) - 2) * 3;
+    const y = box.top + 20 + row * 25 + (((col * 3 + row * 5) % 5) - 2) * 2.5;
+    // A few scattered holes: a flat picture exaggerates the real difference in space (about 9%).
+    const hole = [2, 5, 1, 4, 0, 3][row] === col;
+    if (inside(x, y, liquidBox.left, liquidBox.right) && !hole) liquid.push([x, y]);
+  }
+}
+const liquidBonds: number[][][] = [];
+liquid.forEach((a, i) =>
+  liquid.forEach((b, j) => {
+    if (j > i && Math.hypot(a[0] - b[0], a[1] - b[1]) < 34 && (i + j) % 3 !== 1) liquidBonds.push([a, b]);
+  }),
+);
+
+// Ice: the corners of a honeycomb of six-sided rings (pointy-top hexagons, side 30).
+const side = 30;
+const w = Math.sqrt(3) * side;
+const corners = new Map<string, number[]>();
+for (let row = -1; row < 6; row++) {
+  for (let col = -1; col < 6; col++) {
+    const cx = iceBox.left + 12 + col * w + (row % 2 ? w / 2 : 0);
+    const cy = box.top + 4 + row * 1.5 * side;
+    for (let k = 0; k < 6; k++) {
+      const a = ((30 + 60 * k) * Math.PI) / 180;
+      const x = cx + side * Math.cos(a);
+      const y = cy + side * Math.sin(a);
+      if (inside(x, y, iceBox.left, iceBox.right)) corners.set(`${Math.round(x)},${Math.round(y)}`, [x, y]);
+    }
+  }
+}
+const ice = [...corners.values()];
+const iceBonds: number[][][] = [];
+ice.forEach((a, i) =>
+  ice.forEach((b, j) => {
+    if (j > i && Math.abs(Math.hypot(a[0] - b[0], a[1] - b[1]) - side) < 1) iceBonds.push([a, b]);
+  }),
+);
+---
+<Svg viewBox="0 0 400 290" title={s.title} desc={s.desc} maxWidth="32rem">
+  <text x="100" y="30" text-anchor="middle" class="d-label">{s.liquid}</text>
+  <text x="300" y="30" text-anchor="middle" class="d-label">{s.ice}</text>
+  <rect x={liquidBox.left} y={box.top} width="180" height={box.bottom - box.top} rx="8" class="d-box" />
+  <rect x={iceBox.left} y={box.top} width="180" height={box.bottom - box.top} rx="8" class="d-box" />
+  {[...liquidBonds, ...iceBonds].map(([a, b]) => <path d={`M${f(a[0])} ${f(a[1])}L${f(b[0])} ${f(b[1])}`} style={bondStyle} />)}
+  {[...liquid, ...ice].map(([x, y]) => <circle cx={f(x)} cy={f(y)} r={r} class="d-cool" style="stroke: var(--d-cold); stroke-width: 1.5" />)}
+  <text x="100" y="228" text-anchor="middle" class="d-small">{s.crowded}</text>
+  <text x="300" y="228" text-anchor="middle" class="d-small">{s.rings}</text>
+
+  <circle cx="24" cy="266" r={r} class="d-cool" style="stroke: var(--d-cold); stroke-width: 1.5" />
+  <text x="42" y="272" class="d-small">{s.molecule}</text>
+  <path d="M206 266H236" style={bondStyle} />
+  <text x="246" y="272" class="d-small">{s.bond}</text>
+</Svg>

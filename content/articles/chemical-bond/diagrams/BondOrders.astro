@@ -1,0 +1,71 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Single, double and triple bonds',
+    desc: 'Three molecules, one per row. Hydrogen, H₂: two hydrogen atoms share one pair of electrons, a single bond, drawn H–H. Oxygen, O₂: two oxygen atoms share two pairs, a double bond, drawn O=O; each oxygen atom also keeps two pairs of its own. Nitrogen, N₂: two nitrogen atoms share three pairs, a triple bond, drawn N≡N; each nitrogen atom also keeps one pair of its own.',
+    rows: [
+      { name: 'single bond', pairs: '1 shared pair' },
+      { name: 'double bond', pairs: '2 shared pairs' },
+      { name: 'triple bond', pairs: '3 shared pairs' },
+    ],
+  },
+  sk: {
+    title: 'Jednoduchá, dvojitá a trojitá väzba',
+    desc: 'Tri molekuly, každá v jednom riadku. Vodík H₂: dva atómy vodíka majú jeden spoločný elektrónový pár, teda jednoduchú väzbu, ktorá sa kreslí H–H. Kyslík O₂: dva atómy kyslíka majú dva spoločné páry, teda dvojitú väzbu O=O; každý atóm kyslíka si navyše necháva dva vlastné páry. Dusík N₂: dva atómy dusíka majú tri spoločné páry, teda trojitú väzbu N≡N; každý atóm dusíka si necháva jeden vlastný pár.',
+    rows: [
+      { name: 'jednoduchá väzba', pairs: '1 spoločný pár' },
+      { name: 'dvojitá väzba', pairs: '2 spoločné páry' },
+      { name: 'trojitá väzba', pairs: '3 spoločné páry' },
+    ],
+  },
+} as const;
+const s = strings[Astro.props.lang];
+
+// Each row: the element, the line notation, how many pairs are shared and how many each atom keeps.
+const rows = [
+  { symbol: 'H', formula: 'H₂', lines: 'H–H', shared: 1, lone: 0, y: 58 },
+  { symbol: 'O', formula: 'O₂', lines: 'O=O', shared: 2, lone: 2, y: 160 },
+  { symbol: 'N', formula: 'N₂', lines: 'N≡N', shared: 3, lone: 1, y: 262 },
+];
+const left = 58;
+const right = 152;
+const mid = (left + right) / 2;
+const r = 24;
+// Shared pairs: two dots side by side, stacked when there is more than one pair.
+const sharedDots = (count: number, y: number) =>
+  Array.from({ length: count }, (_, i) => y + (i - (count - 1) / 2) * 16).flatMap((py) => [
+    [mid - 6, py],
+    [mid + 6, py],
+  ]);
+// Pairs an atom keeps for itself: on its outer side, then on top.
+const lonePairs = (count: number, y: number) => {
+  const pairs: number[][] = [];
+  if (count >= 1) pairs.push([left - r - 9, y - 6], [left - r - 9, y + 6], [right + r + 9, y - 6], [right + r + 9, y + 6]);
+  if (count >= 2) pairs.push([left - 6, y - r - 9], [left + 6, y - r - 9], [right - 6, y - r - 9], [right + 6, y - r - 9]);
+  return pairs;
+};
+---
+<Svg viewBox="0 0 400 320" title={s.title} desc={s.desc} maxWidth="30rem">
+  {
+    rows.map(({ symbol, formula, lines, shared, lone, y }, i) => (
+      <g>
+        <circle cx={left} cy={y} r={symbol === 'H' ? 20 : r} class={symbol === 'H' ? 'd-box' : 'd-box-alt'} />
+        <circle cx={right} cy={y} r={symbol === 'H' ? 20 : r} class={symbol === 'H' ? 'd-box' : 'd-box-alt'} />
+        <text x={left} y={y + 7} text-anchor="middle" class="d-label">{symbol}</text>
+        <text x={right} y={y + 7} text-anchor="middle" class="d-label">{symbol}</text>
+        {sharedDots(shared, y).map(([x, dy]) => <circle cx={x} cy={dy} r="4.5" class="d-electron" />)}
+        {lonePairs(lone, y).map(([x, dy]) => <circle cx={x} cy={dy} r="4" class="d-electron" opacity="0.7" />)}
+        <text x="222" y={y - 14} class="d-label" style="font-size: 24px">{formula}</text>
+        <text x="282" y={y - 14} class="d-label" style="font-size: 24px">{lines}</text>
+        <text x="222" y={y + 12} class="d-label">{s.rows[i].name}</text>
+        <text x="222" y={y + 34} class="d-small d-muted">{s.rows[i].pairs}</text>
+      </g>
+    ))
+  }
+</Svg>

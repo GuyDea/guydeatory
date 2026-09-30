@@ -1,0 +1,56 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Metal ions in a sea of electrons',
+    desc: 'A piece of metal, seen up close. Metal ions with a plus charge sit in three neat rows. Between them, many free electrons wander in all directions, like a sea that fills every gap and holds the ions together.',
+    metal: 'a piece of metal, up close',
+    ion: 'metal ion',
+    electron: 'free electron',
+  },
+  sk: {
+    title: 'Ióny kovu v mori elektrónov',
+    desc: 'Kúsok kovu zblízka. Kladné ióny kovu sedia v troch úhľadných radoch. Medzi nimi sa všetkými smermi túla množstvo voľných elektrónov. Sú ako more, ktoré vypĺňa každú medzeru a drží ióny pokope.',
+    metal: 'kúsok kovu zblízka',
+    ion: 'ión kovu',
+    electron: 'voľný elektrón',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+
+const ionXs = [48, 99, 150, 201, 252, 303, 354];
+const ionYs = [70, 118, 166];
+const sign = 'stroke: var(--d-fill); stroke-width: 3; stroke-linecap: round';
+// Free electrons in the gaps: [x, y, direction in degrees] (0 = right, clockwise).
+const electrons: [number, number, number][] = [
+  [23, 50, 90], [73, 94, 330], [124, 46, 200], [175, 94, 60], [226, 46, 150], [277, 94, 270],
+  [328, 46, 20], [377, 94, 120], [23, 142, 300], [73, 190, 180], [124, 142, 45], [175, 190, 250],
+  [226, 142, 0], [277, 190, 120], [328, 142, 220], [377, 190, 280], [124, 94, 100], [277, 142, 330],
+];
+const f = (n: number) => n.toFixed(1);
+const arrow = (x: number, y: number, deg: number) => {
+  const dx = Math.cos((deg * Math.PI) / 180);
+  const dy = Math.sin((deg * Math.PI) / 180);
+  return `M${f(x + dx * 7)} ${f(y + dy * 7)}L${f(x + dx * 19)} ${f(y + dy * 19)}`;
+};
+---
+<Svg viewBox="0 0 400 262" title={s.title} desc={s.desc} maxWidth="30rem">
+  <text x="12" y="24" class="d-label">{s.metal}</text>
+  <rect x="6" y="30" width="388" height="180" rx="14" class="d-box-alt" />
+  <rect x="6" y="30" width="388" height="180" rx="14" class="d-cool" opacity="0.18" />
+  {ionYs.map((y) => ionXs.map((x) => <circle cx={x} cy={y} r="15" class="d-positive" />))}
+  {ionYs.map((y) => ionXs.map((x) => <path d={`M${x - 6} ${y}H${x + 6}M${x} ${y - 6}V${y + 6}`} style={sign} />))}
+  {electrons.map(([x, y]) => <circle cx={x} cy={y} r="5" class="d-electron" />)}
+  {electrons.filter((_, i) => i % 3 === 0).map(([x, y, deg]) => <path d={arrow(x, y, deg)} class="d-line d-arrow-electron" />)}
+
+  <circle cx="26" cy="238" r="12" class="d-positive" />
+  <path d="M20 238H32M26 232V244" style={sign} />
+  <text x="46" y="244">{s.ion}</text>
+  <circle cx="212" cy="238" r="5" class="d-electron" />
+  <text x="226" y="244">{s.electron}</text>
+</Svg>

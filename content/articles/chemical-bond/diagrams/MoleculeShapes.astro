@@ -1,0 +1,114 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'The shapes of carbon dioxide, water and methane',
+    desc: 'Three molecules, one per row. Carbon dioxide, CO₂: an oxygen atom, a carbon atom and another oxygen atom in a straight line, joined by double bonds. Water, H₂O: an oxygen atom with two hydrogen atoms below it, bent at an angle of 104.5°; above the oxygen sit its two unshared pairs of electrons. Methane, CH₄: a carbon atom in the middle of a triangular pyramid, with a hydrogen atom at each of its four corners.',
+    co2: 'carbon dioxide',
+    h2o: 'water',
+    ch4: 'methane',
+    straight: 'straight',
+    bent: 'bent',
+    pyramid: 'triangular pyramid',
+    angle: '104.5°',
+    pairs: 'unshared pairs',
+  },
+  sk: {
+    title: 'Tvary molekúl oxidu uhličitého, vody a metánu',
+    desc: 'Tri molekuly, každá v jednom riadku. Oxid uhličitý CO₂: atóm kyslíka, atóm uhlíka a ďalší atóm kyslíka v priamke, spojené dvojitými väzbami. Voda H₂O: atóm kyslíka a pod ním dva atómy vodíka, zalomené pod uhlom 104,5°; nad kyslíkom sú jeho dva voľné elektrónové páry. Metán CH₄: atóm uhlíka v strede trojbokého ihlana, v každom zo štyroch rohov ihlana je atóm vodíka.',
+    co2: 'oxid uhličitý',
+    h2o: 'voda',
+    ch4: 'metán',
+    straight: 'rovný',
+    bent: 'lomená',
+    pyramid: 'trojboký ihlan',
+    angle: '104,5°',
+    pairs: 'voľné páry',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const f = (n: number) => n.toFixed(1);
+
+// Water: O at the top, the two O–H bonds 104.5° apart, opening downwards.
+const water = { x: 110, y: 172 };
+const half = (104.5 / 2) * (Math.PI / 180);
+const bond = 56;
+const hydrogens = [-1, 1].map((side) => [water.x + side * bond * Math.sin(half), water.y + bond * Math.cos(half)]);
+// The angle arc between the two bonds, radius 30.
+const arcR = 30;
+const arcFrom = [water.x - arcR * Math.sin(half), water.y + arcR * Math.cos(half)];
+const arcTo = [water.x + arcR * Math.sin(half), water.y + arcR * Math.cos(half)];
+// Unshared pairs above the oxygen, 50° either side of straight up, 34 from its centre.
+const pairAt = (side: number) => {
+  const a = (side * 50 * Math.PI) / 180;
+  const cx = water.x + 34 * Math.sin(a);
+  const cy = water.y - 34 * Math.cos(a);
+  const ox = 5 * Math.cos(a);
+  const oy = 5 * Math.sin(a);
+  return [
+    [cx - ox, cy - oy],
+    [cx + ox, cy + oy],
+  ];
+};
+
+// Methane: a triangular pyramid in perspective. Top, back-left, back-right, front; carbon near the middle.
+const top = [110, 272];
+const backLeft = [58, 336];
+const backRight = [162, 336];
+const front = [110, 372];
+const carbon = [110, 329];
+const edges = [
+  [top, backLeft],
+  [top, backRight],
+  [top, front],
+  [backLeft, front],
+  [backRight, front],
+  [backLeft, backRight],
+];
+const labelX = 222;
+---
+<Svg viewBox="0 0 400 400" title={s.title} desc={s.desc} maxWidth="30rem">
+  <!-- Carbon dioxide: O=C=O in a straight line -->
+  <path d="M76 58H94M76 70H94M136 58H154M136 70H154" class="d-line" stroke-width="3" />
+  <circle cx="55" cy="64" r="21" class="d-box-alt" />
+  <circle cx="115" cy="64" r="21" class="d-box-alt" />
+  <circle cx="175" cy="64" r="21" class="d-box-alt" />
+  <text x="55" y="71" text-anchor="middle" class="d-label">O</text>
+  <text x="115" y="71" text-anchor="middle" class="d-label">C</text>
+  <text x="175" y="71" text-anchor="middle" class="d-label">O</text>
+  <text x={labelX} y="50" class="d-label" style="font-size: 22px">CO₂</text>
+  <text x={labelX} y="74" class="d-label">{s.co2}</text>
+  <text x={labelX} y="96" class="d-small d-muted">{s.straight}</text>
+
+  <!-- Water: bent, with two unshared pairs on top -->
+  {hydrogens.map(([x, y]) => <path d={`M${water.x} ${water.y}L${f(x)} ${f(y)}`} class="d-line" stroke-width="3" />)}
+  <path d={`M${f(arcFrom[0])} ${f(arcFrom[1])}A${arcR} ${arcR} 0 0 0 ${f(arcTo[0])} ${f(arcTo[1])}`} class="d-line" style="stroke: var(--d-muted)" />
+  <circle cx={water.x} cy={water.y} r="22" class="d-box-alt" />
+  <text x={water.x} y={water.y + 7} text-anchor="middle" class="d-label">O</text>
+  {hydrogens.map(([x, y]) => <circle cx={f(x)} cy={f(y)} r="15" class="d-box" />)}
+  {hydrogens.map(([x, y]) => <text x={f(x)} y={f(y + 6)} text-anchor="middle" class="d-label">H</text>)}
+  {[-1, 1].map((side) => pairAt(side).map(([x, y]) => <circle cx={f(x)} cy={f(y)} r="4" class="d-electron" />))}
+  <text x={water.x} y="238" text-anchor="middle" class="d-small">{s.angle}</text>
+  <text x={labelX} y="160" class="d-label" style="font-size: 22px">H₂O</text>
+  <text x={labelX} y="184" class="d-label">{s.h2o}</text>
+  <text x={labelX} y="206" class="d-small d-muted">{s.bent}</text>
+  <text x={labelX} y="228" class="d-small d-muted">
+    <tspan style="fill: var(--d-electron)">●●</tspan> {s.pairs}
+  </text>
+
+  <!-- Methane: a triangular pyramid with carbon inside -->
+  {edges.map(([a, b]) => <path d={`M${a[0]} ${a[1]}L${b[0]} ${b[1]}`} class="d-line" style="stroke: var(--d-muted)" stroke-dasharray="3 5" />)}
+  {[top, backLeft, backRight, front].map(([x, y]) => <path d={`M${carbon[0]} ${carbon[1]}L${x} ${y}`} class="d-line" stroke-width="3" />)}
+  <circle cx={carbon[0]} cy={carbon[1]} r="19" class="d-box-alt" />
+  <text x={carbon[0]} y={carbon[1] + 7} text-anchor="middle" class="d-label">C</text>
+  {[top, backLeft, backRight, front].map(([x, y]) => <circle cx={x} cy={y} r="14" class="d-box" />)}
+  {[top, backLeft, backRight, front].map(([x, y]) => <text x={x} y={y + 6} text-anchor="middle" class="d-label">H</text>)}
+  <text x={labelX} y="308" class="d-label" style="font-size: 22px">CH₄</text>
+  <text x={labelX} y="332" class="d-label">{s.ch4}</text>
+  <text x={labelX} y="354" class="d-small d-muted">{s.pyramid}</text>
+</Svg>

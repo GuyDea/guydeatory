@@ -1,0 +1,117 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Sodium hands an electron to chlorine, and the ions build a salt crystal',
+    desc: 'Top: a sodium atom with electron shells holding 2, 8 and 1 electrons, and a chlorine atom with shells holding 2, 8 and 7. An arrow shows sodium’s single outer electron jumping into the free place in chlorine’s outer shell. Middle: afterwards, sodium has shells of 2 and 8 and a plus charge, and chlorine has shells of 2, 8 and 8 and a minus charge. The plus and minus ions pull on each other. Bottom: one layer of a salt crystal, a checkerboard of small plus sodium ions and bigger minus chloride ions.',
+    jump: '1 electron jumps',
+    sodium: 'sodium atom',
+    chlorine: 'chlorine atom',
+    sodiumIon: 'sodium ion',
+    chlorideIon: 'chloride ion',
+    pull: 'pull',
+    crystal: 'one layer of a salt crystal',
+  },
+  sk: {
+    title: 'Sodík odovzdá elektrón chlóru a ióny postavia kryštál soli',
+    desc: 'Hore: atóm sodíka s elektrónovými vrstvami, v ktorých sú 2, 8 a 1 elektrón, a atóm chlóru s vrstvami, v ktorých je 2, 8 a 7 elektrónov. Šípka ukazuje, ako jediný vonkajší elektrón sodíka preskočí na voľné miesto vo vonkajšej vrstve chlóru. V strede: potom má sodík vrstvy s 2 a 8 elektrónmi a kladný náboj a chlór vrstvy s 2, 8 a 8 elektrónmi a záporný náboj. Kladný a záporný ión sa navzájom priťahujú. Dole: jedna vrstva kryštálu soli, šachovnica malých kladných sodných iónov a väčších záporných chloridových iónov.',
+    jump: 'preskočí 1 elektrón',
+    sodium: 'atóm sodíka',
+    chlorine: 'atóm chlóru',
+    sodiumIon: 'sodný ión',
+    chlorideIon: 'chloridový ión',
+    pull: 'priťahujú sa',
+    crystal: 'jedna vrstva kryštálu soli',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+
+const radii = [14, 26, 38];
+const shellStyle = 'stroke: var(--d-muted); stroke-width: 1.5';
+const f = (n: number) => n.toFixed(1);
+/** Electrons evenly spread on one shell, starting at `start` degrees (0 = right, clockwise). */
+const onShell = (cx: number, cy: number, radius: number, count: number, slots = count, start = 0) =>
+  Array.from({ length: count }, (_, i) => {
+    const a = ((start + (360 / slots) * i) * Math.PI) / 180;
+    return [f(cx + radius * Math.cos(a)), f(cy + radius * Math.sin(a))];
+  });
+/** An atom drawn with shells: `counts` electrons per shell, `slots` places on the outer shell. */
+const atom = (cx: number, cy: number, counts: number[], outerStart = 0) =>
+  counts.flatMap((count, i) => onShell(cx, cy, radii[i], count, i === 0 ? 2 : 8, i === counts.length - 1 ? outerStart : 22.5 * (i % 2)));
+
+// Top row: the atoms before. Sodium's lone outer electron sits at the right; chlorine's free place is at its left.
+const na = { x: 90, y: 78 };
+const cl = { x: 300, y: 78 };
+const naBefore = atom(na.x, na.y, [2, 8, 1]);
+const clBefore = atom(cl.x, cl.y, [2, 8, 7], 225);
+// Middle row: the ions after. The electron that jumped is marked with a ring.
+const ionY = 238;
+const naAfter = atom(na.x, ionY, [2, 8]);
+const clAfter = atom(cl.x, ionY, [2, 8, 8], 225);
+const arrived = [f(cl.x - radii[2]), f(ionY)];
+
+// Bottom: one layer of the crystal, a checkerboard of Cl⁻ (big) and Na⁺ (small).
+// Plus and minus signs drawn in the page colour, so they stay readable on the coloured discs in dark mode too.
+const sign = 'stroke: var(--d-fill); stroke-width: 3; stroke-linecap: round';
+const plus = (x: number, y: number, h = 5) => `M${x - h} ${y}H${x + h}M${x} ${y - h}V${y + h}`;
+const minus = (x: number, y: number, h = 5) => `M${x - h} ${y}H${x + h}`;
+
+const grid = Array.from({ length: 4 }, (_, row) =>
+  Array.from({ length: 7 }, (_, col) => ({ x: 68 + col * 44, y: 372 + row * 44, chloride: (row + col) % 2 === 0 })),
+).flat();
+---
+<Svg viewBox="0 0 400 560" title={s.title} desc={s.desc} maxWidth="30rem">
+  <!-- Before: the two atoms -->
+  {[na, cl].map(({ x, y }) => radii.map((r) => <circle cx={x} cy={y} r={r} class="d-line" style={shellStyle} />))}
+  {[na, cl].map(({ x, y }) => <circle cx={x} cy={y} r="7" class="d-positive" />)}
+  {[...naBefore, ...clBefore].map(([x, y]) => <circle cx={x} cy={y} r="4.5" class="d-electron" />)}
+  <circle cx={cl.x - radii[2]} cy={cl.y} r="4.5" class="d-line" style="stroke: var(--d-electron); stroke-dasharray: 2 2" />
+  <path d="M134 68C170 30 220 30 254 66" class="d-line d-arrow-electron" stroke-width="2.5" />
+  <text x="195" y="24" text-anchor="middle" class="d-small">{s.jump}</text>
+  <text x={na.x} y="140" text-anchor="middle" class="d-label">{s.sodium}</text>
+  <text x={na.x} y="160" text-anchor="middle" class="d-small d-muted">2, 8, 1</text>
+  <text x={cl.x} y="140" text-anchor="middle" class="d-label">{s.chlorine}</text>
+  <text x={cl.x} y="160" text-anchor="middle" class="d-small d-muted">2, 8, 7</text>
+
+  <path d="M195 150V182" class="d-line d-arrow" />
+
+  <!-- After: the two ions -->
+  {radii.slice(0, 2).map((r) => <circle cx={na.x} cy={ionY} r={r} class="d-line" style={shellStyle} />)}
+  {radii.map((r) => <circle cx={cl.x} cy={ionY} r={r} class="d-line" style={shellStyle} />)}
+  <circle cx={na.x} cy={ionY} r="7" class="d-positive" />
+  <circle cx={cl.x} cy={ionY} r="7" class="d-positive" />
+  {[...naAfter, ...clAfter].map(([x, y]) => <circle cx={x} cy={y} r="4.5" class="d-electron" />)}
+  <circle cx={arrived[0]} cy={arrived[1]} r="9" class="d-line" style="stroke: var(--d-glow); stroke-width: 3" />
+  <circle cx="128" cy="206" r="13" class="d-positive" />
+  <path d={plus(128, 206, 6)} style={sign} />
+  <circle cx="342" cy="200" r="13" class="d-electron" />
+  <path d={minus(342, 200, 6)} style={sign} />
+  <path d="M138 238H246" class="d-line" stroke-dasharray="5 6" />
+  <text x="195" y="230" text-anchor="middle" class="d-small">{s.pull}</text>
+  <text x={na.x} y="298" text-anchor="middle" class="d-label">{s.sodiumIon} Na⁺</text>
+  <text x={cl.x} y="298" text-anchor="middle" class="d-label">{s.chlorideIon} Cl⁻</text>
+
+  <!-- A layer of the crystal -->
+  <rect x="36" y="342" width="328" height="192" rx="12" class="d-box-alt" />
+  {
+    grid.map(({ x, y, chloride }) =>
+      chloride ? (
+        <g>
+          <circle cx={x} cy={y} r="18" class="d-electron" />
+          <path d={minus(x, y, 6)} style={sign} />
+        </g>
+      ) : (
+        <g>
+          <circle cx={x} cy={y} r="11" class="d-positive" />
+          <path d={plus(x, y, 5)} style={sign} />
+        </g>
+      ),
+    )
+  }
+  <text x="200" y="554" text-anchor="middle" class="d-label">{s.crystal}</text>
+</Svg>
