@@ -16,7 +16,7 @@ through GitHub Actions (see "Continuous deployment" below).
 | CloudFront Function `guydeatory-router` | Viewer request, runtime `cloudfront-js-2.0`. Source in `infra/cloudfront/router.js`, tested in `tests/router.test.ts`. |
 | Route53 records | A and AAAA aliases for the apex and `www` → the distribution |
 | GitHub OIDC provider | `token.actions.githubusercontent.com`. Lets GitHub Actions log in with a short-lived token instead of stored keys. Account-wide (one per account): another stack that needs it must reference this one. |
-| IAM role `guydeatory-github-deploy` | Only `repo:GuyDea/guydeatory:ref:refs/heads/main` can assume it. It can read this stack's outputs, write and delete objects in the site bucket, and create and read invalidations on the distribution. Nothing else. |
+| IAM role `guydeatory-github-deploy` | Only pushes to `main` in this repository can assume it: the token subject must be `repo:GuyDea@160761272/guydeatory@1393818515:ref:refs/heads/main` (GitHub adds the owner and repository ids, which survive renames). It can read this stack's outputs, write and delete objects in the site bucket, and create and read invalidations on the distribution. Nothing else. |
 
 The domain `theguydea.com` is registered in Route53 in the same AWS account. The hosted zone is
 `Z06939482PPSH3VUZ9L07`.
@@ -132,5 +132,5 @@ commit on GitHub. A "+" after it means a local build with uncommitted changes.
 | 403 for an existing page | The object key is missing. Check `dist/<path>/index.html` exists and the sync ran. |
 | The certificate is stuck in "pending" | Check that the validation CNAME exists in the hosted zone (CloudFormation creates it) |
 | Search does not work live | Check that `dist/pagefind/` was uploaded. `npm run build` must run Pagefind. |
-| The deploy workflow fails at "Configure AWS credentials" | The role only trusts pushes to `main` in `GuyDea/guydeatory`. A renamed repository or branch needs the `GitHubRepository` parameter or the trust condition in `infra/site.template.yml` updated, then `npm run infra:deploy`. |
+| The deploy workflow fails at "Configure AWS credentials" ("Not authorized to perform sts:AssumeRoleWithWebIdentity") | The token's subject doesn't match the role's trust condition. CloudTrail shows the subject GitHub sent: `aws cloudtrail lookup-events --region us-east-1 --lookup-attributes AttributeKey=EventName,AttributeValue=AssumeRoleWithWebIdentity` (the `userName` field, a few minutes after the failure). Put it in the trust condition in `infra/site.template.yml`, then `npm run infra:deploy`. |
 | The deploy workflow fails with AccessDenied | The deploy needs a permission the role lacks. Add it to the role's `publish-site` policy in `infra/site.template.yml`, keep it scoped to this bucket or distribution, then `npm run infra:deploy`. |

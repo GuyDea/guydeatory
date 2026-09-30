@@ -12,10 +12,6 @@ Parameters:
   HostedZoneId:
     Type: AWS::Route53::HostedZone::Id
     Default: Z06939482PPSH3VUZ9L07
-  GitHubRepository:
-    Type: String
-    Default: GuyDea/guydeatory
-    Description: owner/name of the GitHub repository whose main branch publishes the site
 
 Resources:
   SiteBucket:
@@ -199,7 +195,9 @@ Resources:
             Condition:
               StringEquals:
                 token.actions.githubusercontent.com:aud: sts.amazonaws.com
-                token.actions.githubusercontent.com:sub: !Sub 'repo:${GitHubRepository}:ref:refs/heads/main'
+                # GitHub writes owner@owner-id/name@repository-id into the subject. The ids stay the
+                # same if the repository is renamed, so a new repository reusing the name can't deploy.
+                token.actions.githubusercontent.com:sub: 'repo:GuyDea@160761272/guydeatory@1393818515:ref:refs/heads/main'
       Policies:
         - PolicyName: publish-site
           PolicyDocument:
