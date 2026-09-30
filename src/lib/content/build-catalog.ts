@@ -11,13 +11,19 @@ export interface BuildOptions {
   includeDrafts: boolean;
 }
 
-/** Words a reader actually reads: no code, math, JSX tags or ESM lines. */
-/** An interactive lab: a component hydrated in the browser (`client:visible` and friends), outside code samples. */
+/**
+ * An interactive lab: a component hydrated in the browser (`client:visible` and friends), written in
+ * the article itself, outside code samples. Widgets are always embedded this way (docs/widgets.md);
+ * one hidden inside another component would not be seen.
+ */
 function hasLab(body: string): boolean {
   return /<[A-Z][\w.]*\b[^>]*\sclient:[a-z]+/.test(stripCode(body));
 }
 
-/** Words of the main text, which drive the reading time. Go-deeper blocks are optional and start collapsed. */
+/**
+ * Words a reader of the main text actually reads, for the reading time: no code, math, JSX tags or
+ * ESM lines, and no Go-deeper blocks, which are optional and start collapsed.
+ */
 function countWords(body: string): number {
   const readable = stripCode(body)
     .replace(/<GoDeeper\b[^>]*>[\s\S]*?<\/GoDeeper>/g, '')
