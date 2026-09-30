@@ -155,22 +155,42 @@
       const bottom = Math.max(...mine.map((p) => p.y + p.r + (p.marked ? 20 : 4)));
       const left = Math.min(...mine.map((p) => p.x - p.r - (p.marked ? 20 : 4)));
       const right = Math.max(...mine.map((p) => p.x + p.r + (p.marked ? 20 : 4)));
+      // Slide a tag sideways so it stays inside the drawing.
+      const inside = (o: { x: number; x0: number; x1: number }) => {
+        const dx = Math.max(box[0] + 2 - o.x0, Math.min(0, box[0] + box[2] - 2 - o.x1));
+        return { x: o.x + dx, x0: o.x0 + dx, x1: o.x1 + dx };
+      };
+      // Centred above and below, beside it, and at its four corners.
+      const centred = inside({ x: cx, x0: cx - width / 2, x1: cx + width / 2 });
+      const leftAligned = inside({ x: left + width / 2, x0: left, x1: left + width });
+      const rightAligned = inside({ x: right - width / 2, x0: right - width, x1: right });
       const options = [
-        { x: cx, y: top - 6, anchor: 'middle', x0: cx - width / 2, x1: cx + width / 2 },
-        { x: cx, y: bottom + 16, anchor: 'middle', x0: cx - width / 2, x1: cx + width / 2 },
+        { ...centred, y: top - 6, anchor: 'middle' },
+        { ...centred, y: bottom + 16, anchor: 'middle' },
         { x: right + 4, y: cy + 5, anchor: 'start', x0: right + 4, x1: right + 4 + width },
         { x: left - 4, y: cy + 5, anchor: 'end', x0: left - 4 - width, x1: left - 4 },
+        { ...leftAligned, y: top - 6, anchor: 'middle' },
+        { ...rightAligned, y: top - 6, anchor: 'middle' },
+        { ...leftAligned, y: bottom + 16, anchor: 'middle' },
+        { ...rightAligned, y: bottom + 16, anchor: 'middle' },
       ].map((o) => ({ ...o, y0: o.y - 15, y1: o.y + 4 }));
       const cost = (o: (typeof options)[number]) => {
         let c = 0;
+        let [ownNearest, otherNearest] = [Infinity, Infinity];
         for (const atom of board.atoms) {
           const p = targets[atom.id]!;
-          const nx = Math.max(o.x0, Math.min(p.x, o.x1));
-          const ny = Math.max(o.y0, Math.min(p.y, o.y1));
-          if (Math.hypot(p.x - nx, p.y - ny) < p.r + 4) c += item.ids.includes(atom.id) ? 3 : 2;
+          const d = Math.hypot(p.x - Math.max(o.x0, Math.min(p.x, o.x1)), p.y - Math.max(o.y0, Math.min(p.y, o.y1))) - p.r;
+          const own = item.ids.includes(atom.id);
+          // Never over an atom; and clear of other molecules' glow, so it is plain which molecule it names.
+          if (d < 4) c += 3;
+          else if (!own && d < 12) c += 1;
+          if (own) ownNearest = Math.min(ownNearest, d);
+          else otherNearest = Math.min(otherNearest, d);
         }
-        for (const t of taken) if (o.x0 < t.x1 && t.x0 < o.x1 && o.y0 < t.y1 && t.y0 < o.y1) c += 2;
-        if (o.x0 < box[0] || o.y0 < box[1] || o.x1 > box[0] + box[2] || o.y1 > box[1] + box[3]) c += 1;
+        if (otherNearest < ownNearest) c += 1.5;
+        for (const t of taken) if (o.x0 < t.x1 && t.x0 < o.x1 && o.y0 < t.y1 && t.y0 < o.y1) c += 4;
+        // Outside the drawing it would cover the text around the widget.
+        if (o.x0 < box[0] || o.y0 < box[1] || o.x1 > box[0] + box[2] || o.y1 > box[1] + box[3]) c += 5;
         return c;
       };
       const best = options.reduce((a, b) => (cost(b) < cost(a) ? b : a));
@@ -451,6 +471,7 @@
       >
         <circle class="hit" r={HIT} />
         <circle class="ring" r={r + 6} />
+        <circle class="focus-ring" r={r + 10} />
         {#each targets[atom.id]?.hands ?? [] as hand, i (i)}
           <g class="hand" transform="rotate({deg(hand)})">
             {#if !metal}<line x1={r - 1} x2={r + 8} />{/if}
@@ -624,28 +645,33 @@
     outline: none;
   }
 
-  .ring {
+  .ring,
+  .focus-ring {
     fill: none;
     stroke: transparent;
     stroke-width: 3;
   }
 
+  /* Could join the picked atom: a dashed ring. */
   .atom.partner .ring {
     stroke: var(--d-accent);
     stroke-width: 2;
     stroke-dasharray: 4 4;
   }
 
+  /* Picked: a spotlight behind the atom. */
   .atom.picked .ring {
+    fill: var(--d-accent);
+    fill-opacity: 0.22;
     stroke: var(--d-accent);
-    stroke-width: 3.5;
+    stroke-width: 2.5;
     stroke-dasharray: none;
   }
 
-  .atom:focus-visible .ring {
+  /* Keyboard focus: its own, wider ring, so "focused" and "picked" never look alike. */
+  .atom:focus-visible .focus-ring {
     stroke: var(--focus);
-    stroke-width: 4;
-    stroke-dasharray: none;
+    stroke-width: 3;
   }
 
   .hand line {
