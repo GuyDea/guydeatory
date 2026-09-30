@@ -12,6 +12,11 @@ export interface BuildOptions {
 }
 
 /** Words a reader actually reads: no code, math, JSX tags or ESM lines. */
+/** An interactive lab: a component hydrated in the browser (`client:visible` and friends), outside code samples. */
+function hasLab(body: string): boolean {
+  return /<[A-Z][\w.]*\b[^>]*\sclient:[a-z]+/.test(stripCode(body));
+}
+
 /** Words of the main text, which drive the reading time. Go-deeper blocks are optional and start collapsed. */
 function countWords(body: string): number {
   const readable = stripCode(body)
@@ -139,6 +144,7 @@ function buildTexts(raw: RawContent, problems: Problem[]): Map<string, Partial<R
       reviewed: data.reviewed,
       links: extractWikiLinks(entry.body),
       wordCount: countWords(entry.body),
+      hasLab: hasLab(entry.body),
       hasTodo: [data.title, data.summary, entry.body].some((part) => /\bTODO\b/.test(part)),
     };
     textsByArticle.set(entry.id, texts);

@@ -20,6 +20,8 @@ export const en = {
   'theme.dark': 'dark',
   'footer.promise': 'No ads. No tracking. Made for curious kids and their grown-ups.',
   'footer.readIn': 'Also in:',
+  'lab.has': 'Has a lab',
+  'lab.badge': 'Lab',
   'footer.version': 'Version',
   'footer.versionDirty': 'Built from changes that are not committed yet',
   'article.shortAnswer': 'The short answer',

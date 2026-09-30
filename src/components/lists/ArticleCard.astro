@@ -2,6 +2,7 @@
 import type { LangCode } from '@i18n/languages';
 import type { Article, Catalog } from '@lib/content/types';
 import { articleUrl } from '@lib/urls';
+import LabBadge from './LabBadge.astro';
 import LabelChip from './LabelChip.astro';
 
 interface Props {
@@ -21,7 +22,10 @@ const labels = article.labels.map((id) => catalog.labels.get(id)).filter((l) => 
     <a href={articleUrl(article, lang)} data-trail-link={trail ? '' : undefined} data-trail-to={trail ? article.id : undefined}>{text.title}</a>
   </Heading>
   <p class="card-summary">{text.summary}</p>
-  <p class="card-labels">{labels.map((label) => <LabelChip lang={lang} label={label} link={false} />)}</p>
+  <p class="card-labels">
+    {labels.map((label) => <LabelChip lang={lang} label={label} link={false} />)}
+    {text.hasLab && <LabBadge lang={lang} />}
+  </p>
 </article>
 
 <style>

@@ -8,6 +8,7 @@
  * be a control inside a control. `src/scripts/explore.ts` relies on
  * `.tree-topic > details > summary [data-count]` and on opening the topic's <details>.
  */
+import LabBadge from '@components/lists/LabBadge.astro';
 import type { LangCode } from '@i18n/languages';
 import { localized, articlesInTopic, topicArticleCount, topicHasContent } from '@lib/content/queries';
 import type { Catalog } from '@lib/content/types';
@@ -56,13 +57,14 @@ const searchText = (id: string) => {
     articles.length > 0 && (
       <ul class="tree-articles">
         {articles.map((article) => (
-          <li class="tree-article" data-id={article.id} data-labels={article.labels.join(' ')} data-search={searchText(article.id)}>
+          <li class="tree-article" data-id={article.id} data-labels={article.labels.join(' ')} data-search={searchText(article.id)} data-lab={String(article.texts[lang]!.hasLab)}>
             <a href={articleUrl(article, lang)}>{article.texts[lang]!.title}</a>
             <span class="tree-labels" aria-hidden="true">
               {article.labels.map((id) => (
                 <span class="tree-dot" style={`--dot: var(--label-${catalog.labels.get(id)?.color})`} />
               ))}
             </span>
+            {article.texts[lang]!.hasLab && <LabBadge lang={lang} compact />}
           </li>
         ))}
       </ul>

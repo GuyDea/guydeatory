@@ -20,6 +20,8 @@ export interface ArticleText {
   reviewed: boolean;
   links: WikiLink[];
   wordCount: number;
+  /** The text embeds at least one interactive widget. */
+  hasLab: boolean;
   /** Title, summary or body still contains a TODO placeholder (allowed only in drafts). */
   hasTodo: boolean;
 }

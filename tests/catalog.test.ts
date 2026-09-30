@@ -82,6 +82,18 @@ describe('buildCatalog — valid content', () => {
     expect(catalog.articles.get('atom')!.texts.en!.wordCount).toBe(6);
   });
 
+  it('marks article texts that contain an interactive lab', () => {
+    const withLab = ["import Lab from '@widgets/x/Lab.svelte';", '', 'Try it.', '', '<Figure caption="Play">', '  <Lab client:visible />', '</Figure>'].join('\n');
+    const quizOnly = ['Hello.', '', '<Quiz question="Q?" options={["a", "b"]} answer={0} explanation="E." />'].join('\n');
+    const inCode = ['Write it like this:', '', '```mdx', '<Lab client:visible />', '```'].join('\n');
+    const { catalog } = build(
+      raw({ articles: [article('atom', { bodyEn: withLab }), article('voltage', { bodyEn: quizOnly }), article('ion', { bodyEn: inCode })] }),
+    );
+    expect(catalog.articles.get('atom')!.texts.en!.hasLab).toBe(true);
+    expect(catalog.articles.get('voltage')!.texts.en!.hasLab).toBe(false);
+    expect(catalog.articles.get('ion')!.texts.en!.hasLab).toBe(false);
+  });
+
   it('excludes drafts unless asked to include them', () => {
     const content = raw({ articles: [article('atom', { meta: { status: 'draft' } }), article('voltage')] });
     expect(build(content, false).catalog.articles.has('atom')).toBe(false);

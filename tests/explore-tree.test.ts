@@ -13,7 +13,11 @@ import { article, raw } from './fixtures/content.ts';
 const { catalog, problems } = buildCatalog(
   raw({
     articles: [
-      article('voltage', { meta: { topics: ['electricity'] } }),
+      article('voltage', {
+        meta: { topics: ['electricity'] },
+        bodyEn: 'Try it.\n\n<Lab client:visible />',
+        bodySk: 'Vyskúšaj.\n\n<Lab client:visible />',
+      }),
       article('atom', { meta: { topics: ['electricity', 'heat'] } }),
       article('ampere', { meta: { topics: ['physics'] } }),
     ],
@@ -34,6 +38,15 @@ describe('Explore tree', () => {
 
   for (const lang of LANG_CODES) {
     describe(lang, () => {
+      it('marks articles with a lab for the "Has a lab" filter, with a badge that says so', async () => {
+        const tree = await renderTree(lang);
+        const row = (id: string) => tree.querySelector(`.tree-article[data-id="${id}"]`)!;
+        expect(row('voltage').getAttribute('data-lab')).toBe('true');
+        expect(row('atom').getAttribute('data-lab')).toBe('false');
+        expect(row('voltage').querySelector('.lab-badge')!.textContent.trim()).not.toBe('');
+        expect(row('atom').querySelector('.lab-badge')).toBeNull();
+      });
+
       it('has no link or other control inside a <summary>, which already acts as a button', async () => {
         const tree = await renderTree(lang);
         const summaries = tree.querySelectorAll('summary');
