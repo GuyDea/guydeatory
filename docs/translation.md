@@ -227,6 +227,18 @@ superscripts (Na⁺, Cl⁻, Ca²⁺, O²⁻), in both languages. Add the plain f
 | polyatomic ion | viacatómový ión | |
 | mole, Avogadro constant | mól, Avogadrova konštanta | |
 | ozone | ozón | |
+| law of conservation of mass | zákon zachovania hmotnosti | some Slovak textbooks name it after Lomonosov and Lavoisier |
+| chemical equation | chemická rovnica | |
+| balanced equation, to balance | vyčíslená rovnica, vyčísliť | |
+| coefficient (in an equation) | stechiometrický koeficient | |
+| exothermic / endothermic | exotermická / endotermická | main text: "uvoľňuje / prijíma energiu" |
+| activation energy | aktivačná energia | main text: "postrčenie" |
+| catalytic converter | katalyzátor (vo výfuku auta) | |
+| rust, rusting | hrdza, hrdzavenie | |
+| photosynthesis | fotosyntéza | |
+| baking soda, vinegar | sóda bikarbóna, ocot | hydrogenuhličitan sodný in Go-deeper blocks |
+| bleach, household ammonia | chlórové bielidlo, čpavok | |
+| chlorine gas, chloramines | plynný chlór, chloramíny | |
 
 ## 5. Slugs and links
 

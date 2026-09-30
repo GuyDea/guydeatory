@@ -1,0 +1,60 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'A reaction needs a push over a bump',
+    desc: 'An energy picture of burning, from left to right. On the left, a ball sits on a high ledge: the gas and the oxygen. Before it can roll down, it must be pushed over a bump, and a spark gives that push. Then the path drops to a much lower ledge: the carbon dioxide and water. The drop is the energy that comes out as heat and light. A dashed path with a lower bump shows how a catalyst makes the start easier.',
+    energy: 'energy',
+    start: 'gas + oxygen',
+    push: ['a spark gives', 'the push'],
+    out: ['heat and light', 'come out'],
+    end: ['carbon dioxide', '+ water'],
+    catalyst: 'with a catalyst: a lower bump',
+  },
+  sk: {
+    title: 'Reakcia potrebuje postrčiť cez kopček',
+    desc: 'Energetický obrázok horenia zľava doprava. Vľavo leží guľka na vysokej plošine: plyn a kyslík. Skôr než sa môže skotúľať dole, treba ju postrčiť cez kopček, a toto postrčenie dá iskra. Potom cesta klesne na oveľa nižšiu plošinu: oxid uhličitý a vodu. Tento pokles je energia, ktorá sa uvoľní ako teplo a svetlo. Prerušovaná cesta s nižším kopčekom ukazuje, ako katalyzátor uľahčí začiatok.',
+    energy: 'energia',
+    start: 'plyn + kyslík',
+    push: ['iskra dá', 'postrčenie'],
+    out: ['uvoľní sa', 'teplo a svetlo'],
+    end: ['oxid uhličitý', '+ voda'],
+    catalyst: 's katalyzátorom: nižší kopček',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+// Energy levels: the start (fuel and oxygen) and the end (carbon dioxide and water).
+const high = 140;
+const low = 240;
+const guide = 'stroke: var(--d-muted)';
+---
+<Svg viewBox="0 0 400 300" title={s.title} desc={s.desc} maxWidth="30rem">
+  <path d="M14 286V44" class="d-line d-arrow" />
+  <text x="8" y="30" class="d-small d-muted">{s.energy}</text>
+
+  <path d={`M30 ${low}H286`} class="d-line" style={guide} stroke-dasharray="4 6" />
+  <path d={`M128 ${high}H172`} class="d-line" style={guide} stroke-dasharray="4 6" />
+  <path d={`M128 ${high}C156 ${high} 164 104 188 104C212 104 236 ${low} 286 ${low}`} class="d-line" style="stroke: var(--d-accent)" stroke-dasharray="7 6" stroke-width="3" />
+  <path d={`M30 ${high}H128C158 ${high} 166 62 190 62C214 62 236 ${low} 286 ${low}H390`} class="d-line" stroke-width="4" />
+
+  <circle cx="104" cy={high - 11} r="10" class="d-glow" style="stroke: var(--d-ink); stroke-width: 2" />
+  <text x="80" y={high + 24} text-anchor="middle" class="d-small">{s.start}</text>
+  <text x="78" y="44" class="d-small">{s.push[0]}</text>
+  <text x="78" y="62" class="d-small">{s.push[1]}</text>
+  <path d="M72 72L96 114" class="d-line d-arrow-hot" stroke-width="3" />
+
+  <path d={`M160 ${high + 6}V${low - 6}`} class="d-line d-arrow-hot" stroke-width="3" />
+  <text x="150" y="190" text-anchor="end" class="d-small">{s.out[0]}</text>
+  <text x="150" y="208" text-anchor="end" class="d-small">{s.out[1]}</text>
+
+  <text x="338" y="264" text-anchor="middle" class="d-small">{s.end[0]}</text>
+  <text x="338" y="282" text-anchor="middle" class="d-small">{s.end[1]}</text>
+
+  <path d="M30 284H60" class="d-line" style="stroke: var(--d-accent)" stroke-dasharray="7 6" stroke-width="3" />
+  <text x="68" y="289" class="d-small" style="fill: var(--d-accent)">{s.catalyst}</text>
+</Svg>

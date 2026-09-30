@@ -1,10 +1,27 @@
 # Language-independent facts about this article. Guide: docs/writing-guide.md (Metadata).
 topics: [chemistry]
 labels: [high-level]
-prerequisites: [atom]
-related: []
-status: stub
+prerequisites: [molecule]
+related: [chemical-bond, energy, conservation-of-energy, heat]
+status: published
 created: 2026-09-30
 updated: 2026-09-30
 sources:
-  - { title: 'Chemical reaction — Wikipedia', url: 'https://en.wikipedia.org/wiki/Chemical_reaction' }
+  - title: Antoine-Laurent Lavoisier — Science History Institute
+    url: https://www.sciencehistory.org/education/scientific-biographies/antoine-laurent-lavoisier/
+  - title: Conservation of mass — Wikipedia
+    url: https://en.wikipedia.org/wiki/Conservation_of_mass
+  - title: Methane, enthalpy of combustion — NIST Chemistry WebBook
+    url: https://webbook.nist.gov/cgi/cbook.cgi?ID=C74828&Mask=1
+  - title: Heat of combustion (higher and lower heating values) — Wikipedia
+    url: https://en.wikipedia.org/wiki/Heat_of_combustion
+  - title: Bond Energies — Chemistry LibreTexts
+    url: https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Chemical_Bonding/Fundamentals_of_Chemical_Bonding/Bond_Energies
+  - title: Corrosion (rusting of iron) — Chemistry LibreTexts
+    url: https://chem.libretexts.org/Bookshelves/General_Chemistry/ChemPRIME_(Moore_et_al.)/22:_Metals/22.07:_Corrosion
+  - title: Energy Changes in Chemical Reactions (baking soda and vinegar) — ACS Middle School Chemistry
+    url: https://www.acs.org/middleschoolchemistry/lessonplans/chapter6/lesson7.html
+  - title: Hand warmer — Wikipedia
+    url: https://en.wikipedia.org/wiki/Hand_warmer
+  - title: "Hazard Alert: Mixing Bleach with Other Cleaning Products Can Be Deadly — New Jersey Department of Health"
+    url: https://www.nj.gov/health/workplacehealthandsafety/occupational-health-surveillance/Hazard_Alert-Mixing-Cleaners.pdf

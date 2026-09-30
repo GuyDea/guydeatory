@@ -1,0 +1,112 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'Methane burning: the same atoms, new partners',
+    desc: 'Before: one methane molecule, a carbon atom with four hydrogen atoms, and two oxygen molecules, each two oxygen atoms. An arrow labelled burning points down. After: one carbon dioxide molecule, a carbon atom between two oxygen atoms, and two water molecules, each an oxygen atom with two hydrogen atoms. Under both rows, the count is the same: 1 carbon, 4 hydrogen and 4 oxygen atoms.',
+    before: 'before',
+    after: 'after',
+    burning: 'burning',
+    methane: 'methane',
+    oxygen: 'oxygen',
+    co2: 'carbon dioxide',
+    water: 'water',
+  },
+  sk: {
+    title: 'Horenie metánu: tie isté atómy, noví partneri',
+    desc: 'Pred: jedna molekula metánu, teda atóm uhlíka so štyrmi atómami vodíka, a dve molekuly kyslíka, každá z dvoch atómov kyslíka. Šípka s nápisom horenie ukazuje nadol. Po: jedna molekula oxidu uhličitého, teda atóm uhlíka medzi dvoma atómami kyslíka, a dve molekuly vody, každá z atómu kyslíka a dvoch atómov vodíka. Pod oboma radmi je rovnaký počet: 1 atóm uhlíka, 4 atómy vodíka a 4 atómy kyslíka.',
+    before: 'pred',
+    after: 'po',
+    burning: 'horenie',
+    methane: 'metán',
+    oxygen: 'kyslík',
+    co2: 'oxid uhličitý',
+    water: 'voda',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const f = (n: number) => n.toFixed(1);
+
+type Atom = { x: number; y: number; symbol: 'C' | 'H' | 'O' };
+const radius = (symbol: string) => (symbol === 'H' ? 11 : 16);
+const top = 78;
+const bottom = 262;
+// Before: CH₄ drawn flat as a cross, then two O₂ molecules.
+const methane: Atom[] = [
+  { x: 92, y: top, symbol: 'C' },
+  { x: 92, y: top - 30, symbol: 'H' },
+  { x: 92, y: top + 30, symbol: 'H' },
+  { x: 62, y: top, symbol: 'H' },
+  { x: 122, y: top, symbol: 'H' },
+];
+const oxygenA: Atom[] = [
+  { x: 186, y: top, symbol: 'O' },
+  { x: 226, y: top, symbol: 'O' },
+];
+const oxygenB: Atom[] = [
+  { x: 300, y: top, symbol: 'O' },
+  { x: 340, y: top, symbol: 'O' },
+];
+// After: CO₂ in a row, then two bent water molecules.
+const co2: Atom[] = [
+  { x: 52, y: bottom, symbol: 'O' },
+  { x: 92, y: bottom, symbol: 'C' },
+  { x: 132, y: bottom, symbol: 'O' },
+];
+const half = (104.5 / 2) * (Math.PI / 180);
+const waterAt = (x: number): Atom[] => [
+  { x, y: bottom - 10, symbol: 'O' },
+  { x: x - 30 * Math.sin(half), y: bottom - 10 + 30 * Math.cos(half), symbol: 'H' },
+  { x: x + 30 * Math.sin(half), y: bottom - 10 + 30 * Math.cos(half), symbol: 'H' },
+];
+const waterA = waterAt(226);
+const waterB = waterAt(320);
+
+const single = (a: Atom, b: Atom) => `M${f(a.x)} ${f(a.y)}L${f(b.x)} ${f(b.y)}`;
+const double = (a: Atom, b: Atom) => {
+  const x1 = a.x + radius(a.symbol);
+  const x2 = b.x - radius(b.symbol);
+  return `M${x1} ${a.y - 4}H${x2}M${x1} ${a.y + 4}H${x2}`;
+};
+const bonds = [
+  ...methane.slice(1).map((h) => single(methane[0], h)),
+  double(oxygenA[0], oxygenA[1]),
+  double(oxygenB[0], oxygenB[1]),
+  double(co2[0], co2[1]),
+  double(co2[1], co2[2]),
+  ...[waterA, waterB].flatMap((w) => [single(w[0], w[1]), single(w[0], w[2])]),
+];
+const atoms = [...methane, ...oxygenA, ...oxygenB, ...co2, ...waterA, ...waterB];
+const plus = (x: number, y: number) => `M${x - 7} ${y}H${x + 7}M${x} ${y - 7}V${y + 7}`;
+---
+<Svg viewBox="0 0 400 356" title={s.title} desc={s.desc} maxWidth="30rem">
+  <rect x="6" y="14" width="388" height="150" rx="12" class="d-box-alt" />
+  <rect x="6" y="198" width="388" height="150" rx="12" class="d-box-alt" />
+  <text x="18" y="36" class="d-label">{s.before}</text>
+  <text x="18" y="220" class="d-label">{s.after}</text>
+
+  {bonds.map((d) => <path d={d} class="d-line" stroke-width="3" />)}
+  <path d={plus(154, top)} class="d-line" stroke-width="3" />
+  <path d={plus(263, top)} class="d-line" stroke-width="3" />
+  <path d={plus(176, bottom)} class="d-line" stroke-width="3" />
+  <path d={plus(273, bottom)} class="d-line" stroke-width="3" />
+  {atoms.map(({ x, y, symbol }) => <circle cx={f(x)} cy={f(y)} r={radius(symbol)} class={symbol === 'H' ? 'd-box' : 'd-box-alt'} />)}
+  {atoms.map(({ x, y, symbol }) => <text x={f(x)} y={f(y + (symbol === 'H' ? 5 : 6))} text-anchor="middle" class="d-label" style={symbol === 'H' ? 'font-size: 14px' : undefined}>{symbol}</text>)}
+
+  <text x="92" y="136" text-anchor="middle" class="d-small">{s.methane}</text>
+  <text x="206" y="136" text-anchor="middle" class="d-small">{s.oxygen}</text>
+  <text x="320" y="136" text-anchor="middle" class="d-small">{s.oxygen}</text>
+  <text x="92" y="306" text-anchor="middle" class="d-small">{s.co2}</text>
+  <text x="226" y="306" text-anchor="middle" class="d-small">{s.water}</text>
+  <text x="320" y="306" text-anchor="middle" class="d-small">{s.water}</text>
+  <text x="200" y="157" text-anchor="middle" class="d-label">1 C · 4 H · 4 O</text>
+  <text x="200" y="338" text-anchor="middle" class="d-label">1 C · 4 H · 4 O</text>
+
+  <path d="M200 168V194" class="d-line d-arrow-hot" stroke-width="3" />
+  <text x="214" y="187" class="d-small">{s.burning}</text>
+</Svg>
