@@ -13,6 +13,7 @@ import ElectronSea from './diagrams/ElectronSea.astro';
 import MoleculeShapes from './diagrams/MoleculeShapes.astro';
 import WaterPolarity from './diagrams/WaterPolarity.astro';
 import IceLattice from './diagrams/IceLattice.astro';
+import MoleculeLab from '@widgets/molecule-lab/MoleculeLab.svelte';
 
 Daj si dúšok vody. V každej kvapke je viac ako miliarda miliárd drobných [[molecule|molekúl]] vody.
 Každá z nich sa skladá z troch [[atom|atómov]]: z dvoch atómov vodíka a jedného atómu kyslíka,
@@ -238,6 +239,16 @@ More elektrónov vysvetľuje o kovoch veľa:
 - Väčšinu kovov môžeš ohnúť alebo tvarovať kladivom a nerozbijú sa. Rady atómov sa posunú po sebe a
   more ich drží ďalej.
 - More elektrónov odráža svetlo, a preto sú kovy lesklé.
+
+## Postav si molekuly
+
+Teraz už poznáš tri spôsoby, ako sa atómy navzájom držia. Vyskúšaj si ich v laboratóriu nižšie:
+spájaj atómy spoločnými pármi elektrónov, nechaj sodík jeden elektrón odovzdať a zisti, koľko
+molekúl objavíš.
+
+<Figure caption="Vyber jeden atóm a potom druhý, aby sa spojili. Keď ten istý pár vyberieš znova, vznikne dvojitá alebo trojitá väzba. Keď už žiadny atóm nemá voľnú väzbu, molekula sa rozsvieti a ukáže svoje meno." wide>
+  <MoleculeLab client:visible />
+</Figure>
 
 ## Aký tvar má molekula?
 

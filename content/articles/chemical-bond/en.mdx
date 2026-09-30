@@ -13,6 +13,7 @@ import ElectronSea from './diagrams/ElectronSea.astro';
 import MoleculeShapes from './diagrams/MoleculeShapes.astro';
 import WaterPolarity from './diagrams/WaterPolarity.astro';
 import IceLattice from './diagrams/IceLattice.astro';
+import MoleculeLab from '@widgets/molecule-lab/MoleculeLab.svelte';
 
 Take a sip of water. Every drop holds more than a billion billion tiny water
 [[molecule|molecules]]. Each one is made of three [[atom|atoms]]: two hydrogen atoms and one
@@ -238,6 +239,15 @@ The electron sea explains a lot about metals:
 - You can bend or hammer most metals without breaking them. The rows of atoms slide past each
   other, and the sea keeps holding them.
 - The electron sea reflects light, which makes metals shiny.
+
+## Build molecules yourself
+
+Now you know the three ways atoms hold on to each other. Try them in the lab below: join atoms by
+sharing pairs of electrons, let sodium hand one over, and see how many molecules you can discover.
+
+<Figure caption="Pick an atom, then another, to join them. Pick the same pair again for a double or triple bond. When no atom has a free bond left, the molecule lights up with its name." wide>
+  <MoleculeLab client:visible />
+</Figure>
 
 ## What shape is a molecule?
 
