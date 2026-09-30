@@ -8,19 +8,21 @@ interface Props {
 const strings = {
   en: {
     title: 'How an electron makes a flash of light',
-    desc: 'Two pictures of an atom with three shells drawn as curved lines. In the first, heat pushes an electron from the inner shell out to the outer shell. In the second, the electron falls back to the inner shell, and a wavy arrow shows the light it gives out.',
+    desc: 'Two pictures of an atom, with three of its energy levels drawn as curved lines. In the first, heat lifts an electron from a lower energy level up to a higher one. In the second, the electron falls back down to the lower level, and a wavy arrow shows the light it gives out.',
     up: '1. Heat kicks it up',
     down: '2. Back down: light!',
     heat: 'heat',
     light: 'light',
+    levels: 'energy levels',
   },
   sk: {
     title: 'Ako elektrón vytvorí záblesk svetla',
-    desc: 'Dva obrázky atómu s tromi vrstvami nakreslenými ako oblúky. Na prvom teplo vytlačí elektrón z vnútornej vrstvy do vonkajšej. Na druhom elektrón spadne späť do vnútornej vrstvy a vlnitá šípka ukazuje svetlo, ktoré pritom vyšle.',
-    up: '1. Teplo ho vyhodí',
+    desc: 'Dva obrázky atómu s tromi jeho energetickými hladinami nakreslenými ako oblúky. Na prvom teplo zdvihne elektrón z nižšej hladiny na vyššiu. Na druhom elektrón spadne späť na nižšiu hladinu a vlnitá šípka ukazuje svetlo, ktoré pritom vyšle.',
+    up: '1. Teplo ho zdvihne',
     down: '2. Späť dole: svetlo!',
     heat: 'teplo',
     light: 'svetlo',
+    levels: 'energetické hladiny',
   },
 } as const;
 const s = strings[Astro.props.lang];
@@ -68,6 +70,7 @@ const panels = [
     ))
   }
   <text x="150" y="132" class="d-small">{s.heat}</text>
+  <text x="84" y="232" text-anchor="middle" class="d-small d-muted">{s.levels}</text>
   <path d={wave(234)} class="d-line d-arrow-hot" style="stroke-width: 2.5" />
   <text x="396" y="228" text-anchor="end" class="d-small">{s.light}</text>
 </Svg>

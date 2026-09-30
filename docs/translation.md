@@ -211,7 +211,7 @@ superscripts (Na⁺, Cl⁻, Ca²⁺, O²⁻), in both languages. Add the plain f
 | transition metals | prechodné kovy | |
 | lanthanides / actinides | lantanoidy / aktinoidy | |
 | subshell; s-, p-, d-, f-block | podvrstva; s-, p-, d-, f-prvky | Go-deeper blocks only |
-| energy level | energetická hladina | "vrstva" in the main text |
+| energy level | energetická hladina | not the same as "vrstva": a flame lifts an electron to a higher hladina, often in the same vrstva (sodium: 3s → 3p) |
 | photon | fotón | |
 | flame colour / flame test | farba plameňa / plameňová skúška | |
 | neutron number (N) | neutrónové číslo (N) | |
