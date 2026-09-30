@@ -17,6 +17,12 @@
  *   https://openstax.org/books/chemistry-2e/pages/2-6-ionic-and-molecular-compounds. That figure also
  *   shows C⁴⁻ (in carbides such as Al₄C₃); it is left out, because carbon almost always shares its
  *   electrons instead. Hydrogen is added: H⁺ in acids and H⁻ (hydride) in compounds such as NaH.
+ * - Tendencies follow the octet rule (the duet rule for hydrogen and helium): OpenStax Chemistry 2e,
+ *   https://openstax.org/books/chemistry-2e/pages/7-1-ionic-bonding and
+ *   https://openstax.org/books/chemistry-2e/pages/7-3-lewis-symbols-and-structures. Metals give their outer electrons
+ *   away; boron, carbon and silicon share theirs; nitrogen to chlorine need a few more, which they
+ *   take (ions) or share (molecules).
+ * - Element names live in strings.ts; the Slovak ones follow docs/translation.md.
  */
 
 export interface HalfLife {
