@@ -10,6 +10,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import '@styles/content.css';
 import '@styles/diagram.css';
 import AcDc from '@widgets/ac-dc/AcDc.svelte';
+import AtomLab from '@widgets/atom-lab/AtomLab.svelte';
 import BoilingPoint from '@widgets/boiling-point/BoilingPoint.svelte';
 import CopExplorer from '@widgets/cop-explorer/CopExplorer.svelte';
 import ElectronFlow from '@widgets/electron-flow/ElectronFlow.svelte';
@@ -36,6 +37,9 @@ const alternates = LANG_CODES.map((code) => ({ lang: code, href: `/lab/${code}/`
     <section id="heat-pump-cycle"><h2>HeatPumpCycle</h2><HeatPumpCycle client:visible lang={lang} /></section>
     <section id="cop-explorer"><h2>CopExplorer</h2><CopExplorer client:visible lang={lang} /></section>
     <section id="boiling-point"><h2>BoilingPoint</h2><BoilingPoint client:visible lang={lang} /></section>
+    <section id="atom-lab"><h2>AtomLab</h2><AtomLab client:visible lang={lang} /></section>
+    <section id="atom-lab-isotopes"><h2>AtomLab (quests="isotopes")</h2><AtomLab client:visible lang={lang} quests="isotopes" /></section>
+    <section id="atom-lab-ions"><h2>AtomLab (quests="ions")</h2><AtomLab client:visible lang={lang} quests="ions" /></section>
   </div>
 </BaseLayout>
 
