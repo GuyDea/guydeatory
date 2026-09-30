@@ -1,0 +1,79 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'The shape of the whole periodic table',
+    desc: 'All 118 elements as small coloured boxes in 7 rows and 18 columns, with two more rows of 15 boxes printed below. Metals fill most of the table: the left side, the middle, the lower right and both bottom rows. Nonmetals sit at the top right, and a zigzag of in-between elements separates them from the metals. The noble gases fill the last column. Two dashed boxes in rows 6 and 7 show where the two bottom rows really belong.',
+    metals: 'metals',
+    metalloids: 'in-between',
+    nonmetals: 'nonmetals',
+    noble: 'noble gases',
+  },
+  sk: {
+    title: 'Tvar celej periodickej tabuľky',
+    desc: 'Všetkých 118 prvkov ako malé farebné políčka v 7 riadkoch a 18 stĺpcoch, pod nimi sú ešte dva riadky po 15 políčok. Kovy zaberajú väčšinu tabuľky: ľavú stranu, stred, pravý dolný roh a oba spodné riadky. Nekovy sú vpravo hore a od kovov ich oddeľuje kľukatý pás polokovov. Vzácne plyny zaberajú posledný stĺpec. Dve prerušované políčka v 6. a 7. riadku ukazujú, kam spodné dva riadky naozaj patria.',
+    metals: 'kovy',
+    metalloids: 'polokovy',
+    nonmetals: 'nekovy',
+    noble: 'vzácne plyny',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+
+const NONMETALS = new Set([1, 6, 7, 8, 9, 15, 16, 17, 34, 35, 53]);
+const NOBLE = new Set([2, 10, 18, 36, 54, 86, 118]);
+const METALLOIDS = new Set([5, 14, 32, 33, 51, 52]);
+const kind = (z: number) => (NOBLE.has(z) ? 'd-muted' : NONMETALS.has(z) ? 'd-warm' : METALLOIDS.has(z) ? 'd-glow' : 'd-cool');
+
+const SIZE = 18.4;
+const PITCH = 20.6;
+const gx = (group: number) => 24 + (group - 1) * PITCH;
+const py = (period: number) => 26 + (period - 1) * PITCH;
+const cells: { x: number; y: number; z: number }[] = [];
+const add = (z: number, group: number, period: number) => cells.push({ z, x: gx(group), y: py(period) });
+add(1, 1, 1);
+add(2, 18, 1);
+for (const [start, period] of [[3, 2], [11, 3]]) {
+  add(start!, 1, period!);
+  add(start! + 1, 2, period!);
+  for (let i = 0; i < 6; i++) add(start! + 2 + i, 13 + i, period!);
+}
+for (const [start, period] of [[19, 4], [37, 5]]) {
+  for (let group = 1; group <= 18; group++) add(start! + group - 1, group, period!);
+}
+// Rows 6 and 7: groups 1 and 2, then groups 4–18. The 15 elements in between go in the rows below.
+for (const [start, period] of [[55, 6], [87, 7]]) {
+  add(start!, 1, period!);
+  add(start! + 1, 2, period!);
+  for (let group = 4; group <= 18; group++) add(start! + 17 + group - 4, group, period!);
+}
+const FROW = [180, 200.6];
+for (const [row, start] of [[0, 57], [1, 89]]) {
+  for (let i = 0; i < 15; i++) cells.push({ z: start! + i, x: gx(3 + i), y: FROW[row!]! });
+}
+const legend: [string, string, number, number][] = [
+  ['d-cool', s.metals, 24, 240],
+  ['d-glow', s.metalloids, 210, 240],
+  ['d-warm', s.nonmetals, 24, 270],
+  ['d-muted', s.noble, 210, 270],
+];
+---
+<Svg viewBox="0 14 400 276" title={s.title} desc={s.desc} maxWidth="32rem">
+  {[1, 2, 3, 4, 5, 6, 7].map((period) => <text x="10" y={py(period) + 14} text-anchor="middle" class="d-small d-muted">{period}</text>)}
+  {cells.map(({ x, y, z }) => <rect x={x} y={y} width={SIZE} height={SIZE} rx="3" class={kind(z)} />)}
+  {[6, 7].map((period) => <rect x={gx(3) + 1} y={py(period) + 1} width={SIZE - 2} height={SIZE - 2} rx="3" class="d-line" stroke-dasharray="3 3" style="stroke: var(--d-muted)" />)}
+  <path d={`M${gx(3) + SIZE / 2} ${py(7) + SIZE + 1}V${FROW[0]! - 2}`} class="d-line" stroke-dasharray="3 3" style="stroke: var(--d-muted)" />
+  {
+    legend.map(([token, label, x, y]) => (
+      <>
+        <rect x={x} y={y - 14} width="18" height="18" rx="4" class={token} />
+        <text x={x + 26} y={y} class="d-small">{label}</text>
+      </>
+    ))
+  }
+</Svg>

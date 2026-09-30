@@ -1,10 +1,19 @@
 # Language-independent facts about this article. Guide: docs/writing-guide.md (Metadata).
 topics: [chemistry, matter]
 labels: [high-level]
-prerequisites: [atom]
-related: []
-status: stub
+prerequisites: [chemical-element]
+related: [electron-shell, chemical-element, chemical-bond, ion]
+status: published
 created: 2026-09-30
 updated: 2026-09-30
 sources:
-  - { title: 'Periodic table — Wikipedia', url: 'https://en.wikipedia.org/wiki/Periodic_table' }
+  - title: 150 years ago, the periodic table began with one chemist’s vision — Science News
+    url: https://www.sciencenews.org/article/periodic-table-history-chemical-elements-150-anniversary
+  - title: Reactivity trends of the alkali metals — Royal Society of Chemistry, Education
+    url: https://edu.rsc.org/experiments/reactivity-trends-of-the-alkali-metals/731.article
+  - title: Periodic table — Wikipedia
+    url: https://en.wikipedia.org/wiki/Periodic_table
+  - title: Mendeleev’s predicted elements — Wikipedia
+    url: https://en.wikipedia.org/wiki/Mendeleev%27s_predicted_elements
+  - title: Nonmetal (how many elements are metals, nonmetals and metalloids) — Wikipedia
+    url: https://en.wikipedia.org/wiki/Nonmetal

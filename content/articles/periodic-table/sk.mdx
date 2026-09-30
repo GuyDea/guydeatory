@@ -1,10 +1,182 @@
 ---
-title: 'Ako funguje periodická tabuľka?'
-term: 'periodická tabuľka'
+title: Ako funguje periodická tabuľka?
+term: periodická tabuľka
 slug: periodicka-tabulka
-summary: 'Periodická tabuľka je prehľad všetkých chemických prvkov zoradených podľa počtu protónov v ich atómoch. Prvky v tom istom stĺpci sa správajú podobne.'
-keywords: ['periodická tabuľka', 'prvky', 'Mendelejev', 'skupiny', 'periódy']
+summary: Periodická tabuľka je prehľad všetkých chemických prvkov zoradených podľa toho, koľko protónov majú ich atómy. Je rozdelená na riadky tak, aby prvky, ktoré sa správajú podobne, stáli v tom istom stĺpci.
+keywords: [periodická tabuľka, periodická tabuľka prvkov, Mendelejevova tabuľka, prvky, Mendelejev, skupiny, periódy, riadky, stĺpce, alkalické kovy, halogény, vzácne plyny, kovy, nekovy, polokovy, lantanoidy, aktinoidy]
 ---
 
-Periodická tabuľka je prehľad všetkých chemických prvkov zoradených podľa toho, koľko protónov majú
-ich atómy. Prvky v tom istom stĺpci sa správajú podobne.
+import FirstTwenty from './diagrams/FirstTwenty.astro';
+import TableMap from './diagrams/TableMap.astro';
+
+V mnohých triedach visí veľká tabuľka plná farebných políčok a v každom z nich je jedno alebo dve
+písmená. Je to **periodická tabuľka**. Každý [[chemical-element|chemický prvok]], ktorý veda pozná,
+v nej má svoje políčko – všetkých 118.
+
+Je to mapa všetkých stavebných kociek, z ktorých sa dá čokoľvek postaviť. Prečo má však taký zvláštny
+tvar? Poďme to zistiť.
+
+## Jeden dlhý rad prvkov
+
+Začnime najľahším prvkom, vodíkom, ktorého atómy majú 1 protón. Za ním ide hélium s 2 protónmi,
+potom lítium s 3 a berýlium so 4. Každý prvok má o jeden protón viac ako ten pred ním. Rad pokračuje
+až po oganesón so 118 protónmi.
+
+Toto poradie je chrbtovou kosťou periodickej tabuľky. Číslo v každom políčku je protónové číslo
+prvku: koľko protónov majú jeho atómy.
+
+## Prečo je rad rozdelený na riadky?
+
+Teraz príde prekvapenie. Keď kráčaš po rade, podobné prvky sa znova a znova vracajú:
+
+- Lítium (3), sodík (11) a draslík (19) sú mäkké lesklé kovy, ktoré vo vode syčia.
+- Hélium (2), neón (10) a argón (18) sú plyny, ktoré sa takmer s ničím nespájajú.
+
+Tento vzor sa stále opakuje. Preto je dlhý rad rozdelený na riadky a každý nový riadok začína pod tým
+predchádzajúcim. Podobné prvky sa tak ocitnú v tom istom stĺpci! Presne to znamená slovo
+„periodický“: opakujúci sa znova a znova, ako ročné obdobia.
+
+<Analogy title="Ako kalendár">
+Dni v mesiaci sú očíslované po poradí: 1, 2, 3 a tak ďalej. Kalendár ich však nepíše do jedného
+dlhého radu. Rozdelí ich na týždne, takže všetky pondelky stoja v jednom stĺpci a všetky soboty
+v inom.
+
+Periodická tabuľka robí s prvkami to isté. Len jej riadky nie sú všetky rovnako dlhé.
+</Analogy>
+
+<Figure caption="Prvých 20 prvkov. Atómy v jednom stĺpci majú rovnaký počet vonkajších elektrónov, a preto sa správajú podobne. Výnimkou je hélium: jeho jediná vrstva je plná už s 2 elektrónmi." wide>
+  <FirstTwenty />
+</Figure>
+
+## Riadky sa volajú periódy
+
+Každému riadku hovoríme **perióda** a je ich 7.
+
+Prečo sa nový riadok začína práve tam, kde sa začína? Súvisí to s elektrónmi okolo jadra. Sú
+usporiadané vo vrstvách, ktorým hovoríme [[electron-shell|elektrónové vrstvy]], a každý nový riadok
+sa začína vtedy, keď atómy začnú zapĺňať novú vrstvu. Atómy v 1.&nbsp;riadku majú preto jednu vrstvu
+a atómy v 3.&nbsp;riadku tri.
+
+## Stĺpce sa volajú skupiny
+
+Každému stĺpcu hovoríme **skupina** a je ich 18. Prvky v tej istej skupine majú zvyčajne rovnaký
+počet elektrónov vo vonkajšej vrstve. Tieto vonkajšie elektróny rozhodujú o tom, ako sa atóm správa,
+a tak sa prvky jednej skupiny správajú ako členovia jednej rodiny. Niektoré rodiny majú vlastné mená:
+
+- **Alkalické kovy** sú v prvom stĺpci, okrem vodíka. Sú to kovy také mäkké, že sa dajú krájať
+  nožom. Každý ich atóm má jeden vonkajší elektrón a veľmi ľahko ho odovzdá. Vo vode syčia
+  a pobehujú po hladine a draslík dokonca vzplanie svetlofialovým plameňom!
+- **Halogény** sú v druhom stĺpci sprava: fluór, chlór, bróm a jód. Veľmi túžia získať ešte jeden
+  elektrón. Chlór pomáha udržiavať vodu v bazénoch čistú. Názov „halogén“ znamená v gréčtine
+  „tvoriaci soľ“.
+- **Vzácne plyny** sú v poslednom stĺpci: hélium, neón, argón a ďalšie. Ich vonkajšia vrstva je už
+  plná, a preto takmer s ničím nereagujú. Hélium nadnáša balóny a neón svieti červenooranžovo vo
+  svetelných reklamách.
+
+<Safety>
+Alkalické kovy, ako sodík a draslík, sú nebezpečné. Môžu popáliť kožu a vo vode sa vznietiť.
+Zaobchádzajú s nimi len vyškolení chemici, s ochrannými okuliarmi a za ochranným štítom.
+</Safety>
+
+<FunFact>
+Názov argón pochádza z gréckeho slova, ktoré znamená „lenivý“. Na plyn, ktorý takmer s ničím
+nereaguje, sa hodí! Práve teraz ho dýchaš: takmer 1 zo 100 čiastočiek vzduchu je atóm argónu.
+</FunFact>
+
+<GoDeeper title="Prečo má tabuľka takýto tvar">
+Každá elektrónová vrstva sa delí na menšie časti, ktorým hovoríme podvrstvy. Označujú sa s, p, d a f
+a zmestí sa do nich 2, 6, 10 a 14 elektrónov. Tvar tabuľky zodpovedá poradiu, v akom sa zapĺňajú:
+
+- dva vysoké stĺpce vľavo sú **s-prvky**
+- šesť stĺpcov vpravo sú **p-prvky**
+- desať stĺpcov v strede sú **d-prvky**, prechodné kovy
+- dva samostatné riadky dole sú **f-prvky**, lantanoidy a aktinoidy
+
+Preto sa do siedmich riadkov zmestí 2, 8, 8, 18, 18, 32 a 32 prvkov. Pravidlo „rovnaká skupina,
+rovnaký počet vonkajších elektrónov“ platí najlepšie pre s-prvky a p-prvky. Pri d-prvkoch sa
+elektróny dopĺňajú do vnútornej vrstvy, a preto sa susedné prvky často podobajú aj v rámci riadku.
+
+Dva prvky majú trochu zvláštne miesto. Vodík má jeden vonkajší elektrón ako alkalické kovy, ale je to
+plyn, nie kov. Hélium má len 2 vonkajšie elektróny, a predsa je nad vzácnymi plynmi, pretože jeho
+jediná vrstva je plná – rovnako ako ich vonkajšie vrstvy.
+</GoDeeper>
+
+## Kovy a nekovy
+
+Periodická tabuľka má ešte jeden vzor. Kovy sú vľavo a v strede, nekovy vpravo.
+
+- **Kovy** sú lesklé a ohybné a dobre vedú elektrinu aj teplo. Sú to dobré
+  [[conductors-and-insulators|vodiče]]. Železo, meď, zlato aj hliník sú kovy. Viac ako tri zo
+  štyroch prvkov sú kovy!
+- **Nekovy** sú úplne iné. Mnohé sú plyny, napríklad kyslík a dusík. Iné sú krehké pevné látky, ako
+  síra alebo uhlík v tuhe ceruzky. Väčšina z nich elektrinu dobre nevedie.
+- Na kľukatej čiare medzi nimi je niekoľko prvkov, ktoré sú niečo medzi – **polokovy**, napríklad
+  kremík. Z kremíka sa vyrábajú počítačové čipy.
+
+<Figure caption="Celá periodická tabuľka. Kovy zaberajú väčšinu z nej, nekovy sú vpravo hore a vzácne plyny v poslednom stĺpci. Dva riadky dole v skutočnosti patria do 6. a 7. riadku." wide>
+  <TableMap />
+</Figure>
+
+## Prečo sú dva riadky dole?
+
+Pod zvyškom tabuľky sú dva samostatné riadky. V skutočnosti patria do 6. a 7.&nbsp;riadku, tam, kde
+sú prerušované políčka. Tabuľka by však bola príliš široká, širšia ako strana. Preto sa píšu pod ňu.
+
+Všetky prvky v týchto dvoch riadkoch sú kovy. V prvom z nich sú kovy, z ktorých sa vyrábajú
+supersilné magnety, napríklad tie drobné v slúchadlách. V druhom je urán, palivo jadrových
+elektrární.
+
+## Kto vytvoril prvú periodickú tabuľku?
+
+V roku 1869 napísal ruský chemik Dmitrij Mendelejev každý zo 63 vtedy známych prvkov na samostatnú
+kartičku. Na každú kartičku si poznačil, aké ťažké sú atómy prvku a ako sa prvok správa. Potom
+kartičky presúval, trochu ako pri kartovej hre, až kým sa neukázal vzor.
+
+Jeho najmúdrejším nápadom bolo nechať medzery. Kde nepasoval žiadny známy prvok, nechal prázdne
+políčko. Tvrdil, že tam musia byť prvky, ktoré ešte nikto nenašiel, a dokonca opísal, aké budú.
+
+O niekoľko rokov sa chýbajúce prvky naozaj našli: gálium v roku 1875, skandium v roku 1879
+a germánium v roku 1886. Veľmi presne zodpovedali jeho opisom. Prvok 101 sa na jeho počesť volá
+mendelévium.
+
+<GoDeeper title="Ako dobre Mendelejev hádal?">
+- Chýbajúci prvok pod hliníkom nazval „eka-hliník“ (*eka* znamená v sanskrte „jeden“). Predpovedal
+  mu relatívnu atómovú hmotnosť asi 68 a hustotu asi 6,0&nbsp;g/cm³. Gálium, objavené v roku 1875,
+  má relatívnu atómovú hmotnosť 69,7 a hustotu 5,91&nbsp;g/cm³.
+- Z jeho „eka-kremíka“ sa stalo germánium. Predpovedal hmotnosť 72 a hustotu 5,5&nbsp;g/cm³
+  a germánium má 72,6 a 5,32&nbsp;g/cm³.
+- Mendelejev zoradil prvky podľa atómovej hmotnosti. V roku 1913 zmeral Henry Moseley röntgenové
+  žiarenie, ktoré prvky vysielajú, a ukázal, že skutočné poradie určuje náboj jadra – protónové
+  číslo. Tým sa vyriešili dvojice, ktoré sa zdali prehodené. Telúr je napríklad ťažší ako jód, ale
+  má menej protónov, a preto ide prvý.
+- Mendelejevova tabuľka nemala vôbec žiadne vzácne plyny. Argón objavili až v roku 1894 a vzácne
+  plyny sa potom úhľadne zmestili do nového stĺpca.
+</GoDeeper>
+
+<FunFact>
+V roku 2019 mala periodická tabuľka 150 rokov. Organizácia Spojených národov to oslávila celým
+Medzinárodným rokom periodickej tabuľky.
+</FunFact>
+
+<Remember>
+- Periodická tabuľka obsahuje všetkých 118 prvkov zoradených podľa počtu protónov.
+- Rad prvkov je rozdelený na riadky tak, aby prvky, ktoré sa správajú podobne, stáli v tom istom
+  stĺpci.
+- Riadok sa volá perióda a stĺpec skupina.
+- Prvky v jednom stĺpci majú zvyčajne rovnaký počet vonkajších elektrónov.
+- Kovy sú vľavo a v strede, nekovy vpravo.
+</Remember>
+
+<Quiz
+  question="Sodík a draslík sú v tom istom stĺpci. Čo to prezrádza?"
+  options={["Vážia rovnako", "Správajú sa podobne", "Objavili ich v ten istý deň"]}
+  answer={1}
+  explanation="Prvky v jednom stĺpci majú rovnaký počet vonkajších elektrónov, a preto sa správajú podobne. Oba sú mäkké kovy, ktoré vo vode syčia."
+/>
+
+<Quiz
+  question="Prečo nechal Mendelejev v tabuľke medzery?"
+  options={["Došiel mu atrament", "Tušil, že niektoré prvky ešte nikto nenašiel", "Aby tabuľka vyzerala krajšie"]}
+  answer={1}
+  explanation="Tušil, že niektoré prvky ešte chýbajú, a dokonca ich opísal. Medzery neskôr zaplnilo gálium, skandium a germánium."
+/>

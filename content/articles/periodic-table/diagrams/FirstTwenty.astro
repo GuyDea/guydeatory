@@ -1,0 +1,77 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'The first 20 elements of the periodic table',
+    desc: 'The first 20 elements in four rows, each box with its atomic number and symbol. Row 1: H and He. Row 2: Li, Be, B, C, N, O, F, Ne. Row 3: Na, Mg, Al, Si, P, S, Cl, Ar. Row 4: K and Ca. Numbers above the eight columns show how many outer electrons the atoms have, from 1 to 8. The alkali metals Li, Na and K share the first column. The halogens F and Cl share the seventh column. The noble gases He, Ne and Ar share the last column.',
+    outer: 'outer electrons',
+    alkali: 'alkali metals',
+    halogens: 'halogens',
+    noble: 'noble gases',
+  },
+  sk: {
+    title: 'Prvých 20 prvkov periodickej tabuľky',
+    desc: 'Prvých 20 prvkov v štyroch riadkoch, v každom políčku protónové číslo a značka. Riadok 1: H a He. Riadok 2: Li, Be, B, C, N, O, F, Ne. Riadok 3: Na, Mg, Al, Si, P, S, Cl, Ar. Riadok 4: K a Ca. Čísla nad ôsmimi stĺpcami ukazujú, koľko vonkajších elektrónov majú atómy, od 1 po 8. Alkalické kovy Li, Na a K sú v prvom stĺpci. Halogény F a Cl sú v siedmom stĺpci. Vzácne plyny He, Ne a Ar sú v poslednom stĺpci.',
+    outer: 'vonkajšie elektróny',
+    alkali: 'alkalické kovy',
+    halogens: 'halogény',
+    noble: 'vzácne plyny',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+
+const symbols = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca'];
+// Row and column (0-based) of each element in the short 8-column table: groups 1, 2 and 13–18.
+function place(z: number): [number, number] {
+  if (z === 1) return [0, 0];
+  if (z === 2) return [0, 7];
+  if (z <= 10) return [1, z - 3];
+  if (z <= 18) return [2, z - 11];
+  return [3, z - 19];
+}
+const family: Record<string, string> = { Li: 'd-warm', Na: 'd-warm', K: 'd-warm', F: 'd-electron', Cl: 'd-electron', He: 'd-muted', Ne: 'd-muted', Ar: 'd-muted' };
+const X0 = 32;
+const Y0 = 52;
+const cx = (col: number) => X0 + col * 46;
+const cy = (row: number) => Y0 + row * 50;
+const cells = symbols.map((symbol, i) => {
+  const [row, col] = place(i + 1);
+  return { z: i + 1, symbol, x: cx(col), y: cy(row), tint: family[symbol] };
+});
+// A family's boxes get a see-through tint and a thick border in the family's colour.
+const border = (token: string) => `stroke: var(--${token}); stroke-width: 3`;
+const legend: [string, string, number][] = [
+  ['d-warm', s.alkali, 32],
+  ['d-electron', s.halogens, 172],
+  ['d-muted', s.noble, 276],
+];
+---
+<Svg viewBox="0 0 400 300" title={s.title} desc={s.desc} maxWidth="30rem">
+  <text x="216" y="16" text-anchor="middle" class="d-small d-accent">{s.outer}</text>
+  {Array.from({ length: 8 }, (_, col) => <text x={cx(col) + 21} y="40" text-anchor="middle" class="d-label d-accent">{col + 1}</text>)}
+  {[1, 2, 3, 4].map((row) => <text x="14" y={cy(row - 1) + 30} text-anchor="middle" class="d-small d-muted">{row}</text>)}
+  {
+    cells.map(({ z, symbol, x, y, tint }) => (
+      <>
+        <rect x={x} y={y} width="42" height="46" rx="6" class="d-box" style={tint ? border(tint) : 'stroke-width: 1.5'} />
+        {tint && <rect x={x} y={y} width="42" height="46" rx="6" class={tint} opacity="0.35" />}
+        <text x={x + 5} y={y + 16} class="d-small">{z}</text>
+        <text x={x + 21} y={y + 38} text-anchor="middle" class="d-label" style="font-size: 20px">{symbol}</text>
+      </>
+    ))
+  }
+  {
+    legend.map(([token, label, x]) => (
+      <>
+        <rect x={x} y="266" width="18" height="18" rx="4" class="d-box" style={border(token)} />
+        <rect x={x} y="266" width="18" height="18" rx="4" class={token} opacity="0.35" />
+        <text x={x + 25} y="281" class="d-small">{label}</text>
+      </>
+    ))
+  }
+</Svg>
