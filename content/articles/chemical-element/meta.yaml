@@ -2,9 +2,18 @@
 topics: [matter, chemistry]
 labels: [high-level]
 prerequisites: [atom]
-related: []
-status: stub
+related: [periodic-table, isotope, molecule, chemical-bond, ion]
+status: published
 created: 2026-09-30
 updated: 2026-09-30
 sources:
-  - { title: 'Chemical element — Wikipedia', url: 'https://en.wikipedia.org/wiki/Chemical_element' }
+  - title: The Periodic Table of Chemical Elements, a window on the universe — UNESCO
+    url: https://www.unesco.org/en/articles/periodic-table-chemical-elements-window-universe
+  - title: IUPAC announces the names of the elements 113, 115, 117, and 118 — IUPAC
+    url: https://iupac.org/iupac-announces-the-names-of-the-elements-113-115-117-and-118/
+  - title: Chemical element — Wikipedia
+    url: https://en.wikipedia.org/wiki/Chemical_element
+  - title: Abundance of the chemical elements — Wikipedia
+    url: https://en.wikipedia.org/wiki/Abundance_of_the_chemical_elements
+  - title: Composition of the human body — Wikipedia
+    url: https://en.wikipedia.org/wiki/Composition_of_the_human_body

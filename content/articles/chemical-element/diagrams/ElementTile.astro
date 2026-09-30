@@ -1,0 +1,46 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'How to read an element’s box',
+    desc: 'A square box for carbon. At the top left is the number 6, the atomic number: how many protons each carbon atom has. In the middle is the big letter C, the symbol. At the bottom is the name, carbon. Labels on the right point to each part.',
+    name: 'carbon',
+    number: 'atomic number',
+    numberNote: '= how many protons',
+    symbol: 'symbol',
+    nameLabel: 'name',
+  },
+  sk: {
+    title: 'Ako čítať políčko prvku',
+    desc: 'Štvorcové políčko uhlíka. Vľavo hore je číslo 6, protónové číslo: koľko protónov má každý atóm uhlíka. V strede je veľké písmeno C, značka. Dole je názov, uhlík. Popisy vpravo ukazujú na jednotlivé časti.',
+    name: 'uhlík',
+    number: 'protónové číslo',
+    numberNote: '= počet protónov',
+    symbol: 'značka',
+    nameLabel: 'názov',
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const pointer = 'stroke: var(--d-muted)';
+---
+<Svg viewBox="0 0 400 212" title={s.title} desc={s.desc} maxWidth="30rem">
+  <rect x="24" y="16" width="176" height="176" rx="14" class="d-box" />
+  <text x="42" y="54" class="d-label" style="font-size: 30px">6</text>
+  <text x="112" y="140" text-anchor="middle" class="d-label" style="font-size: 88px">C</text>
+  <text x="112" y="178" text-anchor="middle">{s.name}</text>
+  <path d="M72 44H228" class="d-line" stroke-dasharray="4 5" style={pointer} />
+  <path d="M152 106L228 114" class="d-line" stroke-dasharray="4 5" style={pointer} />
+  <path d="M150 172H228" class="d-line" stroke-dasharray="4 5" style={pointer} />
+  <circle cx="72" cy="44" r="3" class="d-muted" />
+  <circle cx="152" cy="106" r="3" class="d-muted" />
+  <circle cx="150" cy="172" r="3" class="d-muted" />
+  <text x="236" y="50" class="d-label">{s.number}</text>
+  <text x="236" y="72" class="d-small">{s.numberNote}</text>
+  <text x="236" y="120" class="d-label">{s.symbol}</text>
+  <text x="236" y="178" class="d-label">{s.nameLabel}</text>
+</Svg>
