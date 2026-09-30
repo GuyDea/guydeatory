@@ -115,6 +115,9 @@ export function seatOrder(places: number): number[] {
 /** Electrons in a full shell of a noble gas: helium, neon, argon (their atomic numbers too). */
 const NOBLE = [2, 10, 18];
 
+/** Electrons of the noble gas that ends element z's row: helium 2, neon 10, argon 18, krypton 36. */
+const nobleAfter = (z: number) => (z <= 2 ? 2 : z <= 10 ? 10 : z <= 18 ? 18 : 36);
+
 // ── Charge ───────────────────────────────────────────────────────────────────────────────────────
 
 export const chargeOf = (atom: Atom) => atom.protons - atom.electrons;
@@ -141,7 +144,7 @@ export type ChargeKind =
   | 'alpha'
   /** Every electron gone: only in very hot places, like inside the Sun. */
   | 'bare'
-  /** More extra electrons than any atom holds. */
+  /** More electrons than the atom can hold on to (H²⁻, F²⁻, Ne⁻, C⁵⁻). */
   | 'overloaded';
 
 export function chargeKind(atom: Atom): ChargeKind {
@@ -149,8 +152,10 @@ export function chargeKind(atom: Atom): ChargeKind {
   const charge = chargeOf(atom);
   if (charge === 0) return 'neutral';
   if (atom.electrons === 0 && atom.protons >= 2) return atom.protons === 2 && atom.neutrons === 2 ? 'alpha' : 'bare';
-  // C⁴⁻ exists in a few crystals (carbides); nothing holds five extra electrons.
-  if (charge < -4) return 'overloaded';
+  // With more electrons than the next noble gas has, a new shell would start, and nothing holds an
+  // electron there: H⁻ and F⁻ exist, H²⁻ and F²⁻ don't. And no atom holds five extra electrons (C⁴⁻
+  // exists in a few crystals, carbides).
+  if (atom.electrons > nobleAfter(atom.protons) || charge < -4) return 'overloaded';
   return ELEMENTS[atom.protons - 1]!.ions.includes(charge) ? 'common' : 'uncommon';
 }
 
@@ -258,7 +263,10 @@ export const QUESTS: Record<QuestSet, readonly Quest[]> = {
     { id: 'oxide-ion', met: ion(8, -2) },
     { id: 'hydrogen-ion', met: (atom) => nuclide(1, 0)(atom) && atom.electrons === 0 },
     { id: 'calcium-ion', met: ion(20, 2) },
-    { id: 'noble-shell', met: (atom) => atom.protons > 0 && !neutral(atom) && NOBLE.includes(atom.electrons) && lasts(atom) },
+    {
+      id: 'noble-shell',
+      met: (atom) => atom.protons > 0 && !neutral(atom) && NOBLE.includes(atom.electrons) && chargeKind(atom) !== 'overloaded' && lasts(atom),
+    },
   ],
 };
 

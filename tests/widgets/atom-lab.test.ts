@@ -358,9 +358,37 @@ describe('atom lab: ions', () => {
     expect(chargeKind(atom(0, 0, 3))).toBe('loose');
   });
 
+  it('calls an ion overloaded when it has more electrons than the next noble gas: H⁴⁻, F²⁻, O³⁻, Cl²⁻, Ne⁻', () => {
+    // Past helium's 2, neon's 10 or argon's 18 electrons, an extra electron would start a new shell, and nothing holds it.
+    const overloaded: [string, number, number][] = [
+      ['H²⁻', 1, 3], ['H⁴⁻', 1, 5], ['He⁻', 2, 3], ['N⁴⁻', 7, 11], ['O³⁻', 8, 11], ['F²⁻', 9, 11], ['Ne⁻', 10, 11],
+      ['S³⁻', 16, 19], ['Cl²⁻', 17, 19], ['Ar⁻', 18, 19],
+      // More than four extra electrons, even below the next noble gas's count.
+      ['Li⁵⁻', 3, 8], ['Al⁵⁻', 13, 18],
+    ];
+    for (const [name, z, e] of overloaded) expect(chargeKind(atom(z, mostCommon(z).neutrons, e)), name).toBe('overloaded');
+  });
+
+  it('keeps the real anions: H⁻, C⁴⁻, N³⁻, O²⁻, F⁻, S²⁻ and Cl⁻ (and natride, Na⁻)', () => {
+    const real: [string, number, number, string][] = [
+      ['H⁻', 1, 2, 'common'], ['C⁴⁻', 6, 10, 'uncommon'], ['N³⁻', 7, 10, 'common'], ['O²⁻', 8, 10, 'common'],
+      ['F⁻', 9, 10, 'common'], ['S²⁻', 16, 18, 'common'], ['Cl⁻', 17, 18, 'common'], ['Na⁻', 11, 12, 'uncommon'],
+    ];
+    for (const [name, z, e, kind] of real) expect(chargeKind(atom(z, mostCommon(z).neutrons, e)), name).toBe(kind);
+  });
+
+  it('explains an overloaded ion without claiming that no atom holds that many extra electrons', () => {
+    expect(en.readouts(view(atom(1, 0, 3))).charge).toEqual({
+      value: 'H²⁻ ion, charge −2',
+      detail: '2 electrons more than protons. That is too many extra electrons: they push each other away, and this atom cannot hold on to them.',
+    });
+    expect(sk.readouts(view(atom(9, 10, 11))).charge.detail).toBe(
+      'Elektrónov je o 2 viac ako protónov. To je priveľa elektrónov navyše: navzájom sa odpudzujú a tento atóm ich neudrží.',
+    );
+  });
+
   it('says what an element usually does instead of an unusual ion', () => {
     expect(en.readouts(view(atom(11, 12, 9))).charge.detail).toBe('2 electrons fewer than protons. Not a common ion: sodium usually forms Na⁺.');
-    expect(en.readouts(view(atom(1, 0, 3))).charge.detail).toBe('2 electrons more than protons. Not a common ion: hydrogen usually forms H⁺ or H⁻.');
     expect(en.readouts(view(atom(6, 6, 7))).charge.detail).toBe('1 electron more than protons. Not a common ion: carbon usually shares electrons instead.');
     expect(en.readouts(view(atom(10, 10, 9))).charge.detail).toBe('1 electron fewer than protons. Not a common ion: neon hardly ever forms ions.');
     expect(sk.readouts(view(atom(11, 12, 9))).charge.detail).toBe('Elektrónov je o 2 menej ako protónov. Nie je to bežný ión: sodík zvyčajne tvorí Na⁺.');
@@ -425,6 +453,9 @@ describe('atom lab: quests', () => {
     expect(questsMet('ions', atom(1, 1, 0))).toEqual([]); // a deuteron is not a bare proton
     expect(questsMet('ions', atom(20, 20, 18))).toEqual(['calcium-ion', 'noble-shell']);
     expect(questsMet('ions', atom(1, 0, 2))).toEqual(['noble-shell']); // H⁻ has helium's two electrons
+    // Neon's or argon's electrons on hydrogen or oxygen: full shells, but no real ion.
+    expect(questsMet('ions', atom(1, 0, 10))).toEqual([]);
+    expect(questsMet('ions', atom(8, 8, 18))).toEqual([]);
     expect(questsMet('ions', atom(10, 10, 10))).toEqual([]); // neon itself is not an ion
   });
 

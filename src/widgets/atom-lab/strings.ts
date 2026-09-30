@@ -149,7 +149,7 @@ function enReadouts(v: View): Readouts {
         }.`,
         alpha: 'This is an alpha particle: alpha radiation is made of these.',
         bare: 'All its electrons are gone. That happens in extremely hot places, like deep inside stars.',
-        overloaded: 'That is too many extra electrons: they push each other away, and no atom can hold them.',
+        overloaded: 'That is too many extra electrons: they push each other away, and this atom cannot hold on to them.',
       }[v.chargeKind];
       const difference = `${enCount(Math.abs(q), 'electron', 'electrons')} ${q > 0 ? 'fewer' : 'more'} than protons.`;
       charge = { value: `${v.notation} ion, charge ${signed(q)}`, detail: `${difference} ${why}` };
@@ -345,7 +345,7 @@ function skReadouts(v: View): Readouts {
         }.`,
         alpha: 'Je to častica alfa: z takých častíc sa skladá žiarenie alfa.',
         bare: 'Nezostal mu ani jeden elektrón. To sa stáva na nesmierne horúcich miestach, napríklad hlboko vo vnútri hviezd.',
-        overloaded: 'To je priveľa elektrónov navyše: navzájom sa odpudzujú a žiadny atóm ich neudrží.',
+        overloaded: 'To je priveľa elektrónov navyše: navzájom sa odpudzujú a tento atóm ich neudrží.',
       }[v.chargeKind];
       const difference = `Elektrónov je o ${Math.abs(q)} ${q > 0 ? 'menej' : 'viac'} ako protónov.`;
       charge = { value: `Ión ${v.notation}, náboj ${signed(q)}`, detail: `${difference} ${why}` };
