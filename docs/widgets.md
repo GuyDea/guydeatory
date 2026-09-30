@@ -85,6 +85,10 @@ import OhmsLawPlayground from '@widgets/ohms-law/OhmsLawPlayground.svelte';
 Never pass `lang`; it is injected. Always add `client:visible`, or the widget stays a static
 picture.
 
+An article that embeds a widget (any component with a `client:` directive) counts as having a
+**lab**. It gets the flask badge in Explore, on cards and in search results, and it appears under
+the "Has a lab" filter. Nothing needs configuring: the catalog detects it (`ArticleText.hasLab`).
+
 ## Skeleton
 
 ```svelte

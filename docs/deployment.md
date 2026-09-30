@@ -121,6 +121,9 @@ therefore publishing: never push or merge to `main` unless the owner asks.
 Changes to `infra/` (the router, the stack) are not deployed by the workflow. Run
 `npm run infra:deploy` by hand.
 
+**Which version is live?** The footer of every page says "Version 1a2b3c4" and links to that
+commit on GitHub. A "+" after it means a local build with uncommitted changes.
+
 ## Troubleshooting
 
 | Symptom | Fix |
