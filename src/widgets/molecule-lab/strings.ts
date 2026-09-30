@@ -413,7 +413,7 @@ const sk: Strings = {
   pickFirst: 'Najprv vyber atóm, ktorý chceš odobrať.',
   completed: (name) => `${name} – hotovo!`,
   newFind: 'Nová položka v tvojej zbierke!',
-  questDone: 'Úloha splnená!',
+  questDone: 'Výzva splnená!',
   shape: 'Tvar',
   shapes: SK_SHAPES,
   centres: (centres) => byElement(centres, SK_ELEMENT, SK_SHAPES, ' a '),
@@ -435,7 +435,7 @@ const sk: Strings = {
     if (free.length) parts.push(`Voľné: ${free.map(([el, n]) => `${skAtoms(n)} ${SK_OF[el]}`).join(', ')}.`);
     return parts.join(' ') || 'Plocha je prázdna.';
   },
-  quests: 'Úlohy',
+  quests: 'Výzvy',
   questsDone: (done, total) => `Splnené: ${done} z ${total}`,
   quest: {
     h2: 'Plynný vodík, H₂: spoj dva atómy vodíka',
