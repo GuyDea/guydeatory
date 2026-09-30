@@ -217,7 +217,7 @@
     if (shape.kind === 'ionic') return s.ionicShape;
     if (shape.kind === 'pair') return s.shapes.linear;
     if (shape.centres.length === 1) return s.shapes[shape.centres[0]!.shape];
-    return shape.centres.map((c) => `${s.element[c.el]}: ${s.shapes[c.shape]}`).join('; ');
+    return s.centres(shape.centres);
   }
 
   const recipeShape = (molecule: Molecule) => {

@@ -45,6 +45,8 @@ export interface Strings {
   questDone: string;
   shape: string;
   shapes: Record<Shape, string>;
+  /** The shape of a molecule with several centres: "carbon: tetrahedron and flat triangle; oxygen: bent". */
+  centres: (centres: { el: El; shape: Shape }[]) => string;
   ionicShape: string;
   polarity: Record<Polarity, string>;
   unfinished: string;
@@ -68,6 +70,12 @@ export interface Strings {
 /** First letter upper case: element names start sentences. */
 export const cap = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 
+/** "carbon: tetrahedron and flat triangle; oxygen: bent", each element once, in the order given. */
+const byElement = (centres: { el: El; shape: Shape }[], name: Record<El, string>, shapes: Record<Shape, string>, and: string) => {
+  const els = [...new Set(centres.map((c) => c.el))];
+  return els.map((el) => `${name[el]}: ${centres.filter((c) => c.el === el).map((c) => shapes[c.shape]).join(and)}`).join('; ');
+};
+
 const EN_ELEMENT: Record<El, string> = {
   H: 'hydrogen',
   C: 'carbon',
@@ -78,6 +86,13 @@ const EN_ELEMENT: Record<El, string> = {
   Cl: 'chlorine',
   Na: 'sodium',
   Mg: 'magnesium',
+};
+const EN_SHAPES: Record<Shape, string> = {
+  linear: 'straight line',
+  bent: 'bent, like a V',
+  'trigonal-planar': 'flat triangle',
+  'trigonal-pyramidal': 'triangular pyramid',
+  tetrahedral: 'tetrahedron',
 };
 const EN_ORDER = ['', 'single', 'double', 'triple'];
 const EN_SHARE = ['', 'a pair of electrons: a single', 'two pairs: a double', 'three pairs: a triple'];
@@ -173,7 +188,7 @@ const en: Strings = {
           : MAX_ORDER[el] === 1
             ? `${cap(EN_ELEMENT[el])} makes only single bonds.`
             : MAX_ORDER[el] === 2
-              ? `${cap(EN_ELEMENT[el])} can share at most two pairs with one partner.`
+              ? `${cap(EN_ELEMENT[el])} usually shares at most two pairs with one partner.`
               : 'Three pairs, a triple bond, is the most these atoms can share.',
   added: (el) => `Added one ${EN_ELEMENT[el]} atom.`,
   removed: (el) => `Removed one ${EN_ELEMENT[el]} atom.`,
@@ -184,13 +199,8 @@ const en: Strings = {
   newFind: 'New in your collection!',
   questDone: 'Quest done!',
   shape: 'Shape',
-  shapes: {
-    linear: 'straight line',
-    bent: 'bent, like a V',
-    'trigonal-planar': 'flat triangle',
-    'trigonal-pyramidal': 'triangular pyramid',
-    tetrahedral: 'tetrahedron',
-  },
+  shapes: EN_SHAPES,
+  centres: (centres) => byElement(centres, EN_ELEMENT, EN_SHAPES, ' and '),
   ionicShape: 'a crystal of many ions',
   polarity: {
     polar: 'Polar: one end is slightly negative (δ−), the other slightly positive (δ+).',
@@ -278,6 +288,13 @@ const SK_FROM: Record<El, string> = {
 };
 /** Accusative after "na": "na chlór", "na síru". */
 const SK_ONTO: Record<El, string> = { ...SK_ELEMENT, S: 'síru' };
+const SK_SHAPES: Record<Shape, string> = {
+  linear: 'rovná čiara',
+  bent: 'lomená čiara, ako písmeno V',
+  'trigonal-planar': 'plochý trojuholník',
+  'trigonal-pyramidal': 'trojboká pyramída',
+  tetrahedral: 'štvorsten',
+};
 const SK_ORDER = ['', 'jednoduchá', 'dvojitá', 'trojitá'];
 const SK_SHARE = ['', 'jeden elektrónový pár: jednoduchá', 'dva páry: dvojitá', 'tri páry: trojitá'];
 /** 1 atóm, 2–4 atómy, 5 a viac atómov. */
@@ -379,7 +396,7 @@ const sk: Strings = {
           : MAX_ORDER[el] === 1
             ? `${cap(SK_ELEMENT[el])} tvorí iba jednoduché väzby.`
             : MAX_ORDER[el] === 2
-              ? `${cap(SK_ELEMENT[el])} môže s jedným partnerom zdieľať najviac dva páry.`
+              ? `${cap(SK_ELEMENT[el])} zvyčajne zdieľa s jedným partnerom najviac dva páry.`
               : 'Trojitá väzba, teda tri páry, je najviac, čo tieto atómy dokážu zdieľať.',
   added: (el) => `Pribudol jeden atóm ${SK_OF[el]}.`,
   removed: (el) => `Jeden atóm ${SK_OF[el]} je preč.`,
@@ -390,13 +407,8 @@ const sk: Strings = {
   newFind: 'Nová položka v tvojej zbierke!',
   questDone: 'Úloha splnená!',
   shape: 'Tvar',
-  shapes: {
-    linear: 'rovná čiara',
-    bent: 'lomená čiara, ako písmeno V',
-    'trigonal-planar': 'plochý trojuholník',
-    'trigonal-pyramidal': 'trojboká pyramída',
-    tetrahedral: 'štvorsten',
-  },
+  shapes: SK_SHAPES,
+  centres: (centres) => byElement(centres, SK_ELEMENT, SK_SHAPES, ' a '),
   ionicShape: 'kryštál z mnohých iónov',
   polarity: {
     polar: 'Polárna: jeden koniec je trochu záporný (δ−), druhý trochu kladný (δ+).',

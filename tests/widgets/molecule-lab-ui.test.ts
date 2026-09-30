@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { LANG_CODES } from '../../src/i18n/languages.ts';
 import { DARK_INK } from '../../src/widgets/molecule-lab/layout.ts';
 import MoleculeLab from '../../src/widgets/molecule-lab/MoleculeLab.svelte';
-import { buildBoard, ELEMENTS } from '../../src/widgets/molecule-lab/model.ts';
+import { buildBoard, ELEMENTS, moleculeShape } from '../../src/widgets/molecule-lab/model.ts';
 import { INITIAL, MOLECULES, QUESTS, report } from '../../src/widgets/molecule-lab/molecules.ts';
 import { strings } from '../../src/widgets/molecule-lab/strings.ts';
 
@@ -50,6 +50,15 @@ describe('MoleculeLab strings', () => {
     expect(sk.hintText({ kind: 'raise', a: 'N', b: 'N', order: 3 })).toBe(
       'medzi dusíkom a dusíkom môže vzniknúť trojitá väzba – spoj ich ešte raz',
     );
+  });
+
+  it('names each kind of centre once for a molecule with several: acetic acid', () => {
+    const acid = MOLECULES.find((m) => m.id === 'aceticAcid')!;
+    const board = buildBoard(acid.atoms, acid.bonds);
+    const shape = moleculeShape(board, board.atoms.map((atom) => atom.id));
+    if (shape.kind !== 'centres') throw new Error(shape.kind);
+    expect(en.centres(shape.centres)).toBe('carbon: tetrahedron and flat triangle; oxygen: bent, like a V');
+    expect(sk.centres(shape.centres)).toBe('uhlík: štvorsten a plochý trojuholník; kyslík: lomená čiara, ako písmeno V');
   });
 
   it('names every molecule, with a one-line fact, in every language', () => {
