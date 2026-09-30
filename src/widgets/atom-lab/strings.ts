@@ -52,7 +52,6 @@ export interface Strings {
 
 const MINUS = '−';
 const signed = (q: number) => (q > 0 ? `+${q}` : q < 0 ? `${MINUS}${-q}` : '0');
-const capitalise = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 const ions = (v: View, or: string) => v.element!.ions.map((q) => ionNotation(v.element!.symbol, q)).join(` ${or} `);
 
 // ── English ─────────────────────────────────────────────────────────────────────────────────────
@@ -65,7 +64,10 @@ const EN_ELEMENTS = [
 const enCount = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 const enName = (z: number) => EN_ELEMENTS[z - 1]!.toLowerCase();
 const enNuclide = (v: View) => (v.z === 1 && v.a === 2 ? 'Hydrogen-2 (deuterium)' : v.z === 1 && v.a === 3 ? 'Hydrogen-3 (tritium)' : `${EN_ELEMENTS[v.z - 1]}-${v.a}`);
-const EN_NUCLEUS = { stable: 'stable nucleus', radioactive: 'radioactive nucleus', unbound: 'nucleus falls apart quickly' };
+/** The nucleus in the Isotope readout, after the nuclide's name. */
+const EN_NUCLEUS = { stable: 'stable nucleus', radioactive: 'radioactive nucleus', 'short-lived': 'radioactive nucleus, falls apart within a day' };
+/** The line at the bottom of the drawing. */
+const EN_STATUS = { stable: 'Stable nucleus', radioactive: 'Radioactive nucleus', 'short-lived': 'Radioactive: falls apart within a day' };
 
 function enTendency(tendency: Tendency): string {
   if (tendency.kind === 'full') return 'Full: hardly ever reacts';
@@ -76,7 +78,7 @@ function enTendency(tendency: Tendency): string {
 }
 
 function enStatus(v: View): string {
-  if (v.z > 0) return capitalise(EN_NUCLEUS[v.nucleus.kind as keyof typeof EN_NUCLEUS]);
+  if (v.z > 0) return EN_STATUS[v.nucleus.kind as keyof typeof EN_STATUS];
   if (v.e > 0) return 'Nothing holds them together';
   return { none: 'Add a proton to start', neutron: 'Decays in about 10 minutes', neutrons: 'They don’t stick together' }[
     v.nucleus.kind as 'none' | 'neutron' | 'neutrons'
@@ -113,12 +115,12 @@ function enReadouts(v: View): Readouts {
           ? `Half of such nuclei turn into another element in ${en.halfLife(nucleus.halfLife)} (its half-life).${
               outlivesUniverse(nucleus.halfLife) ? ' That is far longer than the universe has existed.' : ''
             }`
-          : `Half of such nuclei fall apart in less than a day, usually in a fraction of a second. ${
+          : `Half of such nuclei fall apart in less than a day. ${
               {
                 'few-neutrons': 'Neutrons help hold a nucleus together, and this one has too few.',
                 'many-neutrons': 'It has too many neutrons for so few protons.',
                 gap: 'This mix of protons and neutrons does not hold together for long.',
-              }[nucleus.kind === 'unbound' ? nucleus.why : 'gap']
+              }[nucleus.kind === 'short-lived' ? nucleus.why : 'gap']
             }`;
     isotope = { value: `${enNuclide(v)}: ${EN_NUCLEUS[nucleus.kind as keyof typeof EN_NUCLEUS]}`, detail: `${counts} ${why}` };
   }
@@ -173,7 +175,9 @@ function enPicture(v: View): string {
       .join(' and ');
     return `${enHeading(v)}${loose ? `: ${loose}` : ''}. ${enStatus(v)}.`;
   }
-  const state = { stable: 'stable', radioactive: 'radioactive', unbound: 'falls apart quickly' }[v.nucleus.kind as 'stable' | 'radioactive' | 'unbound'];
+  const state = { stable: 'stable', radioactive: 'radioactive', 'short-lived': 'radioactive, falls apart within a day' }[
+    v.nucleus.kind as 'stable' | 'radioactive' | 'short-lived'
+  ];
   const electrons =
     v.e === 0 ? 'No electrons' : `${enCount(v.e, 'electron', 'electrons')} in ${enCount(v.shells.length, 'shell', 'shells')}: ${v.shells.join(', ')}`;
   return `${enHeading(v)}. Nucleus: ${enCount(v.z, 'proton', 'protons')} and ${enCount(v.n, 'neutron', 'neutrons')}, ${state}. ${electrons}.`;
@@ -209,7 +213,7 @@ const en: Strings = {
     deuterium: 'Deuterium, heavy hydrogen',
     tritium: 'Tritium, radioactive hydrogen',
     'carbon-14': 'Carbon-14, used to date old things',
-    'falls-apart': 'A nucleus that falls apart quickly',
+    'falls-apart': 'A nucleus that falls apart within a day',
     'potassium-40': 'Potassium-40, found in bananas',
     'sodium-ion': 'Na⁺, as in table salt',
     'chloride-ion': 'Cl⁻, as in table salt',
@@ -259,7 +263,8 @@ const electrons = (n: number) => `${n} ${skForm(n, 'elektrón', 'elektróny', 'e
 const zo = (n: number) => (/^(4|6|7|1[467]|[467]\d|1\d\d)$/.test(String(n)) ? 'zo' : 'z');
 const skName = (z: number) => SK_ELEMENTS[z - 1]!.toLocaleLowerCase('sk');
 const skNuclide = (v: View) => (v.z === 1 && v.a === 2 ? 'Vodík-2 (deutérium)' : v.z === 1 && v.a === 3 ? 'Vodík-3 (trícium)' : `${SK_ELEMENTS[v.z - 1]}-${v.a}`);
-const SK_NUCLEUS = { stable: 'stabilné jadro', radioactive: 'rádioaktívne jadro', unbound: 'jadro sa rýchlo rozpadne' };
+const SK_NUCLEUS = { stable: 'stabilné jadro', radioactive: 'rádioaktívne jadro', 'short-lived': 'rádioaktívne jadro, rozpadne sa do jedného dňa' };
+const SK_STATUS = { stable: 'Stabilné jadro', radioactive: 'Rádioaktívne jadro', 'short-lived': 'Rádioaktívne: rozpadne sa do jedného dňa' };
 
 function skTendency(tendency: Tendency): string {
   if (tendency.kind === 'full') return 'Plná: takmer nikdy nereaguje';
@@ -269,7 +274,7 @@ function skTendency(tendency: Tendency): string {
 }
 
 function skStatus(v: View): string {
-  if (v.z > 0) return capitalise(SK_NUCLEUS[v.nucleus.kind as keyof typeof SK_NUCLEUS]);
+  if (v.z > 0) return SK_STATUS[v.nucleus.kind as keyof typeof SK_STATUS];
   if (v.e > 0) return 'Nič ich nedrží pokope';
   return { none: 'Začni pridaním protónu', neutron: 'Rozpadne sa približne za 10 minút', neutrons: 'Nedržia pokope' }[
     v.nucleus.kind as 'none' | 'neutron' | 'neutrons'
@@ -306,12 +311,12 @@ function skReadouts(v: View): Readouts {
           ? `Polovica takých jadier sa za ${sk.halfLife(nucleus.halfLife)} premení na iný prvok (polčas rozpadu).${
               outlivesUniverse(nucleus.halfLife) ? ' To je oveľa dlhšie, ako existuje vesmír.' : ''
             }`
-          : `Polovica takých jadier sa rozpadne za menej ako deň, zvyčajne za zlomok sekundy. ${
+          : `Polovica takých jadier sa rozpadne za menej ako deň. ${
               {
                 'few-neutrons': 'Neutróny pomáhajú držať jadro pokope a tu ich je primálo.',
                 'many-neutrons': 'Na taký malý počet protónov má priveľa neutrónov.',
                 gap: 'Takáto zmes protónov a neutrónov dlho nevydrží.',
-              }[nucleus.kind === 'unbound' ? nucleus.why : 'gap']
+              }[nucleus.kind === 'short-lived' ? nucleus.why : 'gap']
             }`;
     isotope = { value: `${skNuclide(v)}: ${SK_NUCLEUS[nucleus.kind as keyof typeof SK_NUCLEUS]}`, detail: `${counts} ${why}` };
   }
@@ -367,7 +372,9 @@ function skPicture(v: View): string {
     const loose = [v.n > 1 || (v.n === 1 && v.e > 0) ? neutrons(v.n) : '', v.e > 0 ? electrons(v.e) : ''].filter(Boolean).join(' a ');
     return `${skHeading(v)}${loose ? `: ${loose}` : ''}. ${skStatus(v)}.`;
   }
-  const state = { stable: 'stabilné', radioactive: 'rádioaktívne', unbound: 'rýchlo sa rozpadne' }[v.nucleus.kind as 'stable' | 'radioactive' | 'unbound'];
+  const state = { stable: 'stabilné', radioactive: 'rádioaktívne', 'short-lived': 'rádioaktívne, rozpadne sa do jedného dňa' }[
+    v.nucleus.kind as 'stable' | 'radioactive' | 'short-lived'
+  ];
   const shells = `${v.shells.length} ${v.shells.length === 1 ? 'vrstve' : 'vrstvách'}`;
   const inShells = v.e === 0 ? 'Žiadne elektróny' : `${electrons(v.e)} v ${shells}: ${v.shells.join(', ')}`;
   return `${skHeading(v)}. Jadro: ${protons(v.z)} a ${neutrons(v.n)}, ${state}. ${inShells}.`;
@@ -403,7 +410,7 @@ const sk: Strings = {
     deuterium: 'Deutérium, ťažký vodík',
     tritium: 'Trícium, rádioaktívny vodík',
     'carbon-14': 'Uhlík-14, podľa neho sa určuje vek starých vecí',
-    'falls-apart': 'Jadro, ktoré sa rýchlo rozpadne',
+    'falls-apart': 'Jadro, ktoré sa rozpadne do jedného dňa',
     'potassium-40': 'Draslík-40, nájdeš ho aj v banánoch',
     'sodium-ion': 'Na⁺ ako v kuchynskej soli',
     'chloride-ion': 'Cl⁻ ako v kuchynskej soli',

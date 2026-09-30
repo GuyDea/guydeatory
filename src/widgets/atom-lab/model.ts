@@ -32,8 +32,12 @@ export type Nucleus =
   | { kind: 'neutrons' }
   | { kind: 'stable' }
   | { kind: 'radioactive'; halfLife: HalfLife }
-  /** Falls apart within a day, usually in a fraction of a second, and why. */
-  | { kind: 'unbound'; why: 'few-neutrons' | 'many-neutrons' | 'gap' };
+  /**
+   * Radioactive too, but half of such nuclei fall apart within a day: every nucleus not in data.ts.
+   * Some last hours (fluorine-18, sodium-24), others don't hold together at all (helium-2). `why`
+   * says what is wrong with it.
+   */
+  | { kind: 'short-lived'; why: 'few-neutrons' | 'many-neutrons' | 'gap' };
 
 /** Mass numbers of the nuclei of element z that last at least a day. */
 function lasting(z: number): number[] {
@@ -48,7 +52,7 @@ export function nucleus(protons: number, neutrons: number): Nucleus {
   if (halfLife) return { kind: 'radioactive', halfLife };
   const known = lasting(protons).map((m) => m - protons);
   const why = neutrons < Math.min(...known) ? 'few-neutrons' : neutrons > Math.max(...known) ? 'many-neutrons' : 'gap';
-  return { kind: 'unbound', why };
+  return { kind: 'short-lived', why };
 }
 
 /** A nucleus that lasts at least a day: a real atom's nucleus, stable or radioactive. */
@@ -244,7 +248,7 @@ export const QUESTS: Record<QuestSet, readonly Quest[]> = {
     { id: 'tritium', met: nuclide(1, 2) },
     { id: 'carbon-12', met: nuclide(6, 6) },
     { id: 'carbon-14', met: nuclide(6, 8) },
-    { id: 'falls-apart', met: (atom) => nucleus(atom.protons, atom.neutrons).kind === 'unbound' },
+    { id: 'falls-apart', met: (atom) => nucleus(atom.protons, atom.neutrons).kind === 'short-lived' },
     { id: 'potassium-40', met: nuclide(19, 21) },
   ],
   ions: [

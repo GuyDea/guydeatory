@@ -58,9 +58,9 @@
         }),
   );
 
-  const unbound = $derived(v.nucleus.kind === 'unbound');
+  const shortLived = $derived(v.nucleus.kind === 'short-lived');
   // Without protons nothing holds the particles, so they are drawn scattered.
-  const particles = $derived(nucleusLayout(v.z, v.n, v.z === 0 ? SPACING * 2.8 : unbound ? SPACING * 1.18 : SPACING));
+  const particles = $derived(nucleusLayout(v.z, v.n, v.z === 0 ? SPACING * 2.8 : shortLived ? SPACING * 1.18 : SPACING));
   const extent = $derived(particles.reduce((far, p) => Math.max(far, Math.hypot(p.x, p.y)), 0) + PARTICLE);
   const loose = $derived(
     v.z === 0
@@ -79,9 +79,9 @@
   let eased = $state(untrack(() => fit));
   const zoom = $derived(moving ? eased : fit);
 
-  // An unstable nucleus trembles: hard when it falls apart quickly, gently when it is radioactive.
+  // An unstable nucleus trembles: hard when it falls apart within a day, gently when it lasts longer.
   const shake = $derived.by(() => {
-    const strength = unbound ? 1.7 : v.nucleus.kind === 'radioactive' ? 0.7 : v.z === 0 ? 1 : 0;
+    const strength = shortLived ? 1.7 : v.nucleus.kind === 'radioactive' ? 0.7 : v.z === 0 ? 1 : 0;
     const t = clock;
     return strength === 0
       ? { x: 0, y: 0 }
@@ -205,7 +205,7 @@
             <!-- the nucleus: protons (+) and neutrons, packed; the ones in the middle drawn last, on top -->
             <g transform={`translate(${shake.x.toFixed(2)} ${shake.y.toFixed(2)})`}>
               {#if v.z > 0 && v.nucleus.kind !== 'stable'}
-                <circle r={extent + 7} class={unbound ? 'd-hot' : 'd-warm'} opacity="0.22" />
+                <circle r={extent + 7} class={shortLived ? 'd-hot' : 'd-warm'} opacity="0.22" />
               {/if}
               {#each [...particles].reverse() as p, i (i)}
                 <g transform={`translate(${p.x.toFixed(2)} ${p.y.toFixed(2)})`}>

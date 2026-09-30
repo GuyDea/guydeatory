@@ -77,13 +77,13 @@ describe('atom lab: the data', () => {
     expect(RADIOACTIVE[20]?.[48]?.value).toBeCloseTo(5.6e19, -18);
   });
 
-  it('calls every other nucleus up to 20 protons and 30 neutrons one that falls apart quickly', () => {
+  it('calls every other nucleus up to 20 protons and 30 neutrons one that falls apart within a day', () => {
     let real = 0;
     for (let z = 1; z <= LIMITS.protons; z++) {
       for (let n = 0; n <= LIMITS.neutrons; n++) {
         const kind = nucleus(z, n).kind;
         const listed = STABLE[z]?.includes(z + n) || RADIOACTIVE[z]?.[z + n] !== undefined;
-        expect(kind, `Z=${z} N=${n}`).toBe(listed ? (STABLE[z]?.includes(z + n) ? 'stable' : 'radioactive') : 'unbound');
+        expect(kind, `Z=${z} N=${n}`).toBe(listed ? (STABLE[z]?.includes(z + n) ? 'stable' : 'radioactive') : 'short-lived');
         if (listed) real++;
       }
     }
@@ -169,26 +169,48 @@ describe('atom lab: hand-checked atoms', () => {
     expect(sk.readouts(v).charge).toEqual({ value: 'Ión O²⁻, náboj −2', detail: 'Elektrónov je o 2 viac ako protónov. Bežný ión.' });
   });
 
-  it('helium-2 falls apart: too few neutrons', () => {
+  it('helium-2 falls apart within a day, like every radioactive nucleus not in the table: too few neutrons', () => {
     const v = view(atom(2, 0, 2));
-    expect(v.nucleus).toEqual({ kind: 'unbound', why: 'few-neutrons' });
+    expect(v.nucleus).toEqual({ kind: 'short-lived', why: 'few-neutrons' });
     expect(en.readouts(v).isotope).toEqual({
-      value: 'Helium-2: nucleus falls apart quickly',
+      value: 'Helium-2: radioactive nucleus, falls apart within a day',
       detail:
-        '2 protons + 0 neutrons = 2 particles in the nucleus. Half of such nuclei fall apart in less than a day, usually in a fraction of a second. Neutrons help hold a nucleus together, and this one has too few.',
+        '2 protons + 0 neutrons = 2 particles in the nucleus. Half of such nuclei fall apart in less than a day. Neutrons help hold a nucleus together, and this one has too few.',
     });
     expect(sk.readouts(v).isotope).toEqual({
-      value: 'Hélium-2: jadro sa rýchlo rozpadne',
+      value: 'Hélium-2: rádioaktívne jadro, rozpadne sa do jedného dňa',
       detail:
-        '2 protóny + 0 neutrónov = 2 častice v jadre. Polovica takých jadier sa rozpadne za menej ako deň, zvyčajne za zlomok sekundy. Neutróny pomáhajú držať jadro pokope a tu ich je primálo.',
+        '2 protóny + 0 neutrónov = 2 častice v jadre. Polovica takých jadier sa rozpadne za menej ako deň. Neutróny pomáhajú držať jadro pokope a tu ich je primálo.',
     });
-    expect(en.status(v)).toBe('Nucleus falls apart quickly');
-    expect(sk.status(v)).toBe('Jadro sa rýchlo rozpadne');
+    expect(en.status(v)).toBe('Radioactive: falls apart within a day');
+    expect(sk.status(v)).toBe('Rádioaktívne: rozpadne sa do jedného dňa');
+    expect(en.picture(v)).toBe('Helium-2. Nucleus: 2 protons and 0 neutrons, radioactive, falls apart within a day. 2 electrons in 1 shell: 2.');
+    expect(sk.picture(v)).toBe('Hélium-2. Jadro: 2 protóny a 0 neutrónov, rádioaktívne, rozpadne sa do jedného dňa. 2 elektróny v 1 vrstve: 2.');
+    expect(en.quests['falls-apart']).toBe('A nucleus that falls apart within a day');
+    expect(sk.quests['falls-apart']).toBe('Jadro, ktoré sa rozpadne do jedného dňa');
+  });
+
+  it('says only what is true of every such nucleus: fluorine-18 lasts hours, sodium-24 about 15 hours', () => {
+    // NUBASE2020: F-18 109.7 min, Na-24 14.96 h. Neither is in the table of nuclei that last a day or more.
+    for (const [z, n] of [[9, 9], [11, 13]] as const) {
+      const v = view(atom(z, n, z));
+      expect(v.nucleus.kind).toBe('short-lived');
+      expect(en.readouts(v).isotope.detail).toContain('Half of such nuclei fall apart in less than a day.');
+      expect(sk.readouts(v).isotope.detail).toContain('Polovica takých jadier sa rozpadne za menej ako deň.');
+    }
+    for (let z = 1; z <= LIMITS.protons; z++) {
+      for (let n = 0; n <= LIMITS.neutrons; n++) {
+        const v = view(atom(z, n, z));
+        if (v.nucleus.kind !== 'short-lived') continue;
+        expect(en.readouts(v).isotope.detail).not.toMatch(/second|quickly/);
+        expect(sk.readouts(v).isotope.detail).not.toMatch(/sekund|rýchlo/);
+      }
+    }
   });
 
   it('knows why other nuclei fall apart: too many neutrons, or a mix that does not last', () => {
-    expect(nucleus(1, 3)).toEqual({ kind: 'unbound', why: 'many-neutrons' });
-    expect(nucleus(4, 4)).toEqual({ kind: 'unbound', why: 'gap' }); // beryllium-8 splits into two helium-4
+    expect(nucleus(1, 3)).toEqual({ kind: 'short-lived', why: 'many-neutrons' });
+    expect(nucleus(4, 4)).toEqual({ kind: 'short-lived', why: 'gap' }); // beryllium-8 splits into two helium-4
     expect(en.readouts(view(atom(1, 3, 1))).isotope.detail).toContain('It has too many neutrons for so few protons.');
   });
 
