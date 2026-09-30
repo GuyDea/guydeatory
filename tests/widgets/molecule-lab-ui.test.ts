@@ -206,7 +206,20 @@ describe('MoleculeLab first frame (server render, and all there is without JS)',
       expect(html.querySelectorAll('.quests li.done')).toHaveLength(1);
       expect(html.text).toContain(s.discovered(1, MOLECULES.length));
     });
+
+    it(`describes the scene without JS, and asks for picks only once the lab works (${lang})`, () => {
+      const html = parse(render(MoleculeLab, { props: { lang } }).body);
+      const s = strings[lang];
+      expect(html.querySelector('.status')!.text).toBe(s.scene);
+      expect(html.text).not.toContain(s.welcome);
+    });
   }
+
+  it('words the first frame: a scene before JS, an invitation after', () => {
+    expect(strings.en.scene).toBe('Water is ready. A carbon atom and four hydrogen atoms are waiting to become methane.');
+    expect(strings.sk.scene).toBe('Voda je hotová. Atóm uhlíka a štyri atómy vodíka čakajú, kým z nich vznikne metán.');
+    expect(strings.en.welcome).toBe('Water is ready. Now pick the carbon, then each hydrogen, to make methane.');
+  });
 
   it('lists the atoms before the bonds, and puts the bonds’ tap bands in a layer under the atoms', () => {
     const html = parse(render(MoleculeLab, { props: { lang: 'en' } }).body);

@@ -530,7 +530,8 @@
     </svg>
   </div>
 
-  <p class="status" aria-hidden="true">{status || s.welcome}</p>
+  <!-- Without JS nothing can be picked, so the first frame only says what is on the board. -->
+  <p class="status" aria-hidden="true">{status || (live.current ? s.welcome : s.scene)}</p>
   <div class="card">
     {#if card?.kind === 'done'}
       <p class="card-title">

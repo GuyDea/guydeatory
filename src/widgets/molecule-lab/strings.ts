@@ -12,7 +12,9 @@ export interface MoleculeText {
 export interface Strings {
   title: string;
   hint: string;
-  /** The first frame's invitation, for the carbon and four hydrogens waiting to become methane. */
+  /** The first frame without JS, when nothing can be picked: what is on the board. */
+  scene: string;
+  /** The first frame's invitation once the lab works, for the carbon and four hydrogens waiting to become methane. */
   welcome: string;
   /** The board, for screen readers: "Building board with 8 atoms". */
   board: (atoms: number) => string;
@@ -163,6 +165,7 @@ const EN_MOLECULES: Record<MoleculeId, MoleculeText> = {
 const en: Strings = {
   title: 'Build a molecule',
   hint: 'Pick two atoms to join them. Pick the second one again for a double bond. Pick a bond to loosen it. Keys: Tab to move, Enter to pick, Delete to remove, Escape to let go.',
+  scene: 'Water is ready. A carbon atom and four hydrogen atoms are waiting to become methane.',
   welcome: 'Water is ready. Now pick the carbon, then each hydrogen, to make methane.',
   board: (n) => (n === 0 ? 'Empty building board' : `Building board with ${plural(n, 'atom')}`),
   element: EN_ELEMENT,
@@ -388,6 +391,7 @@ const SK_MOLECULES: Record<MoleculeId, MoleculeText> = {
 const sk: Strings = {
   title: 'Postav molekulu',
   hint: 'Vyber dva atómy a spoja sa. Vyber druhý atóm znova a vznikne dvojitá väzba. Vyber väzbu a uvoľníš ju. Klávesy: Tab – presun, Enter – výber, Delete – odstránenie, Escape – zrušenie výberu.',
+  scene: 'Voda je hotová. Atóm uhlíka a štyri atómy vodíka čakajú, kým z nich vznikne metán.',
   welcome: 'Voda je hotová. Teraz vyber uhlík a potom každý vodík – vznikne metán.',
   board: (n) => (n === 0 ? 'Prázdna stavebná plocha' : `Stavebná plocha s ${n} ${n === 1 ? 'atómom' : 'atómami'}`),
   element: SK_ELEMENT,
