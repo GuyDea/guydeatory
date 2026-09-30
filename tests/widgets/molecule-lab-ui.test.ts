@@ -57,8 +57,22 @@ describe('MoleculeLab strings', () => {
     const board = buildBoard(acid.atoms, acid.bonds);
     const shape = moleculeShape(board, board.atoms.map((atom) => atom.id));
     if (shape.kind !== 'centres') throw new Error(shape.kind);
-    expect(en.centres(shape.centres)).toBe('carbon: tetrahedron and flat triangle; oxygen: bent, like a V');
-    expect(sk.centres(shape.centres)).toBe('uhlík: štvorsten a plochý trojuholník; kyslík: lomená čiara, ako písmeno V');
+    expect(en.centres(shape.centres)).toBe('carbon: triangular pyramid (tetrahedron) and flat triangle; oxygen: bent, like a V');
+    expect(sk.centres(shape.centres)).toBe('uhlík: trojboký ihlan (štvorsten) a plochý trojuholník; kyslík: lomená čiara, ako písmeno V');
+  });
+
+  it('names shapes as the chemical-bond article does: methane is a triangular pyramid, ammonia a low one', () => {
+    const shapeOf = (id: string) => {
+      const molecule = MOLECULES.find((m) => m.id === id)!;
+      const board = buildBoard(molecule.atoms, molecule.bonds);
+      const shape = moleculeShape(board, board.atoms.map((atom) => atom.id));
+      if (shape.kind !== 'centres') throw new Error(shape.kind);
+      return shape.centres[0]!.shape;
+    };
+    expect([en.shapes[shapeOf('methane')], sk.shapes[shapeOf('methane')]]).toEqual(['triangular pyramid (tetrahedron)', 'trojboký ihlan (štvorsten)']);
+    expect([en.shapes[shapeOf('ammonia')], sk.shapes[shapeOf('ammonia')]]).toEqual(['low pyramid, like a tripod', 'nízky ihlan, podobný statívu']);
+    // Slovak school books call a pyramid "ihlan".
+    expect(Object.values(sk.shapes).filter((text) => /pyram/i.test(text))).toEqual([]);
   });
 
   it('names every molecule, with a one-line fact, in every language', () => {

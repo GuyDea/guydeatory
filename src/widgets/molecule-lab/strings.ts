@@ -52,7 +52,7 @@ export interface Strings {
   questDone: string;
   shape: string;
   shapes: Record<Shape, string>;
-  /** The shape of a molecule with several centres: "carbon: tetrahedron and flat triangle; oxygen: bent". */
+  /** The shape of a molecule with several centres: "carbon: triangular pyramid (tetrahedron) and flat triangle; oxygen: bent, like a V". */
   centres: (centres: { el: El; shape: Shape }[]) => string;
   ionicShape: string;
   polarity: Record<Polarity, string>;
@@ -77,7 +77,7 @@ export interface Strings {
 /** First letter upper case: element names start sentences. */
 export const cap = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 
-/** "carbon: tetrahedron and flat triangle; oxygen: bent", each element once, in the order given. */
+/** "carbon: triangular pyramid (tetrahedron) and flat triangle; oxygen: bent, like a V", each element once, in the order given. */
 const byElement = (centres: { el: El; shape: Shape }[], name: Record<El, string>, shapes: Record<Shape, string>, and: string) => {
   const els = [...new Set(centres.map((c) => c.el))];
   return els.map((el) => `${name[el]}: ${centres.filter((c) => c.el === el).map((c) => shapes[c.shape]).join(and)}`).join('; ');
@@ -94,12 +94,13 @@ const EN_ELEMENT: Record<El, string> = {
   Na: 'sodium',
   Mg: 'magnesium',
 };
+// The words of the chemical-bond article: methane is a triangular pyramid, ammonia a low one.
 const EN_SHAPES: Record<Shape, string> = {
   linear: 'straight line',
   bent: 'bent, like a V',
   'trigonal-planar': 'flat triangle',
-  'trigonal-pyramidal': 'triangular pyramid',
-  tetrahedral: 'tetrahedron',
+  'trigonal-pyramidal': 'low pyramid, like a tripod',
+  tetrahedral: 'triangular pyramid (tetrahedron)',
 };
 const EN_ORDER = ['', 'single', 'double', 'triple'];
 const EN_SHARE = ['', 'a pair of electrons: a single', 'two pairs: a double', 'three pairs: a triple'];
@@ -306,12 +307,13 @@ const SK_FROM: Record<El, string> = {
 };
 /** Accusative: "na chlór", "vyber síru". */
 const SK_ACC: Record<El, string> = { ...SK_ELEMENT, S: 'síru' };
+// Slovak school books say "ihlan", never "pyramída" (docs/translation.md).
 const SK_SHAPES: Record<Shape, string> = {
   linear: 'rovná čiara',
   bent: 'lomená čiara, ako písmeno V',
   'trigonal-planar': 'plochý trojuholník',
-  'trigonal-pyramidal': 'trojboká pyramída',
-  tetrahedral: 'štvorsten',
+  'trigonal-pyramidal': 'nízky ihlan, podobný statívu',
+  tetrahedral: 'trojboký ihlan (štvorsten)',
 };
 const SK_ORDER = ['', 'jednoduchá', 'dvojitá', 'trojitá'];
 const SK_SHARE = ['', 'jeden elektrónový pár: jednoduchá', 'dva páry: dvojitá', 'tri páry: trojitá'];
