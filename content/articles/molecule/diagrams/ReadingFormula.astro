@@ -1,0 +1,68 @@
+---
+import Svg from '@components/diagram/Svg.astro';
+import type { LangCode } from '@i18n/languages';
+
+interface Props {
+  lang: LangCode;
+}
+const strings = {
+  en: {
+    title: 'How to read the formulas H₂O, O₂ and CO₂',
+    desc: 'Three chemical formulas, each next to a drawing of its molecule. H₂O: 2 hydrogen atoms and 1 oxygen atom, drawn as an oxygen atom with two hydrogen atoms. O₂: 2 oxygen atoms joined together. CO₂: 1 carbon atom and 2 oxygen atoms, in a row with the carbon in the middle.',
+    rows: [['2 hydrogen atoms', '1 oxygen atom'], ['2 oxygen atoms'], ['1 carbon atom', '2 oxygen atoms']],
+  },
+  sk: {
+    title: 'Ako čítať vzorce H₂O, O₂ a CO₂',
+    desc: 'Tri chemické vzorce, každý vedľa obrázka svojej molekuly. H₂O: 2 atómy vodíka a 1 atóm kyslíka, nakreslené ako atóm kyslíka s dvoma atómami vodíka. O₂: 2 atómy kyslíka spojené spolu. CO₂: 1 atóm uhlíka a 2 atómy kyslíka v rade, uhlík je v strede.',
+    rows: [['2 atómy vodíka', '1 atóm kyslíka'], ['2 atómy kyslíka'], ['1 atóm uhlíka', '2 atómy kyslíka']],
+  },
+} as const;
+const s = strings[Astro.props.lang];
+const formulas = ['H₂O', 'O₂', 'CO₂'];
+const ys = [52, 160, 268];
+
+type Atom = { x: number; y: number; symbol: string };
+const f = (n: number) => n.toFixed(1);
+// Water: O above, the two H atoms 104.5° apart below it.
+const half = (104.5 / 2) * (Math.PI / 180);
+const water: Atom[] = [
+  { x: 305, y: ys[0] - 10, symbol: 'O' },
+  { x: 305 - 42 * Math.sin(half), y: ys[0] - 10 + 42 * Math.cos(half), symbol: 'H' },
+  { x: 305 + 42 * Math.sin(half), y: ys[0] - 10 + 42 * Math.cos(half), symbol: 'H' },
+];
+const oxygen: Atom[] = [
+  { x: 280, y: ys[1], symbol: 'O' },
+  { x: 330, y: ys[1], symbol: 'O' },
+];
+const carbonDioxide: Atom[] = [
+  { x: 255, y: ys[2], symbol: 'O' },
+  { x: 305, y: ys[2], symbol: 'C' },
+  { x: 355, y: ys[2], symbol: 'O' },
+];
+const radius = (symbol: string) => (symbol === 'H' ? 14 : 20);
+// Double bonds: two short lines in the gap between neighbouring atoms.
+const double = (a: Atom, b: Atom) => {
+  const x1 = a.x + radius(a.symbol);
+  const x2 = b.x - radius(b.symbol);
+  return `M${x1} ${a.y - 5}H${x2}M${x1} ${a.y + 5}H${x2}`;
+};
+const atoms = [...water, ...oxygen, ...carbonDioxide];
+---
+<Svg viewBox="0 0 400 328" title={s.title} desc={s.desc} maxWidth="30rem">
+  {
+    formulas.map((formula, i) => (
+      <g>
+        <text x="20" y={ys[i] + 2} class="d-label" style="font-size: 34px">{formula}</text>
+        {s.rows[i].map((line, j) => (
+          <text x="20" y={ys[i] + 28 + j * 20} class="d-small">{line}</text>
+        ))}
+      </g>
+    ))
+  }
+  {water.slice(1).map((h) => <path d={`M${water[0].x} ${water[0].y}L${f(h.x)} ${f(h.y)}`} class="d-line" stroke-width="3" />)}
+  <path d={double(oxygen[0], oxygen[1])} class="d-line" stroke-width="3" />
+  <path d={double(carbonDioxide[0], carbonDioxide[1])} class="d-line" stroke-width="3" />
+  <path d={double(carbonDioxide[1], carbonDioxide[2])} class="d-line" stroke-width="3" />
+  {atoms.map(({ x, y, symbol }) => <circle cx={f(x)} cy={f(y)} r={radius(symbol)} class={symbol === 'H' ? 'd-box' : 'd-box-alt'} />)}
+  {atoms.map(({ x, y, symbol }) => <text x={f(x)} y={f(y + 6)} text-anchor="middle" class="d-label">{symbol}</text>)}
+</Svg>

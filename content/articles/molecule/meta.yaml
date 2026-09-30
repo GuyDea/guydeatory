@@ -2,9 +2,24 @@
 topics: [chemistry, matter]
 labels: [high-level]
 prerequisites: [atom]
-related: []
-status: stub
+related: [chemical-bond, chemical-reaction, chemical-element, ion]
+status: published
 created: 2026-09-30
 updated: 2026-09-30
 sources:
-  - { title: 'Molecule — Wikipedia', url: 'https://en.wikipedia.org/wiki/Molecule' }
+  - title: Molecule — Wikipedia
+    url: https://en.wikipedia.org/wiki/Molecule
+  - title: Water molecule structure (size of a water molecule) — Martin Chaplin, Water Structure and Science
+    url: https://water.lsbu.ac.uk/water/water_molecule.html
+  - title: How much water is in the ocean? — NOAA National Ocean Service
+    url: https://oceanservice.noaa.gov/facts/oceanwater.html
+  - title: Avogadro constant — Wikipedia
+    url: https://en.wikipedia.org/wiki/Avogadro_constant
+  - title: DNA (width, and the length of chromosome 1) — Wikipedia
+    url: https://en.wikipedia.org/wiki/DNA
+  - title: Hemoglobin — Wikipedia
+    url: https://en.wikipedia.org/wiki/Hemoglobin
+  - title: What is Ozone? — US Environmental Protection Agency
+    url: https://www.epa.gov/ozone-pollution-and-your-patients-health/what-ozone
+  - title: Dimethyl ether — Wikipedia
+    url: https://en.wikipedia.org/wiki/Dimethyl_ether

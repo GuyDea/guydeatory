@@ -220,6 +220,13 @@ superscripts (Na⁺, Cl⁻, Ca²⁺, O²⁻), in both languages. Add the plain f
 | natural gas | zemný plyn | |
 | catalyst | katalyzátor | also the part of a car exhaust |
 | enzyme | enzým | |
+| (element) symbol | značka (prvku) | |
+| structural formula | štruktúrny vzorec | |
+| isomer | izomér | plural izoméry |
+| formula unit | vzorcová jednotka | |
+| polyatomic ion | viacatómový ión | |
+| mole, Avogadro constant | mól, Avogadrova konštanta | |
+| ozone | ozón | |
 
 ## 5. Slugs and links
 
